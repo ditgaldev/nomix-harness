@@ -31,7 +31,17 @@ function packMember(family: ReleaseFamily, member: ReleaseMember, destination: s
   if (family.packing === 'portable-deploy') {
     const deployment = mkdtempSync(join(tmpdir(), 'nomix-npm-deploy-'))
     try {
-      run('pnpm', ['--filter', member.name, '--prod', 'deploy', '--legacy', deployment])
+      run('pnpm', [
+        '--filter',
+        member.name,
+        'deploy',
+        '--legacy',
+        '--prod',
+        '--config.node-linker=hoisted',
+        '--config.auto-install-peers=false',
+        '--config.link-workspace-packages=true',
+        deployment,
+      ])
       run('npm', ['pack', deployment, '--pack-destination', destination, '--ignore-scripts'])
     } finally {
       rmSync(deployment, { recursive: true, force: true })
