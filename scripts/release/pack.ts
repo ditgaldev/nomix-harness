@@ -9,9 +9,19 @@
  * ([rationale](../../.agents/notes/implemented/process/2026-08-10-npm-release-sequences.md)).
  */
 
-import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
+import {
+  cpSync,
+  existsSync,
+  lstatSync,
+  mkdirSync,
+  mkdtempSync,
+  readdirSync,
+  realpathSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs'
 import { tmpdir } from 'node:os'
-import { join, resolve } from 'node:path'
+import { dirname, join, resolve, sep } from 'node:path'
 import { parseArgs } from 'node:util'
 import { releaseFamily, tarballName, type ReleaseFamily, type ReleaseMember } from './families.ts'
 import { isEntry, run } from './process.ts'
@@ -19,6 +29,58 @@ import { PUBLISH_ORDER_FILE, tarballFiles } from './tarball.ts'
 
 /** Where pack output lands when `--out` is omitted. */
 const DEFAULT_OUTPUT = 'dist/npm'
+
+/**
+ * Return the first symlink below a deployed node_modules tree, excluding its
+ * virtual store because that store is removed after its package links are copied.
+ * @param directory - directory to scan.
+ * @param virtualStore - absolute `.pnpm` directory to skip.
+ * @returns The symlink path, if one remains.
+ */
+function findDeployedSymlink(directory: string, virtualStore: string): string | undefined {
+  for (const entry of readdirSync(directory, { withFileTypes: true })) {
+    const path = join(directory, entry.name)
+    if (path === virtualStore) continue
+    const metadata = lstatSync(path)
+    if (metadata.isSymbolicLink()) return path
+    if (metadata.isDirectory()) {
+      const nested = findDeployedSymlink(path, virtualStore)
+      if (nested !== undefined) return nested
+    }
+  }
+  return undefined
+}
+
+/**
+ * Replace deploy-time package links with package files and remove the duplicate
+ * pnpm virtual store. Runtime dependencies then form one finite npm payload.
+ * @param deployment - portable deployment root.
+ */
+function materializeDeployment(deployment: string): void {
+  const nodeModules = join(deployment, 'node_modules')
+  const virtualStore = join(nodeModules, '.pnpm')
+  let link = findDeployedSymlink(nodeModules, virtualStore)
+  while (link !== undefined) {
+    const segments = link.slice(nodeModules.length + 1).split(sep)
+    const binIndex = segments.lastIndexOf('.bin')
+    if (binIndex >= 0) {
+      rmSync(join(nodeModules, ...segments.slice(0, binIndex + 1)), { recursive: true, force: true })
+    } else {
+      const source = realpathSync(link)
+      const nestedNodeModules = join(source, 'node_modules')
+      rmSync(link, { recursive: true, force: true })
+      mkdirSync(dirname(link), { recursive: true })
+      cpSync(source, link, {
+        recursive: true,
+        dereference: true,
+        filter: path => path !== nestedNodeModules && !path.startsWith(nestedNodeModules + sep),
+      })
+    }
+    link = findDeployedSymlink(nodeModules, virtualStore)
+  }
+  rmSync(virtualStore, { recursive: true, force: true })
+  rmSync(join(nodeModules, '.modules.yaml'), { force: true })
+}
 
 /**
  * Pack one member and check what its tarball carries.
@@ -43,6 +105,7 @@ function packMember(family: ReleaseFamily, member: ReleaseMember, destination: s
         '--config.link-workspace-packages=true',
         deployment,
       ])
+      materializeDeployment(deployment)
       run('tar', [
         '-czf',
         join(destination, filename),
