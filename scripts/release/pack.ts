@@ -74,8 +74,9 @@ function copyInternalPackage(source: string, destination: string): void {
  * packages. Legacy deploy can leave workspace dependencies only beside their
  * consumer, so scanning the virtual store alone does not find the whole set.
  * @param internalRoot - deployed `node_modules/@nomix-ai` directory.
+ * @param virtualStore - deployed pnpm virtual store used only for named fallbacks.
  */
-function restoreInternalClosure(internalRoot: string): void {
+function restoreInternalClosure(internalRoot: string, virtualStore: string): void {
   const queue = readdirSync(internalRoot).sort()
   const visited = new Set<string>()
   while (queue.length > 0) {
@@ -91,12 +92,24 @@ function restoreInternalClosure(internalRoot: string): void {
         const unscoped = dependencyName.slice('@nomix-ai/'.length)
         const destination = join(internalRoot, unscoped)
         if (!existsSync(destination)) {
-          const nested = join(packageDirectory, 'node_modules', ...dependencyName.split('/'))
-          if (!existsSync(nested)) {
+          let source: string | undefined
+          for (let ancestor = packageDirectory; source === undefined;) {
+            const candidate = join(ancestor, 'node_modules', ...dependencyName.split('/'))
+            if (existsSync(candidate)) source = realpathSync(candidate)
+            const parent = dirname(ancestor)
+            if (parent === ancestor) break
+            ancestor = parent
+          }
+          for (const entry of readdirSync(virtualStore).sort()) {
+            if (source !== undefined) break
+            const candidate = join(virtualStore, entry, 'node_modules', ...dependencyName.split('/'))
+            if (existsSync(candidate)) source = realpathSync(candidate)
+          }
+          if (source === undefined) {
             if (section === 'optionalDependencies') continue
             throw new Error(`${dependencyName} is absent from the deployed dependency tree of @nomix-ai/${packageName}`)
           }
-          copyInternalPackage(realpathSync(nested), destination)
+          copyInternalPackage(source, destination)
         }
         queue.push(unscoped)
       }
@@ -114,7 +127,7 @@ function materializeDeployment(deployment: string): void {
   const virtualStore = join(nodeModules, '.pnpm')
   const internalRoot = join(nodeModules, '@nomix-ai')
   mkdirSync(internalRoot, { recursive: true })
-  restoreInternalClosure(internalRoot)
+  restoreInternalClosure(internalRoot, virtualStore)
   let link = findDeployedSymlink(nodeModules, virtualStore)
   while (link !== undefined) {
     const segments = link.slice(nodeModules.length + 1).split(sep)
