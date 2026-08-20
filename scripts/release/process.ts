@@ -8,6 +8,9 @@ import { realpathSync } from 'node:fs'
 import { basename, dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+/** Maximum captured output; portable tarball listings can exceed Node's 1 MiB default. */
+const MAX_CAPTURE_BYTES = 64 * 1024 * 1024
+
 /** Where and with what environment a release step runs a command. */
 export interface RunOptions {
   /** Working directory; defaults to the current one. */
@@ -69,6 +72,7 @@ function spawnCommand(command: string, args: readonly string[], options: RunOpti
     cwd: options.cwd,
     env: options.env,
     encoding: 'utf8',
+    maxBuffer: MAX_CAPTURE_BYTES,
     ...(stdio === undefined ? {} : { stdio }),
   })
 }
