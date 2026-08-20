@@ -12,6 +12,7 @@
 import {
   cpSync,
   existsSync,
+  globSync,
   lstatSync,
   mkdirSync,
   mkdtempSync,
@@ -32,6 +33,30 @@ import { PUBLISH_ORDER_FILE, tarballFiles } from './tarball.ts'
 /** Where pack output lands when `--out` is omitted. */
 const DEFAULT_OUTPUT = 'dist/npm'
 const RUNTIME_DEPENDENCY_SECTIONS = ['dependencies', 'optionalDependencies', 'peerDependencies'] as const
+let workspaceInternalPackages: ReadonlyMap<string, string> | undefined
+
+/**
+ * Resolve one internal package from the built workspace source tree.
+ * @param name - scoped package name.
+ * @returns Its absolute directory, if this repository owns it.
+ */
+function workspaceInternalPackage(name: string): string | undefined {
+  if (workspaceInternalPackages === undefined) {
+    const packages = new Map<string, string>()
+    const manifests = globSync([
+      'apps/*/package.json',
+      'packages/*/*/package.json',
+      'vendor/*/package.json',
+      'native/landlock-run/packages/*/package.json',
+    ], { cwd: process.cwd() }).sort()
+    for (const manifestPath of manifests) {
+      const manifest = JSON.parse(readFileSync(resolve(process.cwd(), manifestPath), 'utf8')) as { name?: unknown }
+      if (typeof manifest.name === 'string') packages.set(manifest.name, dirname(resolve(process.cwd(), manifestPath)))
+    }
+    workspaceInternalPackages = packages
+  }
+  return workspaceInternalPackages.get(name)
+}
 
 /**
  * Return the first symlink below a deployed node_modules tree, excluding its
@@ -105,8 +130,9 @@ function restoreInternalClosure(internalRoot: string, virtualStore: string): voi
             const candidate = join(virtualStore, entry, 'node_modules', ...dependencyName.split('/'))
             if (existsSync(candidate)) source = realpathSync(candidate)
           }
+          if (source === undefined && section === 'optionalDependencies') continue
+          source ??= workspaceInternalPackage(dependencyName)
           if (source === undefined) {
-            if (section === 'optionalDependencies') continue
             throw new Error(`${dependencyName} is absent from the deployed dependency tree of @nomix-ai/${packageName}`)
           }
           copyInternalPackage(source, destination)
