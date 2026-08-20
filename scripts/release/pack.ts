@@ -93,6 +93,7 @@ function restoreInternalClosure(internalRoot: string): void {
         if (!existsSync(destination)) {
           const nested = join(packageDirectory, 'node_modules', ...dependencyName.split('/'))
           if (!existsSync(nested)) {
+            if (section === 'optionalDependencies') continue
             throw new Error(`${dependencyName} is absent from the deployed dependency tree of @nomix-ai/${packageName}`)
           }
           copyInternalPackage(realpathSync(nested), destination)
