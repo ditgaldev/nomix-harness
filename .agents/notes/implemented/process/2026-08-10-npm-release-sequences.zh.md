@@ -72,7 +72,7 @@ tag 只是 commit 指针，不是发布成功的证明。bump 会向 registry �
 
 三条序列都按这套判定，native 也在内：它通过自己的脚本发布，而不是 shell 循环——一串裸 `npm publish` 无法重试，registry 对「重发已存在的版本」的回答是永久失败，因此中途失败一次就没有前路了。
 
-registry 的两个行为决定了「怎么尝试一次发布」。写入之间至少间隔两秒并带退避重试，因为连续背靠背发多个包会超出 registry 自身的处理速度，换来 `E409 Failed to save packument`。而每次重试都先重查 registry：报出来的失败可能对应一次其实已经落地的写入，所以「该版本现在存在且 integrity 与本 tarball 相同」算作已发布，而不是又一个待放置的版本。
+registry 的两个行为决定了「怎么尝试一次发布」。写入使用 workflow 配置的间隔与带上限的指数退避，因为连续背靠背发布多个包会超出 registry 的处理速度，换来 `E409 Failed to save packument` 或 `E429 Too Many Requests`；新 scope 一次发布数百个包时，每分钟最多写入四次，并从两分钟开始退避重试。registry 读取使用同一套带上限的重试策略，因此受限流的 integrity 检查不会中断恢复流程。每次重试都先重查 registry：报出来的失败可能对应一次其实已经落地的写入，所以「该版本现在存在且 integrity 与本 tarball 相同」算作已发布，而不是又一个待放置的版本。
 
 ### workspace 内部引用走 `workspace:` 协议
 

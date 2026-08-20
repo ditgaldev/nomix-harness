@@ -72,7 +72,7 @@ The third state catches code that changed without a version bump. The first two 
 
 All three sequences decide this way, including the native one: it publishes through its own script rather than a shell loop, because a loop of bare `npm publish` calls cannot be retried — the registry answers a repeat of an existing version permanently, so one failure partway through left no way forward.
 
-Two registry behaviours shape how a publish is attempted. Writes are spaced by at least two seconds and retried with a backoff, because publishing several packages back to back outruns the registry's own processing and earns `E409 Failed to save packument`. And every retry re-reads the registry first: a reported failure can answer a write that landed anyway, so a version that now exists with this tarball's integrity counts as published rather than as a version to place again.
+Two registry behaviours shape how a publish is attempted. Writes use workflow-configured spacing and capped exponential backoff, because publishing several packages back to back outruns the registry's processing and earns `E409 Failed to save packument` or `E429 Too Many Requests`; a new scope publishing hundreds of packages uses four writes per minute and retries after two minutes. Registry reads use the same capped retry policy, so a throttled integrity check cannot abort that recovery. Every retry re-reads the registry first: a reported failure can answer a write that landed anyway, so a version that now exists with this tarball's integrity counts as published rather than as a version to place again.
 
 ### Workspace-internal references use the `workspace:` protocol
 

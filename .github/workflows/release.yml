@@ -119,6 +119,14 @@ jobs:
       cancel-in-progress: false
     permissions:
       contents: read
+    env:
+      # The public registry rate-limits a new scope publishing hundreds of
+      # packages. Four writes per minute plus long E429 backoff keeps this
+      # release resumable without hammering the registry.
+      NOMIX_NPM_PUBLISH_ATTEMPTS: '8'
+      NOMIX_NPM_PUBLISH_SPACING_MS: '20000'
+      NOMIX_NPM_PUBLISH_RETRY_BASE_MS: '120000'
+      NOMIX_NPM_PUBLISH_RETRY_MAX_MS: '600000'
     steps:
       # Checkout and install carry the release scripts only. There is no build
       # step: publication uploads the bytes the pack job produced.
