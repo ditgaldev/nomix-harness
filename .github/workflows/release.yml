@@ -81,7 +81,7 @@ jobs:
         run: pnpm run release:pack --family dsh --out dist/npm
 
       - name: Verify packed install
-        run: pnpm run release:verify-packed-install --family dsh --from dist/npm
+        run: node scripts/release/verify-packed-install.ts --family dsh --from dist/npm
 
       - uses: actions/upload-artifact@v4
         with:
