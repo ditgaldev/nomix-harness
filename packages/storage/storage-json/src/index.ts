@@ -2,15 +2,15 @@
  * JSON storage backend: one human-readable file per unit under a configured
  * root, published by atomic whole-file rewrite. Registers as backend `json`
  * on the storage hub.
- * @module @deepseek-ai/dsh-storage-json
+ * @module @nomix-ai/nomix-storage-json
  */
 
 import { mkdir } from 'node:fs/promises'
 import { join } from 'node:path'
-import type { Context } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import { StorageError, UNIT_NAME_RE, storageBackendServiceKey } from '@deepseek-ai/dsh-storage'
-import type { KvFacet, KvUnit, KvUnitDescriptor, StorageBackend } from '@deepseek-ai/dsh-storage'
+import type { Context } from '@nomix-ai/cordis'
+import z from '@nomix-ai/schemastery'
+import { StorageError, UNIT_NAME_RE, storageBackendServiceKey } from '@nomix-ai/nomix-storage'
+import type { KvFacet, KvUnit, KvUnitDescriptor, StorageBackend } from '@nomix-ai/nomix-storage'
 import { openJsonUnit } from './unit.ts'
 
 /** Cordis plugin name. */

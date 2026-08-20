@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-storage
+# @nomix-ai/nomix-storage
 
 [English](README.md) | 中文
 

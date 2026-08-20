@@ -14,12 +14,12 @@ import { existsSync } from 'node:fs'
 import { mkdir, mkdtemp, rm, utimes, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { Context } from '@deepseek-ai/cordis'
-import { CallId } from '@deepseek-ai/dsh-llm'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import ToolRuntime, { TOOL_ABORTED_BEFORE_DISPATCH } from '@deepseek-ai/dsh-tools'
-import LocalSubprocessRuntime from '@deepseek-ai/dsh-subprocess-local'
-import * as ToolFsSearch from '@deepseek-ai/dsh-tool-fs-search'
+import { Context } from '@nomix-ai/cordis'
+import { CallId } from '@nomix-ai/nomix-llm'
+import SystemPrompt from '@nomix-ai/nomix-system-prompt'
+import ToolRuntime, { TOOL_ABORTED_BEFORE_DISPATCH } from '@nomix-ai/nomix-tools'
+import LocalSubprocessRuntime from '@nomix-ai/nomix-subprocess-local'
+import * as ToolFsSearch from '@nomix-ai/nomix-tool-fs-search'
 
 const testToolSignal = new AbortController().signal
 

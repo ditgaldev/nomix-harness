@@ -1,13 +1,13 @@
 /**
- * Package-owned invariant companion for `@deepseek-ai/dsh-workflow-worker-thread`.
- * @module @deepseek-ai/dsh-workflow-worker-thread/invariant
+ * Package-owned invariant companion for `@nomix-ai/nomix-workflow-worker-thread`.
+ * @module @nomix-ai/nomix-workflow-worker-thread/invariant
  */
 
 /* jscpd:ignore-start */
-import type { Context } from '@deepseek-ai/cordis'
-import type { InvariantInstaller } from '@deepseek-ai/dsh-invariants'
+import type { Context } from '@nomix-ai/cordis'
+import type { InvariantInstaller } from '@nomix-ai/nomix-invariants'
 
-const PACKAGE_NAME = '@deepseek-ai/dsh-workflow-worker-thread'
+const PACKAGE_NAME = '@nomix-ai/nomix-workflow-worker-thread'
 
 /** Cordis companion plugin name. */
 export const name = 'workflow-worker-thread-invariant'

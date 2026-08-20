@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-typert-loader
+# @nomix-ai/nomix-typert-loader
 
 [English](README.md) | 中文
 

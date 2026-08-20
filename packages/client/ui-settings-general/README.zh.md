@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-client-ui-settings-general
+# @nomix-ai/nomix-client-ui-settings-general
 
 [English](README.md) | 中文
 

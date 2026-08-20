@@ -8,7 +8,7 @@ Status: implemented
 
 ## 问题
 
-`run_code` 轮次过去在每个产品界面上都不透明。调用卡片的标题就是原始程序文本，在行宽内无法阅读；而且不同于 `bash`（其必填的 `description` 用作卡片标签，命令本身放在展开后的输入里），`run_code` 完全没有模型撰写的标签。`tool/code-dispatch` 事件过去只携带每个子调用的 `resultSummary`（上限 200 字符、经 cwd 归一化），因此任何 UI 都无从展示子调用实际返回的内容：Web 对话视图（[chat 子调用行](2026-07-26-code-mode-chat-subcall-rows.md)）会用渲染原生 `tool/result` 卡片的同一批组件来渲染子调用，而有界摘要无法支撑一张与原生同等保真的卡片。同时，`dsh web` 组合此前根本无法启用 Code Mode：`tools` 行钉死在 schema 默认值上，配置树里也完全没有该运行时。
+`run_code` 轮次过去在每个产品界面上都不透明。调用卡片的标题就是原始程序文本，在行宽内无法阅读；而且不同于 `bash`（其必填的 `description` 用作卡片标签，命令本身放在展开后的输入里），`run_code` 完全没有模型撰写的标签。`tool/code-dispatch` 事件过去只携带每个子调用的 `resultSummary`（上限 200 字符、经 cwd 归一化），因此任何 UI 都无从展示子调用实际返回的内容：Web 对话视图（[chat 子调用行](2026-07-26-code-mode-chat-subcall-rows.md)）会用渲染原生 `tool/result` 卡片的同一批组件来渲染子调用，而有界摘要无法支撑一张与原生同等保真的卡片。同时，`nomix web` 组合此前根本无法启用 Code Mode：`tools` 行钉死在 schema 默认值上，配置树里也完全没有该运行时。
 
 ## 决策
 

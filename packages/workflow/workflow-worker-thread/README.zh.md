@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-workflow-worker-thread
+# @nomix-ai/nomix-workflow-worker-thread
 
 [English](README.md) | 中文
 

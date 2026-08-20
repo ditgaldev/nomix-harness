@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-session-persistence-sqlite
+# @nomix-ai/nomix-session-persistence-sqlite
 
 [English](README.md) | 中文
 

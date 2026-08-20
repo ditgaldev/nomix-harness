@@ -2,13 +2,13 @@
  * Concrete agent-loop plugin: creates scoped ReactLoopAgents, publishes them
  * through the agent/session registries, and owns their ordered teardown.
  *
- * @module @deepseek-ai/dsh-agent-loop
+ * @module @nomix-ai/nomix-agent-loop
  */
 
-import { Context, FiberState, Service } from '@deepseek-ai/cordis'
+import { Context, FiberState, Service } from '@nomix-ai/cordis'
 import { randomUUID } from 'node:crypto'
-import z from '@deepseek-ai/schemastery'
-import { emitAgentEvent } from '@deepseek-ai/dsh-agent'
+import z from '@nomix-ai/schemastery'
+import { emitAgentEvent } from '@nomix-ai/nomix-agent'
 import type {
   Agent,
   AgentFactory,
@@ -18,14 +18,14 @@ import type {
   CreateAgentOptions,
   ResumeAgentOptions,
   SessionStartSource,
-} from '@deepseek-ai/dsh-agent'
-import { errorChain } from '@deepseek-ai/dsh-llm'
-import { installSettingsSection, settingsNamespace } from '@deepseek-ai/dsh-settings'
-import { SessionId, SessionPreparation } from '@deepseek-ai/dsh-session'
-import type { Session, SessionHeader } from '@deepseek-ai/dsh-session'
-import type {} from '@deepseek-ai/dsh-system-prompt'
-import type {} from '@deepseek-ai/dsh-tools'
-import type { SessionPersistence } from '@deepseek-ai/dsh-session-persistence'
+} from '@nomix-ai/nomix-agent'
+import { errorChain } from '@nomix-ai/nomix-llm'
+import { installSettingsSection, settingsNamespace } from '@nomix-ai/nomix-settings'
+import { SessionId, SessionPreparation } from '@nomix-ai/nomix-session'
+import type { Session, SessionHeader } from '@nomix-ai/nomix-session'
+import type {} from '@nomix-ai/nomix-system-prompt'
+import type {} from '@nomix-ai/nomix-tools'
+import type { SessionPersistence } from '@nomix-ai/nomix-session-persistence'
 import { ReactLoopAgent } from './agent.ts'
 import { DEFAULT_MAX_PARALLEL_TOOL_CALLS } from './constants.ts'
 
@@ -157,7 +157,7 @@ interface PreparedAgent {
   dispose(): Promise<void>
 }
 
-declare module '@deepseek-ai/cordis' {
+declare module '@nomix-ai/cordis' {
   interface Context {
     agentLoop: AgentLoop
     /**

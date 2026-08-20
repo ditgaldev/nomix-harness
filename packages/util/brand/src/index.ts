@@ -18,7 +18,7 @@
  * package can brand its ids without depending on an unrelated capability
  * package.
  *
- * @module @deepseek-ai/dsh-brand
+ * @module @nomix-ai/nomix-brand
  */
 
 declare const BRAND: unique symbol

@@ -4,9 +4,9 @@
  * @module dsh-llm-pi-ai/context
  */
 
-import { CallId, contentHasImage, LlmError } from '@deepseek-ai/dsh-llm'
-import type { ContentBlock, GenerateOptions, Message } from '@deepseek-ai/dsh-llm'
-import type { AttachmentStore } from '@deepseek-ai/dsh-attachment'
+import { CallId, contentHasImage, LlmError } from '@nomix-ai/nomix-llm'
+import type { ContentBlock, GenerateOptions, Message } from '@nomix-ai/nomix-llm'
+import type { AttachmentStore } from '@nomix-ai/nomix-attachment'
 import type { Context as PiContext, ImageContent, Message as PiMessage, TextContent, Tool as PiTool } from '@earendil-works/pi-ai'
 import { toPiAssistant } from './replay.ts'
 

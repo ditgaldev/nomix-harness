@@ -8,10 +8,10 @@ import { mkdtempSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
-import { Context } from '@deepseek-ai/cordis'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import Include from '@deepseek-ai/cordis-plugin-include'
-import { internals, provideCmdline } from '@deepseek-ai/dsh-cmdline'
+import { Context } from '@nomix-ai/cordis'
+import Loader from '@nomix-ai/cordis-plugin-loader'
+import Include from '@nomix-ai/cordis-plugin-include'
+import { internals, provideCmdline } from '@nomix-ai/nomix-cmdline'
 import { afterEach, describe, expect, it } from 'vitest'
 import { apply, HEADLESS_STARTUP_SERVICE, type HeadlessStartupValues } from '../src/startup.ts'
 
@@ -98,7 +98,7 @@ describe('headless command-line provider', () => {
 
   it('prints its own help and leaves the runner pending', async () => {
     const { task, observed } = await bootStartup(['--help'])
-    expect(observed.out).toContain('dsh --profile headless')
+    expect(observed.out).toContain('nomix --profile headless')
     expect(task).toBeUndefined()
     expect(observed.runnerConfig).toBeUndefined()
     expect(observed.exits).toEqual([0])

@@ -5,14 +5,14 @@
  * for host consumers, `./client/types` (the browser half-entry's re-export)
  * for client aggregates — with zero content duplication.
  *
- * @module @deepseek-ai/dsh-tool-todo/types
+ * @module @nomix-ai/nomix-tool-todo/types
  */
 
-import type { TodoItem } from '@deepseek-ai/dsh-session/types'
+import type { TodoItem } from '@nomix-ai/nomix-session/types'
 
-export type { TodoItem } from '@deepseek-ai/dsh-session/types'
+export type { TodoItem } from '@nomix-ai/nomix-session/types'
 
-declare module '@deepseek-ai/dsh-session-projection/types' {
+declare module '@nomix-ai/nomix-session-projection/types' {
   interface SessionProjectionMap {
     /**
      * The agent's current whole todo list (the latest `todo/write` snapshot),

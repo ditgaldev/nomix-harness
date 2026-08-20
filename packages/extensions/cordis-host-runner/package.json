@@ -1,13 +1,13 @@
 {
-  "name": "@deepseek-ai/dsh-cordis-host-runner",
+  "name": "@nomix-ai/nomix-cordis-host-runner",
   "description": "Dynamic package definition registry, host-half sandbox lifecycle, and invoke handler table for model-mounted dual-half packages",
-  "version": "0.1.0-rc.7",
+  "version": "0.1.0",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
     "directory": "packages/extensions/cordis-host-runner"
   },
   "type": "module",
@@ -49,30 +49,30 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@deepseek-ai/schemastery": "workspace:^",
+    "@nomix-ai/schemastery": "workspace:^",
     "zod": "^4.4.3"
   },
   "peerDependencies": {
-    "@deepseek-ai/cordis": "workspace:^",
-    "@deepseek-ai/dsh-agent": "workspace:^",
-    "@deepseek-ai/dsh-brand": "workspace:^",
-    "@deepseek-ai/dsh-invariants": "workspace:^",
-    "@deepseek-ai/dsh-llm": "workspace:^",
-    "@deepseek-ai/dsh-scope": "workspace:^",
-    "@deepseek-ai/dsh-session": "workspace:^",
-    "@deepseek-ai/dsh-tools": "workspace:^",
-    "@deepseek-ai/dsh-typert-protocol": "workspace:^"
+    "@nomix-ai/cordis": "workspace:^",
+    "@nomix-ai/nomix-agent": "workspace:^",
+    "@nomix-ai/nomix-brand": "workspace:^",
+    "@nomix-ai/nomix-invariants": "workspace:^",
+    "@nomix-ai/nomix-llm": "workspace:^",
+    "@nomix-ai/nomix-scope": "workspace:^",
+    "@nomix-ai/nomix-session": "workspace:^",
+    "@nomix-ai/nomix-tools": "workspace:^",
+    "@nomix-ai/nomix-typert-protocol": "workspace:^"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "workspace:^",
-    "@deepseek-ai/cordis-plugin-timer": "workspace:^",
-    "@deepseek-ai/dsh-agent": "workspace:^",
-    "@deepseek-ai/dsh-brand": "workspace:^",
-    "@deepseek-ai/dsh-invariants": "workspace:^",
-    "@deepseek-ai/dsh-llm": "workspace:^",
-    "@deepseek-ai/dsh-scope": "workspace:^",
-    "@deepseek-ai/dsh-session": "workspace:^",
-    "@deepseek-ai/dsh-tools": "workspace:^",
-    "@deepseek-ai/dsh-typert-protocol": "workspace:^"
+    "@nomix-ai/cordis": "workspace:^",
+    "@nomix-ai/cordis-plugin-timer": "workspace:^",
+    "@nomix-ai/nomix-agent": "workspace:^",
+    "@nomix-ai/nomix-brand": "workspace:^",
+    "@nomix-ai/nomix-invariants": "workspace:^",
+    "@nomix-ai/nomix-llm": "workspace:^",
+    "@nomix-ai/nomix-scope": "workspace:^",
+    "@nomix-ai/nomix-session": "workspace:^",
+    "@nomix-ai/nomix-tools": "workspace:^",
+    "@nomix-ai/nomix-typert-protocol": "workspace:^"
   }
 }

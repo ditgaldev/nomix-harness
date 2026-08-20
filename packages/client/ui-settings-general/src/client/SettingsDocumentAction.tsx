@@ -2,9 +2,9 @@
 
 import { useEffect } from 'react'
 import type { ReactNode } from 'react'
-import { Button } from '@deepseek-ai/dsh-client-ui-primitives'
-import type { PropsLocale, PropsRuntime } from '@deepseek-ai/dsh-client-ui-slots'
-import type { SnapshotSelectorHook } from '@deepseek-ai/dsh-client-web-react'
+import { Button } from '@nomix-ai/nomix-client-ui-primitives'
+import type { PropsLocale, PropsRuntime } from '@nomix-ai/nomix-client-ui-slots'
+import type { SnapshotSelectorHook } from '@nomix-ai/nomix-client-web-react'
 import type { SettingsDocumentState, SettingsDocumentStore } from './settings-document-store.ts'
 import css from './SettingsDocumentAction.module.css'
 

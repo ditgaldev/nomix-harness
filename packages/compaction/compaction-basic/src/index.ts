@@ -1,21 +1,21 @@
 /**
  * Basic replay-aware compaction backend.
  *
- * @module @deepseek-ai/dsh-compaction-basic
+ * @module @nomix-ai/nomix-compaction-basic
  */
 
-import { Context } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import { CompactionEngine, ManualCompactionError } from '@deepseek-ai/dsh-compaction'
-import type { CompactionResult, CompactionTrigger } from '@deepseek-ai/dsh-compaction'
-import type { TokenMeter } from '@deepseek-ai/dsh-token-meter'
-import type { Session } from '@deepseek-ai/dsh-session'
-import { CONTEXT_WINDOW_EXCEEDED_CODE, assertNever } from '@deepseek-ai/dsh-llm'
-import type { LlmCallConfig } from '@deepseek-ai/dsh-llm'
-import type { Agent, PreStepDecision } from '@deepseek-ai/dsh-agent'
-import type { CommandId } from '@deepseek-ai/dsh-commands/brand'
+import { Context } from '@nomix-ai/cordis'
+import z from '@nomix-ai/schemastery'
+import { CompactionEngine, ManualCompactionError } from '@nomix-ai/nomix-compaction'
+import type { CompactionResult, CompactionTrigger } from '@nomix-ai/nomix-compaction'
+import type { TokenMeter } from '@nomix-ai/nomix-token-meter'
+import type { Session } from '@nomix-ai/nomix-session'
+import { CONTEXT_WINDOW_EXCEEDED_CODE, assertNever } from '@nomix-ai/nomix-llm'
+import type { LlmCallConfig } from '@nomix-ai/nomix-llm'
+import type { Agent, PreStepDecision } from '@nomix-ai/nomix-agent'
+import type { CommandId } from '@nomix-ai/nomix-commands/brand'
 // Type-only: makes the optional sibling service available to `ctx.get()`.
-import type {} from '@deepseek-ai/dsh-compaction-tool-result-pruner'
+import type {} from '@nomix-ai/nomix-compaction-tool-result-pruner'
 import {
   resolveCompactSpec,
   resolveConfig,

@@ -8,17 +8,17 @@
  * tool result enters durable session history, so emitting an image on a route
  * that cannot carry it would break that route's continuation. Unknown
  * capability therefore refuses instead of relying on the adapter guard.
- * @module @deepseek-ai/dsh-tool-fs/src/read-image
+ * @module @nomix-ai/nomix-tool-fs/src/read-image
  */
 
 import { basename, extname } from 'node:path'
-import type { Context } from '@deepseek-ai/cordis'
-import { AttachmentError, AttachmentId } from '@deepseek-ai/dsh-attachment'
-import type { ImageAttachmentRef, ImageMediaType } from '@deepseek-ai/dsh-attachment'
-import type { ContentBlock } from '@deepseek-ai/dsh-llm'
-import { defineTool } from '@deepseek-ai/dsh-tools'
-import type { GenericCallView, ToolExecution } from '@deepseek-ai/dsh-tools'
-import type {} from '@deepseek-ai/dsh-fs'
+import type { Context } from '@nomix-ai/cordis'
+import { AttachmentError, AttachmentId } from '@nomix-ai/nomix-attachment'
+import type { ImageAttachmentRef, ImageMediaType } from '@nomix-ai/nomix-attachment'
+import type { ContentBlock } from '@nomix-ai/nomix-llm'
+import { defineTool } from '@nomix-ai/nomix-tools'
+import type { GenericCallView, ToolExecution } from '@nomix-ai/nomix-tools'
+import type {} from '@nomix-ai/nomix-fs'
 import { resolveRegularReadTarget } from './read-target.ts'
 
 /** Extensions `read_image` accepts; magic-byte validation at the attachment service stays authoritative. */

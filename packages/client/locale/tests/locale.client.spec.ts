@@ -1,9 +1,9 @@
 // @vitest-environment jsdom
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import { stubSettingsScope, type StubSettingsScope } from '@deepseek-ai/dsh-client-test-runtime'
-import type { LocaleSettings, LocaleSnapshot } from '@deepseek-ai/dsh-client-locale/client'
-import { LocaleRuntime } from '@deepseek-ai/dsh-client-locale/client'
+import { Context } from '@nomix-ai/cordis'
+import { stubSettingsScope, type StubSettingsScope } from '@nomix-ai/nomix-client-test-runtime'
+import type { LocaleSettings, LocaleSnapshot } from '@nomix-ai/nomix-client-locale/client'
+import { LocaleRuntime } from '@nomix-ai/nomix-client-locale/client'
 
 const make = (host?: StubSettingsScope<LocaleSettings>): {
   ctx: Context

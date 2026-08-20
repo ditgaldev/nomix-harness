@@ -1,14 +1,14 @@
-# Agent Note: dsh web 的 config-tree boot 与 web 传输分层
+# Agent Note: nomix web 的 config-tree boot 与 web 传输分层
 
 Status: implemented
 
 [English](2026-07-24-web-config-tree-boot-and-transport-layering.md) | 中文
 
-> 范围：`dsh web` 如何组合（cordis.yml + cordis 之前的 boot 类 + 配置源），以及 web 传输如何跨包分层（网关 / 载体 / 绑定 / 图 / 开发期重载）。浏览器侧装载链归 [client 插件装载 note](2026-07-23-client-plugin-loading-model.md) 所有，本组合只是它的供给方。
+> 范围：`nomix web` 如何组合（cordis.yml + cordis 之前的 boot 类 + 配置源），以及 web 传输如何跨包分层（网关 / 载体 / 绑定 / 图 / 开发期重载）。浏览器侧装载链归 [client 插件装载 note](2026-07-23-client-plugin-loading-model.md) 所有，本组合只是它的供给方。
 
 ## 问题
 
-`dsh web` 曾是仅剩的手工装配面：`bootHost` 逐个挂 32 个插件、config 钉死在代码里（违反 no-hardcoded-tunables），client roster 是 `web.ts` 常量，而 TUI/headless 早已是 yml 组合。传输层的职责错位与之配套：webserver 自称哑载体却认识 `__DSH_BOOT__` 图、拥有 SSE（Server-Sent Events）通道、硬编码 `/api/*` 前缀；dev 的 bundle watch 寄居在 prod 注册表里靠 `watch?` 参数开关、生命周期无主；图注册表对每次 `internal/plugin` 全量重扫；单请求失败与致命 server 错误共用一个一律退出进程的 sink。还有一个用户可见缺陷：web 路径从不加载 `$DSH_HOME/.env`，`DSH_HOME=… dsh web` 读不到自定义 home 下的 API key。
+`nomix web` 曾是仅剩的手工装配面：`bootHost` 逐个挂 32 个插件、config 钉死在代码里（违反 no-hardcoded-tunables），client roster 是 `web.ts` 常量，而 TUI/headless 早已是 yml 组合。传输层的职责错位与之配套：webserver 自称哑载体却认识 `__DSH_BOOT__` 图、拥有 SSE（Server-Sent Events）通道、硬编码 `/api/*` 前缀；dev 的 bundle watch 寄居在 prod 注册表里靠 `watch?` 参数开关、生命周期无主；图注册表对每次 `internal/plugin` 全量重扫；单请求失败与致命 server 错误共用一个一律退出进程的 sink。还有一个用户可见缺陷：web 路径从不加载 `$DSH_HOME/.env`，`DSH_HOME=… nomix web` 读不到自定义 home 下的 API key。
 
 ## 决策
 

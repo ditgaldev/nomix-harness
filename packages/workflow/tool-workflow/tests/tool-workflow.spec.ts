@@ -1,20 +1,20 @@
 import { describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import ToolRuntime, { TOOL_ABORTED_BEFORE_DISPATCH } from '@deepseek-ai/dsh-tools'
-import type { ToolExecutionResult, ToolExecutionToken } from '@deepseek-ai/dsh-tools'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import { WorkflowRunId, WorkflowEngine } from '@deepseek-ai/dsh-workflow'
+import { Context } from '@nomix-ai/cordis'
+import Loader from '@nomix-ai/cordis-plugin-loader'
+import SystemPrompt from '@nomix-ai/nomix-system-prompt'
+import ToolRuntime, { TOOL_ABORTED_BEFORE_DISPATCH } from '@nomix-ai/nomix-tools'
+import type { ToolExecutionResult, ToolExecutionToken } from '@nomix-ai/nomix-tools'
+import type { Agent } from '@nomix-ai/nomix-agent'
+import { WorkflowRunId, WorkflowEngine } from '@nomix-ai/nomix-workflow'
 import type {
   WorkflowAgentEndInfo, WorkflowAgentInfo, WorkflowResult, WorkflowRun,
   WorkflowRunId as WorkflowRunIdType, WorkflowStartRequest,
-} from '@deepseek-ai/dsh-workflow'
-import { CallId } from '@deepseek-ai/dsh-llm'
-import SubagentRuntime from '@deepseek-ai/dsh-subagent'
-import WorkerThreadWorkflowEngine from '@deepseek-ai/dsh-workflow-worker-thread'
+} from '@nomix-ai/nomix-workflow'
+import { CallId } from '@nomix-ai/nomix-llm'
+import SubagentRuntime from '@nomix-ai/nomix-subagent'
+import WorkerThreadWorkflowEngine from '@nomix-ai/nomix-workflow-worker-thread'
 import * as toolWorkflow from '../src/index.ts'
-import { Session, SessionId } from '@deepseek-ai/dsh-session'
+import { Session, SessionId } from '@nomix-ai/nomix-session'
 
 const testToolSignal = new AbortController().signal
 

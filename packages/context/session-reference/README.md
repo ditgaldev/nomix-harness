@@ -1,4 +1,4 @@
-# `@deepseek-ai/dsh-session-reference`
+# `@nomix-ai/nomix-session-reference`
 
 English | [中文](README.zh.md)
 

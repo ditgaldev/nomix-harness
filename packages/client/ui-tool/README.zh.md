@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-client-ui-tool
+# @nomix-ai/nomix-client-ui-tool
 
 [English](README.md) | 中文
 

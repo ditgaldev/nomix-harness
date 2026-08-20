@@ -1,15 +1,15 @@
 /**
- * `@deepseek-ai/dsh-web-fetch-http`: registers an anonymous public HTTP(S)
+ * `@nomix-ai/nomix-web-fetch-http`: registers an anonymous public HTTP(S)
  * `WebFetchProvider` with `ctx.web`. A function/namespace plugin (NOT a
  * default-export service): it registers INTO the seam's fetch registry, like the
  * search providers register into the search registry.
  *
- * @module @deepseek-ai/dsh-web-fetch-http
+ * @module @nomix-ai/nomix-web-fetch-http
  */
 
-import type { Context } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import type {} from '@deepseek-ai/dsh-web'
+import type { Context } from '@nomix-ai/cordis'
+import z from '@nomix-ai/schemastery'
+import type {} from '@nomix-ai/nomix-web'
 import { HttpFetchProvider } from './provider.ts'
 import type { HttpFetchLimits } from './provider.ts'
 
@@ -22,7 +22,7 @@ export {
 export type { HttpFetchLimits } from './provider.ts'
 
 /** Default `User-Agent`: an explicit product agent, never a browser disguise. */
-export const DEFAULT_USER_AGENT = 'deepseek-harness/0.0.1 (+https://github.com/deepseek-ai)'
+export const DEFAULT_USER_AGENT = 'nomix-harness/0.1.0 (+https://github.com/ditgaldev/nomix-harness)'
 
 /** Cordis plugin name used by loader diagnostics. */
 export const name = 'web-fetch-http'

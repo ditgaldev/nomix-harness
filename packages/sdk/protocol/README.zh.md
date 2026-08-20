@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-sdk-protocol
+# @nomix-ai/nomix-sdk-protocol
 
 [English](README.md) | 中文
 

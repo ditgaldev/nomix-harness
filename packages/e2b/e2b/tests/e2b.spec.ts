@@ -1,15 +1,15 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
+import { Context } from '@nomix-ai/cordis'
 import type { Sandbox as SandboxType } from 'e2b'
 import E2BRuntime, {
   e2bControlEnvs,
   FileType,
   SandboxNotFoundError,
   quoteE2BShellArg,
-} from '@deepseek-ai/dsh-e2b'
+} from '@nomix-ai/nomix-e2b'
 import * as E2BInvariant from '../src/invariant.ts'
-import InvariantRegistry from '@deepseek-ai/dsh-invariants'
+import InvariantRegistry from '@nomix-ai/nomix-invariants'
 
 const sdk = vi.hoisted(() => ({
   create: vi.fn(),

@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-session-projection
+# @nomix-ai/nomix-session-projection
 
 English | [中文](README.zh.md)
 

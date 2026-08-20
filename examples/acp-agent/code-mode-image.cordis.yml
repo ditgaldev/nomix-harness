@@ -3,12 +3,12 @@
 # The authored snapshot is replay-only; the live config retains the ordinary
 # exact provider route for manual use.
 - id: base
-  name: '@deepseek-ai/cordis-plugin-include'
+  name: '@nomix-ai/cordis-plugin-include'
   config:
     path: ./cordis.yml
     patches:
       - id: acp-agent
-        name: '@deepseek-ai/dsh-acp-demo'
+        name: '@nomix-ai/nomix-acp-demo'
         config:
           provider: deepseek-official
           model: deepseek-v4-pro
@@ -24,6 +24,6 @@
             Verify your work by running the code or tests. Keep answers brief and factual.
       - insert:
           - id: attachment-local
-            name: '@deepseek-ai/dsh-attachment-local'
+            name: '@nomix-ai/nomix-attachment-local'
           - id: code-runtime
-            name: '@deepseek-ai/dsh-code-runtime-worker-thread'
+            name: '@nomix-ai/nomix-code-runtime-worker-thread'

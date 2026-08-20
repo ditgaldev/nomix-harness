@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-client-hmr
+# @nomix-ai/nomix-client-hmr
 
 [English](README.md) | 中文
 

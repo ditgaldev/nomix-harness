@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-subprocess
+# @nomix-ai/nomix-subprocess
 
 English | [中文](README.zh.md)
 

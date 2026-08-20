@@ -1,13 +1,13 @@
 {
-  "name": "@deepseek-ai/dsh-api-gateway",
+  "name": "@nomix-ai/nomix-api-gateway",
   "description": "Typert Remote Host dispatcher and Client API endpoint",
-  "version": "0.1.0-rc.7",
+  "version": "0.1.0",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
     "directory": "packages/api/gateway"
   },
   "type": "module",
@@ -36,8 +36,8 @@
   "dsh": {
     "client": {
       "inject": [
-        "@deepseek-ai/dsh-typert-registry",
-        "@deepseek-ai/dsh-client-connection"
+        "@nomix-ai/nomix-typert-registry",
+        "@nomix-ai/nomix-client-connection"
       ],
       "platform": "web",
       "immediately": true
@@ -56,20 +56,20 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@deepseek-ai/dsh-typert-protocol": "workspace:^"
+    "@nomix-ai/nomix-typert-protocol": "workspace:^"
   },
   "peerDependencies": {
-    "@deepseek-ai/dsh-client-connection": "workspace:^",
-    "@deepseek-ai/dsh-invariants": "workspace:^",
-    "@deepseek-ai/dsh-typert-registry": "workspace:^",
-    "@deepseek-ai/cordis": "workspace:^"
+    "@nomix-ai/nomix-client-connection": "workspace:^",
+    "@nomix-ai/nomix-invariants": "workspace:^",
+    "@nomix-ai/nomix-typert-registry": "workspace:^",
+    "@nomix-ai/cordis": "workspace:^"
   },
   "devDependencies": {
-    "@deepseek-ai/dsh-client-connection": "workspace:^",
-    "@deepseek-ai/dsh-host-webserver": "workspace:^",
-    "@deepseek-ai/dsh-invariants": "workspace:^",
-    "@deepseek-ai/dsh-typert-registry": "workspace:^",
-    "@deepseek-ai/cordis": "workspace:^",
+    "@nomix-ai/nomix-client-connection": "workspace:^",
+    "@nomix-ai/nomix-host-webserver": "workspace:^",
+    "@nomix-ai/nomix-invariants": "workspace:^",
+    "@nomix-ai/nomix-typert-registry": "workspace:^",
+    "@nomix-ai/cordis": "workspace:^",
     "zod": "^4.4.3"
   }
 }

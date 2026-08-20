@@ -5,8 +5,8 @@ import react from '@vitejs/plugin-react'
 
 const src = (rel: string): string => fileURLToPath(new URL(rel, import.meta.url))
 const STANDALONE_ERROR = 'apps/web is not a standalone application: bare Vite cannot inject window.__DSH_BOOT__. '
-  + 'From a repository checkout, run `pnpm dsh web`; an installed package uses `dsh web`. '
-  + 'For client-plugin HMR, run `pnpm dsh web` together with `pnpm run dev:web`.'
+  + 'From a repository checkout, run `pnpm nomix web`; an installed package uses `nomix web`. '
+  + 'For client-plugin HMR, run `pnpm nomix web` together with `pnpm run dev:web`.'
 
 /** Fail before a Vite dev or preview server can expose the boot-manifest-free shell. */
 function rejectStandaloneServe(): Plugin {
@@ -139,13 +139,13 @@ export default defineConfig({
       // Browserization of the vendored cordis Loader: its only node-only
       // import; the two process probes are mapped by `define` below.
       { find: /^node:module$/, replacement: src('./src/node-module-stub.ts') },
-      { find: /^@deepseek-ai\/dsh-client-web$/, replacement: src('../../packages/client/web/src/boot.tsx') },
-      { find: /^@deepseek-ai\/dsh-client-web-react$/, replacement: src('../../packages/client/web-react/src/index.ts') },
-      { find: /^@deepseek-ai\/dsh-client-ui-slots$/, replacement: src('../../packages/client/ui-slots/src/index.ts') },
-      { find: /^@deepseek-ai\/dsh-client-ui-primitives$/, replacement: src('../../packages/client/ui-primitives/src/index.ts') },
-      { find: /^@deepseek-ai\/dsh-client-ui-attachment$/, replacement: src('../../packages/client/ui-attachment/src/index.ts') },
-      { find: /^@deepseek-ai\/dsh-client-schema-form$/, replacement: src('../../packages/client/schema-form/src/index.ts') },
-      { find: /^@deepseek-ai\/dsh-client-modules\/client$/, replacement: src('../../packages/client/modules/src/client/index.ts') },
+      { find: /^@nomix-ai\/nomix-client-web$/, replacement: src('../../packages/client/web/src/boot.tsx') },
+      { find: /^@nomix-ai\/nomix-client-web-react$/, replacement: src('../../packages/client/web-react/src/index.ts') },
+      { find: /^@nomix-ai\/nomix-client-ui-slots$/, replacement: src('../../packages/client/ui-slots/src/index.ts') },
+      { find: /^@nomix-ai\/nomix-client-ui-primitives$/, replacement: src('../../packages/client/ui-primitives/src/index.ts') },
+      { find: /^@nomix-ai\/nomix-client-ui-attachment$/, replacement: src('../../packages/client/ui-attachment/src/index.ts') },
+      { find: /^@nomix-ai\/nomix-client-schema-form$/, replacement: src('../../packages/client/schema-form/src/index.ts') },
+      { find: /^@nomix-ai\/nomix-client-modules\/client$/, replacement: src('../../packages/client/modules/src/client/index.ts') },
     ],
   },
   define: {

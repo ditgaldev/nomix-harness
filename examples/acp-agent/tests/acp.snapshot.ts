@@ -5,9 +5,9 @@ import { mkdir, utimes, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { homedir } from 'node:os'
 import { expect, it } from 'vitest'
-import { defineAcpSnapshotSuite, type Scenario, type SnapshotSuiteOptions } from '@deepseek-ai/dsh-acp-snapshot'
-import { resolvePwshPath } from '@deepseek-ai/dsh-pwsh-local'
-import { decodeStorageRecord } from '@deepseek-ai/dsh-session'
+import { defineAcpSnapshotSuite, type Scenario, type SnapshotSuiteOptions } from '@nomix-ai/nomix-acp-snapshot'
+import { resolvePwshPath } from '@nomix-ai/nomix-pwsh-local'
+import { decodeStorageRecord } from '@nomix-ai/nomix-session'
 
 /**
  * The acp-agent example's snapshot suite: the scenario table for

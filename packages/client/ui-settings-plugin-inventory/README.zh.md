@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-client-ui-settings-plugin-inventory
+# @nomix-ai/nomix-client-ui-settings-plugin-inventory
 
 [English](README.md) | 中文
 

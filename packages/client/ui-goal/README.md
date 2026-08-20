@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-client-ui-goal
+# @nomix-ai/nomix-client-ui-goal
 
 English | [中文](README.zh.md)
 

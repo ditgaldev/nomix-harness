@@ -8,41 +8,41 @@
 # falls back to /home/user/workspace while Bash and PTY keep targeting the
 # host path, so every tool call fails with a remote spawn error.
 - id: base
-  name: '@deepseek-ai/cordis-plugin-include'
+  name: '@nomix-ai/cordis-plugin-include'
   config:
     path: ./advanced.cordis.yml
     patches:
       - id: subprocess
-        name: '@deepseek-ai/dsh-subprocess-local'
+        name: '@nomix-ai/nomix-subprocess-local'
         disabled: true
       - id: fs-local
-        name: '@deepseek-ai/dsh-fs-local'
+        name: '@nomix-ai/nomix-fs-local'
         disabled: true
       - insert:
           - id: e2b
-            name: '@deepseek-ai/dsh-e2b'
+            name: '@nomix-ai/nomix-e2b'
             config:
               cwd: !!js process.cwd()
               timeoutMs: 300000
           - id: subprocess-e2b
-            name: '@deepseek-ai/dsh-subprocess-e2b'
+            name: '@nomix-ai/nomix-subprocess-e2b'
           - id: fs-e2b
-            name: '@deepseek-ai/dsh-fs-e2b'
+            name: '@nomix-ai/nomix-fs-e2b'
           - id: sandbox-policy
-            name: '@deepseek-ai/dsh-sandbox-policy'
+            name: '@nomix-ai/nomix-sandbox-policy'
             config:
               mode: danger-full-access
               workspaceRoot: !!js process.cwd()
           - id: pty
-            name: '@deepseek-ai/dsh-terminal'
+            name: '@nomix-ai/nomix-terminal'
           - id: terminal-bash
-            name: '@deepseek-ai/dsh-terminal-bash'
+            name: '@nomix-ai/nomix-terminal-bash'
           - id: tool-terminal
-            name: '@deepseek-ai/dsh-tool-terminal'
+            name: '@nomix-ai/nomix-tool-terminal'
           - id: lsp
-            name: '@deepseek-ai/dsh-lsp'
+            name: '@nomix-ai/nomix-lsp'
           - id: lsp-stdio
-            name: '@deepseek-ai/dsh-lsp-stdio'
+            name: '@nomix-ai/nomix-lsp-stdio'
             config:
               servers:
                 typescript:
@@ -54,4 +54,4 @@
                     .js: javascript
                     .jsx: javascriptreact
           - id: tool-lsp
-            name: '@deepseek-ai/dsh-tool-lsp'
+            name: '@nomix-ai/nomix-tool-lsp'

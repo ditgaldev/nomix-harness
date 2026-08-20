@@ -18,12 +18,12 @@ export type {
   CredentialsApi, CredentialView, ConfigurableProviderView, DiscoveredModelView, LlmApi,
   SubagentsApi, SubagentAddress, SubagentCatalog, SubagentListEntry, SubagentPromptReceipt,
   JobView,
-} from '@deepseek-ai/dsh-host-apiproxy/api'
-export type { ToolCallView, ToolResultView } from '@deepseek-ai/dsh-tools/presentation'
+} from '@nomix-ai/nomix-host-apiproxy/api'
+export type { ToolCallView, ToolResultView } from '@nomix-ai/nomix-tools/presentation'
 export type {
   RpcRequest, RpcResponse, RpcResult, RpcError, RpcErrorCode,
   ClientRequest, ServerResponse, ServerRequest, ClientResponse, RpcMessage, RpcReceipt,
-} from '@deepseek-ai/dsh-host-apiproxy/api'
+} from '@nomix-ai/nomix-host-apiproxy/api'
 // transportError lives in the apiproxy api layer (beside RpcResult, its
 // subject); re-exported here so connection consumers keep one contract
 // entry point.
@@ -31,17 +31,17 @@ export {
   RpcId,
   SESSION_SEARCH_RESULT_LIMIT,
   transportError,
-} from '@deepseek-ai/dsh-host-apiproxy/api'
-export { AbstractApiClient } from '@deepseek-ai/dsh-host-apiproxy/client'
-export type { IApiClient } from '@deepseek-ai/dsh-host-apiproxy/client'
-export type { SessionId, SessionEvent } from '@deepseek-ai/dsh-session/types'
-export type { MessageId } from '@deepseek-ai/dsh-llm/brand'
-export type { ContentBlock, StreamChunk } from '@deepseek-ai/dsh-llm/types'
+} from '@nomix-ai/nomix-host-apiproxy/api'
+export { AbstractApiClient } from '@nomix-ai/nomix-host-apiproxy/client'
+export type { IApiClient } from '@nomix-ai/nomix-host-apiproxy/client'
+export type { SessionId, SessionEvent } from '@nomix-ai/nomix-session/types'
+export type { MessageId } from '@nomix-ai/nomix-llm/brand'
+export type { ContentBlock, StreamChunk } from '@nomix-ai/nomix-llm/types'
 
 /** Successful value returned by the connection-generation host handshake. */
-export type HostDescription = import('@deepseek-ai/dsh-host-apiproxy/api').ResponseValue<'host.describe'>
+export type HostDescription = import('@nomix-ai/nomix-host-apiproxy/api').ResponseValue<'host.describe'>
 
-import type { RpcResponse, RpcResult } from '@deepseek-ai/dsh-host-apiproxy/api'
+import type { RpcResponse, RpcResult } from '@nomix-ai/nomix-host-apiproxy/api'
 
 /**
  * Unwrap a unary response: RpcResponse<T> -> RpcResult<T> (business code only

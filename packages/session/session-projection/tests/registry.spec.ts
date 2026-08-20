@@ -8,21 +8,21 @@
  */
 
 import { describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
+import { Context } from '@nomix-ai/cordis'
 import { z } from 'zod'
-import SessionStore from '@deepseek-ai/dsh-session'
-import type { Session, SessionEvent } from '@deepseek-ai/dsh-session'
-import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
-import type { ProjectionDefinition } from '@deepseek-ai/dsh-session-projection'
+import SessionStore from '@nomix-ai/nomix-session'
+import type { Session, SessionEvent } from '@nomix-ai/nomix-session'
+import SessionProjectionRegistry from '@nomix-ai/nomix-session-projection'
+import type { ProjectionDefinition } from '@nomix-ai/nomix-session-projection'
 
-declare module '@deepseek-ai/dsh-session-projection/types' {
+declare module '@nomix-ai/nomix-session-projection/types' {
   interface SessionProjectionMap {
     'test/marks': { marks: string[] }
     'test/count': number
   }
 }
 
-declare module '@deepseek-ai/dsh-session/types' {
+declare module '@nomix-ai/nomix-session/types' {
   interface SessionEventMap {
     'test/mark': { marks: string[] }
   }

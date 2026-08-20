@@ -2,9 +2,9 @@
 
 [English](publish.md) | 中文
 
-前几篇教程通过 `--patch` overlay 加载本地插件。本教程把它打包成可安装的**组合包**（bundle），用 `dsh plugin add` 安装进一个 **profile**，并解释决定组合后配置的层顺序。本文假设 `dsh` CLI 已安装。请先完成[插件配置](./config.md)。
+前几篇教程通过 `--patch` overlay 加载本地插件。本教程把它打包成可安装的**组合包**（bundle），用 `nomix plugin add` 安装进一个 **profile**，并解释决定组合后配置的层顺序。本文假设 `nomix` CLI 已安装。请先完成[插件配置](./config.md)。
 
-如果改用全新的源码 checkout，请先按照[从源码运行章节](../../../../README.md#run-from-source)完成准备，将本教程的 `hello-plugin` 目录放在仓库根目录，并从该目录把下文的 `dsh ...` 命令改为 `pnpm dsh ...`。构建与启动器行为见[源码执行](../../../../apps/cli/reference/README.md#source-execution)。
+如果改用全新的源码 checkout，请先按照[从源码运行章节](../../../../README.md#run-from-source)完成准备，将本教程的 `hello-plugin` 目录放在仓库根目录，并从该目录把下文的 `nomix ...` 命令改为 `pnpm nomix ...`。构建与启动器行为见[源码执行](../../../../apps/cli/reference/README.md#source-execution)。
 
 ## 两个概念，两种 manifest
 
@@ -13,7 +13,7 @@
 - **组合包**是附带一个配置层的 npm 包。它的 manifest 声明 `dsh.bundle`，回答的是"这个包贡献什么？"：一个插入或覆盖插件行的 patch 文件。
 - **profile** 是位于 `$DSH_HOME/profiles/<name>` 下、描述一份可启动组合的目录。它的 manifest 声明 `dsh.profile`，回答的是"这套配置由哪些组合包按什么顺序组成？"。
 
-组合包是你编写并分发的东西；profile 是用户用 `dsh --profile <name>` 启动的东西。没有东西同时是两者。
+组合包是你编写并分发的东西；profile 是用户用 `nomix --profile <name>` 启动的东西。没有东西同时是两者。
 
 ### 组合包 manifest
 
@@ -61,7 +61,7 @@ export function apply() {
       name: dsh-hello-plugin
 ```
 
-没有 `dsh.bundle` 声明的包仍然可以安装，但只作为普通依赖：`dsh plugin` 会打印警告，且不激活任何层。如果一个库供插件包 import，而不是供用户启用，就使用这种包格式。
+没有 `dsh.bundle` 声明的包仍然可以安装，但只作为普通依赖：`nomix plugin` 会打印警告，且不激活任何层。如果一个库供插件包 import，而不是供用户启用，就使用这种包格式。
 
 ### profile manifest
 
@@ -70,17 +70,17 @@ profile 目录包含两个文件：
 - `package.json` — profile 的树外插件依赖（由 pnpm 管理），加上 `dsh.profile` manifest 及其有序的 `bundles` 列表。
 - `cordis.patch.yml` — 用户自己的 patch 层，在每个组合包层之后应用。
 
-profile manifest 从不需要手写：`dsh plugin` 负责创建和维护它。下一节展示其结果。
+profile manifest 从不需要手写：`nomix plugin` 负责创建和维护它。下一节展示其结果。
 
 ## 安装进 profile
 
-`dsh plugin --profile <name> <args...>` 在 profile 目录内转发给 pnpm，因此所有 pnpm 子命令都可用。在包含 `hello-plugin` 的目录中安装该包的 checkout：
+`nomix plugin --profile <name> <args...>` 在 profile 目录内转发给 pnpm，因此所有 pnpm 子命令都可用。在包含 `hello-plugin` 的目录中安装该包的 checkout：
 
 ```sh
-dsh plugin --profile demo add ./hello-plugin
+nomix plugin --profile demo add ./hello-plugin
 ```
 
-首次使用会初始化 profile（`@deepseek-ai/dsh-base` 作为它的第一个组合包），pnpm 链接该 checkout，而 `dsh` 因为这个包声明了 `dsh.bundle`，把它追加进 `dsh.profile.bundles`：
+首次使用会初始化 profile（`@nomix-ai/nomix-base` 作为它的第一个组合包），pnpm 链接该 checkout，而 `dsh` 因为这个包声明了 `dsh.bundle`，把它追加进 `dsh.profile.bundles`：
 
 ```json
 {
@@ -92,7 +92,7 @@ dsh plugin --profile demo add ./hello-plugin
   "dsh": {
     "profile": {
       "bundles": [
-        "@deepseek-ai/dsh-base",
+        "@nomix-ai/nomix-base",
         "dsh-hello-plugin"
       ]
     }
@@ -103,17 +103,17 @@ dsh plugin --profile demo add ./hello-plugin
 先不启动、只验证该层，再启动：
 
 ```sh
-dsh --profile demo --dump-config   # shows a "# == dsh-hello-plugin" layer
-dsh --profile demo
+nomix --profile demo --dump-config   # shows a "# == dsh-hello-plugin" layer
+nomix --profile demo
 ```
 
-`dsh plugin --profile demo remove dsh-hello-plugin` 会同时移除依赖和对应的层。
+`nomix plugin --profile demo remove dsh-hello-plugin` 会同时移除依赖和对应的层。
 
 ## 加载顺序
 
 生效配置在空根之上按以下顺序逐层组合：
 
-1. profile 的 `dsh.profile.bundles` 列表所列的各个组合包 patch，按列表顺序——先是 `@deepseek-ai/dsh-base`，然后是每个已安装组合包，按其加入顺序。
+1. profile 的 `dsh.profile.bundles` 列表所列的各个组合包 patch，按列表顺序——先是 `@nomix-ai/nomix-base`，然后是每个已安装组合包，按其加入顺序。
 2. profile 自己的 `cordis.patch.yml`。
 3. home 级的 `$DSH_HOME/cordis.patch.yml`——各 profile 共享的机器本地偏好。
 4. 每个 `--patch <path>` overlay，按 argv 顺序。
@@ -125,7 +125,7 @@ dsh --profile demo
 - 你的 patch 可以按 `id` 覆盖前面各层的行——就像 [`dsh-web-app` 组合包](../../../../packages/bundle/web-app/cordis.patch.yml)覆盖 `dsh-base` 的行那样——但必须重述该行需要的每一个键，而不是只写改动的那个。
 - 用户可以在自己 profile 的 `cordis.patch.yml` 中覆盖你的行，无需改动你的包，所以优先给出用户大概率会保留的配置默认值，其余交给 schema 承担。
 
-内置组合包名称始终从 dsh 安装目录本身解析；pnpm 只管理树外的包，所以你的组合包可以放心依赖 `@deepseek-ai/dsh-base` 存在且与安装保持一致。
+内置组合包名称始终从 dsh 安装目录本身解析；pnpm 只管理树外的包，所以你的组合包可以放心依赖 `@nomix-ai/nomix-base` 存在且与安装保持一致。
 
 ## 让表层组合包持有自己的命令行
 
@@ -136,7 +136,7 @@ dsh --profile demo
   name: 'dsh-hello-plugin/startup'
 ```
 
-该插件导出 `inject = ['cmdlineArgs']`，使用自己的 commander program 调用 [`@deepseek-ai/dsh-cmdline`](../../../../packages/boot/cmdline/README.md) 中的 `parseCmdline`，再在 program 自己的 action 中把应用自有服务提供出去。启动器把自身 flag 之后的同一份不可变参数交给每个插件，因此添加应用专属 flag 无需修改启动器，多个插件也可以解析该快照。Loader 行不需要启动器标记或特殊类型。
+该插件导出 `inject = ['cmdlineArgs']`，使用自己的 commander program 调用 [`@nomix-ai/nomix-cmdline`](../../../../packages/boot/cmdline/README.md) 中的 `parseCmdline`，再在 program 自己的 action 中把应用自有服务提供出去。启动器把自身 flag 之后的同一份不可变参数交给每个插件，因此添加应用专属 flag 无需修改启动器，多个插件也可以解析该快照。Loader 行不需要启动器标记或特殊类型。
 
 受这些参数配置的行会注入提供方服务，并在自己的 `!!js` 选项中读取它，同时把部署取值写在旁边作为回退：
 
@@ -155,7 +155,7 @@ dsh --profile demo
 发布到注册表不是必须的——用户可以直接从 git 托管安装：
 
 ```sh
-dsh plugin --profile demo add github:you/hello-plugin
+nomix plugin --profile demo add github:you/hello-plugin
 ```
 
 但 git 安装拉取的是**源码，不是构建产物**：没有任何环节运行你的 `build` 脚本，因此 TypeScript 包到手时没有 `lib/` 输出，加载会失败。必须两边各做一件事：
@@ -174,8 +174,8 @@ dsh plugin --profile demo add github:you/hello-plugin
 
 如果不想让用户做这项授权，就改为分发构建产物——以下两种形式都不需要任何构建权限：
 
-- **发布到 npm**，在 `pnpm publish` 时构建好 `lib/`；`dsh plugin add your-package` 安装的就是预构建代码。
-- **交付 tarball**：用 `pnpm pack` 打包；用户执行 `dsh plugin add ./hello-plugin-0.1.0.tgz`。
+- **发布到 npm**，在 `pnpm publish` 时构建好 `lib/`；`nomix plugin add your-package` 安装的就是预构建代码。
+- **交付 tarball**：用 `pnpm pack` 打包；用户执行 `nomix plugin add ./hello-plugin-0.1.0.tgz`。
 
 ## 下一步
 

@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-client-schema-form
+# @nomix-ai/nomix-client-schema-form
 
 English | [中文](README.zh.md)
 

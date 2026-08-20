@@ -1,4 +1,4 @@
-/** Published dsh web + pnpm dev:web → browser HMR, with no page reload. */
+/** Published nomix web + pnpm dev:web → browser HMR, with no page reload. */
 
 import { existsSync } from 'node:fs'
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
@@ -6,10 +6,10 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { chromium } from 'playwright'
 import { expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import type { Fiber } from '@deepseek-ai/cordis'
-import LocalSubprocessRuntime from '@deepseek-ai/dsh-subprocess-local'
-import type { SubprocessHandle, SubprocessSpawnSpec } from '@deepseek-ai/dsh-subprocess'
+import { Context } from '@nomix-ai/cordis'
+import type { Fiber } from '@nomix-ai/cordis'
+import LocalSubprocessRuntime from '@nomix-ai/nomix-subprocess-local'
+import type { SubprocessHandle, SubprocessSpawnSpec } from '@nomix-ai/nomix-subprocess'
 import { REPO_ROOT } from './support.ts'
 
 function spawnSpec(argv: readonly string[], cwd: string, env?: Record<string, string>): SubprocessSpawnSpec {
@@ -99,7 +99,7 @@ it('hot-reloads a real client-plugin source edit without refreshing the page', a
         DSH_HOME: join(world, '.dsh'),
       },
     ))
-    const baseUrl = await waitForOutput(host, /dsh web: (http:\/\/[^\s]+)/, 'built dsh web')
+    const baseUrl = await waitForOutput(host, /nomix web: (http:\/\/[^\s]+)/, 'built nomix web')
     browser = await chromium.launch()
     const page = await browser.newPage()
     const pageErrors: string[] = []

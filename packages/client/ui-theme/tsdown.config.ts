@@ -1,7 +1,7 @@
 import { clientBundle } from '../tsdown.client.ts'
 
 export default clientBundle(
-  '@deepseek-ai/dsh-client-ui-theme',
+  '@nomix-ai/nomix-client-ui-theme',
   ['lib/types/index.js', 'lib/types/invariant.js'],
   {
     lib: {

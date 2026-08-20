@@ -8,17 +8,17 @@
  */
 
 import { describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import SessionStore from '@deepseek-ai/dsh-session'
-import AgentRegistry from '@deepseek-ai/dsh-agent'
-import type { Agent, AgentHandle, CreateAgentOptions } from '@deepseek-ai/dsh-agent'
-import { createUserMessage } from '@deepseek-ai/dsh-llm'
-import SessionTitleService from '@deepseek-ai/dsh-session-title'
-import UserQuestionService from '@deepseek-ai/dsh-user-questions'
-import type { Session, SessionId } from '@deepseek-ai/dsh-session'
-import type { RpcRequest } from '@deepseek-ai/dsh-host-apiproxy/api/rpc'
-import { RpcId } from '@deepseek-ai/dsh-host-apiproxy/api/rpc'
-import { createApiProxy } from '@deepseek-ai/dsh-host-apiproxy'
+import { Context } from '@nomix-ai/cordis'
+import SessionStore from '@nomix-ai/nomix-session'
+import AgentRegistry from '@nomix-ai/nomix-agent'
+import type { Agent, AgentHandle, CreateAgentOptions } from '@nomix-ai/nomix-agent'
+import { createUserMessage } from '@nomix-ai/nomix-llm'
+import SessionTitleService from '@nomix-ai/nomix-session-title'
+import UserQuestionService from '@nomix-ai/nomix-user-questions'
+import type { Session, SessionId } from '@nomix-ai/nomix-session'
+import type { RpcRequest } from '@nomix-ai/nomix-host-apiproxy/api/rpc'
+import { RpcId } from '@nomix-ai/nomix-host-apiproxy/api/rpc'
+import { createApiProxy } from '@nomix-ai/nomix-host-apiproxy'
 
 const sid = (id: string): SessionId => id as SessionId
 

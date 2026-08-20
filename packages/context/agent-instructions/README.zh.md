@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-agent-instructions
+# @nomix-ai/nomix-agent-instructions
 
 [English](README.md) | 中文
 

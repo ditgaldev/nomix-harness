@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
+import { Context } from '@nomix-ai/cordis'
 import WorkflowEngineDefault, {
   isFatalWorkflowError,
   WorkflowError,

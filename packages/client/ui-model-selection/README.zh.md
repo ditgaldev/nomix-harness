@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-client-ui-model-selection
+# @nomix-ai/nomix-client-ui-model-selection
 
 [English](README.md) | 中文
 

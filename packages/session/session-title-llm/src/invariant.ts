@@ -1,13 +1,13 @@
 /**
- * Package-owned invariant companion for `@deepseek-ai/dsh-session-title-llm`.
- * @module @deepseek-ai/dsh-session-title-llm/invariant
+ * Package-owned invariant companion for `@nomix-ai/nomix-session-title-llm`.
+ * @module @nomix-ai/nomix-session-title-llm/invariant
  */
 
 /* jscpd:ignore-start */
-import type { Context } from '@deepseek-ai/cordis'
-import type { InvariantInstaller } from '@deepseek-ai/dsh-invariants'
+import type { Context } from '@nomix-ai/cordis'
+import type { InvariantInstaller } from '@nomix-ai/nomix-invariants'
 
-const PACKAGE_NAME = '@deepseek-ai/dsh-session-title-llm'
+const PACKAGE_NAME = '@nomix-ai/nomix-session-title-llm'
 
 /** Cordis companion plugin name. */
 export const name = 'session-title-llm-invariant'

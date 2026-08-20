@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import { scopeTarget } from '@deepseek-ai/dsh-scope'
-import { CallId } from '@deepseek-ai/dsh-llm'
-import SessionStore, { Session, SessionId } from '@deepseek-ai/dsh-session'
-import type { ToolExecution, ToolExecutionResult, ToolExecutionToken } from '@deepseek-ai/dsh-tools'
-import * as ToolsInvariant from '@deepseek-ai/dsh-tools/invariant'
-import InvariantRegistry from '@deepseek-ai/dsh-invariants'
+import { Context } from '@nomix-ai/cordis'
+import { scopeTarget } from '@nomix-ai/nomix-scope'
+import { CallId } from '@nomix-ai/nomix-llm'
+import SessionStore, { Session, SessionId } from '@nomix-ai/nomix-session'
+import type { ToolExecution, ToolExecutionResult, ToolExecutionToken } from '@nomix-ai/nomix-tools'
+import * as ToolsInvariant from '@nomix-ai/nomix-tools/invariant'
+import InvariantRegistry from '@nomix-ai/nomix-invariants'
 
 const testToolSignal = new AbortController().signal
 

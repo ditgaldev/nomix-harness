@@ -1,14 +1,14 @@
-# Agent Note: dsh web config-tree boot and the web transport layering
+# Agent Note: nomix web config-tree boot and the web transport layering
 
 Status: implemented
 
 English | [中文](2026-07-24-web-config-tree-boot-and-transport-layering.zh.md)
 
-> Scope: how `dsh web` composes (cordis.yml + pre-cordis boot classes + config sources) and how the web transport splits across packages (gateway / carrier / binding / graph / dev-reload). The [client plugin loading note](2026-07-23-client-plugin-loading-model.md) owns the browser-side loading chain this composition feeds.
+> Scope: how `nomix web` composes (cordis.yml + pre-cordis boot classes + config sources) and how the web transport splits across packages (gateway / carrier / binding / graph / dev-reload). The [client plugin loading note](2026-07-23-client-plugin-loading-model.md) owns the browser-side loading chain this composition feeds.
 
 ## Problem
 
-`dsh web` was the only hand-assembled surface left: `bootHost` mounted 32 plugins with configs pinned in code (violating no-hardcoded-tunables), the client roster was a `web.ts` constant, and TUI/headless had long been yml compositions. The transport layer misplaced responsibilities to match: the webserver self-described as a dumb carrier yet knew the `__DSH_BOOT__` graph, owned the SSE channel, and hard-coded the `/api/*` prefix; the dev bundle watch lived inside the prod registry behind a `watch?` flag with no lifecycle owner; the graph registry rescanned everything on every `internal/plugin` emission; per-request errors and fatal server errors shared one sink that always exited the process. One user-visible defect rode along: the web path never loaded `$DSH_HOME/.env`, so `DSH_HOME=… dsh web` could not find an API key living there.
+`nomix web` was the only hand-assembled surface left: `bootHost` mounted 32 plugins with configs pinned in code (violating no-hardcoded-tunables), the client roster was a `web.ts` constant, and TUI/headless had long been yml compositions. The transport layer misplaced responsibilities to match: the webserver self-described as a dumb carrier yet knew the `__DSH_BOOT__` graph, owned the SSE channel, and hard-coded the `/api/*` prefix; the dev bundle watch lived inside the prod registry behind a `watch?` flag with no lifecycle owner; the graph registry rescanned everything on every `internal/plugin` emission; per-request errors and fatal server errors shared one sink that always exited the process. One user-visible defect rode along: the web path never loaded `$DSH_HOME/.env`, so `DSH_HOME=… nomix web` could not find an API key living there.
 
 ## Decision
 

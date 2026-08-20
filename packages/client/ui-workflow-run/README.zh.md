@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-client-ui-workflow-run
+# @nomix-ai/nomix-client-ui-workflow-run
 
 [English](README.md) | 中文
 

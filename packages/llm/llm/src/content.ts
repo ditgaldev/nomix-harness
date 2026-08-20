@@ -1,4 +1,4 @@
-/** Content-block structure helpers. @module @deepseek-ai/dsh-llm/content */
+/** Content-block structure helpers. @module @nomix-ai/nomix-llm/content */
 
 import type { ContentBlock } from './types.ts'
 

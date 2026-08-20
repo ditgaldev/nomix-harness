@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-user-approval
+# @nomix-ai/nomix-user-approval
 
 [English](README.md) | 中文
 

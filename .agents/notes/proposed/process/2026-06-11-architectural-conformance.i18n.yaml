@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/proposed/process/2026-06-11-architectural-conformance.md
-2026-06-11-architectural-conformance.md: f7cb0d7397d4e03df225f68417da43b1fec8de62
-2026-06-11-architectural-conformance.zh.md: 16692f765ceaeca585e6563f7dd864ac524adb77
+2026-06-11-architectural-conformance.md: 4532f70bb03d512c24ee7815dc75bc130eb9e92f
+2026-06-11-architectural-conformance.zh.md: dccc7f69c09f7c26bf42a985bf357b038d15860a

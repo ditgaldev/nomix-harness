@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-session-title
+# @nomix-ai/nomix-session-title
 
 [English](README.md) | 中文
 

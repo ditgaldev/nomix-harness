@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-subagent
+# @nomix-ai/nomix-subagent
 
 English | [中文](README.zh.md)
 

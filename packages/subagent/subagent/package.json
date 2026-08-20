@@ -1,13 +1,13 @@
 {
-  "name": "@deepseek-ai/dsh-subagent",
+  "name": "@nomix-ai/nomix-subagent",
   "description": "Abstract subagent seam (ctx.subagents): named-provider registry for delegating to child agents",
-  "version": "0.1.0-rc.7",
+  "version": "0.1.0",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
     "directory": "packages/subagent/subagent"
   },
   "type": "module",
@@ -40,67 +40,67 @@
     "zod": "^4.4.3"
   },
   "peerDependencies": {
-    "@deepseek-ai/dsh-agent": "workspace:^",
-    "@deepseek-ai/dsh-agent-presets": "workspace:^",
-    "@deepseek-ai/dsh-brand": "workspace:^",
-    "@deepseek-ai/dsh-invariants": "workspace:^",
-    "@deepseek-ai/dsh-llm": "workspace:^",
-    "@deepseek-ai/dsh-sandbox": "workspace:^",
-    "@deepseek-ai/dsh-sandbox-policy": "workspace:^",
-    "@deepseek-ai/dsh-scope": "workspace:^",
-    "@deepseek-ai/dsh-session": "workspace:^",
-    "@deepseek-ai/dsh-session-persistence": "workspace:^",
-    "@deepseek-ai/dsh-session-projection": "workspace:^",
-    "@deepseek-ai/dsh-session-projection-cache": "workspace:^",
-    "@deepseek-ai/dsh-jobs": "workspace:^",
-    "@deepseek-ai/dsh-tools": "workspace:^",
-    "@deepseek-ai/dsh-user-approval": "workspace:^",
-    "@deepseek-ai/cordis": "workspace:^"
+    "@nomix-ai/nomix-agent": "workspace:^",
+    "@nomix-ai/nomix-agent-presets": "workspace:^",
+    "@nomix-ai/nomix-brand": "workspace:^",
+    "@nomix-ai/nomix-invariants": "workspace:^",
+    "@nomix-ai/nomix-llm": "workspace:^",
+    "@nomix-ai/nomix-sandbox": "workspace:^",
+    "@nomix-ai/nomix-sandbox-policy": "workspace:^",
+    "@nomix-ai/nomix-scope": "workspace:^",
+    "@nomix-ai/nomix-session": "workspace:^",
+    "@nomix-ai/nomix-session-persistence": "workspace:^",
+    "@nomix-ai/nomix-session-projection": "workspace:^",
+    "@nomix-ai/nomix-session-projection-cache": "workspace:^",
+    "@nomix-ai/nomix-jobs": "workspace:^",
+    "@nomix-ai/nomix-tools": "workspace:^",
+    "@nomix-ai/nomix-user-approval": "workspace:^",
+    "@nomix-ai/cordis": "workspace:^"
   },
   "peerDependenciesMeta": {
-    "@deepseek-ai/dsh-agent-presets": {
+    "@nomix-ai/nomix-agent-presets": {
       "optional": true
     },
-    "@deepseek-ai/dsh-sandbox": {
+    "@nomix-ai/nomix-sandbox": {
       "optional": true
     },
-    "@deepseek-ai/dsh-sandbox-policy": {
+    "@nomix-ai/nomix-sandbox-policy": {
       "optional": true
     },
-    "@deepseek-ai/dsh-session-persistence": {
+    "@nomix-ai/nomix-session-persistence": {
       "optional": true
     },
-    "@deepseek-ai/dsh-session-projection": {
+    "@nomix-ai/nomix-session-projection": {
       "optional": true
     },
-    "@deepseek-ai/dsh-session-projection-cache": {
+    "@nomix-ai/nomix-session-projection-cache": {
       "optional": true
     },
-    "@deepseek-ai/dsh-jobs": {
+    "@nomix-ai/nomix-jobs": {
       "optional": true
     },
-    "@deepseek-ai/dsh-user-approval": {
+    "@nomix-ai/nomix-user-approval": {
       "optional": true
     }
   },
   "devDependencies": {
-    "@deepseek-ai/dsh-agent": "workspace:^",
-    "@deepseek-ai/dsh-agent-presets": "workspace:^",
-    "@deepseek-ai/dsh-brand": "workspace:^",
-    "@deepseek-ai/dsh-invariants": "workspace:^",
-    "@deepseek-ai/dsh-llm": "workspace:^",
-    "@deepseek-ai/dsh-sandbox": "workspace:^",
-    "@deepseek-ai/dsh-sandbox-policy": "workspace:^",
-    "@deepseek-ai/dsh-scope": "workspace:^",
-    "@deepseek-ai/dsh-session": "workspace:^",
-    "@deepseek-ai/dsh-session-persistence": "workspace:^",
-    "@deepseek-ai/dsh-session-projection": "workspace:^",
-    "@deepseek-ai/dsh-session-projection-cache": "workspace:^",
-    "@deepseek-ai/dsh-storage": "workspace:^",
-    "@deepseek-ai/dsh-storage-domain": "workspace:^",
-    "@deepseek-ai/dsh-jobs": "workspace:^",
-    "@deepseek-ai/dsh-tools": "workspace:^",
-    "@deepseek-ai/dsh-user-approval": "workspace:^",
-    "@deepseek-ai/cordis": "workspace:^"
+    "@nomix-ai/nomix-agent": "workspace:^",
+    "@nomix-ai/nomix-agent-presets": "workspace:^",
+    "@nomix-ai/nomix-brand": "workspace:^",
+    "@nomix-ai/nomix-invariants": "workspace:^",
+    "@nomix-ai/nomix-llm": "workspace:^",
+    "@nomix-ai/nomix-sandbox": "workspace:^",
+    "@nomix-ai/nomix-sandbox-policy": "workspace:^",
+    "@nomix-ai/nomix-scope": "workspace:^",
+    "@nomix-ai/nomix-session": "workspace:^",
+    "@nomix-ai/nomix-session-persistence": "workspace:^",
+    "@nomix-ai/nomix-session-projection": "workspace:^",
+    "@nomix-ai/nomix-session-projection-cache": "workspace:^",
+    "@nomix-ai/nomix-storage": "workspace:^",
+    "@nomix-ai/nomix-storage-domain": "workspace:^",
+    "@nomix-ai/nomix-jobs": "workspace:^",
+    "@nomix-ai/nomix-tools": "workspace:^",
+    "@nomix-ai/nomix-user-approval": "workspace:^",
+    "@nomix-ai/cordis": "workspace:^"
   }
 }

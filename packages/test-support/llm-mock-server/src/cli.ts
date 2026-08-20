@@ -1,6 +1,6 @@
 /**
  * Dependency-free CLI parsing for the standalone mock LLM server.
- * @module @deepseek-ai/dsh-llm-mock-server/cli
+ * @module @nomix-ai/nomix-llm-mock-server/cli
  */
 
 import { parseArgs } from 'node:util'
@@ -34,7 +34,7 @@ const BEHAVIORS = new Set<string>(MOCK_LLM_BEHAVIORS)
 const DEFAULT_LISTEN_DELAY_MS = 750
 
 /** Command usage written for `--help` and invalid arguments. */
-export const MOCK_LLM_CLI_USAGE = `Usage: dsh-llm-mock-server [options]
+export const MOCK_LLM_CLI_USAGE = `Usage: nomix-llm-mock-server [options]
 
 Required:
   --sequence <a,b,...>       Ordered behaviors; connection_refused is allowed first

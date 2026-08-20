@@ -8,7 +8,7 @@ English | [中文](2026-07-26-code-dispatch-ui-foundation.zh.md)
 
 ## Problem
 
-A `run_code` turn was opaque in every product surface. The call card's title was the raw program text — unreadable at row width, and unlike `bash` (whose required `description` labels the card while the command rides the expanded input) there was no model-authored label at all. The `tool/code-dispatch` event carried only a 200-char, cwd-normalized `resultSummary` of each sub-call, so no UI could ever show what a sub-call actually returned: the web conversation view ([chat sub-call rows](2026-07-26-code-mode-chat-subcall-rows.md)) renders sub-calls through the exact components that render native `tool/result` cards, and a bounded summary cannot feed a native-parity card. And the `dsh web` composition had no way to enable Code Mode at all — the `tools` row pinned the schema default and the runtime was absent from the tree.
+A `run_code` turn was opaque in every product surface. The call card's title was the raw program text — unreadable at row width, and unlike `bash` (whose required `description` labels the card while the command rides the expanded input) there was no model-authored label at all. The `tool/code-dispatch` event carried only a 200-char, cwd-normalized `resultSummary` of each sub-call, so no UI could ever show what a sub-call actually returned: the web conversation view ([chat sub-call rows](2026-07-26-code-mode-chat-subcall-rows.md)) renders sub-calls through the exact components that render native `tool/result` cards, and a bounded summary cannot feed a native-parity card. And the `nomix web` composition had no way to enable Code Mode at all — the `tools` row pinned the schema default and the runtime was absent from the tree.
 
 ## Decision
 

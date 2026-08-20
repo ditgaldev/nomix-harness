@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-typert-protocol
+# @nomix-ai/nomix-typert-protocol
 
 [English](README.md) | 中文
 

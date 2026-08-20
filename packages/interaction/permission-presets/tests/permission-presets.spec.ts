@@ -1,14 +1,14 @@
 import { describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import SessionStore, { Session, SessionId } from '@deepseek-ai/dsh-session'
-import type { SandboxMode } from '@deepseek-ai/dsh-sandbox'
-import type { ApprovalPolicy } from '@deepseek-ai/dsh-user-approval'
+import { Context } from '@nomix-ai/cordis'
+import SessionStore, { Session, SessionId } from '@nomix-ai/nomix-session'
+import type { SandboxMode } from '@nomix-ai/nomix-sandbox'
+import type { ApprovalPolicy } from '@nomix-ai/nomix-user-approval'
 import PermissionPresetService, {
   CUSTOM_PRESET, effectivePermissionPreset, PERMISSION_SETTINGS_NAMESPACE,
-} from '@deepseek-ai/dsh-permission-presets'
-import type { Config } from '@deepseek-ai/dsh-permission-presets'
-import { SettingsProvider } from '@deepseek-ai/dsh-settings'
-import type { SettingsNamespace } from '@deepseek-ai/dsh-settings'
+} from '@nomix-ai/nomix-permission-presets'
+import type { Config } from '@nomix-ai/nomix-permission-presets'
+import { SettingsProvider } from '@nomix-ai/nomix-settings'
+import type { SettingsNamespace } from '@nomix-ai/nomix-settings'
 
 /** Writable memory provider for the permission/settings lifecycle specs. */
 class MemorySettings extends SettingsProvider {

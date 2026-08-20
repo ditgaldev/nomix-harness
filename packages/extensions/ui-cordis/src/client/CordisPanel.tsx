@@ -5,11 +5,11 @@ import type { ButtonHTMLAttributes, ReactNode } from 'react'
 import {
   IconCheckOutline16, IconCloseOutline16, IconCordisPluginOutline14, IconPlayOutline16,
   IconStopFill16, IconTrashOutline16, Tooltip, useDismissOnOutsidePointer,
-} from '@deepseek-ai/dsh-client-ui-primitives'
-import type { InjectFace, PropsLocale, PropsRuntime } from '@deepseek-ai/dsh-client-ui-slots'
-import type {} from '@deepseek-ai/dsh-client-ui-sidebar/client'
-import type { CordisRunActivity } from '@deepseek-ai/dsh-cordis-client-runner/client'
-import type { SessionId } from '@deepseek-ai/dsh-client-connection/client'
+} from '@nomix-ai/nomix-client-ui-primitives'
+import type { InjectFace, PropsLocale, PropsRuntime } from '@nomix-ai/nomix-client-ui-slots'
+import type {} from '@nomix-ai/nomix-client-ui-sidebar/client'
+import type { CordisRunActivity } from '@nomix-ai/nomix-cordis-client-runner/client'
+import type { SessionId } from '@nomix-ai/nomix-client-connection/client'
 import type { CordisInventoryRow } from './dynamic-port.ts'
 import type { CordisPanelFace } from './slots.ts'
 import type { CordisKey } from './locales.ts'

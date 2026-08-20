@@ -1,13 +1,13 @@
 /**
- * Package-owned invariant companion for `@deepseek-ai/dsh-client-ui-settings`.
- * @module @deepseek-ai/dsh-client-ui-settings/invariant
+ * Package-owned invariant companion for `@nomix-ai/nomix-client-ui-settings`.
+ * @module @nomix-ai/nomix-client-ui-settings/invariant
  */
 
 /* jscpd:ignore-start */
-import type { Context } from '@deepseek-ai/cordis'
-import type { InvariantInstaller } from '@deepseek-ai/dsh-invariants'
+import type { Context } from '@nomix-ai/cordis'
+import type { InvariantInstaller } from '@nomix-ai/nomix-invariants'
 
-const PACKAGE_NAME = '@deepseek-ai/dsh-client-ui-settings'
+const PACKAGE_NAME = '@nomix-ai/nomix-client-ui-settings'
 
 /** Cordis companion plugin name. */
 export const name = 'client-ui-settings-invariant'

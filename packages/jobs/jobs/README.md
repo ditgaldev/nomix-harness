@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-jobs
+# @nomix-ai/nomix-jobs
 
 English | [中文](README.zh.md)
 

@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-client-locale
+# @nomix-ai/nomix-client-locale
 
 [English](README.md) | 中文
 

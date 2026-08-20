@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-sdk-client
+# @nomix-ai/nomix-sdk-client
 
 [English](README.md) | 中文
 
@@ -9,7 +9,7 @@
 ## DeepSeekHarness
 
 ```ts
-import { DeepSeekHarness } from '@deepseek-ai/dsh-sdk-client'
+import { DeepSeekHarness } from '@nomix-ai/nomix-sdk-client'
 
 await using harness = new DeepSeekHarness({
   launch: { command: 'node', args: ['lib/bin.js', 'cordis.yml'] },

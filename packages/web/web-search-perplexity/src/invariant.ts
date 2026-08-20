@@ -1,13 +1,13 @@
 /**
- * Package-owned invariant companion for `@deepseek-ai/dsh-web-search-perplexity`.
- * @module @deepseek-ai/dsh-web-search-perplexity/invariant
+ * Package-owned invariant companion for `@nomix-ai/nomix-web-search-perplexity`.
+ * @module @nomix-ai/nomix-web-search-perplexity/invariant
  */
 
 /* jscpd:ignore-start */
-import type { Context } from '@deepseek-ai/cordis'
-import type { InvariantInstaller } from '@deepseek-ai/dsh-invariants'
+import type { Context } from '@nomix-ai/cordis'
+import type { InvariantInstaller } from '@nomix-ai/nomix-invariants'
 
-const PACKAGE_NAME = '@deepseek-ai/dsh-web-search-perplexity'
+const PACKAGE_NAME = '@nomix-ai/nomix-web-search-perplexity'
 
 /** Cordis companion plugin name. */
 export const name = 'web-search-perplexity-invariant'

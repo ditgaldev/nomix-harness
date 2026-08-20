@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-host-webserver
+# @nomix-ai/nomix-host-webserver
 
 [English](README.md) | 中文
 

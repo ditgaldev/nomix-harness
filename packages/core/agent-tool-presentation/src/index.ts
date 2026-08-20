@@ -15,14 +15,14 @@
  * This row therefore waits for it rather than assuming it: a preset selecting
  * Code Mode against a deployment that composes no runtime fails at mount, named
  * in the preset's own activation audit, instead of at the first prompt.
- * @module @deepseek-ai/dsh-agent-tool-presentation
+ * @module @nomix-ai/nomix-agent-tool-presentation
  */
 
-import type { Context } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import type { ToolPresentationMode } from '@deepseek-ai/dsh-tools'
+import type { Context } from '@nomix-ai/cordis'
+import z from '@nomix-ai/schemastery'
+import type { ToolPresentationMode } from '@nomix-ai/nomix-tools'
 // Type-only: brings the `ctx.tools` Context merge into this program.
-import type {} from '@deepseek-ai/dsh-tools'
+import type {} from '@nomix-ai/nomix-tools'
 
 /** Cordis plugin name. */
 export const name = 'tool-presentation'

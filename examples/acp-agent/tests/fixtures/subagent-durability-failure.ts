@@ -1,5 +1,5 @@
-import type { Context } from '@deepseek-ai/cordis'
-import { SessionId } from '@deepseek-ai/dsh-session'
+import type { Context } from '@nomix-ai/cordis'
+import { SessionId } from '@nomix-ai/nomix-session'
 
 export const name = 'subagent-durability-failure'
 export const inject = ['agents', 'sessionPersistence', 'subagents']

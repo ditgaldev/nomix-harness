@@ -28,7 +28,7 @@ The first-generation client loader (`createClientLoader`) hand-wrote both layers
 
 What makes a package a plugin? One rule: **a package is a plugin package once its consumption is cordis dependency injection; until then it is a plain package.** How code reaches the page is not part of the taxonomy — arrival follows from the kind instead of defining it.
 
-- **Plain packages** are the absolute base the module system itself needs, plus libraries not yet converted to DI: the react family, cordis, `@deepseek-ai/dsh-client-modules` (the module system itself — it can never be a plugin, because modules precede all modules), the web shell kernel, and — for now — ui-slots, web-react, ui-primitives. Plain packages are shell-bundled, seeded into the module table, and invisible to the host graph.
+- **Plain packages** are the absolute base the module system itself needs, plus libraries not yet converted to DI: the react family, cordis, `@nomix-ai/nomix-client-modules` (the module system itself — it can never be a plugin, because modules precede all modules), the web shell kernel, and — for now — ui-slots, web-react, ui-primitives. Plain packages are shell-bundled, seeded into the module table, and invisible to the host graph.
 - **Plugin packages** are everything else. Each one carries a `dsh.client` manifest declaration (`{ platform, inject, immediately? }`) and one uniform shape: the shared tsdown preset emits `lib/client.js`, and `exports["./client"]` points at that bundle. Each is a governed entry of the host-authored graph. The current set is connection, runtime, ui-theme, i18n, hmr (dev graphs only), ui-layout, ui-sidebar, ui-conversation, ui-model-selector, ui-user-questions, and ui-trajectory.
 
 The manifest owns the package's loading contract: its `inject` dependency edges, plus the optional `immediately` prefetch mark (absent means lazy). The composing app owns only the roster.
@@ -62,7 +62,7 @@ The shared tsdown preset emits `client.js.map` for every plugin and rewrites fir
 
 ### The loading flow, end to end
 
-What happens between `dsh web` starting and the UI appearing? Three stages: the host composes and serves a graph, the shell prefetches, then cordis orchestrates.
+What happens between `nomix web` starting and the UI appearing? Three stages: the host composes and serves a graph, the shell prefetches, then cordis orchestrates.
 
 **Host side — compose the graph.**
 

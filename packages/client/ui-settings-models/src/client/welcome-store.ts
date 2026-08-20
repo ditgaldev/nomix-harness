@@ -1,8 +1,8 @@
 /** Welcome-notice state, durable when the browser may use Host settings. */
 
-import type { IApiClient, SettingsNamespaceView } from '@deepseek-ai/dsh-api-remotes/client'
-import type { SnapshotStore } from '@deepseek-ai/dsh-client-runtime/client'
-import { createSnapshotStore } from '@deepseek-ai/dsh-client-runtime/client'
+import type { IApiClient, SettingsNamespaceView } from '@nomix-ai/nomix-api-remotes/client'
+import type { SnapshotStore } from '@nomix-ai/nomix-client-runtime/client'
+import { createSnapshotStore } from '@nomix-ai/nomix-client-runtime/client'
 import {
   WELCOME_NOTICE_ACK_FIELD, WELCOME_NOTICE_SETTINGS_NAMESPACE, WELCOME_NOTICE_VERSION,
 } from '../onboarding-copy.ts'

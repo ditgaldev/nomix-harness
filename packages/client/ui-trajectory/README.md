@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-client-ui-trajectory
+# @nomix-ai/nomix-client-ui-trajectory
 
 English | [中文](README.zh.md)
 

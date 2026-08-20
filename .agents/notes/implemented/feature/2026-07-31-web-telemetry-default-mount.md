@@ -1,4 +1,4 @@
-# Agent Note: Default session-telemetry mount (OTel reporting) in the dsh web composition
+# Agent Note: Default session-telemetry mount (OTel reporting) in the nomix web composition
 
 Status: implemented
 
@@ -35,6 +35,6 @@ The base bundle test pins the shipped `DISABLED` mode expression, the backend su
 
 ## Consequences
 
-- A developer running `dsh web` without telemetry configuration makes no telemetry network request. An internal deployment sets `DSH_TELEMETRY_MODE` and may point `DSH_TELEMETRY_OTLP_URL` at another collector.
+- A developer running `nomix web` without telemetry configuration makes no telemetry network request. An internal deployment sets `DSH_TELEMETRY_MODE` and may point `DSH_TELEMETRY_OTLP_URL` at another collector.
 - **No redaction rule is mounted**: explicitly enabled exports are the raw captured copy (full user/assistant message text, tool arguments and results, the system prompt, the local `session.cwd` path). Crossing a trust boundary requires `session-telemetry/record` rules first — the redaction rule, remaining identity Resource attributes, and usage metrics remain separate deployment work. The anonymous user id ships through the [anonymous-user-id Note](2026-07-31-telemetry-anonymous-user-id.md).
 - Test rigs remain local by default; explicit uploading-mode tests provide their own collector and mode.

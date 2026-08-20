@@ -4,14 +4,14 @@
  */
 
 import { describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
+import { Context } from '@nomix-ai/cordis'
 import { mkdirSync, mkdtempSync, realpathSync, rmSync, symlinkSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, resolve, sep } from 'node:path'
-import { CallId } from '@deepseek-ai/dsh-llm'
-import SystemPrompt, { renderPrompt } from '@deepseek-ai/dsh-system-prompt'
-import ToolRuntime, { type ToolResult } from '@deepseek-ai/dsh-tools'
-import { FileSystem, FsError, FsTargetKey, FsVersion } from '@deepseek-ai/dsh-fs'
+import { CallId } from '@nomix-ai/nomix-llm'
+import SystemPrompt, { renderPrompt } from '@nomix-ai/nomix-system-prompt'
+import ToolRuntime, { type ToolResult } from '@nomix-ai/nomix-tools'
+import { FileSystem, FsError, FsTargetKey, FsVersion } from '@nomix-ai/nomix-fs'
 import type {
   FsDirEntry,
   FsEditOutcome,
@@ -21,16 +21,16 @@ import type {
   FsTarget,
   FsWriteIntent,
   FsWriteOutcome,
-} from '@deepseek-ai/dsh-fs'
-import * as FsPolicy from '@deepseek-ai/dsh-fs-observation-policy'
-import * as ToolFs from '@deepseek-ai/dsh-tool-fs'
+} from '@nomix-ai/nomix-fs'
+import * as FsPolicy from '@nomix-ai/nomix-fs-observation-policy'
+import * as ToolFs from '@nomix-ai/nomix-tool-fs'
 import { STREAM_MIN_SIZE } from '../src/read.ts'
 import { formatReadOutput } from '../src/read-render.ts'
 import type { FileReadOutcome } from '../src/read-render.ts'
 import { sessionCwd } from '../src/session-cwd.ts'
-import ApprovalService from '@deepseek-ai/dsh-user-approval'
-import type { SandboxExecutionPolicy, SandboxMode } from '@deepseek-ai/dsh-sandbox'
-import SandboxPolicyService from '@deepseek-ai/dsh-sandbox-policy'
+import ApprovalService from '@nomix-ai/nomix-user-approval'
+import type { SandboxExecutionPolicy, SandboxMode } from '@nomix-ai/nomix-sandbox'
+import SandboxPolicyService from '@nomix-ai/nomix-sandbox-policy'
 
 const testToolSignal = new AbortController().signal
 

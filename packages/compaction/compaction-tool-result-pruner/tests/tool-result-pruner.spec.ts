@@ -1,22 +1,22 @@
 import { describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import { CallId , createMessage, createToolResultMessage } from '@deepseek-ai/dsh-llm'
-import type { ContentBlock } from '@deepseek-ai/dsh-llm'
+import { Context } from '@nomix-ai/cordis'
+import { CallId , createMessage, createToolResultMessage } from '@nomix-ai/nomix-llm'
+import type { ContentBlock } from '@nomix-ai/nomix-llm'
 import SessionStore, {
   Session,
   SessionId,
-} from '@deepseek-ai/dsh-session'
-import type { SurfaceEvent } from '@deepseek-ai/dsh-session'
-import * as SessionInvariant from '@deepseek-ai/dsh-session/invariant'
-import InvariantRegistry from '@deepseek-ai/dsh-invariants'
-import TokenMeter from '@deepseek-ai/dsh-token-meter'
+} from '@nomix-ai/nomix-session'
+import type { SurfaceEvent } from '@nomix-ai/nomix-session'
+import * as SessionInvariant from '@nomix-ai/nomix-session/invariant'
+import InvariantRegistry from '@nomix-ai/nomix-invariants'
+import TokenMeter from '@nomix-ai/nomix-token-meter'
 import ToolResultPruner, {
   codePointLength,
   DEFAULTS,
   PRUNE_MARKER,
   resolveConfig,
-} from '@deepseek-ai/dsh-compaction-tool-result-pruner'
-import type { ToolResultPruneConfig } from '@deepseek-ai/dsh-compaction-tool-result-pruner'
+} from '@nomix-ai/nomix-compaction-tool-result-pruner'
+import type { ToolResultPruneConfig } from '@nomix-ai/nomix-compaction-tool-result-pruner'
 
 const MODEL = 'test-model'
 const SMALL: ToolResultPruneConfig = {

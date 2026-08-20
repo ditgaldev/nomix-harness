@@ -3,15 +3,15 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { afterEach, describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import Include from '@deepseek-ai/cordis-plugin-include'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import SessionStore, { SessionId } from '@deepseek-ai/dsh-session'
-import JsonlSessionPersistence from '@deepseek-ai/dsh-session-persistence-jsonl'
-import Storage from '@deepseek-ai/dsh-storage'
-import * as StorageDomain from '@deepseek-ai/dsh-storage-domain'
-import * as StorageJson from '@deepseek-ai/dsh-storage-json'
-import { remoteMethods } from '@deepseek-ai/dsh-typert-protocol'
+import { Context } from '@nomix-ai/cordis'
+import Include from '@nomix-ai/cordis-plugin-include'
+import Loader from '@nomix-ai/cordis-plugin-loader'
+import SessionStore, { SessionId } from '@nomix-ai/nomix-session'
+import JsonlSessionPersistence from '@nomix-ai/nomix-session-persistence-jsonl'
+import Storage from '@nomix-ai/nomix-storage'
+import * as StorageDomain from '@nomix-ai/nomix-storage-domain'
+import * as StorageJson from '@nomix-ai/nomix-storage-json'
+import { remoteMethods } from '@nomix-ai/nomix-typert-protocol'
 import MessageFeedbackService from '../src/index.ts'
 import { appendMessageFixture } from './helpers.ts'
 
@@ -30,12 +30,12 @@ async function loadComposition(configPath: string): Promise<Context> {
   await ctx.plugin(Loader)
   ctx.loader.builtins.include = Include
   const modules = new Map<string, unknown>([
-    ['@deepseek-ai/dsh-session', SessionStore],
-    ['@deepseek-ai/dsh-session-persistence-jsonl', JsonlSessionPersistence],
-    ['@deepseek-ai/dsh-storage', Storage],
-    ['@deepseek-ai/dsh-storage-json', StorageJson],
-    ['@deepseek-ai/dsh-storage-domain', StorageDomain],
-    ['@deepseek-ai/dsh-message-feedback', MessageFeedbackService],
+    ['@nomix-ai/nomix-session', SessionStore],
+    ['@nomix-ai/nomix-session-persistence-jsonl', JsonlSessionPersistence],
+    ['@nomix-ai/nomix-storage', Storage],
+    ['@nomix-ai/nomix-storage-json', StorageJson],
+    ['@nomix-ai/nomix-storage-domain', StorageDomain],
+    ['@nomix-ai/nomix-message-feedback', MessageFeedbackService],
   ])
   ctx.loader.internal = {
     version: 'v2',
@@ -61,20 +61,20 @@ describe('message feedback through a real Loader composition', () => {
     root = await mkdtemp(join(tmpdir(), 'dsh-message-feedback-loader-'))
     const configPath = join(root, 'cordis.yml')
     await writeFile(configPath, [
-      "- name: '@deepseek-ai/dsh-session'",
-      "- name: '@deepseek-ai/dsh-session-persistence-jsonl'",
+      "- name: '@nomix-ai/nomix-session'",
+      "- name: '@nomix-ai/nomix-session-persistence-jsonl'",
       '  config:',
       `    root: ${JSON.stringify(join(root, 'sessions'))}`,
       '    compression: none',
       '    writeBatchMaxDelayMs: 1',
-      "- name: '@deepseek-ai/dsh-storage'",
-      "- name: '@deepseek-ai/dsh-storage-json'",
+      "- name: '@nomix-ai/nomix-storage'",
+      "- name: '@nomix-ai/nomix-storage-json'",
       '  config:',
       `    root: ${JSON.stringify(join(root, 'storage'))}`,
-      "- name: '@deepseek-ai/dsh-storage-domain'",
+      "- name: '@nomix-ai/nomix-storage-domain'",
       '  config:',
       '    backend: json',
-      "- name: '@deepseek-ai/dsh-message-feedback'",
+      "- name: '@nomix-ai/nomix-message-feedback'",
       '  config:',
       '    maxNoteBytes: 32',
       '',

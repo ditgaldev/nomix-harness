@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-sdk-jsonrpc-demo
+# @nomix-ai/nomix-sdk-jsonrpc-demo
 
 English | [中文](README.zh.md)
 

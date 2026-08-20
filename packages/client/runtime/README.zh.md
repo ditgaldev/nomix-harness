@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-client-runtime
+# @nomix-ai/nomix-client-runtime
 
 [English](README.md) | 中文
 

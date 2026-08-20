@@ -1,13 +1,13 @@
 {
-  "name": "@deepseek-ai/dsh-tool-bash-persistent",
+  "name": "@nomix-ai/nomix-tool-bash-persistent",
   "description": "Model-facing owner-scoped persistent Bash tool backed by the Harness PTY service",
-  "version": "0.1.0-rc.7",
+  "version": "0.1.0",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
     "directory": "packages/shell/tool-bash-persistent"
   },
   "type": "module",
@@ -31,31 +31,31 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@deepseek-ai/dsh-agent": "workspace:^",
-    "@deepseek-ai/dsh-invariants": "workspace:^",
-    "@deepseek-ai/dsh-terminal": "workspace:^",
-    "@deepseek-ai/dsh-timeout": "workspace:^",
-    "@deepseek-ai/dsh-tools": "workspace:^",
-    "@deepseek-ai/cordis": "workspace:^"
+    "@nomix-ai/nomix-agent": "workspace:^",
+    "@nomix-ai/nomix-invariants": "workspace:^",
+    "@nomix-ai/nomix-terminal": "workspace:^",
+    "@nomix-ai/nomix-timeout": "workspace:^",
+    "@nomix-ai/nomix-tools": "workspace:^",
+    "@nomix-ai/cordis": "workspace:^"
   },
   "dependencies": {
-    "@deepseek-ai/schemastery": "workspace:^"
+    "@nomix-ai/schemastery": "workspace:^"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis-plugin-include": "workspace:^",
-    "@deepseek-ai/cordis-plugin-loader": "workspace:^",
-    "@deepseek-ai/dsh-agent": "workspace:^",
-    "@deepseek-ai/dsh-invariants": "workspace:^",
-    "@deepseek-ai/dsh-llm": "workspace:^",
-    "@deepseek-ai/dsh-terminal": "workspace:^",
-    "@deepseek-ai/dsh-terminal-bash": "workspace:^",
-    "@deepseek-ai/dsh-sandbox": "workspace:^",
-    "@deepseek-ai/dsh-sandbox-policy": "workspace:^",
-    "@deepseek-ai/dsh-session": "workspace:^",
-    "@deepseek-ai/dsh-subprocess-local": "workspace:^",
-    "@deepseek-ai/dsh-system-prompt": "workspace:^",
-    "@deepseek-ai/dsh-timeout": "workspace:^",
-    "@deepseek-ai/dsh-tools": "workspace:^",
-    "@deepseek-ai/cordis": "workspace:^"
+    "@nomix-ai/cordis-plugin-include": "workspace:^",
+    "@nomix-ai/cordis-plugin-loader": "workspace:^",
+    "@nomix-ai/nomix-agent": "workspace:^",
+    "@nomix-ai/nomix-invariants": "workspace:^",
+    "@nomix-ai/nomix-llm": "workspace:^",
+    "@nomix-ai/nomix-terminal": "workspace:^",
+    "@nomix-ai/nomix-terminal-bash": "workspace:^",
+    "@nomix-ai/nomix-sandbox": "workspace:^",
+    "@nomix-ai/nomix-sandbox-policy": "workspace:^",
+    "@nomix-ai/nomix-session": "workspace:^",
+    "@nomix-ai/nomix-subprocess-local": "workspace:^",
+    "@nomix-ai/nomix-system-prompt": "workspace:^",
+    "@nomix-ai/nomix-timeout": "workspace:^",
+    "@nomix-ai/nomix-tools": "workspace:^",
+    "@nomix-ai/cordis": "workspace:^"
   }
 }

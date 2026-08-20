@@ -1,6 +1,6 @@
-import type { Context } from '@deepseek-ai/cordis'
-import type { GenerateOptions, StreamChunk } from '@deepseek-ai/dsh-llm'
-import { LlmAdapter } from '@deepseek-ai/dsh-llm'
+import type { Context } from '@nomix-ai/cordis'
+import type { GenerateOptions, StreamChunk } from '@nomix-ai/nomix-llm'
+import { LlmAdapter } from '@nomix-ai/nomix-llm'
 
 /**
  * Scripted model for the CHILD runtime: answers every request with its own

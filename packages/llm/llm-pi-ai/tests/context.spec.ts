@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from 'vitest'
-import { AttachmentId } from '@deepseek-ai/dsh-attachment'
-import type { AttachmentStore, ImageAttachmentRef } from '@deepseek-ai/dsh-attachment'
-import { CallId, createMessage, createUserMessage } from '@deepseek-ai/dsh-llm'
-import type { ContentBlock, GenerateOptions, Message } from '@deepseek-ai/dsh-llm'
+import { AttachmentId } from '@nomix-ai/nomix-attachment'
+import type { AttachmentStore, ImageAttachmentRef } from '@nomix-ai/nomix-attachment'
+import { CallId, createMessage, createUserMessage } from '@nomix-ai/nomix-llm'
+import type { ContentBlock, GenerateOptions, Message } from '@nomix-ai/nomix-llm'
 import { toPiContext } from '../src/context.ts'
 import { toPiAssistant } from '../src/replay.ts'
 

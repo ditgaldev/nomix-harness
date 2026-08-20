@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-storage-domain
+# @nomix-ai/nomix-storage-domain
 
 [English](README.md) | 中文
 

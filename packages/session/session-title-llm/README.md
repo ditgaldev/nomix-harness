@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-session-title-llm
+# @nomix-ai/nomix-session-title-llm
 
 English | [中文](README.zh.md)
 

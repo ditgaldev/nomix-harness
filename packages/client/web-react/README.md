@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-client-web-react
+# @nomix-ai/nomix-client-web-react
 
 English | [中文](README.zh.md)
 

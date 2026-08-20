@@ -1,4 +1,4 @@
-# `@deepseek-ai/dsh-loader-smoke`
+# `@nomix-ai/nomix-loader-smoke`
 
 English | [中文](README.zh.md)
 

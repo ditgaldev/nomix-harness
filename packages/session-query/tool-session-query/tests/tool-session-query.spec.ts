@@ -1,16 +1,16 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { Context, type Fiber } from '@deepseek-ai/cordis'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import { createUserMessage, CallId, HarnessError , createMessage } from '@deepseek-ai/dsh-llm'
-import { MAX_TIMER_DELAY_MS, TimeoutReason } from '@deepseek-ai/dsh-timeout'
-import * as TimeoutPolicy from '@deepseek-ai/dsh-tool-call-timeout-policy'
+import { Context, type Fiber } from '@nomix-ai/cordis'
+import type { Agent } from '@nomix-ai/nomix-agent'
+import { createUserMessage, CallId, HarnessError , createMessage } from '@nomix-ai/nomix-llm'
+import { MAX_TIMER_DELAY_MS, TimeoutReason } from '@nomix-ai/nomix-timeout'
+import * as TimeoutPolicy from '@nomix-ai/nomix-tool-call-timeout-policy'
 import SessionStore, {
   SESSION_FORMAT_VERSION,
   SessionId,
   type Session,
   type SessionHeader,
   type SessionId as SessionIdValue,
-} from '@deepseek-ai/dsh-session'
+} from '@nomix-ai/nomix-session'
 import SessionQueryEngine, {
   SessionQueryError,
   SessionSearchCursor,
@@ -23,10 +23,10 @@ import SessionQueryEngine, {
   type SessionSearchPage,
   type SessionSearchRequest,
   type SessionTitleObservationResult,
-} from '@deepseek-ai/dsh-session-query'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import ToolRuntime, { type ToolExecutionResult } from '@deepseek-ai/dsh-tools'
-import * as ToolSessionQuery from '@deepseek-ai/dsh-tool-session-query'
+} from '@nomix-ai/nomix-session-query'
+import SystemPrompt from '@nomix-ai/nomix-system-prompt'
+import ToolRuntime, { type ToolExecutionResult } from '@nomix-ai/nomix-tools'
+import * as ToolSessionQuery from '@nomix-ai/nomix-tool-session-query'
 
 const activeContexts: Context[] = []
 

@@ -1,13 +1,13 @@
 {
-  "name": "@deepseek-ai/dsh-host-plugin-inventory",
+  "name": "@nomix-ai/nomix-host-plugin-inventory",
   "description": "Read-only Remote projection of current Cordis Loader plugin state",
-  "version": "0.1.0-rc.7",
+  "version": "0.1.0",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
     "directory": "packages/host/plugin-inventory"
   },
   "type": "module",
@@ -52,17 +52,17 @@
     "zod": "^4.4.3"
   },
   "peerDependencies": {
-    "@deepseek-ai/cordis-plugin-loader": "workspace:^",
-    "@deepseek-ai/dsh-brand": "workspace:^",
-    "@deepseek-ai/dsh-invariants": "workspace:^",
-    "@deepseek-ai/dsh-typert-protocol": "workspace:^",
-    "@deepseek-ai/cordis": "workspace:^"
+    "@nomix-ai/cordis-plugin-loader": "workspace:^",
+    "@nomix-ai/nomix-brand": "workspace:^",
+    "@nomix-ai/nomix-invariants": "workspace:^",
+    "@nomix-ai/nomix-typert-protocol": "workspace:^",
+    "@nomix-ai/cordis": "workspace:^"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis-plugin-loader": "workspace:^",
-    "@deepseek-ai/dsh-brand": "workspace:^",
-    "@deepseek-ai/dsh-invariants": "workspace:^",
-    "@deepseek-ai/dsh-typert-protocol": "workspace:^",
-    "@deepseek-ai/cordis": "workspace:^"
+    "@nomix-ai/cordis-plugin-loader": "workspace:^",
+    "@nomix-ai/nomix-brand": "workspace:^",
+    "@nomix-ai/nomix-invariants": "workspace:^",
+    "@nomix-ai/nomix-typert-protocol": "workspace:^",
+    "@nomix-ai/cordis": "workspace:^"
   }
 }

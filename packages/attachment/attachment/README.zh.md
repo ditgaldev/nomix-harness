@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-attachment
+# @nomix-ai/nomix-attachment
 
 [English](README.md) | 中文
 

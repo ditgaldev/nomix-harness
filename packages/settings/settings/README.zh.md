@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-settings
+# @nomix-ai/nomix-settings
 
 [English](README.md) | 中文
 

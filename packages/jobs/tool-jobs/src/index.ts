@@ -4,19 +4,19 @@
  * producers. It also delivers unreported completions to the owning agent:
  * injected into a busy owner's next step, or opening a turn on an idle one
  * under the default `wakeup` delivery, bounded per owner.
- * @module @deepseek-ai/dsh-tool-jobs
+ * @module @nomix-ai/nomix-tool-jobs
  */
 
-import type { Context } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import { boundContextSummary, createUserMessage, type ContentBlock } from '@deepseek-ai/dsh-llm'
-import { TextRetainer } from '@deepseek-ai/dsh-output-retention'
-import { defineTool } from '@deepseek-ai/dsh-tools'
-import type { GenericCallView, ToolDefinition, ToolExecution } from '@deepseek-ai/dsh-tools'
-import { JobId } from '@deepseek-ai/dsh-jobs'
-import type { JobSnapshot } from '@deepseek-ai/dsh-jobs'
-import type {} from '@deepseek-ai/dsh-system-prompt'
-import type { Agent } from '@deepseek-ai/dsh-agent'
+import type { Context } from '@nomix-ai/cordis'
+import z from '@nomix-ai/schemastery'
+import { boundContextSummary, createUserMessage, type ContentBlock } from '@nomix-ai/nomix-llm'
+import { TextRetainer } from '@nomix-ai/nomix-output-retention'
+import { defineTool } from '@nomix-ai/nomix-tools'
+import type { GenericCallView, ToolDefinition, ToolExecution } from '@nomix-ai/nomix-tools'
+import { JobId } from '@nomix-ai/nomix-jobs'
+import type { JobSnapshot } from '@nomix-ai/nomix-jobs'
+import type {} from '@nomix-ai/nomix-system-prompt'
+import type { Agent } from '@nomix-ai/nomix-agent'
 
 export const name = 'tool-jobs'
 export const inject = ['tools', 'jobs', 'systemPrompt']

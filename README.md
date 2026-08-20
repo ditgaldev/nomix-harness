@@ -17,7 +17,7 @@ DeepSeek Harness is currently in _developer preview_ and is iterating rapidly. *
 Install `Node.js`, then run:
 
 ```sh
-npx @deepseek-ai/dsh web
+npx @nomix-ai/nomix-harness web
 ```
 
 The command starts the Web UI, served at `http://127.0.0.1:3080` by default. See [Web UI guide](docs/user/guide/index.md).
@@ -27,16 +27,16 @@ The command starts the Web UI, served at `http://127.0.0.1:3080` by default. See
 To run from a repository checkout:
 
 ```sh
-git clone https://github.com/deepseek-ai/deepseek-harness.git
+git clone https://github.com/ditgaldev/nomix-harness.git
 cd deepseek-harness
 pnpm install
 pnpm run build
-pnpm dsh web
+pnpm nomix web
 ```
 
 ## Community and support
 
-- Feel free to submit feedback or bug reports through [GitHub Discussions](https://github.com/deepseek-ai/deepseek-harness/discussions).
+- Feel free to submit feedback or bug reports through [GitHub Discussions](https://github.com/ditgaldev/nomix-harness/discussions).
 - Add the [`dsh-plugin`](https://github.com/topics/dsh-plugin) topic to your plugin repository for discoverability.
 - Join <a href="https://discord.gg/Ycq5dCaS4">DeepSeek Harness Discord community</a>.
 

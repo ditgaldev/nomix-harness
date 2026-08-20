@@ -1,4 +1,4 @@
-# `@deepseek-ai/dsh-acp-snapshot`
+# `@nomix-ai/nomix-acp-snapshot`
 
 English | [中文](README.zh.md)
 
@@ -22,7 +22,7 @@ import {
   defineAcpSnapshotSuite,
   type Scenario,
   type SnapshotSuiteOptions,
-} from '@deepseek-ai/dsh-acp-snapshot'
+} from '@nomix-ai/nomix-acp-snapshot'
 
 function snapshotMode(value: string | undefined): SnapshotSuiteOptions['mode'] {
   switch (value) {

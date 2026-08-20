@@ -7,14 +7,14 @@
 
 import { randomBytes } from 'node:crypto'
 import { describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
+import { Context } from '@nomix-ai/cordis'
 import { unzipSync, strFromU8 } from 'fflate'
-import type { ImageAttachmentRef } from '@deepseek-ai/dsh-attachment'
-import UserQuestionService from '@deepseek-ai/dsh-user-questions'
-import type { SessionHeader, SessionId } from '@deepseek-ai/dsh-session'
-import type { SessionLineageNode } from '@deepseek-ai/dsh-session-query'
-import type { SessionRawArtifact } from '@deepseek-ai/dsh-session-persistence'
-import ApiProxyService, { createApiProxy, toFetchHandler } from '@deepseek-ai/dsh-host-apiproxy'
+import type { ImageAttachmentRef } from '@nomix-ai/nomix-attachment'
+import UserQuestionService from '@nomix-ai/nomix-user-questions'
+import type { SessionHeader, SessionId } from '@nomix-ai/nomix-session'
+import type { SessionLineageNode } from '@nomix-ai/nomix-session-query'
+import type { SessionRawArtifact } from '@nomix-ai/nomix-session-persistence'
+import ApiProxyService, { createApiProxy, toFetchHandler } from '@nomix-ai/nomix-host-apiproxy'
 
 const sid = (id: string): SessionId => id as SessionId
 

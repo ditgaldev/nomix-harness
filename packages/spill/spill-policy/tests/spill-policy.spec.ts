@@ -9,19 +9,19 @@
  */
 
 import { describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import { createUserMessage, CallId } from '@deepseek-ai/dsh-llm'
-import type { ContentBlock } from '@deepseek-ai/dsh-llm'
-import { SessionId } from '@deepseek-ai/dsh-session'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import ToolRuntime, { defineContentToolFixture } from '@deepseek-ai/dsh-tools'
-import type { ToolDefinition } from '@deepseek-ai/dsh-tools'
-import type { PostToolDecision, ToolExecution, ToolExecutionToken } from '@deepseek-ai/dsh-tools'
-import { SpillLocator, SpillStore } from '@deepseek-ai/dsh-spill'
-import type { SaveTextSpill, SpillRef } from '@deepseek-ai/dsh-spill'
-import * as SpillPolicy from '@deepseek-ai/dsh-spill-policy'
-import { WorkerThreadCodeRuntime } from '@deepseek-ai/dsh-code-runtime-worker-thread'
+import { Context } from '@nomix-ai/cordis'
+import Loader from '@nomix-ai/cordis-plugin-loader'
+import { createUserMessage, CallId } from '@nomix-ai/nomix-llm'
+import type { ContentBlock } from '@nomix-ai/nomix-llm'
+import { SessionId } from '@nomix-ai/nomix-session'
+import SystemPrompt from '@nomix-ai/nomix-system-prompt'
+import ToolRuntime, { defineContentToolFixture } from '@nomix-ai/nomix-tools'
+import type { ToolDefinition } from '@nomix-ai/nomix-tools'
+import type { PostToolDecision, ToolExecution, ToolExecutionToken } from '@nomix-ai/nomix-tools'
+import { SpillLocator, SpillStore } from '@nomix-ai/nomix-spill'
+import type { SaveTextSpill, SpillRef } from '@nomix-ai/nomix-spill'
+import * as SpillPolicy from '@nomix-ai/nomix-spill-policy'
+import { WorkerThreadCodeRuntime } from '@nomix-ai/nomix-code-runtime-worker-thread'
 
 const testToolSignal = new AbortController().signal
 

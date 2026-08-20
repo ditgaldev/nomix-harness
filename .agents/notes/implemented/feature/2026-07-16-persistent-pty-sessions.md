@@ -102,14 +102,14 @@ The example composition remains opt-in and safe by default:
 
 ```yaml
 plugins:
-  '@deepseek-ai/dsh-sandbox-local':
-  '@deepseek-ai/dsh-sandbox-policy':
+  '@nomix-ai/nomix-sandbox-local':
+  '@nomix-ai/nomix-sandbox-policy':
     config:
       mode: workspace-write
       workspaceRoot: .
-  '@deepseek-ai/dsh-terminal':
-  '@deepseek-ai/dsh-subprocess-local':
-  '@deepseek-ai/dsh-terminal-bash':
+  '@nomix-ai/nomix-terminal':
+  '@nomix-ai/nomix-subprocess-local':
+  '@nomix-ai/nomix-terminal-bash':
     config:
       scrollbackLines: 10000
       scrollbackMaxBytes: 4194304
@@ -120,7 +120,7 @@ plugins:
       handoffGraceMs: 500
       timeoutMs: 30000
       disposeGraceMs: 3000
-  '@deepseek-ai/dsh-tool-terminal':
+  '@nomix-ai/nomix-tool-terminal':
     config:
       enableRunInBackground: true
       maxResultBytes: 262144

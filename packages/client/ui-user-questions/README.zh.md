@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-client-ui-user-questions
+# @nomix-ai/nomix-client-ui-user-questions
 
 [English](README.md) | 中文
 

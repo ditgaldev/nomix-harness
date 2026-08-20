@@ -1,13 +1,13 @@
 {
-  "name": "@deepseek-ai/dsh-command-feedback",
+  "name": "@nomix-ai/nomix-command-feedback",
   "description": "Log-only session feedback producer and human-facing slash command",
-  "version": "0.1.0-rc.7",
+  "version": "0.1.0",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
     "directory": "packages/feedback/command-feedback"
   },
   "type": "module",
@@ -32,23 +32,23 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@deepseek-ai/dsh-commands": "workspace:^",
-    "@deepseek-ai/dsh-invariants": "workspace:^",
-    "@deepseek-ai/dsh-session": "workspace:^",
-    "@deepseek-ai/dsh-session-telemetry": "workspace:^",
-    "@deepseek-ai/dsh-anonymous-user-id": "workspace:^",
-    "@deepseek-ai/cordis": "workspace:^"
+    "@nomix-ai/nomix-commands": "workspace:^",
+    "@nomix-ai/nomix-invariants": "workspace:^",
+    "@nomix-ai/nomix-session": "workspace:^",
+    "@nomix-ai/nomix-session-telemetry": "workspace:^",
+    "@nomix-ai/nomix-anonymous-user-id": "workspace:^",
+    "@nomix-ai/cordis": "workspace:^"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis-plugin-include": "workspace:^",
-    "@deepseek-ai/cordis-plugin-loader": "workspace:^",
-    "@deepseek-ai/dsh-agent": "workspace:^",
-    "@deepseek-ai/dsh-commands": "workspace:^",
-    "@deepseek-ai/dsh-invariants": "workspace:^",
-    "@deepseek-ai/dsh-llm": "workspace:^",
-    "@deepseek-ai/dsh-session": "workspace:^",
-    "@deepseek-ai/dsh-session-telemetry": "workspace:^",
-    "@deepseek-ai/dsh-anonymous-user-id": "workspace:^",
-    "@deepseek-ai/cordis": "workspace:^"
+    "@nomix-ai/cordis-plugin-include": "workspace:^",
+    "@nomix-ai/cordis-plugin-loader": "workspace:^",
+    "@nomix-ai/nomix-agent": "workspace:^",
+    "@nomix-ai/nomix-commands": "workspace:^",
+    "@nomix-ai/nomix-invariants": "workspace:^",
+    "@nomix-ai/nomix-llm": "workspace:^",
+    "@nomix-ai/nomix-session": "workspace:^",
+    "@nomix-ai/nomix-session-telemetry": "workspace:^",
+    "@nomix-ai/nomix-anonymous-user-id": "workspace:^",
+    "@nomix-ai/cordis": "workspace:^"
   }
 }

@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-workspace
+# @nomix-ai/nomix-workspace
 
 English | [中文](README.zh.md)
 

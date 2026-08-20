@@ -16,9 +16,9 @@ import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import yaml from 'js-yaml'
-import { entryListSchema } from '@deepseek-ai/cordis-plugin-include'
-import { evaluate } from '@deepseek-ai/cordis-plugin-loader'
-import { composeEntries, initProfile, loadProfile, PROFILES_DIR } from '@deepseek-ai/dsh-app-boot'
+import { entryListSchema } from '@nomix-ai/cordis-plugin-include'
+import { evaluate } from '@nomix-ai/cordis-plugin-loader'
+import { composeEntries, initProfile, loadProfile, PROFILES_DIR } from '@nomix-ai/nomix-app-boot'
 
 /**
  * The effective disabled state of one row on one platform: a `!!js` expression
@@ -42,8 +42,8 @@ describe('the shipped shell composition (real bundle layers)', () => {
 
   it('composes the confined pwsh roster on win32 and the bash roster on POSIX from the same rows', () => {
     home = mkdtempSync(join(tmpdir(), 'dsh-windows-home-'))
-    initProfile(join(home, PROFILES_DIR, 'web'), ['@deepseek-ai/dsh-base', '@deepseek-ai/dsh-web-app'])
-    const profile = loadProfile('dsh', 'web', anchor, home)
+    initProfile(join(home, PROFILES_DIR, 'web'), ['@nomix-ai/nomix-base', '@nomix-ai/nomix-web-app'])
+    const profile = loadProfile('nomix', 'web', anchor, home)
     const warnings: string[] = []
     const rows = composeEntries(
       profile.layers.map(layer => layer.patches),
@@ -72,7 +72,7 @@ describe('the shipped shell composition (real bundle layers)', () => {
     // dependency closure into the profile's node_modules, so every bare
     // plugin name in the base patch must resolve from there.
     const cliManifest = JSON.parse(readFileSync(anchor, 'utf8')) as { dependencies?: Record<string, string> }
-    for (const name of ['@deepseek-ai/dsh-pwsh-sandbox', '@deepseek-ai/dsh-tool-pwsh']) {
+    for (const name of ['@nomix-ai/nomix-pwsh-sandbox', '@nomix-ai/nomix-tool-pwsh']) {
       expect(cliManifest.dependencies?.[name], `cold-start closure must reach ${name}`).toBeDefined()
     }
     expect(warnings).toEqual([])
@@ -80,8 +80,8 @@ describe('the shipped shell composition (real bundle layers)', () => {
 
   it('base-only profiles carry both stacks with the same platform gating', () => {
     home = mkdtempSync(join(tmpdir(), 'dsh-windows-home-'))
-    initProfile(join(home, PROFILES_DIR, 'base-only'), ['@deepseek-ai/dsh-base'])
-    const profile = loadProfile('dsh', 'base-only', anchor, home)
+    initProfile(join(home, PROFILES_DIR, 'base-only'), ['@nomix-ai/nomix-base'])
+    const profile = loadProfile('nomix', 'base-only', anchor, home)
     const warnings: string[] = []
     const rows = composeEntries(
       profile.layers.map(layer => layer.patches),

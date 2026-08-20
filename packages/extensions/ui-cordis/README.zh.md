@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-client-ui-cordis
+# @nomix-ai/nomix-client-ui-cordis
 
 [English](README.md) | 中文
 

@@ -1,4 +1,4 @@
-# @deepseek-ai/dsh-lsp-stdio
+# @nomix-ai/nomix-lsp-stdio
 
 [English](README.md) | 中文
 
