@@ -330,7 +330,7 @@ class DshFamily extends ReleaseFamily {
    * @param members - every package sharing the product version.
    * @returns The CLI member.
    */
-  publicationMembers(members: readonly ReleaseMember[]): ReleaseMember[] {
+  override publicationMembers(members: readonly ReleaseMember[]): ReleaseMember[] {
     const published = members.filter(member => member.name === '@nomix-ai/nomix-harness')
     if (published.length !== 1) {
       throw new Error(`dsh release requires exactly one @nomix-ai/nomix-harness member, found ${String(published.length)}`)
