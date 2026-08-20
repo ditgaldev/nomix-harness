@@ -1,4 +1,4 @@
-# Agent Note: 三条独立序列的私有 NPM 发布
+# Agent Note: 三条独立序列的 npm 发布
 
 Status: implemented
 
@@ -8,9 +8,9 @@ Status: implemented
 
 这个仓库有三组互不相干的可发布包，却没有任何发布通道把它们送上 registry。
 
-`packages/*/*` 与 `apps/*` 组成 `@nomix-ai/nomix-harness` 的运行面；`vendor/*` 是九个 rescope 过的 Cordis 框架包，各自带着上游的版本号；`native/landlock-run/packages/*` 是 Linux 平台包，有自己的 workflow。三组的版本基线、变更节奏和构建要求都不同：dsh 随产品迭代，vendor 只在同步上游或改动本地修改时才动，native 需要 musl 工具链和逐架构构建。把它们塞进一条发布流水线，等于每次产品发版都要重发框架和原生二进制。
+`packages/*/*` 与 `apps/*` 组成 `@nomix-ai/nomix-harness` 的运行时；`vendor/*` 是九个 rescope 过的 Cordis 框架包，各自带着上游版本号；`native/landlock-run/packages/*` 是 Linux 平台包，有自己的 workflow。三组的版本基线、变更节奏和构建要求都不同：CLI 随产品迭代，vendor 只在同步上游或改动本地修改时才动，native 需要 musl 工具链和逐架构构建。把它们塞进一条发布流水线，等于每次产品发版都要重发框架和原生二进制。
 
-挡路的还有两处硬门。全部 217 个 workspace manifest 都是 `private: true`，`npm publish` 直接拒绝。更隐蔽的是 933 条 dsh 兄弟包之间硬写的 `peerDependencies: "^0.0.1"`：`pnpm pack` 只替换 `workspace:` 协议，不动语义范围，而 `^0.0.1` 等于 `>=0.0.1 <0.0.2`——发 `0.0.2` 落不进去，发 `0.0.1-rc.1` 也落不进去（semver 规定不带预发布段的范围排除预发布版本）。这些条目至今没出事，只因为版本一直停在 `0.0.1`。
+逐个发布全部 workspace 包还会遇到版本对齐之外的问题：新 npm scope 无法在一次发布中创建数百个包名而不触发 registry 的反滥用限制。因此产品只发布一个可移植 CLI 包，不把内部包依赖图暴露成公开 registry 条目。
 
 `scripts/publish-npm-baseline.ts` 是本机发布脚本：它把 pack 与 publish 放进同一个进程，需要人工在本机完成认证与重试，且把 vendor 排除在发布集之外。它不能作为 CI 发布的基础，但其中的 tarball payload 校验与已安装产物探针是验证过的零件。
 
@@ -18,21 +18,21 @@ Status: implemented
 
 ### 三条独立序列
 
-`packages/`、`vendor/`、`native/` 各自一条 bump 序列、各自一次发布，不共享版本号、不共享触发、不互相等待。发 dsh 不重发 vendor，发 vendor 不重发 native。
+CLI、vendor 框架和 native 启动器各自一条 bump 序列、各自一次发布，不共享版本号或触发。发 CLI 不重发 vendor，发 vendor 不重发 native。
 
 | 序列 | 成员 | 版本基线 | tag | workflow |
 |---|---|---|---|---|
-| dsh | `packages/*/*` + `apps/*`（`@nomix-ai/nomix-harness` 与 `@nomix-ai/nomix-web-frontend`） | 全族与 workspace 根共用一个 `0.0.x` | `dsh-v<版本>` | `release.yml` |
+| dsh | 一个包含生产依赖树的可移植 `@nomix-ai/nomix-harness` tarball | 产品源码包、apps 与 workspace 根共用一个版本 | `nomix-v<版本>` | `release.yml` |
 | vendored framework | `vendor/*` 九个包 | 每包各自一条版本线 | `vendor-<包名>-v<版本>`（每包一个） | `release-vendor.yml` |
 | native | `native/landlock-run/packages/*` | 自己的 `0.0.x` | `landlock-run-v<版本>` | `landlock-run-release.yml` |
 
-三组一律发到 npmjs.com 的 `@nomix-ai` scope，且 access 按序列而非按 scope 区分：vendored 框架与 native 包是 `public`，dsh 族是 `restricted`（[理由](2026-08-13-public-vendor-and-native-sequences.md)）。没有任何发布路径传 `--access`——一个选项无法服务级别互不相同的序列，且会覆盖真正拥有该级别的 manifest。
+三组一律公开发布到 npmjs.com 的 `@nomix-ai` scope。发布路径不传 `--access`，每个 manifest 自己拥有访问级别。
 
 ### 版本由本地命令写进仓库，CI 只核对与上传
 
 每条序列有一条 bump-and-commit 命令：算出目标版本，写进相关 manifest，跑 `pnpm install --lockfile-only`，再把 manifest 连 lockfile 一起 commit。发布版本因此在仓库里查得到。tag 由人工在 commit 合入 master 后打；CI 不写仓库，也不需要写权限。
 
-`release:dsh` 接受 `major`、`minor`、`patch` 或显式版本号，把同一个版本写进全族**以及 workspace 根**——workspace 约束要求每个成员的版本等于根版本，所以根承载族版本，而根的检查接受预发布段。像 `0.0.1-rc.1` 这样的预发布号先把 pack、已安装产物探针和一次真实私有发布跑通，数字版本随后。dist-tag 沿用 `landlock-run-release.yml` 已有的判定：版本带预发布段就 `--tag next`，否则进 `latest`。
+`release:dsh` 接受 `major`、`minor`、`patch` 或显式版本号，并把该版本写入产品源码包、apps 与 workspace 根。虽然只有 CLI 根包会成为 registry package，这仍会让 deployed tree 中各包的身份保持一致。版本带预发布段就发布到 `next`，否则进入 `latest`。
 
 ### vendor：谁改了谁发版，tag 就是账本
 
@@ -72,7 +72,7 @@ tag 只是 commit 指针，不是发布成功的证明。bump 会向 registry �
 
 三条序列都按这套判定，native 也在内：它通过自己的脚本发布，而不是 shell 循环——一串裸 `npm publish` 无法重试，registry 对「重发已存在的版本」的回答是永久失败，因此中途失败一次就没有前路了。
 
-registry 的两个行为决定了「怎么尝试一次发布」。写入使用 workflow 配置的间隔与带上限的指数退避，因为连续背靠背发布多个包会超出 registry 的处理速度，换来 `E409 Failed to save packument` 或 `E429 Too Many Requests`；新 scope 一次发布数百个包时，每分钟最多写入四次，并从两分钟开始退避重试。registry 读取使用同一套带上限的重试策略，因此受限流的 integrity 检查不会中断恢复流程。每次重试都先重查 registry：报出来的失败可能对应一次其实已经落地的写入，所以「该版本现在存在且 integrity 与本 tarball 相同」算作已发布，而不是又一个待放置的版本。
+写入对临时 registry 故障使用 workflow 配置的间隔与带上限的指数退避；registry 读取使用同一套策略。每次写入重试都先检查失败响应对应的 tarball 是否其实已经落地。CLI 序列只有一次 registry 写入，因此 npm 的新包名创建限制不会再把一次产品发布截成很长的内部包前缀。
 
 ### workspace 内部引用走 `workspace:` 协议
 
@@ -103,11 +103,11 @@ registry 的两个行为决定了「怎么尝试一次发布」。写入使用 w
 | `publish` | 上面那三态 |
 | `process` / `tarball` | 启动命令、读取打包 tarball 的唯一正家，其中的入口守卫让每个脚本都可被 import |
 
-dsh 族套用仓库的发布 payload 策略（拒绝源码与声明映射）。vendored 族保留上游 payload，因为那些 manifest 导出 `./src/*`，去掉 `src` 会发出一个导出映射指向不存在文件的包。
+dsh 族只对 CLI 自身文件应用仓库发布 payload 策略；其 bundled dependencies 保留各包拥有的 payload，包括 vendored exports。vendored 族同样保留上游 payload，因为那些 manifest 导出 `./src/*`。
 
-### workflow 形状：一次性 pack 全部，再统一 publish
+### workflow 形状：deploy 一次，再发布验证过的字节
 
-`pack` job 一趟遍历整个发布集，把每个成员打进同一个目录，写出上传顺序，整个目录作为一份 artifact 上传；`publish` job 下载那一份 artifact，按顺序逐个发布。发布集是一个整体——绝不会出现一半的包已经上了 registry、另一半还在构建。
+`pack` job 对 CLI 及其生产依赖运行 `pnpm deploy`，把可移植目录打成一个 tarball，在一次性 consumer 中安装该 tarball，并执行 `nomix --version`。`publish` job 下载并上传完全相同的字节，不再构建。内部 workspace 包仍是仓库和安装产物中的实现单元，不再是独立 npm 发布。
 
 `pack` 无凭据，在每个 pull request 和每次 master push 上跑，所以一个 pull request 就能证明发布集仍能完整打出来。`publish` 是手动 dispatch，挂在 `npm-publish` environment 后面等人工审批，且既不构建也不重建——它上传的就是 pack 产出的字节。pack 的 run 按 ref 分组，并发的 pull request 不会互相顶掉；全局分组落在 publish job 上，因为 dist-tag 是共享的 registry 状态。
 

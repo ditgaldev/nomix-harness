@@ -3,7 +3,8 @@
  * readable from the repository rather than derived inside CI
  * ([rationale](../../.agents/notes/implemented/process/2026-08-10-npm-release-sequences.md)).
  *
- * The dsh family shares one version across its members and the workspace root:
+ * The dsh source family shares one version across its members and workspace root,
+ * although only its portable CLI artifact is published:
  * `major`, `minor`, `patch`, or an explicit `x.y.z` (including a prerelease such
  * as `0.0.1-rc.1`). The vendored family has one version line per package, but
  * every release advances and publishes the complete family so the next release

@@ -79,8 +79,9 @@ function main(): void {
   if (values.family === undefined) throw new Error('usage: verify.ts --family <dsh|vendor>')
 
   const family = releaseFamily(values.family)
-  const members = family.members(process.cwd())
-  family.verifyVersions(members)
+  const versionMembers = family.members(process.cwd())
+  family.verifyVersions(versionMembers)
+  const members = family.publicationMembers(versionMembers)
   // Resolve the publish order here, before the build: an install-edge cycle
   // makes the order unrepresentable, and that has to surface at the first gate
   // rather than when pack is already writing tarballs.
@@ -98,10 +99,11 @@ function main(): void {
     verifyTag(family, members, process.env.GITHUB_REF ?? '')
   }
 
-  const versions = [...new Set(members.map(member => member.version))]
+  const versions = [...new Set(versionMembers.map(member => member.version))]
   const summary = versions.length === 1 ? versions[0] : `${String(versions.length)} versions`
   console.log(
-    `release verify: family ${family.id}, ${String(members.length)} member(s), ${summary},`
+    `release verify: family ${family.id}, ${String(versionMembers.length)} version member(s),`
+    + ` ${String(members.length)} registry package(s), ${summary},`
     + ` publish order resolved, ${String(plan.droppedPeerEdges.length)} peer declaration(s) unordered`
     + (publishing ? ', publish gates passed' : ''),
   )

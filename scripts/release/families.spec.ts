@@ -30,6 +30,15 @@ describe('release families', () => {
     expect(vendor.tagFor({ ...cordis, version: '4.0.0-rc.7' })).toBe('vendor-cordis-v4.0.0-rc.7')
   })
 
+  it('publishes the product as one portable CLI package', () => {
+    const dsh = releaseFamily('dsh')
+    const harness = member('apps/cli', '@nomix-ai/nomix-harness')
+    const library = member('packages/core/library', '@nomix-ai/nomix-library')
+
+    expect(dsh.publicationMembers([library, harness])).toEqual([harness])
+    expect(dsh.packing).toBe('portable-deploy')
+  })
+
   it('rejects a family whose members disagree on the shared version', () => {
     const dsh = releaseFamily('dsh')
     const members = [member('apps/cli', '@nomix-ai/nomix-harness'), { ...member('apps/web', '@nomix-ai/nomix-web-frontend'), version: '0.0.2' }]
@@ -168,6 +177,14 @@ describe('release families', () => {
 
     expect(() => { dsh.validatePayload(harness, ['package/lib/index.js', 'package/src/index.ts']) })
       .toThrow(/publishes source file/)
+    expect(() => {
+      dsh.validatePayload(harness, [
+        'package/lib/index.js',
+        'package/node_modules/@nomix-ai/nomix-library/package.json',
+        'package/node_modules/@nomix-ai/nomix-library/src/index.ts',
+      ])
+    }).not.toThrow()
+    expect(() => { dsh.validatePayload(harness, ['package/lib/index.js']) }).toThrow(/no bundled @nomix-ai runtime packages/)
     expect(() => { vendor.validatePayload(vendored, ['package/lib/index.js', 'package/src/index.ts']) }).not.toThrow()
     expect(() => { vendor.validatePayload(vendored, []) }).toThrow(/empty tarball/)
   })

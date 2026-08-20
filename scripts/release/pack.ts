@@ -1,13 +1,16 @@
 /**
- * Pack one release family's whole publish set into a single directory, in
- * publish order, and record that order for the publish step.
+ * Pack one release family's registry packages into a single directory, in
+ * publish order, and record that order for the publish step. A portable family
+ * first deploys its production workspace tree and bundles that tree into its
+ * entry package.
  *
  * The pack step is the release boundary: it runs without credentials, produces
  * every tarball from one commit, and hands the publish step exactly those bytes
  * ([rationale](../../.agents/notes/implemented/process/2026-08-10-npm-release-sequences.md)).
  */
 
-import { existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { parseArgs } from 'node:util'
 import { releaseFamily, tarballName, type ReleaseFamily, type ReleaseMember } from './families.ts'
@@ -25,7 +28,17 @@ const DEFAULT_OUTPUT = 'dist/npm'
  * @returns The tarball filename.
  */
 function packMember(family: ReleaseFamily, member: ReleaseMember, destination: string): string {
-  run('pnpm', ['--dir', member.directory, 'pack', '--pack-destination', destination])
+  if (family.packing === 'portable-deploy') {
+    const deployment = mkdtempSync(join(tmpdir(), 'nomix-npm-deploy-'))
+    try {
+      run('pnpm', ['--filter', member.name, '--prod', 'deploy', '--legacy', deployment])
+      run('npm', ['pack', deployment, '--pack-destination', destination, '--ignore-scripts'])
+    } finally {
+      rmSync(deployment, { recursive: true, force: true })
+    }
+  } else {
+    run('pnpm', ['--dir', member.directory, 'pack', '--pack-destination', destination])
+  }
 
   const filename = tarballName(member)
   const tarball = join(destination, filename)
@@ -45,8 +58,9 @@ function main(): void {
   const family = releaseFamily(values.family)
   const root = process.cwd()
   const destination = resolve(root, values.out ?? DEFAULT_OUTPUT)
-  const members = family.publishOrder(family.members(root)).order
-  family.verifyVersions(members)
+  const versionMembers = family.members(root)
+  family.verifyVersions(versionMembers)
+  const members = family.publishOrder(family.publicationMembers(versionMembers)).order
 
   rmSync(destination, { recursive: true, force: true })
   mkdirSync(destination, { recursive: true })

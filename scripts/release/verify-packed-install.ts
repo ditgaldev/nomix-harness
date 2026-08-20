@@ -2,18 +2,16 @@
  * Install packed tarballs into a throwaway consumer outside the repository and
  * drive the installed executable with plain Node.
  *
- * Every tarball the installed tree needs comes from `--from`, so the only
- * registry traffic is for external dependencies. That matters beyond hermetic
- * verification: the harness packages declare the vendored framework as a peer,
- * those packages live in another release sequence, and this job must not depend
- * on the registry already carrying versions that match — one pull request may
- * bump both families before either publishes — so a dsh verification passes the
- * vendored family's pack output too, while publishing only its own
+ * Every registry package the installed tree owns comes from `--from`. For the
+ * dsh family that is one portable CLI tarball whose bundled production tree
+ * contains the product and vendored workspace packages; verification therefore
+ * does not depend on those internal package names existing in the registry
  * ([rationale](../../.agents/notes/implemented/process/2026-08-10-npm-release-sequences.md)).
  *
- * What this proves is that `files` selected a complete payload and that the
- * published dependency ranges resolve. A workspace link or a stale `lib/` in the
- * checkout cannot stand in for a missing file here.
+ * What this proves is that `files` selected a complete payload, bundled links
+ * survived packing, and remaining external dependency ranges resolve. A
+ * workspace link or stale `lib/` in the checkout cannot stand in for a missing
+ * file here.
  */
 
 import { mkdtempSync, readdirSync, rmSync, writeFileSync } from 'node:fs'

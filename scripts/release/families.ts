@@ -100,13 +100,16 @@ export interface InstalledEntry {
   readonly binPath: string
 }
 
-/** A release sequence: its members, its version baseline, and its tag naming. */
+/** A release sequence: its version members, publish set, and tag naming. */
 export abstract class ReleaseFamily {
   /** Workflow-facing identifier, also the `--family` argument. */
   abstract readonly id: string
 
   /** Glob patterns, relative to the repository root, that select this family's manifests. */
   abstract readonly patterns: readonly string[]
+
+  /** How each member becomes a publishable tarball. */
+  abstract readonly packing: 'package' | 'portable-deploy'
 
   /** Git tag prefix this family publishes from. */
   abstract readonly tagPrefix: string
@@ -139,6 +142,15 @@ export abstract class ReleaseFamily {
       })
     }
     return members
+  }
+
+  /**
+   * Select the members that become registry packages from the versioned family.
+   * @param members - every member on the family's version line.
+   * @returns Members published to npm.
+   */
+  publicationMembers(members: readonly ReleaseMember[]): ReleaseMember[] {
+    return [...members]
   }
 
   /**
@@ -305,11 +317,26 @@ export abstract class ReleaseFamily {
   abstract readonly installedEntry: InstalledEntry | undefined
 }
 
-/** `packages/*` and `apps/*`: one shared version across the whole family. */
+/** Product packages share one version, but publish as one self-contained CLI package. */
 class DshFamily extends ReleaseFamily {
   readonly id = 'dsh'
   readonly patterns = ['packages/*/*/package.json', 'apps/*/package.json'] as const
+  readonly packing = 'portable-deploy' as const
   readonly tagPrefix = 'nomix-v'
+
+  /**
+   * Publish only the portable CLI; its deployed dependency tree carries the
+   * internal workspace packages without creating registry packages for them.
+   * @param members - every package sharing the product version.
+   * @returns The CLI member.
+   */
+  publicationMembers(members: readonly ReleaseMember[]): ReleaseMember[] {
+    const published = members.filter(member => member.name === '@nomix-ai/nomix-harness')
+    if (published.length !== 1) {
+      throw new Error(`dsh release requires exactly one @nomix-ai/nomix-harness member, found ${String(published.length)}`)
+    }
+    return published
+  }
 
   /**
    * Require one version across the family, the way a single tag can name it.
@@ -337,7 +364,11 @@ class DshFamily extends ReleaseFamily {
    * @param files - every path inside its tarball.
    */
   validatePayload(member: ReleaseMember, files: readonly string[]): void {
-    validateTarballPayload(files, member.name)
+    const packageFiles = files.filter(file => !file.startsWith('package/node_modules/'))
+    validateTarballPayload(packageFiles, member.name)
+    if (!files.some(file => file.startsWith('package/node_modules/@nomix-ai/'))) {
+      throw new Error(`${member.name} carries no bundled @nomix-ai runtime packages`)
+    }
   }
 
   readonly installedEntry = { packageName: '@nomix-ai/nomix-harness', binPath: 'lib/bin.js' }
@@ -347,6 +378,7 @@ class DshFamily extends ReleaseFamily {
 class VendorFamily extends ReleaseFamily {
   readonly id = 'vendor'
   readonly patterns = ['vendor/*/package.json'] as const
+  readonly packing = 'package' as const
   readonly tagPrefix = 'vendor-'
 
   /**

@@ -18,6 +18,7 @@
     "lib/*.js",
     "config"
   ],
+  "bundleDependencies": true,
   "license": "MIT",
   "dependencies": {
     "@nomix-ai/cordis-plugin-hmr": "workspace:^",

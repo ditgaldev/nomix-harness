@@ -1,4 +1,4 @@
-# Agent Note: Private npm publication as three independent sequences
+# Agent Note: npm publication as three independent sequences
 
 Status: implemented
 
@@ -8,9 +8,9 @@ English | [中文](2026-08-10-npm-release-sequences.zh.md)
 
 This repository held three unrelated groups of publishable packages and no channel that sent any of them to a registry.
 
-`packages/*/*` and `apps/*` form the runtime surface of `@nomix-ai/nomix-harness`; `vendor/*` holds nine rescoped Cordis framework packages, each carrying its upstream version; `native/landlock-run/packages/*` holds Linux platform packages with their own workflow. The three differ in version baseline, change rate, and build requirements: dsh moves with the product, vendor moves only when upstream is re-synced or a local modification changes, and native needs a musl toolchain and one build per architecture. Forcing them through one pipeline means every product release republishes the framework and the native binaries.
+`packages/*/*` and `apps/*` form the runtime of `@nomix-ai/nomix-harness`; `vendor/*` holds nine rescoped Cordis framework packages, each carrying its upstream version; `native/landlock-run/packages/*` holds Linux platform packages with their own workflow. The three differ in version baseline, change rate, and build requirements: the CLI moves with the product, vendor moves only when upstream is re-synced or a local modification changes, and native needs a musl toolchain and one build per architecture. Forcing them through one pipeline means every product release republishes the framework and the native binaries.
 
-Two hard blockers sat in the way. All 217 workspace manifests set `private: true`, which npm refuses to publish. The subtler one was 933 hand-written `peerDependencies: "^0.0.1"` entries between sibling dsh packages: `pnpm pack` substitutes the `workspace:` protocol but leaves semver ranges alone, and `^0.0.1` means `>=0.0.1 <0.0.2` — it excludes `0.0.2`, and semver excludes prereleases from a range without a prerelease of its own, so it excluded `0.0.1-rc.1` too. Those entries never failed only because the version never left `0.0.1`.
+Publishing every workspace package separately creates a second problem beyond version alignment: a fresh npm scope cannot create hundreds of package names in one release without hitting registry anti-abuse limits. The product therefore publishes one portable CLI package instead of exposing its internal package graph as public registry entries.
 
 `scripts/publish-npm-baseline.ts` is a local publication script: it packs and publishes in one process, needs a human to authenticate and retry on their own machine, and excludes vendor from its release set. It cannot be the basis for CI publication, though its tarball payload validation and installed-artifact probes are verified parts.
 
@@ -18,21 +18,21 @@ Two hard blockers sat in the way. All 217 workspace manifests set `private: true
 
 ### Three independent sequences
 
-`packages/`, `vendor/`, and `native/` each have one bump sequence and one publication, sharing no version, no trigger, and no waiting. Releasing dsh does not republish vendor; releasing vendor does not republish native.
+The CLI, vendor framework, and native launcher each have one bump sequence and one publication, sharing no version or trigger. Releasing the CLI does not republish vendor; releasing vendor does not republish native.
 
 | Sequence | Members | Version baseline | Tag | Workflow |
 |---|---|---|---|---|
-| dsh | `packages/*/*` + `apps/*` (`@nomix-ai/nomix-harness` and `@nomix-ai/nomix-web-frontend`) | one version for the family and the workspace root, `0.0.x` | `dsh-v<version>` | `release.yml` |
+| dsh | one portable `@nomix-ai/nomix-harness` tarball containing its production dependency tree | product source packages, apps, and workspace root share one version | `nomix-v<version>` | `release.yml` |
 | vendored framework | the nine `vendor/*` packages | each package on its own version line | `vendor-<package>-v<version>` (one per package) | `release-vendor.yml` |
 | native | `native/landlock-run/packages/*` | its own `0.0.x` | `landlock-run-v<version>` | `landlock-run-release.yml` |
 
-All three publish to the `@nomix-ai` scope on npmjs.com, and access is per sequence rather than per scope: the vendored framework and the native packages are `public`, the dsh family is `restricted` ([rationale](2026-08-13-public-vendor-and-native-sequences.md)). No publish path passes `--access`, because one flag cannot serve sequences that disagree and would override the manifest that owns the level.
+All three publish publicly to the `@nomix-ai` scope on npmjs.com. No publish path passes `--access`; each manifest owns its access level.
 
 ### Versions land in the repository from a local command; CI only checks and uploads
 
 Each sequence has one bump-and-commit command: it derives the target version, writes it into the relevant manifests, runs `pnpm install --lockfile-only`, and commits the manifests with the lockfile. The published version is therefore readable from the repository. A human creates the tag after the commit merges to master; CI never writes to the repository and needs no write permission.
 
-`release:dsh` accepts `major`, `minor`, `patch`, or an explicit version, and writes one version across the family **and the workspace root** — the workspace constraint requires every member's version to equal the root's, so the root carries the family version, and the root check accepts a prerelease segment. A prerelease such as `0.0.1-rc.1` drives pack, the installed-artifact probe, and one real private publication before numbered versions follow. The dist-tag decision is the one `landlock-run-release.yml` already made: a version with a prerelease segment publishes under `--tag next`, anything else takes `latest`.
+`release:dsh` accepts `major`, `minor`, `patch`, or an explicit version, and writes that version across the product source packages, apps, and workspace root. This keeps the deployed tree's package identities aligned even though only its CLI root becomes a registry package. A version with a prerelease segment publishes under `--tag next`; anything else takes `latest`.
 
 ### vendor: publish what changed, and let tags be the ledger
 
@@ -72,7 +72,7 @@ The third state catches code that changed without a version bump. The first two 
 
 All three sequences decide this way, including the native one: it publishes through its own script rather than a shell loop, because a loop of bare `npm publish` calls cannot be retried — the registry answers a repeat of an existing version permanently, so one failure partway through left no way forward.
 
-Two registry behaviours shape how a publish is attempted. Writes use workflow-configured spacing and capped exponential backoff, because publishing several packages back to back outruns the registry's processing and earns `E409 Failed to save packument` or `E429 Too Many Requests`; a new scope publishing hundreds of packages uses four writes per minute and retries after two minutes. Registry reads use the same capped retry policy, so a throttled integrity check cannot abort that recovery. Every retry re-reads the registry first: a reported failure can answer a write that landed anyway, so a version that now exists with this tarball's integrity counts as published rather than as a version to place again.
+Writes use workflow-configured spacing and capped exponential backoff for transient registry failures. Registry reads use the same retry policy, and every write retry first checks whether the attempted tarball landed despite the error. The CLI sequence contains one registry write, so npm package-name creation limits cannot leave a product release as a long prefix of internal packages.
 
 ### Workspace-internal references use the `workspace:` protocol
 
@@ -103,11 +103,11 @@ The entity in this domain is a **release family**: a set of packages sharing one
 | `publish` | the three registry states above |
 | `process` / `tarball` | the one home for spawning commands and for reading a packed tarball, including the entry guard that keeps every script importable |
 
-The dsh family applies the repository's publication payload policy, which rejects sources and declaration maps. The vendored family keeps upstream's payload, because those manifests export `./src/*` and dropping `src` would publish an export map pointing at absent files.
+The dsh family applies the repository's publication payload policy to the CLI's own files. Its bundled dependencies keep their package-owned payloads, including vendored exports. The vendored family likewise keeps upstream payloads because those manifests export `./src/*`.
 
-### Workflow shape: pack everything at once, then publish as one set
+### Workflow shape: deploy once, then publish the verified bytes
 
-The `pack` job walks the whole release set once, packing each member into one directory, writes the upload order, and uploads that directory as one artifact; the `publish` job downloads that artifact and publishes each entry in order. The release set is one unit — half the packages can never reach the registry while the other half is still building.
+The `pack` job runs `pnpm deploy` for the CLI with production dependencies, packs that portable directory as one tarball, installs the tarball into a throwaway consumer, and drives `nomix --version`. The `publish` job downloads and uploads those exact bytes without rebuilding. Internal workspace packages remain implementation units in the repository and installed package, not independent npm publications.
 
 `pack` carries no credentials and runs on every pull request and master push, so a pull request proves the release set still packs. `publish` is a manual dispatch, sits behind the `npm-publish` environment for human approval, and neither builds nor rebuilds — it uploads the bytes pack produced. Pack runs are grouped per ref so concurrent pull requests do not displace each other; the publish job carries the global group, because dist-tags are shared registry state.
 
