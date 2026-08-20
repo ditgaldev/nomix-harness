@@ -114,16 +114,6 @@ function materializeDeployment(deployment: string): void {
   const virtualStore = join(nodeModules, '.pnpm')
   const internalRoot = join(nodeModules, '@nomix-ai')
   mkdirSync(internalRoot, { recursive: true })
-  for (const entry of readdirSync(virtualStore).sort()) {
-    const scopedDirectory = join(virtualStore, entry, 'node_modules', '@nomix-ai')
-    if (!existsSync(scopedDirectory)) continue
-    for (const packageName of readdirSync(scopedDirectory).sort()) {
-      const destination = join(internalRoot, packageName)
-      if (existsSync(destination)) continue
-      const source = realpathSync(join(scopedDirectory, packageName))
-      copyInternalPackage(source, destination)
-    }
-  }
   restoreInternalClosure(internalRoot)
   let link = findDeployedSymlink(nodeModules, virtualStore)
   while (link !== undefined) {
