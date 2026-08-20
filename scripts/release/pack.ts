@@ -28,6 +28,7 @@ const DEFAULT_OUTPUT = 'dist/npm'
  * @returns The tarball filename.
  */
 function packMember(family: ReleaseFamily, member: ReleaseMember, destination: string): string {
+  const filename = tarballName(member)
   if (family.packing === 'portable-deploy') {
     const deployment = mkdtempSync(join(tmpdir(), 'nomix-npm-deploy-'))
     try {
@@ -42,7 +43,14 @@ function packMember(family: ReleaseFamily, member: ReleaseMember, destination: s
         '--config.link-workspace-packages=true',
         deployment,
       ])
-      run('npm', ['pack', deployment, '--pack-destination', destination, '--ignore-scripts'])
+      run('tar', [
+        '-czf',
+        join(destination, filename),
+        '--transform=s,^\\./,package/,',
+        '-C',
+        deployment,
+        '.',
+      ])
     } finally {
       rmSync(deployment, { recursive: true, force: true })
     }
@@ -50,7 +58,6 @@ function packMember(family: ReleaseFamily, member: ReleaseMember, destination: s
     run('pnpm', ['--dir', member.directory, 'pack', '--pack-destination', destination])
   }
 
-  const filename = tarballName(member)
   const tarball = join(destination, filename)
   if (!existsSync(tarball)) throw new Error(`${member.name} produced no tarball at ${tarball}`)
   family.validatePayload(member, tarballFiles(tarball))
