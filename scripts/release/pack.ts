@@ -15,6 +15,7 @@ import {
   lstatSync,
   mkdirSync,
   mkdtempSync,
+  readFileSync,
   readdirSync,
   realpathSync,
   rmSync,
@@ -30,6 +31,7 @@ import { PUBLISH_ORDER_FILE, tarballFiles } from './tarball.ts'
 
 /** Where pack output lands when `--out` is omitted. */
 const DEFAULT_OUTPUT = 'dist/npm'
+const RUNTIME_DEPENDENCY_SECTIONS = ['dependencies', 'optionalDependencies', 'peerDependencies'] as const
 
 /**
  * Return the first symlink below a deployed node_modules tree, excluding its
@@ -53,6 +55,55 @@ function findDeployedSymlink(directory: string, virtualStore: string): string | 
 }
 
 /**
+ * Copy one internal package without its deploy-time dependency links.
+ * @param source - real package directory.
+ * @param destination - flattened package directory.
+ */
+function copyInternalPackage(source: string, destination: string): void {
+  const nestedNodeModules = join(source, 'node_modules')
+  mkdirSync(dirname(destination), { recursive: true })
+  cpSync(source, destination, {
+    recursive: true,
+    dereference: true,
+    filter: path => path !== nestedNodeModules && !path.startsWith(nestedNodeModules + sep),
+  })
+}
+
+/**
+ * Hoist every internal dependency reachable from the deployed top-level
+ * packages. Legacy deploy can leave workspace dependencies only beside their
+ * consumer, so scanning the virtual store alone does not find the whole set.
+ * @param internalRoot - deployed `node_modules/@nomix-ai` directory.
+ */
+function restoreInternalClosure(internalRoot: string): void {
+  const queue = readdirSync(internalRoot).sort()
+  const visited = new Set<string>()
+  while (queue.length > 0) {
+    const packageName = queue.shift()
+    if (packageName === undefined || visited.has(packageName)) continue
+    visited.add(packageName)
+    const packageDirectory = realpathSync(join(internalRoot, packageName))
+    const manifest = JSON.parse(readFileSync(join(packageDirectory, 'package.json'), 'utf8')) as Record<string, unknown>
+    for (const section of RUNTIME_DEPENDENCY_SECTIONS) {
+      const dependencies = manifest[section]
+      if (dependencies === null || typeof dependencies !== 'object' || Array.isArray(dependencies)) continue
+      for (const dependencyName of Object.keys(dependencies).filter(name => name.startsWith('@nomix-ai/')).sort()) {
+        const unscoped = dependencyName.slice('@nomix-ai/'.length)
+        const destination = join(internalRoot, unscoped)
+        if (!existsSync(destination)) {
+          const nested = join(packageDirectory, 'node_modules', ...dependencyName.split('/'))
+          if (!existsSync(nested)) {
+            throw new Error(`${dependencyName} is absent from the deployed dependency tree of @nomix-ai/${packageName}`)
+          }
+          copyInternalPackage(realpathSync(nested), destination)
+        }
+        queue.push(unscoped)
+      }
+    }
+  }
+}
+
+/**
  * Replace deploy-time package links with package files and remove the duplicate
  * pnpm virtual store. Runtime dependencies then form one finite npm payload.
  * @param deployment - portable deployment root.
@@ -69,14 +120,10 @@ function materializeDeployment(deployment: string): void {
       const destination = join(internalRoot, packageName)
       if (existsSync(destination)) continue
       const source = realpathSync(join(scopedDirectory, packageName))
-      const nestedNodeModules = join(source, 'node_modules')
-      cpSync(source, destination, {
-        recursive: true,
-        dereference: true,
-        filter: path => path !== nestedNodeModules && !path.startsWith(nestedNodeModules + sep),
-      })
+      copyInternalPackage(source, destination)
     }
   }
+  restoreInternalClosure(internalRoot)
   let link = findDeployedSymlink(nodeModules, virtualStore)
   while (link !== undefined) {
     const segments = link.slice(nodeModules.length + 1).split(sep)
