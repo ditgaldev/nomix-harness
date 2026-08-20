@@ -18,6 +18,7 @@ import {
   readdirSync,
   realpathSync,
   rmSync,
+  statSync,
   writeFileSync,
 } from 'node:fs'
 import { tmpdir } from 'node:os'
@@ -59,6 +60,23 @@ function findDeployedSymlink(directory: string, virtualStore: string): string | 
 function materializeDeployment(deployment: string): void {
   const nodeModules = join(deployment, 'node_modules')
   const virtualStore = join(nodeModules, '.pnpm')
+  const internalRoot = join(nodeModules, '@nomix-ai')
+  mkdirSync(internalRoot, { recursive: true })
+  for (const entry of readdirSync(virtualStore).sort()) {
+    const scopedDirectory = join(virtualStore, entry, 'node_modules', '@nomix-ai')
+    if (!existsSync(scopedDirectory)) continue
+    for (const packageName of readdirSync(scopedDirectory).sort()) {
+      const destination = join(internalRoot, packageName)
+      if (existsSync(destination)) continue
+      const source = realpathSync(join(scopedDirectory, packageName))
+      const nestedNodeModules = join(source, 'node_modules')
+      cpSync(source, destination, {
+        recursive: true,
+        dereference: true,
+        filter: path => path !== nestedNodeModules && !path.startsWith(nestedNodeModules + sep),
+      })
+    }
+  }
   let link = findDeployedSymlink(nodeModules, virtualStore)
   while (link !== undefined) {
     const segments = link.slice(nodeModules.length + 1).split(sep)
@@ -123,7 +141,12 @@ function packMember(family: ReleaseFamily, member: ReleaseMember, destination: s
 
   const tarball = join(destination, filename)
   if (!existsSync(tarball)) throw new Error(`${member.name} produced no tarball at ${tarball}`)
-  family.validatePayload(member, tarballFiles(tarball))
+  const files = tarballFiles(tarball)
+  family.validatePayload(member, files)
+  console.log(
+    `release pack: ${member.name}@${member.version}, ${String(files.length)} file(s),`
+    + ` ${(statSync(tarball).size / (1024 * 1024)).toFixed(1)} MiB`,
+  )
   return filename
 }
 
