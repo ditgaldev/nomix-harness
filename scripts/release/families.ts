@@ -96,8 +96,8 @@ function requireString(manifest: Record<string, unknown>, field: string, context
 export interface InstalledEntry {
   /** Package that carries the executable. */
   readonly packageName: string
-  /** Path to the executable inside that package. */
-  readonly binPath: string
+  /** Command npm exec resolves from that package. */
+  readonly command: string
 }
 
 /** A release sequence: its version members, publish set, and tag naming. */
@@ -364,14 +364,14 @@ class DshFamily extends ReleaseFamily {
    * @param files - every path inside its tarball.
    */
   validatePayload(member: ReleaseMember, files: readonly string[]): void {
-    const packageFiles = files.filter(file => !file.startsWith('package/node_modules/'))
-    validateTarballPayload(packageFiles, member.name)
-    if (!files.some(file => file.startsWith('package/node_modules/@nomix-ai/'))) {
-      throw new Error(`${member.name} carries no bundled @nomix-ai runtime packages`)
+    validateTarballPayload(files, member.name)
+    if (!files.includes('package/nomix-runtime.tgz')) throw new Error(`${member.name} carries no portable runtime archive`)
+    if (files.some(file => file.startsWith('package/node_modules/'))) {
+      throw new Error(`${member.name} exposes its expanded runtime as npm tarball members`)
     }
   }
 
-  readonly installedEntry = { packageName: '@nomix-ai/nomix-harness', binPath: 'lib/bin.js' }
+  readonly installedEntry = { packageName: '@nomix-ai/nomix-harness', command: 'nomix' }
 }
 
 /** `vendor/*`: every package keeps its own version line, so every package has its own tag. */

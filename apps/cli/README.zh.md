@@ -2,7 +2,7 @@
 
 [English](README.md) | 中文
 
-`nomix` 是用于启动 profile 的产品命令；profile 由多个插件组合包 patch 层按顺序叠加而成，其上再应用用户自己的覆盖配置。npm 发布物是一个可移植的 `@nomix-ai/nomix-harness` tarball，随附的生产依赖树包含仓库内运行时包，消费者无需分别安装这些包。[`src/args.ts`](src/args.ts) 负责命令语法，[`src/bin.ts`](src/bin.ts) 只加载选中的运行器。无效命令、来自其他模式的选项、配置错误和启动失败都会以非零状态退出。
+`nomix` 是用于启动 profile 的产品命令；profile 由多个插件组合包 patch 层按顺序叠加而成，其上再应用用户自己的覆盖配置。npm 发布物是一个可移植的 `@nomix-ai/nomix-harness` tarball，其安装生命周期会恢复包含仓库内运行时包的压缩生产依赖树，消费者无需分别安装这些包。安装时必须允许运行 package 生命周期脚本；使用 `--ignore-scripts` 会导致运行时不可用。[`src/args.ts`](src/args.ts) 负责命令语法，[`src/bin.ts`](src/bin.ts) 只加载选中的运行器。无效命令、来自其他模式的选项、配置错误和启动失败都会以非零状态退出。
 
 ## 入口模式
 
@@ -12,6 +12,13 @@
 | `nomix --profile headless "job"` | 运行一个全新的持久化会话，打印最终答案并退出。 |
 | `nomix web` | `--profile web` 的别名。 |
 | `nomix plugin --profile <name> <pnpm args>` | 通过在 profile 目录中转发给 pnpm 来管理该 profile 的插件。 |
+
+如果不需要持久安装，npm 可以从缓存安装并执行同一个 CLI：
+
+```sh
+npx --yes --package @nomix-ai/nomix-harness@0.1.1 nomix --version
+npx --yes --package @nomix-ai/nomix-harness@0.1.1 nomix --profile headless "task"
+```
 
 运行命令时所在的目录将作为默认 workspace 根目录。`web` 和 `headless` profile 在首次使用时会从随附模板自动初始化；其他任何 profile 都必须通过 `nomix plugin` 创建。
 

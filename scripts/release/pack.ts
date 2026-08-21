@@ -37,6 +37,7 @@ import {
 
 /** Where pack output lands when `--out` is omitted. */
 const DEFAULT_OUTPUT = 'dist/npm'
+const PORTABLE_RUNTIME_ARCHIVE = 'nomix-runtime.tgz'
 const RUNTIME_DEPENDENCY_SECTIONS = ['dependencies', 'optionalDependencies', 'peerDependencies'] as const
 let workspaceInternalPackages: ReadonlyMap<string, string> | undefined
 
@@ -183,6 +184,34 @@ function materializeDeployment(deployment: string): void {
 }
 
 /**
+ * Compress the materialized runtime and add its install lifecycle to the
+ * deployed manifest. The outer npm tarball then carries one runtime member
+ * instead of exceeding the registry's file-count limit.
+ * @param deployment - portable deployment root.
+ */
+function compressPortableRuntime(deployment: string): void {
+  const nodeModules = join(deployment, 'node_modules')
+  run('tar', [
+    '--hard-dereference',
+    '-czf',
+    join(deployment, PORTABLE_RUNTIME_ARCHIVE),
+    '-C',
+    deployment,
+    'node_modules',
+  ])
+  rmSync(nodeModules, { recursive: true, force: true })
+
+  const manifestPath = join(deployment, 'package.json')
+  const manifest = JSON.parse(readFileSync(manifestPath, 'utf8')) as Record<string, unknown>
+  const scripts = manifest.scripts
+  if (scripts !== undefined && (scripts === null || typeof scripts !== 'object' || Array.isArray(scripts))) {
+    throw new Error('portable CLI manifest scripts must be an object')
+  }
+  manifest.scripts = { ...(scripts as Record<string, unknown> | undefined), postinstall: 'node lib/install-runtime.js' }
+  writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`)
+}
+
+/**
  * Pack one member and check what its tarball carries.
  * @param family - the release family being packed.
  * @param member - the member to pack.
@@ -207,6 +236,7 @@ function packMember(family: ReleaseFamily, member: ReleaseMember, destination: s
         deployment,
       ])
       materializeDeployment(deployment)
+      compressPortableRuntime(deployment)
       run('tar', [
         '--hard-dereference',
         '-czf',

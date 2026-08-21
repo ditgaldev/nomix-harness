@@ -1,17 +1,17 @@
 /**
- * Install packed tarballs into a throwaway consumer outside the repository and
- * drive the installed executable with plain Node.
+ * Execute a packed CLI through npm exec in a throwaway consumer outside the
+ * repository.
  *
  * Every registry package the installed tree owns comes from `--from`. For the
  * dsh family that is one portable CLI tarball whose bundled production tree
- * contains the product and vendored workspace packages; verification therefore
- * does not depend on those internal package names existing in the registry
+ * restores the product and vendored workspace packages from its compressed
+ * runtime during installation; verification therefore does not depend on
+ * those internal package names existing in the registry
  * ([rationale](../../.agents/notes/implemented/process/2026-08-10-npm-release-sequences.md)).
  *
- * What this proves is that `files` selected a complete payload, bundled links
- * survived packing, and remaining external dependency ranges resolve. A
- * workspace link or stale `lib/` in the checkout cannot stand in for a missing
- * file here.
+ * What this proves is that the npx/npm-exec entry installs, its lifecycle
+ * restores the compressed runtime, and its command starts. A workspace link or
+ * stale `lib/` in the checkout cannot stand in for a missing file here.
  */
 
 import { mkdtempSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
@@ -38,6 +38,7 @@ function consumerEnvironment(consumerRoot: string): NodeJS.ProcessEnv {
   environment.DSH_HOME = resolve(consumerRoot, '.dsh')
   environment.DSH_AGENTS_HOME = resolve(consumerRoot, '.agents')
   environment.DSH_TELEMETRY_DISABLED = '1'
+  environment.NPM_CONFIG_OMIT = 'optional'
   return environment
 }
 
@@ -92,21 +93,18 @@ function main(): void {
       name: `dsh-packed-install-${family.id}`,
       version: '0.0.0',
       private: true,
-      dependencies: Object.fromEntries([...packed].map(([name, entryPacked]) => [name, entryPacked.url])),
     }, null, 2)}\n`)
 
     const environment = consumerEnvironment(consumerRoot)
-    console.log(`release verify-packed-install: installing ${String(packed.size)} tarball(s) into ${consumerRoot}`)
-    // Optional dependencies are omitted: the Landlock platform packages behind
-    // them need a musl toolchain and one build per architecture, and a consumer
-    // that cannot install them must still start — which is what optional means
-    // here. Their entry package is a plain dependency of dsh-sandbox-local, so
-    // its tarball is supplied through --from.
-    capture('npm', ['install', '--no-audit', '--no-fund', '--package-lock=false', '--omit=optional'],
-      { cwd: consumerRoot, env: environment })
-
-    const bin = join(consumerRoot, 'node_modules', ...entry.packageName.split('/'), entry.binPath)
-    const version = capture(process.execPath, [bin, '--version'], { cwd: consumerRoot, env: environment })
+    console.log(`release verify-packed-install: executing ${entry.command} from ${expected.url} in ${consumerRoot}`)
+    const version = capture('npm', [
+      'exec',
+      '--yes',
+      `--package=${expected.url}`,
+      '--',
+      entry.command,
+      '--version',
+    ], { cwd: consumerRoot, env: environment })
     if (version !== expected.version) {
       throw new Error(`installed ${entry.packageName} --version reported ${JSON.stringify(version)}, expected ${expected.version}`)
     }

@@ -180,17 +180,23 @@ describe('release families', () => {
     expect(() => {
       dsh.validatePayload(harness, [
         'package/lib/index.js',
-        'package/node_modules/@nomix-ai/nomix-library/package.json',
-        'package/node_modules/@nomix-ai/nomix-library/src/index.ts',
+        'package/nomix-runtime.tgz',
       ])
     }).not.toThrow()
-    expect(() => { dsh.validatePayload(harness, ['package/lib/index.js']) }).toThrow(/no bundled @nomix-ai runtime packages/)
+    expect(() => { dsh.validatePayload(harness, ['package/lib/index.js']) }).toThrow(/no portable runtime archive/)
+    expect(() => {
+      dsh.validatePayload(harness, [
+        'package/lib/index.js',
+        'package/nomix-runtime.tgz',
+        'package/node_modules/@nomix-ai/nomix-library/package.json',
+      ])
+    }).toThrow(/exposes its expanded runtime/)
     expect(() => { vendor.validatePayload(vendored, ['package/lib/index.js', 'package/src/index.ts']) }).not.toThrow()
     expect(() => { vendor.validatePayload(vendored, []) }).toThrow(/empty tarball/)
   })
 
   it('drives the installed entry only for the family that publishes one', () => {
-    expect(releaseFamily('dsh').installedEntry).toEqual({ packageName: '@nomix-ai/nomix-harness', binPath: 'lib/bin.js' })
+    expect(releaseFamily('dsh').installedEntry).toEqual({ packageName: '@nomix-ai/nomix-harness', command: 'nomix' })
     expect(releaseFamily('vendor').installedEntry).toBeUndefined()
   })
 

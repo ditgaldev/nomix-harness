@@ -6,8 +6,7 @@ import { defineConfig } from 'tsdown'
  * `lib/types/bin.js` instead; its reachable mode modules bundle with it.
  * Declarations come from `tsc -b` (dts: false), matching every package.
  */
-export default defineConfig({
-  entry: ['lib/types/bin.js'],
+const common = {
   outDir: 'lib',
   format: ['esm'],
   platform: 'node',
@@ -15,4 +14,13 @@ export default defineConfig({
   fixedExtension: false,
   dts: false,
   clean: false,
-})
+} as const
+
+export default defineConfig([
+  { ...common, entry: ['lib/types/bin.js'] },
+  {
+    ...common,
+    entry: ['lib/types/install-runtime.js'],
+    deps: { alwaysBundle: ['tar'] },
+  },
+])

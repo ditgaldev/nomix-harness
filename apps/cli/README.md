@@ -2,7 +2,7 @@
 
 English | [中文](README.zh.md)
 
-The `nomix` command is the product launcher for profiles: ordered stacks of plugin-bundle patch layers under the user's own overrides. The npm release is one portable `@nomix-ai/nomix-harness` tarball whose bundled production tree contains the in-repository runtime packages; consumers do not install those packages separately. [`src/args.ts`](src/args.ts) owns the command grammar, and [`src/bin.ts`](src/bin.ts) loads only the selected runner. Invalid commands, options from another mode, configuration errors, and boot failures exit nonzero.
+The `nomix` command is the product launcher for profiles: ordered stacks of plugin-bundle patch layers under the user's own overrides. The npm release is one portable `@nomix-ai/nomix-harness` tarball whose install lifecycle restores a compressed production tree containing the in-repository runtime packages; consumers do not install those packages separately. Installation must allow package lifecycle scripts; `--ignore-scripts` leaves the runtime unavailable. [`src/args.ts`](src/args.ts) owns the command grammar, and [`src/bin.ts`](src/bin.ts) loads only the selected runner. Invalid commands, options from another mode, configuration errors, and boot failures exit nonzero.
 
 ## Entry modes
 
@@ -12,6 +12,13 @@ The `nomix` command is the product launcher for profiles: ordered stacks of plug
 | `nomix --profile headless "job"` | Run one fresh persisted session, print the final answer, and exit. |
 | `nomix web` | Alias of `--profile web`. |
 | `nomix plugin --profile <name> <pnpm args>` | Manage a profile's plugins by forwarding to pnpm in the profile directory. |
+
+Without a persistent installation, npm can install and execute the same CLI from its cache:
+
+```sh
+npx --yes --package @nomix-ai/nomix-harness@0.1.1 nomix --version
+npx --yes --package @nomix-ai/nomix-harness@0.1.1 nomix --profile headless "task"
+```
 
 The invoking directory is the default workspace root. The `web` and `headless` profiles auto-initialize on first use from shipped templates; any other profile must be created through `nomix plugin`.
 
