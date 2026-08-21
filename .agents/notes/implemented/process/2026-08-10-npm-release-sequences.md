@@ -26,7 +26,7 @@ The CLI, vendor framework, and native launcher each have one bump sequence and o
 | vendored framework | the nine `vendor/*` packages | each package on its own version line | `vendor-<package>-v<version>` (one per package) | `release-vendor.yml` |
 | native | `native/landlock-run/packages/*` | its own `0.0.x` | `landlock-run-v<version>` | `landlock-run-release.yml` |
 
-All three publish publicly to the `@nomix-ai` scope on npmjs.com, and each manifest owns its intended access level. The Nomix workflow also reapplies public access after publication and requires an anonymous `npm view` to succeed. Its `repair_access` dispatch performs only those two operations, allowing an account-to-organization conversion to repair registry access without rebuilding or republishing the tarball.
+All three publish publicly to the `@nomix-ai` scope on npmjs.com, and each manifest owns its intended access level. The Nomix workflow also reapplies public access after publication and requires an anonymous `npm view` to succeed. Its `repair_access` dispatch performs only those two operations without rebuilding or republishing the tarball; the npm credential must be authorized to change package access, and an interactive package owner must use npmjs.com when registry policy requires a 2FA challenge.
 
 ### Versions land in the repository from a local command; CI only checks and uploads
 
