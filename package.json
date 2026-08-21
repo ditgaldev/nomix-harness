@@ -1,6 +1,6 @@
 {
   "name": "@nomix-ai/nomix-root",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "private": true,
   "type": "module",

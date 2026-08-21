@@ -16,8 +16,8 @@
 如果不需要持久安装，npm 可以从缓存安装并执行同一个 CLI：
 
 ```sh
-npx --yes --package @nomix-ai/nomix-harness@0.1.1 nomix --version
-npx --yes --package @nomix-ai/nomix-harness@0.1.1 nomix --profile headless "task"
+npx --yes --package @nomix-ai/nomix-harness@0.1.2 nomix --version
+npx --yes --package @nomix-ai/nomix-harness@0.1.2 nomix --profile headless "task"
 ```
 
 运行命令时所在的目录将作为默认 workspace 根目录。`web` 和 `headless` profile 在首次使用时会从随附模板自动初始化；其他任何 profile 都必须通过 `nomix plugin` 创建。

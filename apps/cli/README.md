@@ -16,8 +16,8 @@ The `nomix` command is the product launcher for profiles: ordered stacks of plug
 Without a persistent installation, npm can install and execute the same CLI from its cache:
 
 ```sh
-npx --yes --package @nomix-ai/nomix-harness@0.1.1 nomix --version
-npx --yes --package @nomix-ai/nomix-harness@0.1.1 nomix --profile headless "task"
+npx --yes --package @nomix-ai/nomix-harness@0.1.2 nomix --version
+npx --yes --package @nomix-ai/nomix-harness@0.1.2 nomix --profile headless "task"
 ```
 
 The invoking directory is the default workspace root. The `web` and `headless` profiles auto-initialize on first use from shipped templates; any other profile must be created through `nomix plugin`.
