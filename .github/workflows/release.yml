@@ -18,6 +18,11 @@ on:
         required: true
         type: boolean
         default: false
+      repair_access:
+        description: Reapply public npm access without packing or publishing.
+        required: true
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -144,3 +149,58 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: pnpm run release:publish --family dsh --from dist/npm
+
+      - name: Ensure public npm access
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm access set status=public @nomix-ai/nomix-harness --registry https://registry.npmjs.org
+
+      - name: Verify anonymous registry metadata
+        shell: bash
+        run: |
+          for attempt in {1..12}; do
+            if NPM_CONFIG_USERCONFIG=/dev/null npm view @nomix-ai/nomix-harness version --registry https://registry.npmjs.org >/dev/null 2>&1; then
+              NPM_CONFIG_USERCONFIG=/dev/null npm view @nomix-ai/nomix-harness version --registry https://registry.npmjs.org
+              exit 0
+            fi
+            sleep 10
+          done
+          NPM_CONFIG_USERCONFIG=/dev/null npm view @nomix-ai/nomix-harness version --registry https://registry.npmjs.org
+
+  repair-access:
+    name: Repair public npm access
+    if: inputs.repair_access
+    runs-on: ubuntu-24.04
+    environment: npm-publish
+    concurrency:
+      group: Release-publish
+      cancel-in-progress: false
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.PRIMARY_NODE_VERSION }}
+          registry-url: https://registry.npmjs.org
+
+      - name: Verify npm credentials
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm whoami --registry https://registry.npmjs.org
+
+      - name: Set package access to public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm access set status=public @nomix-ai/nomix-harness --registry https://registry.npmjs.org
+
+      - name: Verify anonymous registry metadata
+        shell: bash
+        run: |
+          for attempt in {1..12}; do
+            if NPM_CONFIG_USERCONFIG=/dev/null npm view @nomix-ai/nomix-harness version --registry https://registry.npmjs.org >/dev/null 2>&1; then
+              NPM_CONFIG_USERCONFIG=/dev/null npm view @nomix-ai/nomix-harness version --registry https://registry.npmjs.org
+              exit 0
+            fi
+            sleep 10
+          done
+          NPM_CONFIG_USERCONFIG=/dev/null npm view @nomix-ai/nomix-harness version --registry https://registry.npmjs.org
