@@ -1,6 +1,6 @@
 /**
- * Execute a packed CLI through npm exec in a throwaway consumer outside the
- * repository.
+ * Install a packed CLI once and execute its local bin through npm exec in a
+ * throwaway consumer outside the repository.
  *
  * Every registry package the installed tree owns comes from `--from`. For the
  * dsh family that is one portable CLI tarball whose bundled production tree
@@ -9,8 +9,8 @@
  * those internal package names existing in the registry
  * ([rationale](../../.agents/notes/implemented/process/2026-08-10-npm-release-sequences.md)).
  *
- * What this proves is that the npx/npm-exec entry installs, its lifecycle
- * restores the compressed runtime, and its command starts. A workspace link or
+ * What this proves is that npm installs the entry, its lifecycle restores the
+ * compressed runtime, and npm exec resolves its command. A workspace link or
  * stale `lib/` in the checkout cannot stand in for a missing file here.
  */
 
@@ -20,7 +20,7 @@ import { join, resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { parseArgs } from 'node:util'
 import { releaseFamily } from './families.ts'
-import { capture, isEntry } from './process.ts'
+import { capture, isEntry, run } from './process.ts'
 import { packedIdentity } from './tarball.ts'
 
 /**
@@ -93,14 +93,22 @@ function main(): void {
       name: `dsh-packed-install-${family.id}`,
       version: '0.0.0',
       private: true,
+      dependencies: { [entry.packageName]: expected.url },
     }, null, 2)}\n`)
 
     const environment = consumerEnvironment(consumerRoot)
-    console.log(`release verify-packed-install: executing ${entry.command} from ${expected.url} in ${consumerRoot}`)
+    console.log(`release verify-packed-install: installing ${expected.url} once in ${consumerRoot}`)
+    run('npm', [
+      'install',
+      '--ignore-scripts=false',
+      '--omit=optional',
+      '--no-audit',
+      '--no-fund',
+    ], { cwd: consumerRoot, env: environment })
+    console.log(`release verify-packed-install: executing installed ${entry.command} in ${consumerRoot}`)
     const version = capture('npm', [
       'exec',
-      '--yes',
-      `--package=${expected.url}`,
+      '--offline',
       '--',
       entry.command,
       '--version',
@@ -112,8 +120,7 @@ function main(): void {
     if (entry.smokeArgs !== undefined) {
       const output = capture('npm', [
         'exec',
-        '--yes',
-        `--package=${expected.url}`,
+        '--offline',
         '--',
         entry.command,
         ...entry.smokeArgs,
