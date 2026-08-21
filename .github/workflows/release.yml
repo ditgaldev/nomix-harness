@@ -96,11 +96,19 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-  verify-windows:
-    name: Verify packed install (Windows x64)
+  verify-platform:
+    name: Verify packed install (${{ matrix.name }})
     needs: pack
-    runs-on: windows-2025
-    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Windows x64
+            os: windows-2025
+          - name: macOS
+            os: macos-15
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v6
         with:
@@ -121,7 +129,7 @@ jobs:
   publish:
     name: Publish to npm
     if: inputs.publish
-    needs: [pack, verify-windows]
+    needs: [pack, verify-platform]
     runs-on: ubuntu-24.04
     # Required reviewers and the allowed tags live on the environment; this is
     # the only step in the sequence that can write to the registry.

@@ -39,6 +39,7 @@ import {
 const DEFAULT_OUTPUT = 'dist/npm'
 const PORTABLE_RUNTIME_ARCHIVE = 'nomix-runtime.tgz'
 const RUNTIME_DEPENDENCY_SECTIONS = ['dependencies', 'optionalDependencies', 'peerDependencies'] as const
+const PLATFORM_DEPENDENCIES = ['koffi', 'node-addon-require-builtin', 'sharp'] as const
 let workspaceInternalPackages: ReadonlyMap<string, string> | undefined
 
 /**
@@ -184,6 +185,41 @@ function materializeDeployment(deployment: string): void {
 }
 
 /**
+ * Mark repository-owned dependencies as bundled while leaving native wrappers
+ * for npm to resolve on the consumer platform.
+ * @param manifest - deployed CLI manifest.
+ * @param platformVersions - exact native-wrapper versions from the deployment.
+ * @returns The manifest written into the npm package.
+ */
+export function preparePortableManifest(
+  manifest: Record<string, unknown>,
+  platformVersions: Readonly<Record<string, string>>,
+): Record<string, unknown> {
+  const dependencies = manifest.dependencies
+  if (dependencies === null || typeof dependencies !== 'object' || Array.isArray(dependencies)) {
+    throw new Error('portable CLI manifest dependencies must be an object')
+  }
+  const rewrittenDependencies = { ...dependencies } as Record<string, unknown>
+  const bundledDependencies = Object.keys(rewrittenDependencies).filter(name => !PLATFORM_DEPENDENCIES.includes(
+    name as typeof PLATFORM_DEPENDENCIES[number],
+  ))
+  for (const name of PLATFORM_DEPENDENCIES) {
+    const version = platformVersions[name]
+    if (version === undefined) throw new Error(`portable runtime is missing platform dependency ${name}`)
+    rewrittenDependencies[name] = version
+  }
+  manifest.dependencies = rewrittenDependencies
+  manifest.bundleDependencies = bundledDependencies
+
+  const scripts = manifest.scripts
+  if (scripts !== undefined && (scripts === null || typeof scripts !== 'object' || Array.isArray(scripts))) {
+    throw new Error('portable CLI manifest scripts must be an object')
+  }
+  manifest.scripts = { ...(scripts as Record<string, unknown> | undefined), postinstall: 'node lib/install-runtime.js' }
+  return manifest
+}
+
+/**
  * Compress the materialized runtime and add its install lifecycle to the
  * deployed manifest. The outer npm tarball then carries one runtime member
  * instead of exceeding the registry's file-count limit.
@@ -191,6 +227,16 @@ function materializeDeployment(deployment: string): void {
  */
 function compressPortableRuntime(deployment: string): void {
   const nodeModules = join(deployment, 'node_modules')
+  const platformVersions: Record<string, string> = {}
+  for (const name of PLATFORM_DEPENDENCIES) {
+    const packageDirectory = join(nodeModules, ...name.split('/'))
+    const dependencyManifest = JSON.parse(readFileSync(join(packageDirectory, 'package.json'), 'utf8')) as { version?: unknown }
+    if (typeof dependencyManifest.version !== 'string') {
+      throw new Error(`${name} has no version in the portable runtime`)
+    }
+    platformVersions[name] = dependencyManifest.version
+    rmSync(packageDirectory, { recursive: true, force: true })
+  }
   run('tar', [
     '--hard-dereference',
     '-czf',
@@ -203,12 +249,7 @@ function compressPortableRuntime(deployment: string): void {
 
   const manifestPath = join(deployment, 'package.json')
   const manifest = JSON.parse(readFileSync(manifestPath, 'utf8')) as Record<string, unknown>
-  const scripts = manifest.scripts
-  if (scripts !== undefined && (scripts === null || typeof scripts !== 'object' || Array.isArray(scripts))) {
-    throw new Error('portable CLI manifest scripts must be an object')
-  }
-  manifest.scripts = { ...(scripts as Record<string, unknown> | undefined), postinstall: 'node lib/install-runtime.js' }
-  writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`)
+  writeFileSync(manifestPath, `${JSON.stringify(preparePortableManifest(manifest, platformVersions), null, 2)}\n`)
 }
 
 /**

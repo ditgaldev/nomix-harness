@@ -107,13 +107,13 @@ dsh 族只对 CLI 自身文件应用仓库发布 payload 策略；其 bundled de
 
 ### workflow 形状：deploy 一次，再发布验证过的字节
 
-`pack` job 对 CLI 及其生产依赖运行 `pnpm deploy`，其中包括 Linux 构建主机与 Windows x64 消费方所需的原生可选包；随后物化链接，把展开的 `node_modules` 树压缩成单个 `nomix-runtime.tgz` 成员，再把可移植包放到标准的 `package/` 归档根下。安装生命周期使用已打包的解压器恢复运行时；禁用 package 脚本的安装方式不受支持。pack 会在安装一次 tarball、通过已安装的 npm-exec bin 检查 `nomix --version` 并通过 `nomix web --help` 加载 Web 应用之前，拒绝根目录之外的路径、硬链接条目、缺失的运行时归档，或作为 npm 成员暴露的展开运行时。Windows x64 job 会对 Linux 生成的同一 tarball 重复这项安装产物探针，之后发布才能开始。`publish` job 下载并上传这些已验证的字节，不再构建。内部 workspace 包仍是仓库和安装产物中的实现单元，不再是独立 npm 发布。
+`pack` job 对 CLI 及其生产依赖运行 `pnpm deploy` 并物化其中的链接。它移除已按构建机平台选出的 `sharp`、`koffi` 与 `node-addon-require-builtin`，把它们的精确版本声明为普通 npm 依赖，再把其余依赖树压缩成单个 `nomix-runtime.tgz` 成员，并把可移植包放到标准的 `package/` 归档根下。因此，这些包装器的原生 optional packages 由 npm 根据消费者的操作系统和架构选择，而不是把打包机上的 Linux 二进制交给消费者。安装生命周期使用已打包的解压器恢复仓库内运行时；禁用 package 脚本或 optional dependencies 的安装方式不受支持。pack 会在安装一次 tarball、通过已安装的 npm-exec bin 检查 `nomix --version` 并通过 `nomix web --help` 加载 Web 应用之前，拒绝根目录之外的路径、硬链接条目、缺失的运行时归档，或作为 npm 成员暴露的展开运行时。Windows x64 与 macOS job 会对 Linux 生成的同一 tarball 重复这项安装产物探针，之后发布才能开始。`publish` job 下载并上传这些已验证的字节，不再构建。内部 workspace 包仍是仓库和安装产物中的实现单元，不再是独立 npm 发布。
 
 `pack` 无凭据，在每个 pull request 和每次 master push 上跑，所以一个 pull request 就能证明发布集仍能完整打出来。`publish` 是手动 dispatch，挂在 `npm-publish` environment 后面等人工审批，且既不构建也不重建——它上传的就是 pack 产出的字节。pack 的 run 按 ref 分组，并发的 pull request 不会互相顶掉；全局分组落在 publish job 上，因为 dist-tag 是共享的 registry 状态。
 
 dsh 的验证会一并安装 vendored 族的 pack 产物。harness 的包把 vendored 框架声明成 peer，而那些包属于另一条序列，无凭据的 job 无法从私有 registry 取到——所以 `release.yml` 为验证而打包 vendored 族，发布的仍只有自己那一份。
 
-验证还会打一份 Landlock entry 的 tarball——`dsh-sandbox-local` 把它声明为普通 `dependencies`——同时略去可选依赖。那些可选项背后的平台包需要 musl 工具链且每个架构各构建一次，单台 runner 产不出来；而装不到它们的消费方也必须能起，这正是「可选」在这里的含义。因此验证按目录内容读取 tarball，而不是读发布顺序：一个目录可能只装着为满足跨序列依赖而打出来的包，任何发布顺序都不描述它。
+安装探针会保留 optional dependencies，因为外置的原生包装器依赖它们来选择平台二进制。验证按目录内容读取 tarball，而不是读发布顺序：一个目录可能只装着为满足跨序列依赖而打出来的包，任何发布顺序都不描述它。
 
 ### 本次带出的仓库改动
 

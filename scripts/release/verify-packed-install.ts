@@ -38,7 +38,6 @@ function consumerEnvironment(consumerRoot: string): NodeJS.ProcessEnv {
   environment.DSH_HOME = resolve(consumerRoot, '.dsh')
   environment.DSH_AGENTS_HOME = resolve(consumerRoot, '.agents')
   environment.DSH_TELEMETRY_DISABLED = '1'
-  environment.NPM_CONFIG_OMIT = 'optional'
   return environment
 }
 
@@ -101,7 +100,6 @@ function main(): void {
     run('npm', [
       'install',
       '--ignore-scripts=false',
-      '--omit=optional',
       '--no-audit',
       '--no-fund',
     ], { cwd: consumerRoot, env: environment })

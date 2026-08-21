@@ -2,7 +2,7 @@
 
 English | [中文](README.zh.md)
 
-The `nomix` command is the product launcher for profiles: ordered stacks of plugin-bundle patch layers under the user's own overrides. The npm release is one portable `@nomix-ai/nomix-harness` tarball whose install lifecycle restores a compressed production tree containing the in-repository runtime packages and the native optional dependencies for Linux and Windows x64; consumers do not install those packages separately. Installation must allow package lifecycle scripts; `--ignore-scripts` leaves the runtime unavailable. [`src/args.ts`](src/args.ts) owns the command grammar, and [`src/bin.ts`](src/bin.ts) loads only the selected runner. Invalid commands, options from another mode, configuration errors, and boot failures exit nonzero.
+The `nomix` command is the product launcher for profiles: ordered stacks of plugin-bundle patch layers under the user's own overrides. The npm release is one portable `@nomix-ai/nomix-harness` tarball whose install lifecycle restores the in-repository runtime packages; npm installs `sharp`, `koffi`, and the built-in loader for the consumer's Windows, macOS, or Linux platform. Installation must allow package lifecycle scripts and optional dependencies; `--ignore-scripts` or `--omit=optional` leaves the runtime unavailable. [`src/args.ts`](src/args.ts) owns the command grammar, and [`src/bin.ts`](src/bin.ts) loads only the selected runner. Invalid commands, options from another mode, configuration errors, and boot failures exit nonzero.
 
 ## Entry modes
 
