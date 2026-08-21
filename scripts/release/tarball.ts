@@ -40,6 +40,23 @@ export function validateNpmTarballPaths(files: readonly string[]): void {
 }
 
 /**
+ * Reject hard-link entries that the npm registry does not accept.
+ * @param tarball - absolute tarball path.
+ */
+export function validateNpmTarballListing(tarball: string): void {
+  validateNpmTarListing(capture('tar', ['-tvzf', tarball]).split('\n'))
+}
+
+/**
+ * Validate a verbose GNU tar listing.
+ * @param lines - lines emitted by `tar -tvzf`.
+ */
+export function validateNpmTarListing(lines: readonly string[]): void {
+  const hardLink = lines.find(line => line.startsWith('h'))
+  if (hardLink !== undefined) throw new Error(`npm tarball contains hard link: ${hardLink}`)
+}
+
+/**
  * Read a packed tarball's own manifest.
  * @param tarball - absolute tarball path.
  * @returns The name and version the tarball declares.

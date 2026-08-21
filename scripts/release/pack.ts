@@ -28,7 +28,12 @@ import { dirname, join, resolve, sep } from 'node:path'
 import { parseArgs } from 'node:util'
 import { releaseFamily, tarballName, type ReleaseFamily, type ReleaseMember } from './families.ts'
 import { isEntry, run } from './process.ts'
-import { PUBLISH_ORDER_FILE, tarballFiles, validateNpmTarballPaths } from './tarball.ts'
+import {
+  PUBLISH_ORDER_FILE,
+  tarballFiles,
+  validateNpmTarballListing,
+  validateNpmTarballPaths,
+} from './tarball.ts'
 
 /** Where pack output lands when `--out` is omitted. */
 const DEFAULT_OUTPUT = 'dist/npm'
@@ -203,6 +208,7 @@ function packMember(family: ReleaseFamily, member: ReleaseMember, destination: s
       ])
       materializeDeployment(deployment)
       run('tar', [
+        '--hard-dereference',
         '-czf',
         join(destination, filename),
         '-C',
@@ -220,6 +226,7 @@ function packMember(family: ReleaseFamily, member: ReleaseMember, destination: s
   if (!existsSync(tarball)) throw new Error(`${member.name} produced no tarball at ${tarball}`)
   const files = tarballFiles(tarball)
   validateNpmTarballPaths(files)
+  validateNpmTarballListing(tarball)
   family.validatePayload(member, files)
   console.log(
     `release pack: ${member.name}@${member.version}, ${String(files.length)} file(s),`
