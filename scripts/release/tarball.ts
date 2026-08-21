@@ -31,6 +31,15 @@ export function tarballFiles(tarball: string): string[] {
 }
 
 /**
+ * Require npm's conventional `package/` archive root.
+ * @param files - paths listed from a packed tarball.
+ */
+export function validateNpmTarballPaths(files: readonly string[]): void {
+  const invalid = files.find(file => file !== 'package' && file !== 'package/' && !file.startsWith('package/'))
+  if (invalid !== undefined) throw new Error(`npm tarball contains invalid path: ${invalid}`)
+}
+
+/**
  * Read a packed tarball's own manifest.
  * @param tarball - absolute tarball path.
  * @returns The name and version the tarball declares.

@@ -28,7 +28,7 @@ import { dirname, join, resolve, sep } from 'node:path'
 import { parseArgs } from 'node:util'
 import { releaseFamily, tarballName, type ReleaseFamily, type ReleaseMember } from './families.ts'
 import { isEntry, run } from './process.ts'
-import { PUBLISH_ORDER_FILE, tarballFiles } from './tarball.ts'
+import { PUBLISH_ORDER_FILE, tarballFiles, validateNpmTarballPaths } from './tarball.ts'
 
 /** Where pack output lands when `--out` is omitted. */
 const DEFAULT_OUTPUT = 'dist/npm'
@@ -187,7 +187,8 @@ function materializeDeployment(deployment: string): void {
 function packMember(family: ReleaseFamily, member: ReleaseMember, destination: string): string {
   const filename = tarballName(member)
   if (family.packing === 'portable-deploy') {
-    const deployment = mkdtempSync(join(tmpdir(), 'nomix-npm-deploy-'))
+    const archiveRoot = mkdtempSync(join(tmpdir(), 'nomix-npm-archive-'))
+    const deployment = join(archiveRoot, 'package')
     try {
       run('pnpm', [
         '--filter',
@@ -204,13 +205,12 @@ function packMember(family: ReleaseFamily, member: ReleaseMember, destination: s
       run('tar', [
         '-czf',
         join(destination, filename),
-        '--transform=s,^\\./,package/,',
         '-C',
-        deployment,
-        '.',
+        archiveRoot,
+        'package',
       ])
     } finally {
-      rmSync(deployment, { recursive: true, force: true })
+      rmSync(archiveRoot, { recursive: true, force: true })
     }
   } else {
     run('pnpm', ['--dir', member.directory, 'pack', '--pack-destination', destination])
@@ -219,6 +219,7 @@ function packMember(family: ReleaseFamily, member: ReleaseMember, destination: s
   const tarball = join(destination, filename)
   if (!existsSync(tarball)) throw new Error(`${member.name} produced no tarball at ${tarball}`)
   const files = tarballFiles(tarball)
+  validateNpmTarballPaths(files)
   family.validatePayload(member, files)
   console.log(
     `release pack: ${member.name}@${member.version}, ${String(files.length)} file(s),`
