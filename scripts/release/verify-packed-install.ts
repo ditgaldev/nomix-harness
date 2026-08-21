@@ -109,6 +109,22 @@ function main(): void {
       throw new Error(`installed ${entry.packageName} --version reported ${JSON.stringify(version)}, expected ${expected.version}`)
     }
     console.log(`release verify-packed-install: installed ${entry.packageName} reports ${version}`)
+    if (entry.smokeArgs !== undefined) {
+      const output = capture('npm', [
+        'exec',
+        '--yes',
+        `--package=${expected.url}`,
+        '--',
+        entry.command,
+        ...entry.smokeArgs,
+      ], { cwd: consumerRoot, env: environment })
+      if (entry.smokeOutput !== undefined && !output.includes(entry.smokeOutput)) {
+        throw new Error(
+          `installed ${entry.packageName} smoke output omitted ${JSON.stringify(entry.smokeOutput)}: ${JSON.stringify(output)}`,
+        )
+      }
+      console.log(`release verify-packed-install: installed ${entry.packageName} application smoke passed`)
+    }
   } finally {
     rmSync(consumerRoot, { recursive: true, force: true })
   }

@@ -2,7 +2,7 @@
 
 [English](README.md) | 中文
 
-`nomix` 是用于启动 profile 的产品命令；profile 由多个插件组合包 patch 层按顺序叠加而成，其上再应用用户自己的覆盖配置。npm 发布物是一个可移植的 `@nomix-ai/nomix-harness` tarball，其安装生命周期会恢复包含仓库内运行时包的压缩生产依赖树，消费者无需分别安装这些包。安装时必须允许运行 package 生命周期脚本；使用 `--ignore-scripts` 会导致运行时不可用。[`src/args.ts`](src/args.ts) 负责命令语法，[`src/bin.ts`](src/bin.ts) 只加载选中的运行器。无效命令、来自其他模式的选项、配置错误和启动失败都会以非零状态退出。
+`nomix` 是用于启动 profile 的产品命令；profile 由多个插件组合包 patch 层按顺序叠加而成，其上再应用用户自己的覆盖配置。npm 发布物是一个可移植的 `@nomix-ai/nomix-harness` tarball，其安装生命周期会恢复包含仓库内运行时包以及 Linux 与 Windows x64 原生可选依赖的压缩生产依赖树，消费者无需分别安装这些包。安装时必须允许运行 package 生命周期脚本；使用 `--ignore-scripts` 会导致运行时不可用。[`src/args.ts`](src/args.ts) 负责命令语法，[`src/bin.ts`](src/bin.ts) 只加载选中的 runner（运行器）。无效命令、来自其他模式的选项、配置错误和启动失败都会以非零状态退出。
 
 ## 入口模式
 

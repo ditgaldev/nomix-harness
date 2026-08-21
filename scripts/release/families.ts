@@ -98,6 +98,10 @@ export interface InstalledEntry {
   readonly packageName: string
   /** Command npm exec resolves from that package. */
   readonly command: string
+  /** Arguments that load the assembled application without starting a persistent service. */
+  readonly smokeArgs?: readonly string[]
+  /** Text the smoke command must print. */
+  readonly smokeOutput?: string
 }
 
 /** A release sequence: its version members, publish set, and tag naming. */
@@ -371,7 +375,12 @@ class DshFamily extends ReleaseFamily {
     }
   }
 
-  readonly installedEntry = { packageName: '@nomix-ai/nomix-harness', command: 'nomix' }
+  readonly installedEntry = {
+    packageName: '@nomix-ai/nomix-harness',
+    command: 'nomix',
+    smokeArgs: ['web', '--help'],
+    smokeOutput: 'Usage: nomix --profile web',
+  }
 }
 
 /** `vendor/*`: every package keeps its own version line, so every package has its own tag. */

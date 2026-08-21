@@ -24,6 +24,17 @@ packages:
 # builds must resolve those matching names to this workspace's pinned sources.
 linkWorkspacePackages: true
 
+# The portable CLI is packed on Linux but also runs on Windows x64. Keep the
+# optional native packages for both the build host and that consumer platform
+# in the deployed production tree.
+supportedArchitectures:
+  os:
+    - current
+    - win32
+  cpu:
+    - current
+    - x64
+
 overrides:
   '@nomix-ai/cosmokit': 'link:vendor/cosmokit'
   '@nomix-ai/schemastery': 'link:vendor/schemastery'

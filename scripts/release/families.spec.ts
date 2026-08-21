@@ -196,7 +196,12 @@ describe('release families', () => {
   })
 
   it('drives the installed entry only for the family that publishes one', () => {
-    expect(releaseFamily('dsh').installedEntry).toEqual({ packageName: '@nomix-ai/nomix-harness', command: 'nomix' })
+    expect(releaseFamily('dsh').installedEntry).toEqual({
+      packageName: '@nomix-ai/nomix-harness',
+      command: 'nomix',
+      smokeArgs: ['web', '--help'],
+      smokeOutput: 'Usage: nomix --profile web',
+    })
     expect(releaseFamily('vendor').installedEntry).toBeUndefined()
   })
 
