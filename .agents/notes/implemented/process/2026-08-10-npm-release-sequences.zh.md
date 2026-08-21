@@ -26,7 +26,7 @@ CLI、vendor 框架和 native 启动器各自一条 bump 序列、各自一次�
 | vendored framework | `vendor/*` 九个包 | 每包各自一条版本线 | `vendor-<包名>-v<版本>`（每包一个） | `release-vendor.yml` |
 | native | `native/landlock-run/packages/*` | 自己的 `0.0.x` | `landlock-run-v<版本>` | `landlock-run-release.yml` |
 
-三组一律公开发布到 npmjs.com 的 `@nomix-ai` scope，每个 manifest 自己拥有预期访问级别。Nomix workflow 还会在发布后重新设置公开访问，并要求匿名 `npm view` 成功。其 `repair_access` 手工入口只执行这两项操作，不重新构建或发布 tarball；npm 凭据必须有修改包访问级别的权限，registry 策略要求 2FA 交互时则由包所有者在 npmjs.com 操作。
+三组一律公开发布到 npmjs.com 的 `@nomix-ai` scope，每个 manifest 自己拥有预期访问级别。Nomix workflow 要求发布后的匿名 `npm view` 成功。其 `repair_access` 手工入口重新设置公开访问并执行相同的匿名检查，不重新构建或发布 tarball；npm 凭据必须有修改包访问级别的权限，registry 策略要求 2FA 交互时则由包所有者在 npmjs.com 操作。
 
 ### 版本由本地命令写进仓库，CI 只核对与上传
 

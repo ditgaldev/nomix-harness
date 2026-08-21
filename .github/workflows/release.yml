@@ -151,11 +151,6 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: pnpm run release:publish --family dsh --from dist/npm
 
-      - name: Ensure public npm access
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm access set status=public @nomix-ai/nomix-harness --registry https://registry.npmjs.org
-
       - name: Verify anonymous registry metadata
         shell: bash
         run: |
