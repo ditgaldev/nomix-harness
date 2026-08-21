@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-sdk-jsonrpc-demo",
   "description": "Bin that boots an external Cordis config for the stdio JSON-RPC SDK runtime",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "publishConfig": {
     "access": "public"
   },
@@ -14,7 +14,7 @@
   "main": "lib/index.js",
   "types": "lib/types/index.d.ts",
   "bin": {
-    "dsh-jsonrpc-agent": "lib/bin.js"
+    "nomix-jsonrpc-agent": "lib/bin.js"
   },
   "exports": {
     ".": {

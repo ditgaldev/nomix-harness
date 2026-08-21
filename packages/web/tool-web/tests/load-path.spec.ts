@@ -13,7 +13,7 @@ import ToolRuntime from '@nomix-ai/nomix-tools'
 import WebRuntime from '@nomix-ai/nomix-web'
 import * as toolWeb from '@nomix-ai/nomix-tool-web'
 
-describe('dsh-tool-web real-load-path guard', () => {
+describe('nomix-tool-web real-load-path guard', () => {
   it('has no default export and keeps name/inject/Config through unwrapExports', () => {
     expect('default' in toolWeb).toBe(false)
 

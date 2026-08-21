@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-headless",
-  "description": "The dsh one-shot bundle: a direct core Agent/Session runner over dsh-base with no Host, HTTP, or browser layer",
-  "version": "0.1.2",
+  "description": "The nomix one-shot bundle: a direct core Agent/Session runner over nomix-base with no Host, HTTP, or browser layer",
+  "version": "0.2.0",
   "publishConfig": {
     "access": "public"
   },
@@ -38,7 +38,7 @@
     "lib/types/**/*.d.ts"
   ],
   "license": "MIT",
-  "dsh": {
+  "nomix": {
     "bundle": {
       "patch": "./cordis.patch.yml"
     }

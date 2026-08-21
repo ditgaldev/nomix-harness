@@ -56,13 +56,13 @@ describe('session format guard through the assembled app', () => {
     let sessionPath = ''
     const result = await runLoaderSmoke({
       label: 'newer-format resume refusal',
-      tempDirPrefix: 'dsh-format-guard-version-',
+      tempDirPrefix: 'nomix-format-guard-version-',
       binScript,
       libBinScript: binScript,
       configPath,
       binArgs: [configPath, 'Try to resume.'],
       tsconfigPath,
-      env: { DSH_SNAPSHOT_FILE: replayFixture },
+      env: { NOMIX_SNAPSHOT_FILE: replayFixture },
       expectedExitCode: 1,
       prepare: async (runCwd) => {
         sessionPath = await seedSession(join(runCwd, '.sessions'), runCwd, SESSION_FORMAT_VERSION + 99, closedTurn())
@@ -81,13 +81,13 @@ describe('session format guard through the assembled app', () => {
     let sessionPath = ''
     const result = await runLoaderSmoke({
       label: 'unknown-event resume refusal',
-      tempDirPrefix: 'dsh-format-guard-event-',
+      tempDirPrefix: 'nomix-format-guard-event-',
       binScript,
       libBinScript: binScript,
       configPath,
       binArgs: [configPath, 'Try to resume.'],
       tsconfigPath,
-      env: { DSH_SNAPSHOT_FILE: replayFixture },
+      env: { NOMIX_SNAPSHOT_FILE: replayFixture },
       expectedExitCode: 1,
       prepare: async (runCwd) => {
         sessionPath = await seedSession(join(runCwd, '.sessions'), runCwd, SESSION_FORMAT_VERSION, [

@@ -18,14 +18,14 @@ Delete `@nomix-ai/nomix-cli-demo` completely: its package, bin, parser, app plug
 
 ## Alternatives considered
 
-- **Keep `dsh-cli-demo` as an alias or wrapper around `nomix --profile headless`.** Rejected because a second bin and package would preserve two discoverable owners without adding capability.
+- **Keep `nomix-cli-demo` as an alias or wrapper around `nomix --profile headless`.** Rejected because a second bin and package would preserve two discoverable owners without adding capability.
 - **Move JSON and stream-JSON flags onto `nomix --profile headless`.** Rejected because no current product consumer requires them; adopting the old demo protocol would enlarge the canonical CLI contract solely to save test machinery.
 - **Delete the canonical-event snapshots with the package.** Rejected because they pin model-visible assembled behavior that final-text product acceptance cannot observe.
 - **Keep the app plugin but delete only its bin.** Rejected because the hidden composition would still duplicate the explicit headless profile and conceal which services the test leaf mounts.
 
 ## Consequences
 
-This is intentionally breaking. `dsh-cli-demo`, its `--output-format` choices, and imports from `@nomix-ai/nomix-cli-demo/src/cli.ts` no longer resolve. There is no public event-stream replacement in this change; callers use `nomix --profile headless` for one-shot execution and must choose an existing protocol API when they need structured automation.
+This is intentionally breaking. `nomix-cli-demo`, its `--output-format` choices, and imports from `@nomix-ai/nomix-cli-demo/src/cli.ts` no longer resolve. There is no public event-stream replacement in this change; callers use `nomix --profile headless` for one-shot execution and must choose an existing protocol API when they need structured automation.
 
 The repository retains backend replay coverage through test-only infrastructure, while product smoke and built-bin acceptance exercise `nomix --profile headless`. A separate one-shot package may return only if it owns a genuinely independent, versioned protocol that cannot belong to the product launcher; a second spelling or output shim is not enough.
 

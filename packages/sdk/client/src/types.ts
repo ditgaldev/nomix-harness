@@ -21,7 +21,7 @@ export type NotificationFilter = (notification: HarnessNotification) => boolean
 
 /** Launch and timeout options for {@link HarnessClient}. */
 export interface HarnessClientOptions {
-  /** The runtime executable (the `dsh-jsonrpc-agent` bin, a packaged exe, or `node`). */
+  /** The runtime executable (the `nomix-jsonrpc-agent` bin, a packaged exe, or `node`). */
   command: string
   /** Arguments passed to {@link command}. */
   args?: string[]
@@ -44,16 +44,16 @@ export interface HarnessClientOptions {
   disposeGraceMs?: number
 }
 
-/** Options for the high-level {@link DeepSeekHarness} wrapper. */
-export interface DeepSeekHarnessOptions {
+/** Options for the high-level {@link NomixHarness} wrapper. */
+export interface NomixHarnessOptions {
   /** Launch spec for the runtime subprocess (command, args, cwd, env, timeouts). */
   launch: HarnessClientOptions
   /** Workspace cwd recorded on every SDK-created session (default: the launch cwd, else `process.cwd()`). */
   cwd?: string
-  /** Provider route for SDK-created agents (default `deepseek-official`). */
-  provider?: string
-  /** Model for SDK-created agents (default `deepseek-v4-flash`). */
-  model?: string
+  /** Explicitly registered provider route for SDK-created agents. */
+  provider: string
+  /** Provider-owned model id for SDK-created agents. */
+  model: string
   /** Maximum output tokens for each conversation-model request. */
   maxTokens?: number
 }

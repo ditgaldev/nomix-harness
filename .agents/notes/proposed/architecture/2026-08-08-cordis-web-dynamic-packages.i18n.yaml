@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/proposed/architecture/2026-08-08-cordis-web-dynamic-packages.md
-2026-08-08-cordis-web-dynamic-packages.md: db1d834e86abfd2100dff8a83292cf3e0554d6f8
-2026-08-08-cordis-web-dynamic-packages.zh.md: 7bda358bff3e49cc1abecf66b2056c70c884ff16
+2026-08-08-cordis-web-dynamic-packages.md: 297615511de7322c512fb0ed2087b192c5d15d60
+2026-08-08-cordis-web-dynamic-packages.zh.md: 66653d27f695ba064c0fadcb6635726c2d4e8d0a

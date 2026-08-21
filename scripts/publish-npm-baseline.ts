@@ -209,7 +209,7 @@ class DetachedWorktree {
   ) {}
 
   static create(repositoryRoot: string, commit: string, runner: CommandRunner): DetachedWorktree {
-    const temporaryRoot = mkdtempSync(join(tmpdir(), 'dsh-npm-baseline-'))
+    const temporaryRoot = mkdtempSync(join(tmpdir(), 'nomix-npm-baseline-'))
     const path = join(temporaryRoot, 'worktree')
     try {
       runner.run('git', ['worktree', 'add', '--detach', path, commit], repositoryRoot)
@@ -422,7 +422,7 @@ class ReleaseBundle {
   }
 }
 
-/** Installs one complete bundle outside the workspace and probes the shipped dsh entry. */
+/** Installs one complete bundle outside the workspace and probes the shipped nomix entry. */
 class InstalledBundleSmoke {
   constructor(
     private readonly bundle: ReleaseBundle,
@@ -430,14 +430,14 @@ class InstalledBundleSmoke {
   ) {}
 
   run(): void {
-    const consumerRoot = mkdtempSync(join(tmpdir(), 'dsh-npm-consumer-'))
+    const consumerRoot = mkdtempSync(join(tmpdir(), 'nomix-npm-consumer-'))
     try {
       const dependencies = Object.fromEntries(this.bundle.manifest.packages.map(pkg => [
         pkg.name,
         pathToFileURL(this.bundle.tarballPath(pkg)).href,
       ]))
       writeFileSync(resolve(consumerRoot, 'package.json'), `${JSON.stringify({
-        name: 'dsh-npm-baseline-consumer',
+        name: 'nomix-npm-baseline-consumer',
         version: '0.0.0',
         private: true,
         dependencies,
@@ -455,7 +455,7 @@ class InstalledBundleSmoke {
       ], consumerRoot, npmClientEnvironment())
 
       const bin = resolve(consumerRoot, 'node_modules/@nomix-ai/nomix-harness/lib/bin.js')
-      assertPathWithin(consumerRoot, bin, 'installed dsh bin')
+      assertPathWithin(consumerRoot, bin, 'installed nomix bin')
       const environment = installedArtifactEnvironment(consumerRoot)
       const version = this.runner.capture(
         process.execPath,
@@ -465,12 +465,12 @@ class InstalledBundleSmoke {
       )
       if (version !== this.bundle.manifest.version) {
         throw new Error(
-          `installed dsh --version returned ${JSON.stringify(version)}; `
+          `installed nomix --version returned ${JSON.stringify(version)}; `
           + `expected ${this.bundle.manifest.version}`,
         )
       }
       this.probeWeb(bin, consumerRoot, environment)
-      console.log('publish-npm-baseline: installed dsh entry and Web startup probes passed')
+      console.log('publish-npm-baseline: installed nomix entry and Web startup probes passed')
     } finally {
       rmSync(consumerRoot, { recursive: true, force: true })
     }
@@ -478,7 +478,7 @@ class InstalledBundleSmoke {
 
   private probeWeb(bin: string, consumerRoot: string, environment: NodeJS.ProcessEnv): void {
     if (process.platform === 'win32') {
-      throw new Error('installed dsh Web probe requires a POSIX host with python3')
+      throw new Error('installed nomix Web probe requires a POSIX host with python3')
     }
     const result = this.runner.result(
       'python3',
@@ -487,7 +487,7 @@ class InstalledBundleSmoke {
       environment,
     )
     if (result.status !== 0) {
-      throw commandFailure('python3', ['installed-dsh-web-probe'], result)
+      throw commandFailure('python3', ['installed-nomix-web-probe'], result)
     }
   }
 }
@@ -912,9 +912,9 @@ function installedArtifactEnvironment(consumerRoot: string): NodeJS.ProcessEnv {
   const environment = npmClientEnvironment()
   delete environment.NODE_OPTIONS
   delete environment.NODE_PATH
-  environment.DSH_HOME = resolve(consumerRoot, '.dsh')
-  environment.DSH_AGENTS_HOME = resolve(consumerRoot, '.agents')
-  environment.DSH_TELEMETRY_DISABLED = '1'
+  environment.NOMIX_HOME = resolve(consumerRoot, '.nomix')
+  environment.NOMIX_AGENTS_HOME = resolve(consumerRoot, '.agents')
+  environment.NOMIX_TELEMETRY_DISABLED = '1'
   environment.DEEPSEEK_API_KEY = 'keyless-installed-web-no-call'
   environment.LANG = 'en_US.UTF-8'
   environment.LC_ALL = 'en_US.UTF-8'

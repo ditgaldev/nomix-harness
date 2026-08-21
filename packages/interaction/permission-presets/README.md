@@ -14,7 +14,7 @@ Two optional children ship the product surfaces over the same service: a `permis
 
 ## Model Experience
 
-Indirectly, through `dsh-user-approval` and `dsh-tool-bash`, which render the approval-policy prompt, switch notice, and sandboxed tool outcomes selected by this service's knob events; `permissionPresets/preset` itself is log-only.
+Indirectly, through `nomix-user-approval` and `nomix-tool-bash`, which render the approval-policy prompt, switch notice, and sandboxed tool outcomes selected by this service's knob events; `permissionPresets/preset` itself is log-only.
 
 #### KV Cache effect
 

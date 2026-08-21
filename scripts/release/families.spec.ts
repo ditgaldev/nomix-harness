@@ -16,13 +16,13 @@ function member(directory: string, name: string, manifest: Record<string, unknow
 }
 
 describe('release families', () => {
-  it('names one tag for the whole dsh family and one per vendored package', () => {
-    const dsh = releaseFamily('dsh')
+  it('names one tag for the whole nomix family and one per vendored package', () => {
+    const nomix = releaseFamily('nomix')
     const vendor = releaseFamily('vendor')
     const cli = member('apps/cli', '@nomix-ai/nomix-harness')
     const cordis = { ...member('vendor/cordis', '@nomix-ai/cordis'), version: '4.0.1' }
 
-    expect(dsh.tagFor(cli)).toBe('nomix-v0.0.1')
+    expect(nomix.tagFor(cli)).toBe('nomix-v0.0.1')
     expect(vendor.tagFor(cordis)).toBe('vendor-cordis-v4.0.1')
     // The prefix is constructed, not recovered from a tag: a version with a
     // hyphen would defeat any suffix-stripping.
@@ -30,21 +30,21 @@ describe('release families', () => {
     expect(vendor.tagFor({ ...cordis, version: '4.0.0-rc.7' })).toBe('vendor-cordis-v4.0.0-rc.7')
   })
 
-  it('publishes the product as one portable CLI package', () => {
-    const dsh = releaseFamily('dsh')
+  it('publishes the product as one native ESM Harness package', () => {
+    const nomix = releaseFamily('nomix')
     const harness = member('apps/cli', '@nomix-ai/nomix-harness')
     const library = member('packages/core/library', '@nomix-ai/nomix-library')
 
-    expect(dsh.publicationMembers([library, harness])).toEqual([harness])
-    expect(dsh.packing).toBe('portable-deploy')
+    expect(nomix.publicationMembers([library, harness])).toEqual([harness])
+    expect(nomix.packing).toBe('native-bundle')
   })
 
   it('rejects a family whose members disagree on the shared version', () => {
-    const dsh = releaseFamily('dsh')
+    const nomix = releaseFamily('nomix')
     const members = [member('apps/cli', '@nomix-ai/nomix-harness'), { ...member('apps/web', '@nomix-ai/nomix-web-frontend'), version: '0.0.2' }]
 
-    expect(() => { dsh.verifyVersions(members) }).toThrow(/must share one version/)
-    expect(() => { dsh.verifyVersions([members[0]!]) }).not.toThrow()
+    expect(() => { nomix.verifyVersions(members) }).toThrow(/must share one version/)
+    expect(() => { nomix.verifyVersions([members[0]!]) }).not.toThrow()
   })
 
   it('accepts independent vendored versions and rejects an unpublishable one', () => {
@@ -59,14 +59,14 @@ describe('release families', () => {
   })
 
   it('publishes a dependency before its consumer, and orders ties by name', () => {
-    const dsh = releaseFamily('dsh')
+    const nomix = releaseFamily('nomix')
     const members = [
       member('packages/a/consumer', '@nomix-ai/nomix-consumer', { dependencies: { '@nomix-ai/nomix-library': 'workspace:^' } }),
       member('packages/a/library', '@nomix-ai/nomix-library'),
       member('packages/a/zebra', '@nomix-ai/nomix-zebra'),
     ]
 
-    expect(dsh.publishOrder(members).order.map(entry => entry.name)).toEqual([
+    expect(nomix.publishOrder(members).order.map(entry => entry.name)).toEqual([
       '@nomix-ai/nomix-library',
       '@nomix-ai/nomix-consumer',
       '@nomix-ai/nomix-zebra',
@@ -74,31 +74,31 @@ describe('release families', () => {
   })
 
   it('reports a runtime dependency cycle instead of emitting an arbitrary order', () => {
-    const dsh = releaseFamily('dsh')
+    const nomix = releaseFamily('nomix')
     const members = [
       member('packages/a/left', '@nomix-ai/nomix-left', { dependencies: { '@nomix-ai/nomix-right': 'workspace:^' } }),
       member('packages/a/right', '@nomix-ai/nomix-right', { dependencies: { '@nomix-ai/nomix-left': 'workspace:^' } }),
     ]
 
-    expect(() => { dsh.publishOrder(members) }).toThrow(/dependency cycle/)
+    expect(() => { nomix.publishOrder(members) }).toThrow(/dependency cycle/)
   })
 
   it('publishes a peer before its consumer', () => {
-    const dsh = releaseFamily('dsh')
+    const nomix = releaseFamily('nomix')
     const members = [
       member('packages/a/consumer', '@nomix-ai/nomix-consumer', { peerDependencies: { '@nomix-ai/nomix-zebra': 'workspace:^' } }),
       member('packages/a/zebra', '@nomix-ai/nomix-zebra'),
     ]
 
     // Name order alone would place the consumer first; the peer edge moves it.
-    expect(dsh.publishOrder(members).order.map(entry => entry.name)).toEqual([
+    expect(nomix.publishOrder(members).order.map(entry => entry.name)).toEqual([
       '@nomix-ai/nomix-zebra',
       '@nomix-ai/nomix-consumer',
     ])
   })
 
   it('orders around a peer cycle rather than refusing to publish, and reports the edge it dropped', () => {
-    const dsh = releaseFamily('dsh')
+    const nomix = releaseFamily('nomix')
     const members = [
       member('packages/a/left', '@nomix-ai/nomix-left', { peerDependencies: { '@nomix-ai/nomix-right': 'workspace:^' } }),
       member('packages/a/right', '@nomix-ai/nomix-right', { peerDependencies: { '@nomix-ai/nomix-left': 'workspace:^' } }),
@@ -106,7 +106,7 @@ describe('release families', () => {
 
     // Sibling packages declare each other as peers, and npm treats an unmet peer
     // as a warning, so this pair has to publish rather than fail the release.
-    const plan = dsh.publishOrder(members)
+    const plan = nomix.publishOrder(members)
     expect(plan.order.map(entry => entry.name)).toEqual([
       '@nomix-ai/nomix-right',
       '@nomix-ai/nomix-left',
@@ -118,7 +118,7 @@ describe('release families', () => {
   })
 
   it('honours an install edge even when a peer cycle surrounds it', () => {
-    const dsh = releaseFamily('dsh')
+    const nomix = releaseFamily('nomix')
     const members = [
       member('packages/a/base', '@nomix-ai/nomix-base', { peerDependencies: { '@nomix-ai/nomix-consumer': 'workspace:^' } }),
       member('packages/a/consumer', '@nomix-ai/nomix-consumer', {
@@ -129,7 +129,7 @@ describe('release families', () => {
 
     // The install edge is absolute: base publishes first, and the peer edge that
     // would reverse it is the one dropped.
-    const plan = dsh.publishOrder(members)
+    const plan = nomix.publishOrder(members)
     expect(plan.order.map(entry => entry.name)).toEqual([
       '@nomix-ai/nomix-base',
       '@nomix-ai/nomix-consumer',
@@ -140,7 +140,7 @@ describe('release families', () => {
   })
 
   it('refuses an order that would publish a consumer before a dependency it installs', () => {
-    const dsh = releaseFamily('dsh')
+    const nomix = releaseFamily('nomix')
     const members = [
       member('packages/a/alpha', '@nomix-ai/nomix-alpha', { peerDependencies: { '@nomix-ai/nomix-bravo': 'workspace:^' } }),
       member('packages/a/bravo', '@nomix-ai/nomix-bravo', { peerDependencies: { '@nomix-ai/nomix-charlie': 'workspace:^' } }),
@@ -151,11 +151,11 @@ describe('release families', () => {
     // would order this, and the traversal drops the install edge instead. That
     // order would publish charlie before the alpha it installs, so it is refused
     // here rather than published.
-    expect(() => { dsh.publishOrder(members) }).toThrow(/no publish order honours @nomix-ai\/nomix-charlie -> @nomix-ai\/nomix-alpha/)
+    expect(() => { nomix.publishOrder(members) }).toThrow(/no publish order honours @nomix-ai\/nomix-charlie -> @nomix-ai\/nomix-alpha/)
   })
 
   it('ignores devDependencies when ordering', () => {
-    const dsh = releaseFamily('dsh')
+    const nomix = releaseFamily('nomix')
     const members = [
       member('packages/a/alpha', '@nomix-ai/nomix-alpha', { devDependencies: { '@nomix-ai/nomix-zebra': 'workspace:^' } }),
       member('packages/a/zebra', '@nomix-ai/nomix-zebra'),
@@ -163,40 +163,46 @@ describe('release families', () => {
 
     // A dev dependency is absent from the published package, so it must not move
     // the consumer behind it.
-    expect(dsh.publishOrder(members).order.map(entry => entry.name)).toEqual([
+    expect(nomix.publishOrder(members).order.map(entry => entry.name)).toEqual([
       '@nomix-ai/nomix-alpha',
       '@nomix-ai/nomix-zebra',
     ])
   })
 
-  it('applies the harness payload policy to dsh and keeps upstream payloads for vendored packages', () => {
-    const dsh = releaseFamily('dsh')
+  it('applies the harness payload policy to nomix and keeps upstream payloads for vendored packages', () => {
+    const nomix = releaseFamily('nomix')
     const vendor = releaseFamily('vendor')
     const harness = member('packages/a/library', '@nomix-ai/nomix-library')
     const vendored = member('vendor/cordis', '@nomix-ai/cordis')
 
-    expect(() => { dsh.validatePayload(harness, ['package/lib/index.js', 'package/src/index.ts']) })
+    expect(() => { nomix.validatePayload(harness, ['package/lib/index.js', 'package/src/index.ts']) })
       .toThrow(/publishes source file/)
     expect(() => {
-      dsh.validatePayload(harness, [
-        'package/lib/index.js',
-        'package/nomix-runtime.tgz',
+      nomix.validatePayload(harness, [
+        'package/dist/cli/bin.js',
+        'package/dist/plugin-api/index.js',
+        'package/dist/plugins/manifest.json',
+        'package/dist/bundles/manifest.json',
+        'package/dist/sdk/index.js',
       ])
     }).not.toThrow()
-    expect(() => { dsh.validatePayload(harness, ['package/lib/index.js']) }).toThrow(/no portable runtime archive/)
+    expect(() => { nomix.validatePayload(harness, ['package/dist/cli/bin.js']) }).toThrow(/carries no dist\/plugins\/manifest.json/)
     expect(() => {
-      dsh.validatePayload(harness, [
-        'package/lib/index.js',
-        'package/nomix-runtime.tgz',
-        'package/node_modules/@nomix-ai/nomix-library/package.json',
+      nomix.validatePayload(harness, [
+        'package/dist/cli/bin.js',
+        'package/dist/plugin-api/index.js',
+        'package/dist/plugins/manifest.json',
+        'package/dist/bundles/manifest.json',
+        'package/dist/sdk/index.js',
+        'package/dist/node_modules/example/index.js',
       ])
-    }).toThrow(/exposes its expanded runtime/)
+    }).toThrow(/forbidden source, source-map, or node_modules/)
     expect(() => { vendor.validatePayload(vendored, ['package/lib/index.js', 'package/src/index.ts']) }).not.toThrow()
     expect(() => { vendor.validatePayload(vendored, []) }).toThrow(/empty tarball/)
   })
 
   it('drives the installed entry only for the family that publishes one', () => {
-    expect(releaseFamily('dsh').installedEntry).toEqual({
+    expect(releaseFamily('nomix').installedEntry).toEqual({
       packageName: '@nomix-ai/nomix-harness',
       command: 'nomix',
       smokeArgs: ['web', '--help'],

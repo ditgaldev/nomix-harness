@@ -14,13 +14,13 @@
         config:
           provider: deepseek-official
           model: deepseek-v4-flash
-          persistenceRoot: !!js process.env.DSH_SNAPSHOT_SESSIONS_ROOT ?? './.sessions'
+          persistenceRoot: !!js process.env.NOMIX_SNAPSHOT_SESSIONS_ROOT ?? './.sessions'
           persistenceCompression: 'none'
           workspaceContext:
             maxBytes: 65536
-            dshHome: !!js process.cwd() + '/.dsh'
+            nomixHome: !!js process.cwd() + '/.nomix'
             projectRootMarkers:
-              - .dsh-project
+              - .nomix-project
           persona: |
             You are a coding assistant powered by the {{model}} model. Your working directory is {{cwd}}.
 

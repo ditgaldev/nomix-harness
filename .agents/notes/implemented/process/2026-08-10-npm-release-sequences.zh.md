@@ -22,7 +22,7 @@ CLI、vendor 框架和 native 启动器各自一条 bump 序列、各自一次�
 
 | 序列 | 成员 | 版本基线 | tag | workflow |
 |---|---|---|---|---|
-| dsh | 一个包含生产依赖树的可移植 `@nomix-ai/nomix-harness` tarball | 产品源码包、apps 与 workspace 根共用一个版本 | `nomix-v<版本>` | `release.yml` |
+| nomix | 一个包含生产依赖树的可移植 `@nomix-ai/nomix-harness` tarball | 产品源码包、apps 与 workspace 根共用一个版本 | `nomix-v<版本>` | `release.yml` |
 | vendored framework | `vendor/*` 九个包 | 每包各自一条版本线 | `vendor-<包名>-v<版本>`（每包一个） | `release-vendor.yml` |
 | native | `native/landlock-run/packages/*` | 自己的 `0.0.x` | `landlock-run-v<版本>` | `landlock-run-release.yml` |
 
@@ -32,7 +32,7 @@ CLI、vendor 框架和 native 启动器各自一条 bump 序列、各自一次�
 
 每条序列有一条 bump-and-commit 命令：算出目标版本，写进相关 manifest，跑 `pnpm install --lockfile-only`，再把 manifest 连 lockfile 一起 commit。发布版本因此在仓库里查得到。tag 由人工在 commit 合入 master 后打；CI 不写仓库，也不需要写权限。
 
-`release:dsh` 接受 `major`、`minor`、`patch` 或显式版本号，并把该版本写入产品源码包、apps 与 workspace 根。虽然只有 CLI 根包会成为 registry package，这仍会让 deployed tree 中各包的身份保持一致。版本带预发布段就发布到 `next`，否则进入 `latest`。
+`release:nomix` 接受 `major`、`minor`、`patch` 或显式版本号，并把该版本写入产品源码包、apps 与 workspace 根。虽然只有 CLI 根包会成为 registry package，这仍会让 deployed tree 中各包的身份保持一致。版本带预发布段就发布到 `next`，否则进入 `latest`。
 
 ### vendor：谁改了谁发版，tag 就是账本
 
@@ -103,7 +103,7 @@ tag 只是 commit 指针，不是发布成功的证明。bump 会向 registry �
 | `publish` | 上面那三态 |
 | `process` / `tarball` | 启动命令、读取打包 tarball 的唯一正家，其中的入口守卫让每个脚本都可被 import |
 
-dsh 族只对 CLI 自身文件应用仓库发布 payload 策略；其 bundled dependencies 保留各包拥有的 payload，包括 vendored exports。vendored 族同样保留上游 payload，因为那些 manifest 导出 `./src/*`。
+nomix 族只对 CLI 自身文件应用仓库发布 payload 策略；其 bundled dependencies 保留各包拥有的 payload，包括 vendored exports。vendored 族同样保留上游 payload，因为那些 manifest 导出 `./src/*`。
 
 ### workflow 形状：deploy 一次，再发布验证过的字节
 
@@ -111,7 +111,7 @@ dsh 族只对 CLI 自身文件应用仓库发布 payload 策略；其 bundled de
 
 `pack` 无凭据，在每个 pull request 和每次 master push 上跑，所以一个 pull request 就能证明发布集仍能完整打出来。`publish` 是手动 dispatch，挂在 `npm-publish` environment 后面等人工审批，且既不构建也不重建——它上传的就是 pack 产出的字节。pack 的 run 按 ref 分组，并发的 pull request 不会互相顶掉；全局分组落在 publish job 上，因为 dist-tag 是共享的 registry 状态。
 
-dsh 的验证会一并安装 vendored 族的 pack 产物。harness 的包把 vendored 框架声明成 peer，而那些包属于另一条序列，无凭据的 job 无法从私有 registry 取到——所以 `release.yml` 为验证而打包 vendored 族，发布的仍只有自己那一份。
+nomix 的验证会一并安装 vendored 族的 pack 产物。harness 的包把 vendored 框架声明成 peer，而那些包属于另一条序列，无凭据的 job 无法从私有 registry 取到——所以 `release.yml` 为验证而打包 vendored 族，发布的仍只有自己那一份。
 
 安装探针会保留 optional dependencies，因为外置的原生包装器依赖它们来选择平台二进制。验证按目录内容读取 tarball，而不是读发布顺序：一个目录可能只装着为满足跨序列依赖而打出来的包，任何发布顺序都不描述它。
 
@@ -160,7 +160,7 @@ dsh 的验证会一并安装 vendored 族的 pack 产物。harness 的包把 ven
 
 发布脚本是带入口守卫的可 import 模块，其判断都有单测覆盖：tag 命名、发布顺序与环报告、版本基线运算、payload 变更判据，以及各族的 payload 策略。第一版带过的两个缺陷——publish 命令在 import 时执行了 pack 命令、变更判据对 `vendor/cordis` 的源码改动失明——正是这类测试在对应接缝上能抓住的。
 
-一个 pull request 会为两条序列跑完整的 pack（无凭据），并把打包好的 dsh tarball 装进一次性 consumer，用普通 Node 驱动 `dsh --version`。这个探针刻意只有一条命令：它证明 `files` 选出了完整 payload、发布出去的范围可解析，不涉及任何交互行为。
+一个 pull request 会为两条序列跑完整的 pack（无凭据），并把打包好的 nomix tarball 装进一次性 consumer，用普通 Node 驱动 `nomix --version`。这个探针刻意只有一条命令：它证明 `files` 选出了完整 payload、发布出去的范围可解析，不涉及任何交互行为。
 
 代价：
 
@@ -171,4 +171,4 @@ dsh 的验证会一并安装 vendored 族的 pack 产物。harness 的包把 ven
 - **`repository` 指向的组织与运行 workflow 的组织不同。** 用 token 发布不受影响；npm provenance（OIDC）要求二者一致，届时要么把 `repository` 改指过去，要么从它指向的组织发布。
 - **字节可复现性是假定的，没有实测。** 「integrity 相同则跳过」这一态建立在「同一 commit 两次 pack 得到相同字节」之上。目前没有任何东西测量过它：若构建嵌入了绝对路径或时间，重跑会误报失败。在第一次可能被重跑的发布之前实测，若不成立就退到比对 tarball 内逐文件内容哈希。
 - **用较旧的 artifact 重跑 publish 会把 `latest` 拉回旧版。** 发布是按版本决定的，所以在较新版本之后重发较旧的一批，会让稳定 dist-tag 再次指向旧版。排练用的是预发布版本，它永远不占 `latest`。
-- **首发是一次大步。** 九个 vendored 包与整个 dsh 集一次发出，任何 payload 缺陷都会集中在同一次发布里暴露——这正是先用预发布版本把完整链路走一遍的理由。
+- **首发是一次大步。** 九个 vendored 包与整个 nomix 集一次发出，任何 payload 缺陷都会集中在同一次发布里暴露——这正是先用预发布版本把完整链路走一遍的理由。

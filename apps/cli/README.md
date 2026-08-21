@@ -8,7 +8,7 @@ The `nomix` command is the product launcher for profiles: ordered stacks of plug
 
 | Command | Purpose |
 |---|---|
-| `nomix --profile <name>` | Boot the named profile under `$DSH_HOME/profiles/<name>`. |
+| `nomix --profile <name>` | Boot the named profile under `$NOMIX_HOME/profiles/<name>`. |
 | `nomix --profile headless "job"` | Run one fresh persisted session, print the final answer, and exit. |
 | `nomix web` | Alias of `--profile web`. |
 | `nomix plugin --profile <name> <pnpm args>` | Manage a profile's plugins by forwarding to pnpm in the profile directory. |
@@ -24,26 +24,26 @@ The invoking directory is the default workspace root. The `web` and `headless` p
 
 ## App arguments
 
-The launcher parses only its own flags and hands everything after them to the booted profile, where any injected app plugin may parse the shared immutable snapshot ([`dsh-cmdline`](../../packages/boot/cmdline/README.md)). Launcher flags therefore come first, and the first token the launcher does not recognize starts the app's arguments:
+The launcher parses only its own flags and hands everything after them to the booted profile, where any injected app plugin may parse the shared immutable snapshot ([`nomix-cmdline`](../../packages/boot/cmdline/README.md)). Launcher flags therefore come first, and the first token the launcher does not recognize starts the app's arguments:
 
 ```sh
 nomix --profile web --port 8080       # --port belongs to the web app
 nomix --profile tui --resume <id>     # example, assuming the tui profile is installed; --resume belongs to the terminal app
 nomix --profile headless "run the tests"
 nomix --profile web --help            # the web app's flags, not the launcher's
-dsh --help                          # the launcher's own help
+nomix --help                          # the launcher's own help
 ```
 
 ## Profiles
 
-A profile directory holds a `package.json` (out-of-tree plugin dependencies plus the profile manifest `dsh.profile` with its ordered `bundles` list) and a `cordis.patch.yml` (the user's own patch layer).
+A profile directory holds a `package.json` (out-of-tree plugin dependencies plus the profile manifest `nomix.profile` with its ordered `bundles` list) and a `cordis.patch.yml` (the user's own patch layer).
 
 The tree composes over an empty root:
-- each bundle's patch in `dsh.profile.bundles` order
-- then the profile's `cordis.patch.yml`, then the home-level `$DSH_HOME/cordis.patch.yml`
+- each bundle's patch in `nomix.profile.bundles` order
+- then the profile's `cordis.patch.yml`, then the home-level `$NOMIX_HOME/cordis.patch.yml`
 - then `--patch` overlays
 
-Bundles named in `dsh.profile.bundles` resolve from the nomix installation first (`@nomix-ai/nomix-base`, `@nomix-ai/nomix-web-app`, `@nomix-ai/nomix-headless`), then from the profile's own `node_modules`, where pnpm installs out-of-tree plugins.
+Bundles named in `nomix.profile.bundles` resolve from the nomix installation first (`@nomix-ai/nomix-base`, `@nomix-ai/nomix-web-app`, `@nomix-ai/nomix-headless`), then from the profile's own `node_modules`, where pnpm installs out-of-tree plugins.
 
 Use `--dump-default-config` and `--dump-config` to inspect the composed tree without booting it.
 

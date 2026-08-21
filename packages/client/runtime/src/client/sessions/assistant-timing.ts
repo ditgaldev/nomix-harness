@@ -6,7 +6,7 @@ import { isTokenDelta } from '@nomix-ai/nomix-llm/message'
 import type { SessionEvent } from '@nomix-ai/nomix-session/types'
 import type { AssistantTiming } from './conversation.ts'
 
-// The first-token predicate lives beside the StreamChunk type in dsh-llm;
+// The first-token predicate lives beside the StreamChunk type in nomix-llm;
 // re-exported here so Chat Definitions keep their client-runtime import.
 export { isTokenDelta } from '@nomix-ai/nomix-llm/message'
 

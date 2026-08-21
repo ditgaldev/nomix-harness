@@ -169,7 +169,7 @@ const base = process.env.DOCS_BASE ?? '/'
  */
 const wordmark = readFileSync(resolve(import.meta.dirname, '../public/wordmark.svg'), 'utf8')
   .trim()
-  .replace('<svg ', '<svg class="dsh-wordmark" ')
+  .replace('<svg ', '<svg class="nomix-wordmark" ')
 
 /**
  * Styles the default theme does not provide, carried inline because the site
@@ -183,9 +183,9 @@ const wordmark = readFileSync(resolve(import.meta.dirname, '../public/wordmark.s
  * stay behind a query only Firefox answers.
  */
 const siteStyle = `
-.dsh-lockup { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
-.dsh-wordmark { display: block; height: 22px; width: auto; color: var(--vp-c-text-1); }
-.dsh-tag {
+.nomix-lockup { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
+.nomix-wordmark { display: block; height: 22px; width: auto; color: var(--vp-c-text-1); }
+.nomix-tag {
   display: inline-flex;
   align-items: center;
   border: 1px solid var(--vp-c-brand-soft);
@@ -243,11 +243,11 @@ const scrollbarScript = `
  * @returns Markup placed beside the navigation-bar home link.
  */
 function siteTitle(previewTag: string): string {
-  return `<span class="dsh-lockup">${wordmark}<span class="dsh-tag">${previewTag}</span></span>`
+  return `<span class="nomix-lockup">${wordmark}<span class="nomix-tag">${previewTag}</span></span>`
 }
 
 export default withMermaid({
-  title: 'DeepSeek Harness',
+  title: 'Nomix Harness',
   description: '用于构建 Agent Harness 的插件化 SDK',
   base,
   head: [
@@ -321,7 +321,7 @@ export default withMermaid({
     publicDir: resolve(import.meta.dirname, '../public'),
     plugins: [
       {
-        name: 'deepseek-harness-doc-projector',
+        name: 'nomix-harness-doc-projector',
         configureServer: watchCanonicalDocs,
       },
     ],

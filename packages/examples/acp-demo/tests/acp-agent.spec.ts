@@ -31,15 +31,15 @@ async function mount(config: acpAgent.Config, withBash = false): Promise<Context
       start() { throw new Error('composition test does not execute bash') },
     })
   }
-  config.persistenceRoot ??= await mkdtemp(join(tmpdir(), 'dsh-acp-demo-persistence-'))
+  config.persistenceRoot ??= await mkdtemp(join(tmpdir(), 'nomix-acp-demo-persistence-'))
   await ctx.plugin(acpAgent, config)
   return ctx
 }
 
 async function isolatedSkillsConfig(catalogDescriptionMaxLength?: number): Promise<NonNullable<acpAgent.Config['skills']>> {
-  const home = await mkdtemp(join(tmpdir(), 'dsh-acp-demo-skills-'))
+  const home = await mkdtemp(join(tmpdir(), 'nomix-acp-demo-skills-'))
   return {
-    filesystem: { dshHome: join(home, '.dsh'), agentsHome: join(home, '.agents') },
+    filesystem: { nomixHome: join(home, '.nomix'), agentsHome: join(home, '.agents') },
     ...catalogDescriptionMaxLength !== undefined ? { tool: { catalogDescriptionMaxLength } } : {},
   }
 }
@@ -60,34 +60,34 @@ async function composePrefix(ctx: Context): Promise<Message[]> {
 }
 
 async function withIsolatedSkillHomes<T>(run: () => Promise<T>): Promise<T> {
-  const oldDshHome = process.env.DSH_HOME
-  const oldAgentsHome = process.env.DSH_AGENTS_HOME
-  const home = await mkdtemp(join(tmpdir(), 'dsh-acp-demo-default-skills-'))
-  process.env.DSH_HOME = join(home, '.dsh')
-  process.env.DSH_AGENTS_HOME = join(home, '.agents')
+  const oldNomixHome = process.env.NOMIX_HOME
+  const oldAgentsHome = process.env.NOMIX_AGENTS_HOME
+  const home = await mkdtemp(join(tmpdir(), 'nomix-acp-demo-default-skills-'))
+  process.env.NOMIX_HOME = join(home, '.nomix')
+  process.env.NOMIX_AGENTS_HOME = join(home, '.agents')
   try {
     return await run()
   } finally {
-    if (oldDshHome === undefined) {
-      delete process.env.DSH_HOME
+    if (oldNomixHome === undefined) {
+      delete process.env.NOMIX_HOME
     } else {
-      process.env.DSH_HOME = oldDshHome
+      process.env.NOMIX_HOME = oldNomixHome
     }
     if (oldAgentsHome === undefined) {
-      delete process.env.DSH_AGENTS_HOME
+      delete process.env.NOMIX_AGENTS_HOME
     } else {
-      process.env.DSH_AGENTS_HOME = oldAgentsHome
+      process.env.NOMIX_AGENTS_HOME = oldAgentsHome
     }
   }
 }
 
-describe('dsh-acp-demo composition', () => {
+describe('nomix-acp-demo composition', () => {
   it('brings up the spine + persistence + the ACP bridge', async () => {
     const ctx = await mount({
       provider: 'mock',
       model: 'mock',
       persona: 'hi',
-      persistenceRoot: '/tmp/dsh-acp-demo-test',
+      persistenceRoot: '/tmp/nomix-acp-demo-test',
       persistenceCompression: 'none',
       skills: await isolatedSkillsConfig(),
       workspaceContext: false,
@@ -143,7 +143,7 @@ describe('dsh-acp-demo composition', () => {
       provider: 'mock',
       model: 'mock',
       persona: 'hi',
-      persistenceRoot: '/tmp/dsh-acp-demo-workspace-context',
+      persistenceRoot: '/tmp/nomix-acp-demo-workspace-context',
       workspaceContext: false,
     })
     expect(ctx.get('agents')).toBeDefined()
@@ -161,9 +161,9 @@ describe('dsh-acp-demo composition', () => {
     })
   })
 
-  it('forwards skill config and dshHome into agent-spine-demo', async () => {
+  it('forwards skill config and nomixHome into agent-spine-demo', async () => {
     const skills = await isolatedSkillsConfig(6)
-    const ctx = await mount({ provider: 'mock', model: 'mock', persona: 'hi', dshHome: skills.filesystem!.dshHome!, skills, workspaceContext: false })
+    const ctx = await mount({ provider: 'mock', model: 'mock', persona: 'hi', nomixHome: skills.filesystem!.nomixHome!, skills, workspaceContext: false })
     ctx.skills.register({ name: 'acp-skill', description: 'ACP skill', source: 'runtime', content: 'body' })
     expect(JSON.stringify(await composePrefix(ctx))).toContain('- `acp-skill`: ACP...')
     await ctx.fiber.dispose()
@@ -174,7 +174,7 @@ describe('dsh-acp-demo composition', () => {
       provider: 'mock',
       model: 'mock',
       maxParallelToolCalls: 3,
-      persistenceRoot: '/tmp/dsh-acp-demo-test-parallel',
+      persistenceRoot: '/tmp/nomix-acp-demo-test-parallel',
       skills: await isolatedSkillsConfig(),
       workspaceContext: false,
     })
@@ -232,7 +232,7 @@ describe('dsh-acp-demo composition', () => {
       provider: 'mock',
       model: 'mock',
       toolOrder: ['zulu', TOOL_ORDER_REST],
-      persistenceRoot: '/tmp/dsh-acp-demo-test-tool-order',
+      persistenceRoot: '/tmp/nomix-acp-demo-test-tool-order',
       workspaceContext: false,
     })
     // The bundle's own bash tools pend on the absent `ctx.shell` executor in

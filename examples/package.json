@@ -1,5 +1,5 @@
 {
-  "name": "dsh-examples",
+  "name": "nomix-examples",
   "private": true,
   "version": "0.0.1",
   "type": "module",
@@ -75,7 +75,7 @@
     "@nomix-ai/nomix-subagent-acp": "workspace:*",
     "@nomix-ai/nomix-subagent-claude-code": "workspace:*",
     "@nomix-ai/nomix-subagent-codex": "workspace:*",
-    "@nomix-ai/nomix-subagent-dsh-sdk": "workspace:*",
+    "@nomix-ai/nomix-subagent-nomix-sdk": "workspace:*",
     "@nomix-ai/nomix-subagent-fork-in-process": "workspace:*",
     "@nomix-ai/nomix-subagent-spawn-in-process": "workspace:*",
     "@nomix-ai/nomix-subprocess-e2b": "workspace:*",

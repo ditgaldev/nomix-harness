@@ -20,7 +20,7 @@ Migrate only unary calls whose business operation already has a natural Service 
 
 `@nomix-ai/nomix-api-remotes/client` will mount each selected business package's generated `/remote` contribution. Client business packages will call `ctx.remote.<service>` and perform Client-owned joins or presentation projection there. The corresponding API Proxy interface member, schema, route, handler, generated client method, fixture implementation, and production invocation will be removed together in that Service's vertical commit.
 
-Large BFF methods remain in `dsh-host-apiproxy`. A method leaves this migration if implementation discovers endpoint-specific lifecycle policy, substantial orchestration, a Client dependency on a protocol-only error distinction, or a transport shape that cannot be expressed as a small owner-side adapter.
+Large BFF methods remain in `nomix-host-apiproxy`. A method leaves this migration if implementation discovers endpoint-specific lifecycle policy, substantial orchestration, a Client dependency on a protocol-only error distinction, or a transport shape that cannot be expressed as a small owner-side adapter.
 
 ## Migration set
 

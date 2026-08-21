@@ -10,7 +10,7 @@ Status: implemented
 
 ## 决策
 
-`SidebarRoot` 跟踪整列上的指针，只要指针不在列内就给根元素挂上 `quietBars` 类。该类选中的规则把 ui-theme 的那组间接变量——`--dsh-scrollbar-thumb` 与 `--dsh-scrollbar-thumb-hover`——重新绑定为 `transparent`，于是嵌套在这一列下的每个滚动区域都不绘制滑块。今天这样的区域只有会话列表；将来新增的区域会直接继承这一行为，而不需要逐个接入。
+`SidebarRoot` 跟踪整列上的指针，只要指针不在列内就给根元素挂上 `quietBars` 类。该类选中的规则把 ui-theme 的那组间接变量——`--nomix-scrollbar-thumb` 与 `--nomix-scrollbar-thumb-hover`——重新绑定为 `transparent`，于是嵌套在这一列下的每个滚动区域都不绘制滑块。今天这样的区域只有会话列表；将来新增的区域会直接继承这一行为，而不需要逐个接入。
 
 拖尾是 `SCROLLBAR_LINGER_MS = 2000`：离开会启动一个定时器，进入会取消尚未触发的定时器，只有定时器真正触发才会把类加回去。指针越过列边界又折返时——绕过一个 portal 菜单，或是奔向某一行时冲过了头——不会看到滑块闪动。
 
@@ -30,7 +30,7 @@ Status: implemented
 
 **只用列上的 CSS `:hover`，不引入 JavaScript 状态。** 整套机制只需一条规则，但它表达不出拖尾：指针越过边界的那一帧滑块就会消失，而那恰好是指针正奔向对话区或绕行 portal 菜单的时刻。诉求本身点名了拖尾，只有 hover 的版本读起来就是闪烁。
 
-**留在 CSS 里、用过渡拿到这段延迟**，即通过 `@property` 注册 `--dsh-scrollbar-thumb` 让该自定义属性可动画，再用 `transition-delay` 把颜色按住。因代价与作用范围被否决：这项注册对每个读取这组变量的表面都是全局的，却只为一列的时序服务；而且这套调色板实际渲染所走的 WebKit 滚动条伪元素并不可靠地支持过渡——延迟会被声明在观察不到它的地方。
+**留在 CSS 里、用过渡拿到这段延迟**，即通过 `@property` 注册 `--nomix-scrollbar-thumb` 让该自定义属性可动画，再用 `transition-delay` 把颜色按住。因代价与作用范围被否决：这项注册对每个读取这组变量的表面都是全局的，却只为一列的时序服务；而且这套调色板实际渲染所走的 WebKit 滚动条伪元素并不可靠地支持过渡——延迟会被声明在观察不到它的地方。
 
 **直接把滚动条藏掉**——`scrollbar-width: none`，或对 `::-webkit-scrollbar` 用 `display: none`。被否决，因为这会连带取消那段预留：滚动条重新出现时会重新占走 8px，使每一行都在触发其显示的指针下方横向移动，而这正是当初加入空槽预留所修掉的回归。
 

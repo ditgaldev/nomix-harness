@@ -51,7 +51,7 @@ describe('jsonrpc-agent keyless smoke', () => {
     { label: 'reports max-token turns with mapping enabled through env', envValue: 'true' },
     { label: 'reports max-token turns with mapping disabled through env', envValue: 'false' },
   ])('$label', async ({ envValue }) => {
-    const root = await mkdtemp(join(tmpdir(), 'dsh-jsonrpc-agent-smoke-'))
+    const root = await mkdtemp(join(tmpdir(), 'nomix-jsonrpc-agent-smoke-'))
     const modelRequests: Record<string, unknown>[] = []
     const modelServer = createServer((request, response) => {
       let body = ''
@@ -81,9 +81,9 @@ describe('jsonrpc-agent keyless smoke', () => {
       env: {
         DEEPSEEK_API_KEY: 'keyless-smoke-no-call',
         DEEPSEEK_BASE_URL: `http://127.0.0.1:${address.port}`,
-        DSH_CWD: root,
-        DSH_SESSION_ROOT: join(root, '.sessions'),
-        ...(envValue === undefined ? {} : { DSH_MAX_TOKENS_AS_SUCCESS: envValue }),
+        NOMIX_CWD: root,
+        NOMIX_SESSION_ROOT: join(root, '.sessions'),
+        ...(envValue === undefined ? {} : { NOMIX_MAX_TOKENS_AS_SUCCESS: envValue }),
       },
       timeout: 35_000,
       killSignal: 'SIGKILL',
@@ -111,7 +111,7 @@ describe('jsonrpc-agent keyless smoke', () => {
       expect(initialized).toMatchObject({
         jsonrpc: '2.0',
         id: 1,
-        result: { serverInfo: { name: 'deepseek-harness-sdk-runtime' } },
+        result: { serverInfo: { name: 'nomix-harness-sdk-runtime' } },
       })
 
       child.stdin.write(`${JSON.stringify({
@@ -185,7 +185,7 @@ describe('jsonrpc-agent keyless smoke', () => {
       cwd: repoRoot,
       env: {
         DEEPSEEK_API_KEY: 'keyless-smoke-no-call',
-        DSH_MAX_TOKENS_AS_SUCCESS: 'sometimes',
+        NOMIX_MAX_TOKENS_AS_SUCCESS: 'sometimes',
       },
       stdin: 'ignore',
       timeout: 25_000,

@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-client-ui-commands",
   "description": "Client command surface: global directory cache, '/' source, three command UI kinds, popupSelect registry",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "publishConfig": {
     "access": "public"
   },
@@ -29,7 +29,7 @@
     "./src/*": "./src/*",
     "./package.json": "./package.json"
   },
-  "dsh": {
+  "nomix": {
     "client": {
       "inject": [
         "@nomix-ai/nomix-api-remotes",

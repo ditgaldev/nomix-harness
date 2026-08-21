@@ -43,7 +43,7 @@ function complete(
   event(response, 'message_start', {
     type: 'message_start',
     message: {
-      id: 'msg_dsh_fixture',
+      id: 'msg_nomix_fixture',
       type: 'message',
       role: 'assistant',
       model,

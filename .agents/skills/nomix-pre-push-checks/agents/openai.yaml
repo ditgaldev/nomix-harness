@@ -1,0 +1,4 @@
+interface:
+  display_name: "NOMIX Pre-Push Checks"
+  short_description: "Run the relevant Nomix Harness checks before push"
+  default_prompt: "Use $nomix-pre-push-checks before pushing this Nomix Harness branch."

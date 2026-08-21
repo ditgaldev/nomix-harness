@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-fs-e2b",
   "description": "E2B filesystem implementation for Nomix Harness",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "publishConfig": {
     "access": "public"
   },

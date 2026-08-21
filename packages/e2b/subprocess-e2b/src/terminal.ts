@@ -30,17 +30,17 @@ import { asError, commandOpts, delay, signalOpts, signalRemoteGroups } from './r
 const TERMINAL_RUNNER_SOURCE = [
   '#!/bin/bash',
   'set -euo pipefail',
-  'dsh_state=$1',
-  'mapfile -d \'\' -t dsh_env < "$dsh_state/environment"',
-  'mapfile -d \'\' -t dsh_argv < "$dsh_state/argv"',
-  'dsh_output_marker=$(<"$dsh_state/output-marker")',
-  'rm -f -- "$dsh_state/environment" "$dsh_state/argv" "$dsh_state/output-marker" "$dsh_state/runner.bash"',
-  'if (( ${#dsh_argv[@]} == 0 )); then',
+  'nomix_state=$1',
+  'mapfile -d \'\' -t nomix_env < "$nomix_state/environment"',
+  'mapfile -d \'\' -t nomix_argv < "$nomix_state/argv"',
+  'nomix_output_marker=$(<"$nomix_state/output-marker")',
+  'rm -f -- "$nomix_state/environment" "$nomix_state/argv" "$nomix_state/output-marker" "$nomix_state/runner.bash"',
+  'if (( ${#nomix_argv[@]} == 0 )); then',
   "  printf 'terminal runner received empty argv\\n' >&2",
   '  exit 125',
   'fi',
-  'printf \'%s\' "$dsh_output_marker"',
-  'exec env -i -- "${dsh_env[@]}" "${dsh_argv[@]}"',
+  'printf \'%s\' "$nomix_output_marker"',
+  'exec env -i -- "${nomix_env[@]}" "${nomix_argv[@]}"',
   '',
 ].join('\n')
 
@@ -469,7 +469,7 @@ export async function spawnE2BTerminal(
     argv: posix.join(stateDir, 'argv'),
     outputMarker: posix.join(stateDir, 'output-marker'),
   }
-  const outputMarker = Buffer.from(`dsh-e2b-bootstrap:${randomUUID()}`)
+  const outputMarker = Buffer.from(`nomix-e2b-bootstrap:${randomUUID()}`)
   const output = new PassThrough()
   const outputFilter = new BootstrapOutputFilter(outputMarker, output)
   let handle: CommandHandle | undefined

@@ -51,7 +51,7 @@ TUI tests exercise all migrated built-ins, live plugin discovery, help/autocompl
 - **Keep adapter-local switches** — rejected because optional plugins cannot contribute discovery and behavior without editing the TUI.
 - **Represent human commands as model tools** — rejected because discovery and direct invocation are human UI behavior; routing through the model adds latency, token cost, and reinterpretation.
 - **Put the registry in the core agent spine** — rejected because UI-less entry points do not consume it, while TUI can compose it explicitly.
-- **Make `dsh-agent-loop` inject commands** — rejected because the loop does not execute or discover human commands. Agent-scoped producers declare the UI dependency in a child plugin instead.
+- **Make `nomix-agent-loop` inject commands** — rejected because the loop does not execute or discover human commands. Agent-scoped producers declare the UI dependency in a child plugin instead.
 - **Attach adapter masks to each definition** — rejected because support is a composition fact, not command-domain state. Every composed adapter exposes a registered command; an incompatible plugin omits registration in that deployment.
 - **Send unknown slash input to the model** — rejected because typoed or unavailable direct actions must fail predictably rather than change execution planes.
 - **Persist generic command input and output** — rejected because adapter notices are not model-visible state. A handler that changes durable behavior calls the owning domain API, which records its own events.

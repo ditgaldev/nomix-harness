@@ -11,8 +11,8 @@
 - id: replay
   name: '@nomix-ai/nomix-llm-replay'
   config:
-    file: !!js process.env.DSH_SNAPSHOT_FILE
-    overrideFile: !!js process.env.DSH_SNAPSHOT_OVERRIDE
+    file: !!js process.env.NOMIX_SNAPSHOT_FILE
+    overrideFile: !!js process.env.NOMIX_SNAPSHOT_OVERRIDE
 
 - id: fs-local
   name: '@nomix-ai/nomix-fs-local'
@@ -25,7 +25,7 @@
     agents: []
     workspaceContext:
       maxBytes: 65536
-      dshHome: !!js process.cwd() + '/.dsh'
+      nomixHome: !!js process.cwd() + '/.nomix'
     skills:
       enabled: false
     toolBash: false

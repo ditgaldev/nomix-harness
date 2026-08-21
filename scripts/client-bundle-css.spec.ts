@@ -18,18 +18,18 @@ function cssPlugin(): CssPlugin {
   const configs = clientBundle(
     '@nomix-ai/nomix-client-test',
     ['lib/types/index.js', 'lib/types/invariant.js'],
-  )({ env: { DSH_BUILD_FACE: 'client' } })
+  )({ env: { NOMIX_BUILD_FACE: 'client' } })
   const client = configs.find(config => config.platform === 'browser')
   if (client === undefined) throw new Error('client config missing')
   const plugins = (client as { plugins: CssPlugin[] }).plugins
-  const plugin = plugins.find(candidate => candidate.name === 'dsh-css-modules-inline')
+  const plugin = plugins.find(candidate => candidate.name === 'nomix-css-modules-inline')
   if (plugin === undefined) throw new Error('CSS Modules plugin missing from client config')
   return plugin
 }
 
 describe('client bundle CSS Modules', () => {
   it('registers the source stylesheet as a watch dependency', async () => {
-    const root = await mkdtemp(join(tmpdir(), 'dsh-client-css-watch-'))
+    const root = await mkdtemp(join(tmpdir(), 'nomix-client-css-watch-'))
     try {
       const stylesheet = join(root, 'Fixture.module.css')
       const importer = join(root, 'index.ts')

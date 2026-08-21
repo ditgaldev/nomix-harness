@@ -1,7 +1,7 @@
 /**
  * Harness request-history conversion into pi-ai's Context vocabulary.
  *
- * @module dsh-llm-pi-ai/context
+ * @module nomix-llm-pi-ai/context
  */
 
 import { CallId, contentHasImage, LlmError } from '@nomix-ai/nomix-llm'

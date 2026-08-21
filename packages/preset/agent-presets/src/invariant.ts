@@ -6,7 +6,7 @@
 import type { Context } from '@nomix-ai/cordis'
 import type { InvariantInstaller } from '@nomix-ai/nomix-invariants'
 // Type-only: resolves the `system-prompt/assemble` waterfall this companion
-// joins, and the `agent` field `dsh-agent` merges into its context.
+// joins, and the `agent` field `nomix-agent` merges into its context.
 import type {} from '@nomix-ai/nomix-system-prompt'
 import type {} from '@nomix-ai/nomix-agent'
 // Imported through the package name, not `./mount.ts`: a module shared between

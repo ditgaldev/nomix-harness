@@ -10,7 +10,7 @@ The repository had grown faster than some names. Several package names described
 
 These names are not harmless. A name tells a contributor where a responsibility starts and stops. `Store` suggests data access. `Registry` suggests registrations and lookup. `Runtime` suggests live execution and lifecycle. When one word is used for all three, callers cannot tell which object owns policy, work, or state without reading the implementation.
 
-The repository also used `SDK` in two meanings. The supported Python and TypeScript clients use the JSON-RPC SDK protocol. The project as a whole is DeepSeek Harness, not an SDK project. The removed SDK project toolchain made the broad meaning obsolete, but prose and names preserved parts of it.
+The repository also used `SDK` in two meanings. The supported Python and TypeScript clients use the JSON-RPC SDK protocol. The project as a whole is Nomix Harness, not an SDK project. The removed SDK project toolchain made the broad meaning obsolete, but prose and names preserved parts of it.
 
 The last pre-release window made repository-wide renames cheap. Keeping weak names would have turned accidental vocabulary into a compatibility contract.
 
@@ -24,13 +24,13 @@ No family exposes two public vocabularies.
 
 ### Publish the fork under one npm namespace
 
-The repository publishes its owned packages under `@nomix-ai`. The CLI package is `@nomix-ai/nomix-harness`; packages formerly named with the `dsh-` prefix use `nomix-` with the same role suffix, and the vendored Cordis and native launcher packages retain their unscoped suffix under `@nomix-ai`. Package manifests, workspace dependencies, module specifiers, TypeScript paths, release checks, packed-install probes, examples, and current documentation use these names together. Published manifests point to `ditgaldev/nomix-harness`.
+The repository publishes its owned packages under `@nomix-ai`. The CLI package is `@nomix-ai/nomix-harness`; packages formerly named with the `nomix-` prefix use `nomix-` with the same role suffix, and the vendored Cordis and native launcher packages retain their unscoped suffix under `@nomix-ai`. Package manifests, workspace dependencies, module specifiers, TypeScript paths, release checks, packed-install probes, examples, and current documentation use these names together. Published manifests point to `ditgaldev/nomix-harness`.
 
-The installed executable is `nomix`, and the source launcher is `pnpm nomix`. The `dsh` manifest keys, `DSH_*` environment variables, `.dsh` state directory, and durable or wire identifiers remain unchanged because they identify configuration and persisted runtime data rather than the executable.
+The installed executable is `nomix`, and the source launcher is `pnpm nomix`. The `nomix` manifest keys, `NOMIX_*` environment variables, `.nomix` state directory, and durable or wire identifiers remain unchanged because they identify configuration and persisted runtime data rather than the executable.
 
 ### Use `SDK` for one thing
 
-`SDK` means the JSON-RPC-based client/server protocol used by the supported Python and TypeScript SDKs. The repository keeps `@nomix-ai/nomix-sdk-client`, `@nomix-ai/nomix-sdk-protocol`, and the wire identity `deepseek-harness-sdk-runtime`; the JSON-RPC server belongs to the same family. DeepSeek Harness itself is not an SDK, and the removed project generator, launcher, helper, and launcher telemetry packages stay absent.
+`SDK` means the JSON-RPC-based client/server protocol used by the supported Python and TypeScript SDKs. The repository keeps `@nomix-ai/nomix-sdk-client`, `@nomix-ai/nomix-sdk-protocol`, and the wire identity `nomix-harness-sdk-runtime`; the JSON-RPC server belongs to the same family. Nomix Harness itself is not an SDK, and the removed project generator, launcher, helper, and launcher telemetry packages stay absent.
 
 This decision partially supersedes three active decisions. It replaces the retained `bash/`, `pty/`, and `self-modification/` group names and both deferred package targets in the [package-regrouping decision](2026-07-29-package-regrouping.md). It replaces only the repository-wide SDK claim in the [SDK project toolchain removal](../simplification/2026-08-11-remove-sdk-project-toolchain.md), which remains the owner of the deletion and the surviving runtime SDK. It replaces only the package-name rationale in the [tool-call timeout policy](2026-07-07-tool-call-timeout-policy.md); the timeout mechanism and its `guard/timeout-policy/` home remain unchanged.
 
@@ -78,7 +78,7 @@ Do not invent a `process sandbox` concept. The current `sandbox` family already 
 
 Use title case for initialisms inside PascalCase identifiers: `Ui`, `Llm`, `JsonRpc`, and `ApiProxy`. Use the conventional uppercase form in prose and package names where applicable: UI, LLM, JSON-RPC, and API. `Typert` is the exact product spelling in identifiers and prose; do not write `TypeRT`, `TypeRt`, or `Typert` with another internal split.
 
-Do not remove an intentional vendor qualifier to avoid repetition. `dsh-subagent-dsh-sdk` names the DeepSeek Harness SDK provider and avoids confusion with another SDK. Its private class becomes `SdkSubagentProvider` because the class also needs to say what it provides.
+Do not remove an intentional vendor qualifier to avoid repetition. `nomix-subagent-nomix-sdk` names the Nomix Harness SDK provider and avoids confusion with another SDK. Its private class becomes `SdkSubagentProvider` because the class also needs to say what it provides.
 
 ### Put the rule in project documentation
 
@@ -95,7 +95,7 @@ The tables record public and repository-wide renames. The `Current` column holds
 | `@nomix-ai/nomix-jsonrpc` | `@nomix-ai/nomix-sdk-jsonrpc-server` | It is the server half of the SDK protocol. `jsonrpc` alone names an encoding; `sdk-jsonrpc-server` gives the family, mechanism, and role. |
 | `HarnessSdkServer` | `HarnessSdkJsonRpcServer` | The class is one JSON-RPC server implementation, not every possible SDK server. |
 
-Keep `@nomix-ai/nomix-sdk-client`, `@nomix-ai/nomix-sdk-protocol`, and `deepseek-harness-sdk-runtime`. Exclude `@nomix-ai/create-sdk`, `@nomix-ai/nomix-scripts`, `@nomix-ai/nomix-helper`, and `@nomix-ai/nomix-telemetry`; the separate removal decision deletes them and their support graph.
+Keep `@nomix-ai/nomix-sdk-client`, `@nomix-ai/nomix-sdk-protocol`, and `nomix-harness-sdk-runtime`. Exclude `@nomix-ai/create-sdk`, `@nomix-ai/nomix-scripts`, `@nomix-ai/nomix-helper`, and `@nomix-ai/nomix-telemetry`; the separate removal decision deletes them and their support graph.
 
 ### Shell and terminal
 
@@ -177,12 +177,12 @@ Keep `@nomix-ai/nomix-tools` and `ctx.tools`. Keep `@nomix-ai/nomix-api-gateway`
 | `TelemetryBackend` | `SessionTelemetrySink` | This lower layer receives emitted records. `Sink` distinguishes it from the coordinating backend service. |
 | `TelemetryCoordinator`, `TelemetryRecord`, `TelemetrySeverity`, `TelemetrySharingStatus`, and `TelemetryCapture` | Corresponding `SessionTelemetry*` names | These public types belong only to session telemetry. |
 | `telemetry/record` | `session-telemetry/record` | The event name must state its owning domain. |
-| `TelemetryOtel`, `TelemetryMode`, plugin `telemetry-otel` | `OpenTelemetrySessionBackend`, `SessionTelemetryMode`, plugin `session-telemetry-otel` | The provider name states both the OpenTelemetry mechanism and session scope. Keep the package names `dsh-session-telemetry` and `dsh-session-telemetry-otel`. |
+| `TelemetryOtel`, `TelemetryMode`, plugin `telemetry-otel` | `OpenTelemetrySessionBackend`, `SessionTelemetryMode`, plugin `session-telemetry-otel` | The provider name states both the OpenTelemetry mechanism and session scope. Keep the package names `nomix-session-telemetry` and `nomix-session-telemetry-otel`. |
 | `docs/subsystems/telemetry.md` | `docs/subsystems/session-telemetry.md` | The page documents session telemetry, not repository-wide observability. |
 | `session/user-id/`, `@nomix-ai/nomix-user-id` | `identity/anonymous-user-id/`, `@nomix-ai/nomix-anonymous-user-id` | The value is a random correlation id shared by telemetry, feedback, and DeepSeek requests. It is neither a Session concern nor an authenticated user identity. |
 | `USER_ID_FILE_NAME`, `.userid`, feedback label `User` | `ANONYMOUS_USER_ID_FILE_NAME`, `.anonymous-user-id`, feedback label `Anonymous user` | The file and UI must not imply account identity. Keep the existing `AnonymousUserId` functions and the standard OTel attribute `user.id`. |
 | `util/environment/`, `@nomix-ai/nomix-environment` | `util/launch-environment/`, `@nomix-ai/nomix-launch-environment` | The package captures one immutable layered snapshot at launch. It is not a general environment API. |
-| Public `Environment*`, `createEnvironmentSnapshot`, `environmentOf`, `DSH_ENVIRONMENT_KEY` | `LaunchEnvironment*`, `createLaunchEnvironmentSnapshot`, `launchEnvironmentOf`, `DSH_LAUNCH_ENVIRONMENT_KEY` | The names state the snapshot's lifetime and purpose. |
+| Public `Environment*`, `createEnvironmentSnapshot`, `environmentOf`, `NOMIX_ENVIRONMENT_KEY` | `LaunchEnvironment*`, `createLaunchEnvironmentSnapshot`, `launchEnvironmentOf`, `NOMIX_LAUNCH_ENVIRONMENT_KEY` | The names state the snapshot's lifetime and purpose. |
 | `ctx.launcherEnvironment` | `ctx.launchEnvironment` | The value describes the application launch, not only a launcher component. Keep source labels `process`, `project-env`, and `user-env`. |
 
 ### Schedule, workflow, goals, and compaction
@@ -249,11 +249,11 @@ Keep the complete session projection family and `SessionProjection*` vocabulary.
 | `@nomix-ai/nomix-subagent-spawn`, `SpawnProvider` | `@nomix-ai/nomix-subagent-spawn-in-process`, `SpawnInProcessProvider` | This provider starts a child agent in the current process. The configured provider id remains `spawn`. |
 | `@nomix-ai/nomix-subagent-fork`, `ForkProvider` | `@nomix-ai/nomix-subagent-fork-in-process`, `ForkInProcessProvider` | This provider forks an agent in the current process. The configured provider id remains `fork`. |
 | `@nomix-ai/nomix-subagent-inprocess`, `subagent-inprocess/` | `@nomix-ai/nomix-subagent-in-process-driver`, `subagent-in-process-driver/` | The package contains common in-process driving logic, not a third provider. |
-| Private `SdkProvider` in `dsh-subagent-dsh-sdk` | `SdkSubagentProvider` | The repeated package qualifier is intentional, and the class must say that it provides subagents through the SDK. |
+| Private `SdkProvider` in `nomix-subagent-nomix-sdk` | `SdkSubagentProvider` | The repeated package qualifier is intentional, and the class must say that it provides subagents through the SDK. |
 | `WebService`, `WebServiceConfig` | `WebRuntime`, `WebRuntimeConfig` | The object selects providers and runs live search and fetch operations. Keep the package, key, provider packages, and model tool. |
 | `@nomix-ai/nomix-web-fetch-local`, `LocalFetchProvider`, `LocalFetchLimits`, provider id `local-http` | `@nomix-ai/nomix-web-fetch-http`, `HttpFetchProvider`, `HttpFetchLimits`, provider id `http` | This provider performs direct HTTP fetches. `local` says where code happens to run, not which mechanism it provides. |
 
-Keep `@nomix-ai/nomix-subagent-dsh-sdk`, its provider id `dsh-sdk`, external ACP, Codex, and Claude Code provider families, the subagent tool package names, the main filesystem package and backends, filesystem tools and events, and the skill badge and tool packages.
+Keep `@nomix-ai/nomix-subagent-nomix-sdk`, its provider id `nomix-sdk`, external ACP, Codex, and Claude Code provider families, the subagent tool package names, the main filesystem package and backends, filesystem tools and events, and the skill badge and tool packages.
 
 ### Hooks, guards, plan mode, extensions, and diagnostics
 
@@ -283,7 +283,7 @@ Keep MCP, Todo, and the Plan Mode package, key, events, and tool names. This dec
 | `@nomix-ai/nomix-jsonrpc-demo` | `@nomix-ai/nomix-sdk-jsonrpc-demo` | The example demonstrates the runtime SDK over JSON-RPC. It belongs to the one SDK meaning. |
 | `@nomix-ai/nomix-frontend` | `@nomix-ai/nomix-web-frontend` | The application is the web frontend. Keep its physical `apps/web/` folder. |
 
-Keep atomic-write, brand, native-command, timeout utility, directory-picker, `dsh-base`, `dsh-web-app`, app boot, CLI names, and the `headless` package, bundle, and example identity. `headless` is the intended product essence and may later support more than one-shot execution.
+Keep atomic-write, brand, native-command, timeout utility, directory-picker, `nomix-base`, `nomix-web-app`, app boot, CLI names, and the `headless` package, bundle, and example identity. `headless` is the intended product essence and may later support more than one-shot execution.
 
 ### Client runtime and UI
 
@@ -330,7 +330,7 @@ The following debated names stay unchanged because the current scope is accurate
 - Keep `PermissionPresetSettingsController` even though it is long. Every word limits the role.
 - Keep `ModelsSettingsStore`; its main contract is one settings data model with store operations.
 - Keep `InputHub`; it is the concrete hub that backs `SessionInputResolver`.
-- Keep `dsh-subagent-dsh-sdk` and provider id `dsh-sdk`; the repeated qualifier prevents ambiguity.
+- Keep `nomix-subagent-nomix-sdk` and provider id `nomix-sdk`; the repeated qualifier prevents ambiguity.
 - Keep `headless`; the product identity is accurate even if the runtime later supports more than one-shot use.
 - Keep deprecated Host `ApiProxy` and client connection names until the API replacement removes them.
 - Keep `Web` for the Host server and the provider-neutral web capability. Use `HTTP` only for the direct fetch provider.
@@ -361,7 +361,7 @@ The following debated names stay unchanged because the current scope is accurate
 
 **Use broad names for possible future features.** Rejected. Name the stable current role. A future boundary change can rename the object again before release or use a new proposal after release. Vague names charge every current reader for an unbuilt future.
 
-**Rename `dsh-compact-basic` to `dsh-compaction-llm`.** Rejected. `LLM` adds no distinction in the current backend family. `basic` is less ambitious and does not claim an algorithm that does not exist.
+**Rename `nomix-compact-basic` to `nomix-compaction-llm`.** Rejected. `LLM` adds no distinction in the current backend family. `basic` is less ambitious and does not claim an algorithm that does not exist.
 
 **Rename session projections to reducers.** Rejected. Reduction is how a projection is built. The package also owns the read-model value, cache, and lookup contract.
 
@@ -377,7 +377,7 @@ The following debated names stay unchanged because the current scope is accurate
 - Runtime behavior, package boundaries, defaults, policy, durable semantics, and model behavior remain equivalent except where an identifier is itself visible.
 - Package directories, npm names, imports, manifests, TypeScript references and paths, Cordis config, plugin ids, service keys, events, tools, RPC names, persisted names named by the ledger, fixtures, snapshots, examples, generated catalogs, and current prose use the current vocabulary.
 - Current implemented Agent Notes carry the factual name and path changes. The package-regrouping note records the group inventory and package targets, the SDK removal note reserves `SDK` for the runtime protocol, and the timeout-policy note records the package-name rationale.
-- The paired package-creation guide contains the role-word contract, `packages/AGENTS.md` links to it, the terminology table records the chosen words and `Typert` spelling, and root project prose calls the product DeepSeek Harness rather than DeepSeek Harness SDK.
+- The paired package-creation guide contains the role-word contract, `packages/AGENTS.md` links to it, the terminology table records the chosen words and `Typert` spelling, and root project prose calls the product Nomix Harness rather than Nomix Harness SDK.
 - The removed SDK project toolchain stays absent.
 - `pnpm run check:ci` covers source-plane typecheck, build, package hygiene, generated-reference checks, affected snapshots, translation pairing, `doc-sync`, and lint. Release-shaped Python runtime smokes and required CI cover packaged-runtime and platform paths.
 

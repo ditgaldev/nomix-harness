@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-llm-retry",
   "description": "Provider-routed LLM request retry policy for the Nomix Harness",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "publishConfig": {
     "access": "public"
   },

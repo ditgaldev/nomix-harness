@@ -6,13 +6,13 @@ English | [中文](2026-08-12-product-subagent-one-shot-background-tasks.zh.md)
 
 ## Problem
 
-The Codex and Claude Code providers already run one self-contained task and return one final answer, while `dsh-tool-subagent` already adapts any one-shot provider to the generic background Job runtime. The shipped product-tool rows disabled that route, so an agent could only wait for the product answer even when the delegation was independent of its next action.
+The Codex and Claude Code providers already run one self-contained task and return one final answer, while `nomix-tool-subagent` already adapts any one-shot provider to the generic background Job runtime. The shipped product-tool rows disabled that route, so an agent could only wait for the product answer even when the delegation was independent of its next action.
 
 Exposing background execution must not add a product session, product-specific job state, another cancellation owner, or another result protocol. The same provider run must remain responsible for one native process or query and one final answer, while the existing Job registry remains responsible for ids, collection, cancellation, owner cleanup, and completion notices.
 
 ## Decision
 
-Production `dsh` does not install the optional product providers. A Profile that opts in installs and mounts `dsh-subagent-codex`, `dsh-subagent-claude-code`, or both once on the host plane. The `standard`, `code`, and `cordis` Agent Presets configure the corresponding dormant tool rows with `backgroundMode: one-shot`; removing a row's `disabled` field exposes the existing optional `run_in_background` argument to agents composed from that preset. Omission or `false` waits in the foreground; explicit `true` returns a parent-owned Job id after synchronous Job preflight and registration, without waiting for provider startup or completion.
+Production `nomix` does not install the optional product providers. A Profile that opts in installs and mounts `nomix-subagent-codex`, `nomix-subagent-claude-code`, or both once on the host plane. The `standard`, `code`, and `cordis` Agent Presets configure the corresponding dormant tool rows with `backgroundMode: one-shot`; removing a row's `disabled` field exposes the existing optional `run_in_background` argument to agents composed from that preset. Omission or `false` waits in the foreground; explicit `true` returns a parent-owned Job id after synchronous Job preflight and registration, without waiting for provider startup or completion.
 
 The [generic one-shot background adapter](2026-07-08-background-subagent-tasks.md) owns background registration and settlement. It starts the same [`SubagentRun`](2026-06-21-subagent-capability-seam.md), uses a Job-owned cancellation signal across provider startup and execution, waits for `run.result` and `run.dispose()`, maps the terminal result into the Job, and lets `job_output`, `job_list`, `job_kill`, and the existing completion notice expose that state. The [product provider decision](2026-08-04-claude-code-and-codex-subagent-backends.md) continues to own native protocols, answer selection, local cancellation, and process-tree quiescence.
 
@@ -33,23 +33,23 @@ product tool call
 
 | Fact or resource | Owner | Product-tool responsibility | Observable result |
 | --- | --- | --- | --- |
-| Product provider installation and registration | Explicit Profile | Install the optional provider package and mount it once on the host plane | The provider name is available without adding its package to every production `dsh` install |
+| Product provider installation and registration | Explicit Profile | Install the optional provider package and mount it once on the host plane | The provider name is available without adding its package to every production `nomix` install |
 | Product selection and exposure | Agent Preset | Bind one fixed tool name to one fixed provider | Enabling one row exposes only that product tool |
-| Foreground or background choice | `dsh-tool-subagent` | Resolve `run_in_background` under `one-shot` policy | Omission is foreground; explicit `true` returns a Job id |
-| Job id, state, output, cancellation, and notice | `ctx.jobs` and `dsh-tool-jobs` | Register and present the existing one-shot run | Generic job tools collect or stop the run for the exact parent |
-| Native answer and process quiescence | Product provider and `dsh-subprocess` | Produce one final result and release one process tree | Job settlement and foreground return both wait for disposal |
+| Foreground or background choice | `nomix-tool-subagent` | Resolve `run_in_background` under `one-shot` policy | Omission is foreground; explicit `true` returns a Job id |
+| Job id, state, output, cancellation, and notice | `ctx.jobs` and `nomix-tool-jobs` | Register and present the existing one-shot run | Generic job tools collect or stop the run for the exact parent |
+| Native answer and process quiescence | Product provider and `nomix-subprocess` | Produce one final result and release one process tree | Job settlement and foreground return both wait for disposal |
 
 ## Published composition
 
 The production base keeps both optional product providers out of its dependency closure. An opting-in Profile installs and mounts either or both providers once on the host plane. Each full preset keeps both product-tool rows disabled and contributes the generic Job controls to its own agent scope, while the base host owns the shared Job registry. A user copies a preset and removes `disabled` from the matching product rows after the Profile provider is present; no product process starts during composition.
 
-A standalone custom composition that enables one-shot background execution must provide the product provider plus the complete generic Job capability: `dsh-jobs-local` as the Job provider and `dsh-tool-jobs` as the model-facing consumer. A Profile based on `dsh-base` already has the Job capability and adds only the optional product provider before enabling the preset tool row. A product tool without the Job runtime can still execute in the foreground, but an explicit background request fails the existing Job preflight instead of publishing an uncollectable id.
+A standalone custom composition that enables one-shot background execution must provide the product provider plus the complete generic Job capability: `nomix-jobs-local` as the Job provider and `nomix-tool-jobs` as the model-facing consumer. A Profile based on `nomix-base` already has the Job capability and adds only the optional product provider before enabling the preset tool row. A product tool without the Job runtime can still execute in the foreground, but an explicit background request fails the existing Job preflight instead of publishing an uncollectable id.
 
 The ACP product compositions use the same fixed product rows and generic job controls. Their keyless schema snapshots expose `description`, `prompt`, and optional `run_in_background` for each enabled product tool without invoking Codex, Claude Code, or an external model.
 
 ## Verification
 
-The Web composition test explicitly mounts both optional providers from the repository examples dependency anchor, then boots four user-preset variants—neither product, Codex, Claude Code, and both—and checks that each enabled product tool exposes `run_in_background` alongside `job_output`, `job_list`, and `job_kill`. The two package-owned Loader compositions run with an empty `PATH`, inspect the same schemas and controls, and prove that explicit provider loading starts no product process. ACP keyless snapshots pin the assembled explicit product schemas, while the existing `dsh-tool-subagent` and job suites pin foreground defaulting, Job registration, final-output collection, cancellation, completion notices, owner disposal, and provider disposal.
+The Web composition test explicitly mounts both optional providers from the repository examples dependency anchor, then boots four user-preset variants—neither product, Codex, Claude Code, and both—and checks that each enabled product tool exposes `run_in_background` alongside `job_output`, `job_list`, and `job_kill`. The two package-owned Loader compositions run with an empty `PATH`, inspect the same schemas and controls, and prove that explicit provider loading starts no product process. ACP keyless snapshots pin the assembled explicit product schemas, while the existing `nomix-tool-subagent` and job suites pin foreground defaulting, Job registration, final-output collection, cancellation, completion notices, owner disposal, and provider disposal.
 
 ## Alternatives considered
 

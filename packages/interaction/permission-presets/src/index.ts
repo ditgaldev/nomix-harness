@@ -7,7 +7,7 @@
  * `permissions` session projection; the write side ships as the
  * `/permission` command — both optional children over the same service.
  *
- * @module dsh-permission-presets
+ * @module nomix-permission-presets
  */
 
 import { Context, Service } from '@nomix-ai/cordis'

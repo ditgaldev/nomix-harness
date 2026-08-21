@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/process/2026-07-10-readme-known-limitations-gate.md
-2026-07-10-readme-known-limitations-gate.md: 2ca1168d795692730d17b6ab23dd113e8be277e5
-2026-07-10-readme-known-limitations-gate.zh.md: cabb368af5b3e35ffcb8713b2c96fdb767f6237d
+2026-07-10-readme-known-limitations-gate.md: 8592c34025a163a3ba75b0568dc56494034b490e
+2026-07-10-readme-known-limitations-gate.zh.md: ff9fe48c77909f9079daed96e06f4eb746356b8a

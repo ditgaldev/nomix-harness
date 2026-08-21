@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-harness",
   "description": "nomix CLI: profile boot, plugin management, and the browser UI alias",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "publishConfig": {
     "access": "public"
   },
@@ -12,13 +12,24 @@
   },
   "type": "module",
   "bin": {
-    "nomix": "lib/bin.js"
+    "nomix": "dist/cli/bin.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+    "./config": { "types": "./dist/config.d.ts", "default": "./dist/config.js" },
+    "./plugin": { "types": "./dist/plugin-api/index.d.ts", "default": "./dist/plugin-api/index.js" },
+    "./plugins": { "types": "./dist/plugins/index.d.ts", "default": "./dist/plugins/index.js" },
+    "./bundles": { "types": "./dist/bundles/index.d.ts", "default": "./dist/bundles/index.js" },
+    "./runtime": { "types": "./dist/runtime/index.d.ts", "default": "./dist/runtime/index.js" },
+    "./sdk": { "types": "./dist/sdk/index.d.ts", "default": "./dist/sdk/index.js" },
+    "./testing": { "types": "./dist/testing/index.d.ts", "default": "./dist/testing/index.js" },
+    "./package.json": "./package.json"
   },
   "files": [
-    "lib/*.js",
-    "config"
+    "dist"
   ],
-  "bundleDependencies": true,
   "license": "MIT",
   "dependencies": {
     "@nomix-ai/cordis-plugin-hmr": "workspace:^",

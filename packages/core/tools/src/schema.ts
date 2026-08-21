@@ -1,4 +1,4 @@
-/** Unified JSON-value schema DSL, inference, compilation, and typed tool helper. @module dsh-tools/schema */
+/** Unified JSON-value schema DSL, inference, compilation, and typed tool helper. @module nomix-tools/schema */
 
 import { HarnessError } from '@nomix-ai/nomix-llm'
 import type { ContentBlock } from '@nomix-ai/nomix-llm'

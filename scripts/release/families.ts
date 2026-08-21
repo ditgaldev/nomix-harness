@@ -1,7 +1,7 @@
 /**
  * The three independent publish sequences this repository releases from
  * (`packages/` + `apps/`, `vendor/`, and `native/`) and the two this module
- * owns: `dsh` and `vendor`. Each family carries its own version baseline, tag
+ * owns: `nomix` and `vendor`. Each family carries its own version baseline, tag
  * naming, and publish set, so releasing one never republishes another
  * ([rationale](../../.agents/notes/implemented/process/2026-08-10-npm-release-sequences.md)).
  *
@@ -113,7 +113,7 @@ export abstract class ReleaseFamily {
   abstract readonly patterns: readonly string[]
 
   /** How each member becomes a publishable tarball. */
-  abstract readonly packing: 'package' | 'portable-deploy'
+  abstract readonly packing: 'package' | 'native-bundle'
 
   /** Git tag prefix this family publishes from. */
   abstract readonly tagPrefix: string
@@ -321,23 +321,23 @@ export abstract class ReleaseFamily {
   abstract readonly installedEntry: InstalledEntry | undefined
 }
 
-/** Product packages share one version, but publish as one self-contained CLI package. */
-class DshFamily extends ReleaseFamily {
-  readonly id = 'dsh'
+/** Product packages share one version and publish as one native ESM package. */
+class NomixFamily extends ReleaseFamily {
+  readonly id = 'nomix'
   readonly patterns = ['packages/*/*/package.json', 'apps/*/package.json'] as const
-  readonly packing = 'portable-deploy' as const
+  readonly packing = 'native-bundle' as const
   readonly tagPrefix = 'nomix-v'
 
   /**
-   * Publish only the portable CLI; its deployed dependency tree carries the
-   * internal workspace packages without creating registry packages for them.
+   * Publish only the aggregate Harness package; its dist tree contains the
+   * internal workspace runtime without publishing internal package names.
    * @param members - every package sharing the product version.
    * @returns The CLI member.
    */
   override publicationMembers(members: readonly ReleaseMember[]): ReleaseMember[] {
     const published = members.filter(member => member.name === '@nomix-ai/nomix-harness')
     if (published.length !== 1) {
-      throw new Error(`dsh release requires exactly one @nomix-ai/nomix-harness member, found ${String(published.length)}`)
+      throw new Error(`nomix release requires exactly one @nomix-ai/nomix-harness member, found ${String(published.length)}`)
     }
     return published
   }
@@ -350,7 +350,7 @@ class DshFamily extends ReleaseFamily {
     const versions = new Set(members.map(member => member.version))
     if (versions.size !== 1) {
       const detail = members.map(member => `${member.directory}: ${member.version}`).join('\n')
-      throw new Error(`dsh release members must share one version:\n${detail}`)
+      throw new Error(`nomix release members must share one version:\n${detail}`)
     }
   }
 
@@ -369,9 +369,15 @@ class DshFamily extends ReleaseFamily {
    */
   validatePayload(member: ReleaseMember, files: readonly string[]): void {
     validateTarballPayload(files, member.name)
-    if (!files.includes('package/nomix-runtime.tgz')) throw new Error(`${member.name} carries no portable runtime archive`)
-    if (files.some(file => file.startsWith('package/node_modules/'))) {
-      throw new Error(`${member.name} exposes its expanded runtime as npm tarball members`)
+    for (const required of [
+      'package/dist/plugins/manifest.json',
+      'package/dist/bundles/manifest.json',
+      'package/dist/cli/bin.js',
+      'package/dist/plugin-api/index.js',
+      'package/dist/sdk/index.js',
+    ]) if (!files.includes(required)) throw new Error(`${member.name} carries no ${required.slice('package/'.length)}`)
+    if (files.some(file => file.includes('/node_modules/') || file.endsWith('.map') || file.includes('/src/'))) {
+      throw new Error(`${member.name} exposes forbidden source, source-map, or node_modules members`)
     }
   }
 
@@ -433,7 +439,7 @@ class VendorFamily extends ReleaseFamily {
 
 /** Every release family this module owns, in workflow order. */
 function releaseFamilies(): readonly ReleaseFamily[] {
-  return [new DshFamily(), new VendorFamily()]
+  return [new NomixFamily(), new VendorFamily()]
 }
 
 /**

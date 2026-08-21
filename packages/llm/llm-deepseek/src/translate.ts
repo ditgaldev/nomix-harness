@@ -5,7 +5,7 @@
  * while ensuring no chunk follows `finish`.
  *
  * Translate DeepSeek wire chunks into the harness `StreamChunk` protocol.
- * @module dsh-llm-deepseek/translate
+ * @module nomix-llm-deepseek/translate
  */
 
 import { CallId, EMPTY_RESPONSE_CODE, LlmError } from '@nomix-ai/nomix-llm'

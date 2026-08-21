@@ -1,293 +1,27 @@
-/**
- * Pack one release family's registry packages into a single directory, in
- * publish order, and record that order for the publish step. A portable family
- * first deploys its production workspace tree and bundles that tree into its
- * entry package.
- *
- * The pack step is the release boundary: it runs without credentials, produces
- * every tarball from one commit, and hands the publish step exactly those bytes
- * ([rationale](../../.agents/notes/implemented/process/2026-08-10-npm-release-sequences.md)).
- */
+/** Pack a release family and validate the exact npm tarballs. */
 
-import {
-  cpSync,
-  existsSync,
-  globSync,
-  lstatSync,
-  mkdirSync,
-  mkdtempSync,
-  readFileSync,
-  readdirSync,
-  realpathSync,
-  rmSync,
-  statSync,
-  writeFileSync,
-} from 'node:fs'
+import { existsSync, mkdirSync, mkdtempSync, rmSync, statSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
-import { dirname, join, resolve, sep } from 'node:path'
+import { join, resolve } from 'node:path'
 import { parseArgs } from 'node:util'
+import { buildNpmHarnessDistribution } from '../npm-harness-distribution.ts'
 import { releaseFamily, tarballName, type ReleaseFamily, type ReleaseMember } from './families.ts'
 import { isEntry, run } from './process.ts'
-import {
-  PUBLISH_ORDER_FILE,
-  tarballFiles,
-  validateNpmTarballListing,
-  validateNpmTarballPaths,
-} from './tarball.ts'
+import { PUBLISH_ORDER_FILE, tarballFiles, validateNpmTarballListing, validateNpmTarballPaths } from './tarball.ts'
 
 /** Where pack output lands when `--out` is omitted. */
 const DEFAULT_OUTPUT = 'dist/npm'
-const PORTABLE_RUNTIME_ARCHIVE = 'nomix-runtime.tgz'
-const RUNTIME_DEPENDENCY_SECTIONS = ['dependencies', 'optionalDependencies', 'peerDependencies'] as const
-const PLATFORM_DEPENDENCIES = ['koffi', 'node-addon-require-builtin', 'sharp'] as const
-let workspaceInternalPackages: ReadonlyMap<string, string> | undefined
 
-/**
- * Resolve one internal package from the built workspace source tree.
- * @param name - scoped package name.
- * @returns Its absolute directory, if this repository owns it.
- */
-function workspaceInternalPackage(name: string): string | undefined {
-  if (workspaceInternalPackages === undefined) {
-    const packages = new Map<string, string>()
-    const manifests = globSync([
-      'apps/*/package.json',
-      'packages/*/*/package.json',
-      'vendor/*/package.json',
-      'native/landlock-run/packages/*/package.json',
-    ], { cwd: process.cwd() }).sort()
-    for (const manifestPath of manifests) {
-      const manifest = JSON.parse(readFileSync(resolve(process.cwd(), manifestPath), 'utf8')) as { name?: unknown }
-      if (typeof manifest.name === 'string') packages.set(manifest.name, dirname(resolve(process.cwd(), manifestPath)))
-    }
-    workspaceInternalPackages = packages
-  }
-  return workspaceInternalPackages.get(name)
-}
-
-/**
- * Return the first symlink below a deployed node_modules tree, excluding its
- * virtual store because that store is removed after its package links are copied.
- * @param directory - directory to scan.
- * @param virtualStore - absolute `.pnpm` directory to skip.
- * @returns The symlink path, if one remains.
- */
-function findDeployedSymlink(directory: string, virtualStore: string): string | undefined {
-  for (const entry of readdirSync(directory, { withFileTypes: true })) {
-    const path = join(directory, entry.name)
-    if (path === virtualStore) continue
-    const metadata = lstatSync(path)
-    if (metadata.isSymbolicLink()) return path
-    if (metadata.isDirectory()) {
-      const nested = findDeployedSymlink(path, virtualStore)
-      if (nested !== undefined) return nested
-    }
-  }
-  return undefined
-}
-
-/**
- * Copy one internal package without its deploy-time dependency links.
- * @param source - real package directory.
- * @param destination - flattened package directory.
- */
-function copyInternalPackage(source: string, destination: string): void {
-  const nestedNodeModules = join(source, 'node_modules')
-  mkdirSync(dirname(destination), { recursive: true })
-  cpSync(source, destination, {
-    recursive: true,
-    dereference: true,
-    filter: path => path !== nestedNodeModules && !path.startsWith(nestedNodeModules + sep),
-  })
-}
-
-/**
- * Hoist every internal dependency reachable from the deployed top-level
- * packages. Legacy deploy can leave workspace dependencies only beside their
- * consumer, so scanning the virtual store alone does not find the whole set.
- * @param internalRoot - deployed `node_modules/@nomix-ai` directory.
- * @param virtualStore - deployed pnpm virtual store used only for named fallbacks.
- */
-function restoreInternalClosure(internalRoot: string, virtualStore: string): void {
-  const queue = readdirSync(internalRoot).sort()
-  const visited = new Set<string>()
-  while (queue.length > 0) {
-    const packageName = queue.shift()
-    if (packageName === undefined || visited.has(packageName)) continue
-    visited.add(packageName)
-    const packageDirectory = realpathSync(join(internalRoot, packageName))
-    const manifest = JSON.parse(readFileSync(join(packageDirectory, 'package.json'), 'utf8')) as Record<string, unknown>
-    for (const section of RUNTIME_DEPENDENCY_SECTIONS) {
-      const dependencies = manifest[section]
-      if (dependencies === null || typeof dependencies !== 'object' || Array.isArray(dependencies)) continue
-      for (const dependencyName of Object.keys(dependencies).filter(name => name.startsWith('@nomix-ai/')).sort()) {
-        const unscoped = dependencyName.slice('@nomix-ai/'.length)
-        const destination = join(internalRoot, unscoped)
-        if (!existsSync(destination)) {
-          let source: string | undefined
-          for (let ancestor = packageDirectory; source === undefined;) {
-            const candidate = join(ancestor, 'node_modules', ...dependencyName.split('/'))
-            if (existsSync(candidate)) source = realpathSync(candidate)
-            const parent = dirname(ancestor)
-            if (parent === ancestor) break
-            ancestor = parent
-          }
-          for (const entry of readdirSync(virtualStore).sort()) {
-            if (source !== undefined) break
-            const candidate = join(virtualStore, entry, 'node_modules', ...dependencyName.split('/'))
-            if (existsSync(candidate)) source = realpathSync(candidate)
-          }
-          if (source === undefined && section === 'optionalDependencies') continue
-          source ??= workspaceInternalPackage(dependencyName)
-          if (source === undefined) {
-            throw new Error(`${dependencyName} is absent from the deployed dependency tree of @nomix-ai/${packageName}`)
-          }
-          copyInternalPackage(source, destination)
-        }
-        queue.push(unscoped)
-      }
-    }
-  }
-}
-
-/**
- * Replace deploy-time package links with package files and remove the duplicate
- * pnpm virtual store. Runtime dependencies then form one finite npm payload.
- * @param deployment - portable deployment root.
- */
-function materializeDeployment(deployment: string): void {
-  const nodeModules = join(deployment, 'node_modules')
-  const virtualStore = join(nodeModules, '.pnpm')
-  const internalRoot = join(nodeModules, '@nomix-ai')
-  mkdirSync(internalRoot, { recursive: true })
-  restoreInternalClosure(internalRoot, virtualStore)
-  let link = findDeployedSymlink(nodeModules, virtualStore)
-  while (link !== undefined) {
-    const segments = link.slice(nodeModules.length + 1).split(sep)
-    const binIndex = segments.lastIndexOf('.bin')
-    if (binIndex >= 0) {
-      rmSync(join(nodeModules, ...segments.slice(0, binIndex + 1)), { recursive: true, force: true })
-    } else {
-      const source = realpathSync(link)
-      const nestedNodeModules = join(source, 'node_modules')
-      rmSync(link, { recursive: true, force: true })
-      mkdirSync(dirname(link), { recursive: true })
-      cpSync(source, link, {
-        recursive: true,
-        dereference: true,
-        filter: path => path !== nestedNodeModules && !path.startsWith(nestedNodeModules + sep),
-      })
-    }
-    link = findDeployedSymlink(nodeModules, virtualStore)
-  }
-  rmSync(virtualStore, { recursive: true, force: true })
-  rmSync(join(nodeModules, '.modules.yaml'), { force: true })
-}
-
-/**
- * Mark repository-owned dependencies as bundled while leaving native wrappers
- * for npm to resolve on the consumer platform.
- * @param manifest - deployed CLI manifest.
- * @param platformVersions - exact native-wrapper versions from the deployment.
- * @returns The manifest written into the npm package.
- */
-export function preparePortableManifest(
-  manifest: Record<string, unknown>,
-  platformVersions: Readonly<Record<string, string>>,
-): Record<string, unknown> {
-  const dependencies = manifest.dependencies
-  if (dependencies === null || typeof dependencies !== 'object' || Array.isArray(dependencies)) {
-    throw new Error('portable CLI manifest dependencies must be an object')
-  }
-  const rewrittenDependencies = { ...dependencies } as Record<string, unknown>
-  const bundledDependencies = Object.keys(rewrittenDependencies).filter(name => !PLATFORM_DEPENDENCIES.includes(
-    name as typeof PLATFORM_DEPENDENCIES[number],
-  ))
-  for (const name of PLATFORM_DEPENDENCIES) {
-    const version = platformVersions[name]
-    if (version === undefined) throw new Error(`portable runtime is missing platform dependency ${name}`)
-    rewrittenDependencies[name] = version
-  }
-  manifest.dependencies = rewrittenDependencies
-  manifest.bundleDependencies = bundledDependencies
-
-  const scripts = manifest.scripts
-  if (scripts !== undefined && (scripts === null || typeof scripts !== 'object' || Array.isArray(scripts))) {
-    throw new Error('portable CLI manifest scripts must be an object')
-  }
-  manifest.scripts = { ...(scripts as Record<string, unknown> | undefined), postinstall: 'node lib/install-runtime.js' }
-  return manifest
-}
-
-/**
- * Compress the materialized runtime and add its install lifecycle to the
- * deployed manifest. The outer npm tarball then carries one runtime member
- * instead of exceeding the registry's file-count limit.
- * @param deployment - portable deployment root.
- */
-function compressPortableRuntime(deployment: string): void {
-  const nodeModules = join(deployment, 'node_modules')
-  const platformVersions: Record<string, string> = {}
-  for (const name of PLATFORM_DEPENDENCIES) {
-    const packageDirectory = join(nodeModules, ...name.split('/'))
-    const dependencyManifest = JSON.parse(readFileSync(join(packageDirectory, 'package.json'), 'utf8')) as { version?: unknown }
-    if (typeof dependencyManifest.version !== 'string') {
-      throw new Error(`${name} has no version in the portable runtime`)
-    }
-    platformVersions[name] = dependencyManifest.version
-    rmSync(packageDirectory, { recursive: true, force: true })
-  }
-  run('tar', [
-    '--hard-dereference',
-    '-czf',
-    join(deployment, PORTABLE_RUNTIME_ARCHIVE),
-    '-C',
-    deployment,
-    'node_modules',
-  ])
-  rmSync(nodeModules, { recursive: true, force: true })
-
-  const manifestPath = join(deployment, 'package.json')
-  const manifest = JSON.parse(readFileSync(manifestPath, 'utf8')) as Record<string, unknown>
-  writeFileSync(manifestPath, `${JSON.stringify(preparePortableManifest(manifest, platformVersions), null, 2)}\n`)
-}
-
-/**
- * Pack one member and check what its tarball carries.
- * @param family - the release family being packed.
- * @param member - the member to pack.
- * @param destination - absolute output directory.
- * @returns The tarball filename.
- */
+/** Pack one member and validate its payload. */
 function packMember(family: ReleaseFamily, member: ReleaseMember, destination: string): string {
   const filename = tarballName(member)
-  if (family.packing === 'portable-deploy') {
-    const archiveRoot = mkdtempSync(join(tmpdir(), 'nomix-npm-archive-'))
-    const deployment = join(archiveRoot, 'package')
+  if (family.packing === 'native-bundle') {
+    const temporary = mkdtempSync(join(tmpdir(), 'nomix-npm-package-'))
     try {
-      run('pnpm', [
-        '--filter',
-        member.name,
-        'deploy',
-        '--legacy',
-        '--prod',
-        '--config.node-linker=hoisted',
-        '--config.auto-install-peers=false',
-        '--config.link-workspace-packages=true',
-        deployment,
-      ])
-      materializeDeployment(deployment)
-      compressPortableRuntime(deployment)
-      run('tar', [
-        '--hard-dereference',
-        '-czf',
-        join(destination, filename),
-        '-C',
-        archiveRoot,
-        'package',
-      ])
+      buildNpmHarnessDistribution(temporary)
+      run('npm', ['pack', temporary, '--pack-destination', destination, '--ignore-scripts'])
     } finally {
-      rmSync(archiveRoot, { recursive: true, force: true })
+      rmSync(temporary, { recursive: true, force: true })
     }
   } else {
     run('pnpm', ['--dir', member.directory, 'pack', '--pack-destination', destination])
@@ -312,7 +46,7 @@ function main(): void {
     options: { family: { type: 'string' }, out: { type: 'string' } },
     allowPositionals: false,
   })
-  if (values.family === undefined) throw new Error('usage: pack.ts --family <dsh|vendor> [--out dist/npm]')
+  if (values.family === undefined) throw new Error('usage: pack.ts --family <nomix|vendor> [--out dist/npm]')
 
   const family = releaseFamily(values.family)
   const root = process.cwd()
@@ -323,11 +57,8 @@ function main(): void {
 
   rmSync(destination, { recursive: true, force: true })
   mkdirSync(destination, { recursive: true })
-
-  const order: string[] = []
-  for (const member of members) order.push(packMember(family, member, destination))
+  const order = members.map(member => packMember(family, member, destination))
   writeFileSync(join(destination, PUBLISH_ORDER_FILE), `${order.join('\n')}\n`)
-
   console.log(`release pack: family ${family.id}, ${String(order.length)} tarball(s) in ${values.out ?? DEFAULT_OUTPUT}`)
 }
 

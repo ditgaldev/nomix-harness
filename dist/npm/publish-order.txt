@@ -210,7 +210,7 @@ nomix-ai-nomix-storage-sqlite-0.1.0.tgz
 nomix-ai-nomix-subagent-acp-0.1.0.tgz
 nomix-ai-nomix-subagent-claude-code-0.1.0.tgz
 nomix-ai-nomix-subagent-codex-0.1.0.tgz
-nomix-ai-nomix-subagent-dsh-sdk-0.1.0.tgz
+nomix-ai-nomix-subagent-nomix-sdk-0.1.0.tgz
 nomix-ai-nomix-subprocess-e2b-0.1.0.tgz
 nomix-ai-nomix-tool-lsp-0.1.0.tgz
 nomix-ai-nomix-tool-session-query-0.1.0.tgz

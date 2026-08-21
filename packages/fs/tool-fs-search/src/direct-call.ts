@@ -1,4 +1,4 @@
-/** Shared top-level-call post-policy selection for search result spill. @module dsh-tool-fs-search/direct-call */
+/** Shared top-level-call post-policy selection for search result spill. @module nomix-tool-fs-search/direct-call */
 
 import type { Context } from '@nomix-ai/cordis'
 import type { JsonValue, PostToolDecision, ToolDefinition, ToolExecution, ToolExecutionResult } from '@nomix-ai/nomix-tools'

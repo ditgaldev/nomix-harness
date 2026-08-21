@@ -142,8 +142,8 @@
         "./packages/identity/*/src/invariant.ts",
         "./packages/test-support/*/src/invariant.ts"
       ],
-      // host/client package names prefix the group dir (dsh-client-<dir>), so
-      // the generic dsh-*/invariant list above cannot map them; strip the
+      // host/client package names prefix the group dir (nomix-client-<dir>), so
+      // the generic nomix-*/invariant list above cannot map them; strip the
       // group prefix with a dedicated wildcard per group instead.
       "@nomix-ai/nomix-host-*/invariant": ["./packages/host/*/src/invariant.ts"],
       "@nomix-ai/nomix-client-*/invariant": ["./packages/client/*/src/invariant.ts"],

@@ -3,7 +3,7 @@
  * readable from the repository rather than derived inside CI
  * ([rationale](../../.agents/notes/implemented/process/2026-08-10-npm-release-sequences.md)).
  *
- * The dsh source family shares one version across its members and workspace root,
+ * The nomix source family shares one version across its members and workspace root,
  * although only its portable CLI artifact is published:
  * `major`, `minor`, `patch`, or an explicit `x.y.z` (including a prerelease such
  * as `0.0.1-rc.1`). The vendored family has one version line per package, but
@@ -32,10 +32,10 @@ const ALWAYS_PUBLISHED = ['package.json', 'README*', 'LICENSE*', 'LICENCE*'] as 
  */
 const BUILD_INPUTS = ['src/**', 'tsconfig*.json', 'tsdown.config.*', 'build.config.*'] as const
 
-/** Release types the dsh family accepts besides an explicit version. */
+/** Release types the nomix family accepts besides an explicit version. */
 const RELEASE_TYPES = ['major', 'minor', 'patch'] as const
 
-/** The workspace root manifest, which carries the dsh family's version. */
+/** The workspace root manifest, which carries the nomix family's version. */
 const ROOT_MANIFEST = 'package.json'
 
 /** One manifest the bump rewrites, and the tag its new version will carry. */
@@ -125,7 +125,7 @@ export function compareVersions(left: string, right: string): number {
 }
 
 /**
- * The next dsh version.
+ * The next nomix version.
  * @param current - the family's current shared version.
  * @param request - `major`, `minor`, `patch`, or an explicit version.
  * @returns The target version.
@@ -133,7 +133,7 @@ export function compareVersions(left: string, right: string): number {
 function nextSharedVersion(current: string, request: string): string {
   if (!RELEASE_TYPES.includes(request as typeof RELEASE_TYPES[number])) {
     if (!/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(request)) {
-      throw new Error(`usage: release:dsh <major|minor|patch|x.y.z>, got ${request}`)
+      throw new Error(`usage: release:nomix <major|minor|patch|x.y.z>, got ${request}`)
     }
     return request
   }
@@ -237,8 +237,8 @@ function rootVersion(root: string): string {
 }
 
 /**
- * Plan the dsh family's rewrite: one version for every member and the root.
- * @param family - the dsh family.
+ * Plan the nomix family's rewrite: one version for every member and the root.
+ * @param family - the nomix family.
  * @param root - repository root.
  * @param members - the family's members.
  * @param request - `major`, `minor`, `patch`, or an explicit version.
@@ -312,7 +312,7 @@ function main(): void {
     },
     allowPositionals: true,
   })
-  if (values.family === undefined) throw new Error('usage: bump.ts --family <dsh|vendor> [version]')
+  if (values.family === undefined) throw new Error('usage: bump.ts --family <nomix|vendor> [version]')
 
   const family = releaseFamily(values.family)
   const root = process.cwd()
@@ -321,11 +321,11 @@ function main(): void {
 
   let planned: PlannedVersion[]
   let sharedVersion: string | undefined
-  if (family.id === 'dsh') {
+  if (family.id === 'nomix') {
     const request = positionals[0]
-    if (request === undefined) throw new Error('usage: release:dsh <major|minor|patch|x.y.z>')
+    if (request === undefined) throw new Error('usage: release:nomix <major|minor|patch|x.y.z>')
     if (values.prerelease !== undefined) {
-      throw new Error('release:dsh takes the prerelease in its version argument, as in 0.0.1-rc.1')
+      throw new Error('release:nomix takes the prerelease in its version argument, as in 0.0.1-rc.1')
     }
     const shared = planShared(family, root, members, request)
     planned = shared.planned

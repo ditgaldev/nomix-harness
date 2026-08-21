@@ -1,9 +1,9 @@
 {
-  "organization": "deepseek-harness",
-  "repository": "deepseek-harness",
+  "organization": "nomix-harness",
+  "repository": "nomix-harness",
   "projectNumber": 1,
-  "projectTitle": "DSH Issue Management",
-  "lifecycleActor": "dsh-issue-management",
+  "projectTitle": "NOMIX Issue Management",
+  "lifecycleActor": "nomix-issue-management",
   "priorityField": "Priority",
   "allowUnassignedOwner": true,
   "statuses": [

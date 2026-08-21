@@ -15,7 +15,7 @@
  * an observed-state owner. `@nomix-ai/nomix-tools`' `ToolExecution` contains
  * these fields, so the tool passes its `exec` straight through as the opaque
  * `object` actor on the `fs/*` events; this plugin narrows that actor to
- * `FsObservationActor` without importing `dsh-tools`, `dsh-agent`, or `dsh-session`.
+ * `FsObservationActor` without importing `nomix-tools`, `nomix-agent`, or `nomix-session`.
  *
  * The owner is `agent.session` when present. It is treated as an opaque object
  * identity (a `WeakMap` key); this package never reads any of its fields.

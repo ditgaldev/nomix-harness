@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/simplification/2026-08-11-cmdline-program-action.md
-2026-08-11-cmdline-program-action.md: 40c4dae1d3461f25ac7f34dee7c166434e6cd24d
-2026-08-11-cmdline-program-action.zh.md: 91036f1c52b60d28055935813d6698205f045422
+2026-08-11-cmdline-program-action.md: f1f3bbab28a1acca62e7b2977913ea8ddb4262ef
+2026-08-11-cmdline-program-action.zh.md: 3b9076f8cd709627027c74309acd7855260cbda3

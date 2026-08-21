@@ -10,7 +10,7 @@ Status: implemented
 
 这些名称并非无关紧要。名称会告诉贡献者一项职责从哪里开始、到哪里结束。`Store` 表示数据访问。`Registry` 表示注册与查找。`Runtime` 表示实时执行和生命周期。如果同一个词同时表示这三者，调用方就必须阅读实现，才能判断哪个对象拥有策略、工作或状态。
 
-仓库还曾在两种含义下使用 `SDK`。受支持的 Python 和 TypeScript 客户端使用 JSON-RPC SDK 协议。项目整体是 DeepSeek Harness，而不是 SDK 项目。已移除的 SDK 项目工具链使宽泛的含义失去依据，但文案和名称仍保留了部分旧用法。
+仓库还曾在两种含义下使用 `SDK`。受支持的 Python 和 TypeScript 客户端使用 JSON-RPC SDK 协议。项目整体是 Nomix Harness，而不是 SDK 项目。已移除的 SDK 项目工具链使宽泛的含义失去依据，但文案和名称仍保留了部分旧用法。
 
 首次发布带标签版本之前的最后一个窗口，使仓库级重命名仍可低成本完成。若继续保留含义不清的名称，偶然形成的词汇就会变成兼容性约定。
 
@@ -24,13 +24,13 @@ Status: implemented
 
 ### 在一个 npm 命名空间下发布 fork
 
-仓库在 `@nomix-ai` 下发布自有包。CLI 包名是 `@nomix-ai/nomix-harness`；原先带 `dsh-` 前缀的包改用 `nomix-` 并保留相同的职责后缀；vendored Cordis 包和原生启动器包则在 `@nomix-ai` 下保留原来的非 scope 后缀。包 manifest、workspace 依赖、模块说明符、TypeScript 路径、发布检查、打包安装探测、示例和当前文档统一使用这些名称。发布后的 manifest 指向 `ditgaldev/nomix-harness`。
+仓库在 `@nomix-ai` 下发布自有包。CLI 包名是 `@nomix-ai/nomix-harness`；原先带 `nomix-` 前缀的包改用 `nomix-` 并保留相同的职责后缀；vendored Cordis 包和原生启动器包则在 `@nomix-ai` 下保留原来的非 scope 后缀。包 manifest、workspace 依赖、模块说明符、TypeScript 路径、发布检查、打包安装探测、示例和当前文档统一使用这些名称。发布后的 manifest 指向 `ditgaldev/nomix-harness`。
 
-安装后的可执行命令是 `nomix`，源码启动命令是 `pnpm nomix`。`dsh` manifest 键、`DSH_*` 环境变量、`.dsh` 状态目录以及持久化或 wire 标识保持不变，因为它们标识的是配置和持久化运行时数据，而不是可执行命令。
+安装后的可执行命令是 `nomix`，源码启动命令是 `pnpm nomix`。`nomix` manifest 键、`NOMIX_*` 环境变量、`.nomix` 状态目录以及持久化或 wire 标识保持不变，因为它们标识的是配置和持久化运行时数据，而不是可执行命令。
 
 ### `SDK` 只表示一件事
 
-`SDK` 表示受支持的 Python 和 TypeScript SDK 所使用、基于 JSON-RPC 的客户端／服务器协议。仓库保留 `@nomix-ai/nomix-sdk-client`、`@nomix-ai/nomix-sdk-protocol` 和协议身份 `deepseek-harness-sdk-runtime`；JSON-RPC 服务器属于同一系列。DeepSeek Harness 本身不是 SDK，已移除的项目生成器、启动器、辅助工具和启动器遥测包继续保持不存在。
+`SDK` 表示受支持的 Python 和 TypeScript SDK 所使用、基于 JSON-RPC 的客户端／服务器协议。仓库保留 `@nomix-ai/nomix-sdk-client`、`@nomix-ai/nomix-sdk-protocol` 和协议身份 `nomix-harness-sdk-runtime`；JSON-RPC 服务器属于同一系列。Nomix Harness 本身不是 SDK，已移除的项目生成器、启动器、辅助工具和启动器遥测包继续保持不存在。
 
 本决策部分取代三项现行决策。它替换[包重新分组决策](2026-07-29-package-regrouping.md)中保留的 `bash/`、`pty/` 和 `self-modification/` 组名，以及两项暂定包名。它只替换[移除 SDK 项目工具链](../simplification/2026-08-11-remove-sdk-project-toolchain.md)中将整个仓库称为 SDK 的说法；后者仍负责说明删除范围和保留的运行时 SDK。它只替换[工具调用超时策略](2026-07-07-tool-call-timeout-policy.md)中的包名理由；超时机制及其 `guard/timeout-policy/` 归属保持不变。
 
@@ -78,7 +78,7 @@ Status: implemented
 
 PascalCase 标识符中的首字母缩略词使用首字母大写格式：`Ui`、`Llm`、`JsonRpc` 和 `ApiProxy`。在文案和适用的包名中使用惯例规定的全大写形式：UI、LLM、JSON-RPC 和 API。`Typert` 是标识符和文案中的唯一准确产品拼写；不得写成 `TypeRT`、`TypeRt`，也不得对 `Typert` 作其他内部拆分。
 
-不得为了避免重复而删除有意保留的供应商限定词。`dsh-subagent-dsh-sdk` 表示 DeepSeek Harness SDK 提供方，可避免与其他 SDK 混淆。其私有类改名为 `SdkSubagentProvider`，因为类名还需要说明它提供什么。
+不得为了避免重复而删除有意保留的供应商限定词。`nomix-subagent-nomix-sdk` 表示 Nomix Harness SDK 提供方，可避免与其他 SDK 混淆。其私有类改名为 `SdkSubagentProvider`，因为类名还需要说明它提供什么。
 
 ### 将规则写入项目文档
 
@@ -95,7 +95,7 @@ PascalCase 标识符中的首字母缩略词使用首字母大写格式：`Ui`�
 | `@nomix-ai/nomix-jsonrpc` | `@nomix-ai/nomix-sdk-jsonrpc-server` | 它是 SDK 协议的服务器端。单独使用 `jsonrpc` 只说明编码；`sdk-jsonrpc-server` 则同时说明所属系列、机制和职责。 |
 | `HarnessSdkServer` | `HarnessSdkJsonRpcServer` | 该类是 JSON-RPC 服务器的一种实现，并不代表所有可能的 SDK 服务器。 |
 
-保留 `@nomix-ai/nomix-sdk-client`、`@nomix-ai/nomix-sdk-protocol` 和 `deepseek-harness-sdk-runtime`。排除 `@nomix-ai/create-sdk`、`@nomix-ai/nomix-scripts`、`@nomix-ai/nomix-helper` 和 `@nomix-ai/nomix-telemetry`；单独的移除决策负责删除这些包及其支撑依赖图。
+保留 `@nomix-ai/nomix-sdk-client`、`@nomix-ai/nomix-sdk-protocol` 和 `nomix-harness-sdk-runtime`。排除 `@nomix-ai/create-sdk`、`@nomix-ai/nomix-scripts`、`@nomix-ai/nomix-helper` 和 `@nomix-ai/nomix-telemetry`；单独的移除决策负责删除这些包及其支撑依赖图。
 
 ### Shell 与终端
 
@@ -177,12 +177,12 @@ PascalCase 标识符中的首字母缩略词使用首字母大写格式：`Ui`�
 | `TelemetryBackend` | `SessionTelemetrySink` | 该底层接收已发出的记录。`Sink` 用于将它与协调型后端服务区分开。 |
 | `TelemetryCoordinator`、`TelemetryRecord`、`TelemetrySeverity`、`TelemetrySharingStatus` 和 `TelemetryCapture` | 对应的 `SessionTelemetry*` 名称 | 这些公开类型只属于会话遥测。 |
 | `telemetry/record` | `session-telemetry/record` | 事件名称必须说明所属领域。 |
-| `TelemetryOtel`、`TelemetryMode`，插件 `telemetry-otel` | `OpenTelemetrySessionBackend`、`SessionTelemetryMode`，插件 `session-telemetry-otel` | 提供方名称同时说明 OpenTelemetry 机制和会话作用域。保留包名 `dsh-session-telemetry` 和 `dsh-session-telemetry-otel`。 |
+| `TelemetryOtel`、`TelemetryMode`，插件 `telemetry-otel` | `OpenTelemetrySessionBackend`、`SessionTelemetryMode`，插件 `session-telemetry-otel` | 提供方名称同时说明 OpenTelemetry 机制和会话作用域。保留包名 `nomix-session-telemetry` 和 `nomix-session-telemetry-otel`。 |
 | `docs/subsystems/telemetry.md` | `docs/subsystems/session-telemetry.md` | 该页面记录会话遥测，而不是仓库级可观测性。 |
 | `session/user-id/`, `@nomix-ai/nomix-user-id` | `identity/anonymous-user-id/`, `@nomix-ai/nomix-anonymous-user-id` | 该值是遥测、反馈和 DeepSeek 请求共用的随机关联 id。它既不属于 Session 领域，也不是经过身份验证的用户身份。 |
 | `USER_ID_FILE_NAME`、`.userid`，反馈标签 `User` | `ANONYMOUS_USER_ID_FILE_NAME`、`.anonymous-user-id`，反馈标签 `Anonymous user` | 文件和 UI 不得暗示账户身份。保留现有 `AnonymousUserId` 函数和标准 OTel 属性 `user.id`。 |
 | `util/environment/`, `@nomix-ai/nomix-environment` | `util/launch-environment/`, `@nomix-ai/nomix-launch-environment` | 该包在启动时捕获一份不可变的分层快照。它不是通用环境 API。 |
-| 公开的 `Environment*`、`createEnvironmentSnapshot`、`environmentOf`、`DSH_ENVIRONMENT_KEY` | `LaunchEnvironment*`、`createLaunchEnvironmentSnapshot`、`launchEnvironmentOf`、`DSH_LAUNCH_ENVIRONMENT_KEY` | 这些名称说明快照的生命周期和用途。 |
+| 公开的 `Environment*`、`createEnvironmentSnapshot`、`environmentOf`、`NOMIX_ENVIRONMENT_KEY` | `LaunchEnvironment*`、`createLaunchEnvironmentSnapshot`、`launchEnvironmentOf`、`NOMIX_LAUNCH_ENVIRONMENT_KEY` | 这些名称说明快照的生命周期和用途。 |
 | `ctx.launcherEnvironment` | `ctx.launchEnvironment` | 该值描述应用启动，而不只描述启动器组件。保留来源标签 `process`、`project-env` 和 `user-env`。 |
 
 ### 日程、工作流、目标与压缩
@@ -249,11 +249,11 @@ PascalCase 标识符中的首字母缩略词使用首字母大写格式：`Ui`�
 | `@nomix-ai/nomix-subagent-spawn`, `SpawnProvider` | `@nomix-ai/nomix-subagent-spawn-in-process`, `SpawnInProcessProvider` | 该提供方在当前进程内启动子 agent。配置的提供方 id 仍为 `spawn`。 |
 | `@nomix-ai/nomix-subagent-fork`, `ForkProvider` | `@nomix-ai/nomix-subagent-fork-in-process`, `ForkInProcessProvider` | 该提供方在当前进程内 fork 一个 agent。配置的提供方 id 仍为 `fork`。 |
 | `@nomix-ai/nomix-subagent-inprocess`, `subagent-inprocess/` | `@nomix-ai/nomix-subagent-in-process-driver`, `subagent-in-process-driver/` | 该包包含通用的进程内驱动逻辑，而不是第三个提供方。 |
-| 私有的 `SdkProvider`，位于 `dsh-subagent-dsh-sdk` 中 | `SdkSubagentProvider` | 重复的包限定词是有意保留的，类名还必须说明它通过 SDK 提供 subagent。 |
+| 私有的 `SdkProvider`，位于 `nomix-subagent-nomix-sdk` 中 | `SdkSubagentProvider` | 重复的包限定词是有意保留的，类名还必须说明它通过 SDK 提供 subagent。 |
 | `WebService`, `WebServiceConfig` | `WebRuntime`, `WebRuntimeConfig` | 该对象选择提供方并运行实时搜索和抓取操作。保留包、键、提供方包和模型工具。 |
 | `@nomix-ai/nomix-web-fetch-local`、`LocalFetchProvider`、`LocalFetchLimits`，提供方 id `local-http` | `@nomix-ai/nomix-web-fetch-http`、`HttpFetchProvider`、`HttpFetchLimits`，提供方 id `http` | 该提供方执行直接 HTTP 抓取。`local` 只说明代码恰好在哪里运行，并未说明它提供哪种机制。 |
 
-保留 `@nomix-ai/nomix-subagent-dsh-sdk`、其提供方 id `dsh-sdk`、外部 ACP（Agent Client Protocol）、Codex 和 Claude Code 提供方系列、subagent 工具包名、主文件系统包和后端、文件系统工具和事件，以及 skill 徽章和工具包。
+保留 `@nomix-ai/nomix-subagent-nomix-sdk`、其提供方 id `nomix-sdk`、外部 ACP（Agent Client Protocol）、Codex 和 Claude Code 提供方系列、subagent 工具包名、主文件系统包和后端、文件系统工具和事件，以及 skill 徽章和工具包。
 
 ### 钩子、防护、Plan Mode、扩展与诊断
 
@@ -283,7 +283,7 @@ PascalCase 标识符中的首字母缩略词使用首字母大写格式：`Ui`�
 | `@nomix-ai/nomix-jsonrpc-demo` | `@nomix-ai/nomix-sdk-jsonrpc-demo` | 该示例演示通过 JSON-RPC 使用运行时 SDK，属于 SDK 的唯一含义。 |
 | `@nomix-ai/nomix-frontend` | `@nomix-ai/nomix-web-frontend` | 该应用是 Web 前端。保留其物理目录 `apps/web/`。 |
 
-保留 atomic-write、brand、native-command、timeout 实用工具、目录选择器、`dsh-base`、`dsh-web-app`、应用启动、CLI（命令行界面）名称，以及 `headless` 包、组合包和示例身份。`headless` 是预期的产品本质，未来也可以支持不止一次性执行。
+保留 atomic-write、brand、native-command、timeout 实用工具、目录选择器、`nomix-base`、`nomix-web-app`、应用启动、CLI（命令行界面）名称，以及 `headless` 包、组合包和示例身份。`headless` 是预期的产品本质，未来也可以支持不止一次性执行。
 
 ### 客户端运行时与 UI
 
@@ -330,7 +330,7 @@ PascalCase 标识符内部使用 `Ui`，不要使用 `UI`。除非清单明确�
 - 保留 `PermissionPresetSettingsController`，即使它很长。每个词都在限定其职责。
 - 保留 `ModelsSettingsStore`；其主要约定是一个具有存储操作的设置数据模型。
 - 保留 `InputHub`；它是支撑 `SessionInputResolver` 的具体中枢。
-- 保留 `dsh-subagent-dsh-sdk` 和提供方 id `dsh-sdk`；重复的限定词可避免歧义。
+- 保留 `nomix-subagent-nomix-sdk` 和提供方 id `nomix-sdk`；重复的限定词可避免歧义。
 - 保留 `headless`；即使运行时以后支持不止一次性使用，该产品身份仍然准确。
 - 保留已弃用的 Host `ApiProxy` 和客户端连接名称，直至 API 替代方案将其移除。
 - Host 服务器和提供方无关的 Web 能力都保留 `Web`。仅直接抓取提供方使用 `HTTP`。
@@ -361,7 +361,7 @@ PascalCase 标识符内部使用 `Ui`，不要使用 `UI`。除非清单明确�
 
 **为未来可能出现的功能使用宽泛名称。**不予采纳。应按稳定的当前职责命名。未来若要改变边界，可以在发布前再次重命名对象，或在发布后另写提案。含义模糊的名称会让每位当前读者为尚未构建的未来付出理解成本。
 
-**将 `dsh-compact-basic` 重命名为 `dsh-compaction-llm`。**不予采纳。`LLM` 没有在当前后端系列中增加区别。`basic` 意图更克制，也不会声称存在一个实际并不存在的算法。
+**将 `nomix-compact-basic` 重命名为 `nomix-compaction-llm`。**不予采纳。`LLM` 没有在当前后端系列中增加区别。`basic` 意图更克制，也不会声称存在一个实际并不存在的算法。
 
 **将会话投影重命名为归约器。**不予采纳。归约只是构建投影的方式。该包还拥有读取模型值、缓存和查找约定。
 
@@ -377,7 +377,7 @@ PascalCase 标识符内部使用 `Ui`，不要使用 `UI`。除非清单明确�
 - 运行时行为、包边界、默认值、策略、持久化语义和模型行为保持等价，只有标识符本身可见时除外。
 - 包目录、NPM 名称、导入、manifest（元数据清单）、TypeScript 引用和路径、Cordis 配置、插件 id、服务键、事件、工具、RPC 名称、清单点名的持久化名称、fixture、快照、示例、生成的目录和当前文案都使用已实现词汇。
 - 当前处于 implemented 状态的 Agent Note 使用事实名称和路径。包重新分组说明记录分组清单和包名目标，SDK 移除说明将 `SDK` 限定为运行时协议，超时策略说明记录包名理由。
-- 配对的包创建指南包含职责词约定，`packages/AGENTS.md` 链接到该约定，术语表记录选定用词和 `Typert` 拼写，根项目文案将产品称为 DeepSeek Harness，而不是 DeepSeek Harness SDK。
+- 配对的包创建指南包含职责词约定，`packages/AGENTS.md` 链接到该约定，术语表记录选定用词和 `Typert` 拼写，根项目文案将产品称为 Nomix Harness，而不是 Nomix Harness SDK。
 - 已移除的 SDK 项目工具链继续保持不存在。
 - `pnpm run check:ci` 覆盖源代码平面的类型检查、构建、包卫生检查、生成参考资料检查、受影响的快照、翻译配对、`doc-sync` 和 lint。发布形态的 Python 运行时冒烟测试和必需 CI 覆盖打包运行时与平台路径。
 

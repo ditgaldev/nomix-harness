@@ -1,4 +1,4 @@
-# dsh-brand
+# nomix-brand
 
 English | [中文](README.zh.md)
 
@@ -23,6 +23,6 @@ Construction goes through the per-id factory in the owning package. Comparison, 
 
 ## Policy: brand ids that cross package boundaries
 
-A package brands the ids it owns — `CallId` in `dsh-llm`, the shared agent/session `SessionId` in `dsh-session`, and `JobId` in `dsh-jobs`. Brand cross-package ids that could plausibly be confused; not every string needs one.
+A package brands the ids it owns — `CallId` in `nomix-llm`, the shared agent/session `SessionId` in `nomix-session`, and `JobId` in `nomix-jobs`. Brand cross-package ids that could plausibly be confused; not every string needs one.
 
-This package owns only the primitive. Keeping it dependency-free lets `dsh-jobs`, for example, brand `JobId` without importing an unrelated capability package merely to reach `Branded`.
+This package owns only the primitive. Keeping it dependency-free lets `nomix-jobs`, for example, brand `JobId` without importing an unrelated capability package merely to reach `Branded`.

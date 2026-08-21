@@ -13,7 +13,7 @@
  * hands the closure down, so this package never depends on the approval or
  * agent packages.
  *
- * @module dsh-sandbox/escalation
+ * @module nomix-sandbox/escalation
  */
 
 import { assertNever } from '@nomix-ai/nomix-llm'

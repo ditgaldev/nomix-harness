@@ -18,7 +18,7 @@ Implementations: [`@nomix-ai/nomix-sandbox-local`](../sandbox-local/) (Linux: `b
 
 #### What the model sees
 
-Through [`dsh-bash-sandbox`](../../shell/bash-sandbox/README.md) and [`dsh-tool-bash`](../../shell/tool-bash/README.md), failure to enforce a requested mode produces code `SANDBOX_UNAVAILABLE` and the exact error below. An execution-time runner failure adds ` Runner failure: <detail>`.
+Through [`nomix-bash-sandbox`](../../shell/bash-sandbox/README.md) and [`nomix-tool-bash`](../../shell/tool-bash/README.md), failure to enforce a requested mode produces code `SANDBOX_UNAVAILABLE` and the exact error below. An execution-time runner failure adds ` Runner failure: <detail>`.
 
 ##### Exact error
 

@@ -12,15 +12,15 @@ Status: implemented
 
 ## 决策
 
-harness 交付两个同级的一次性提供方包：`codex` 与 `claude-code`。本说明负责它们的产品协议、结果映射和进程生命周期；[生产安装排除决策](../simplification/2026-08-12-production-dsh-excludes-product-subagent-providers.md)负责显式 Profile 安装与 host plane（宿主平面）放置，[产品一次性后台任务决策](2026-08-12-product-subagent-one-shot-background-tasks.md)负责模型可见的调度选择。加载任一提供方都不会启动产品进程，而且每个工具只接受独立文本任务；产品选择仍属于部署配置。
+harness 交付两个同级的一次性提供方包：`codex` 与 `claude-code`。本说明负责它们的产品协议、结果映射和进程生命周期；[生产安装排除决策](../simplification/2026-08-12-production-nomix-excludes-product-subagent-providers.md)负责显式 Profile 安装与 host plane（宿主平面）放置，[产品一次性后台任务决策](2026-08-12-product-subagent-one-shot-background-tasks.md)负责模型可见的调度选择。加载任一提供方都不会启动产品进程，而且每个工具只接受独立文本任务；产品选择仍属于部署配置。
 
-这两个提供方都报告 `inheritsParentContext: false`，不声明任何可选的启动能力，并传递父会话 cwd，但不会复制父级对话。文档所示的工具使用 `backgroundMode: 'one-shot'` 与 `maxDepth: 'provider-managed'`：消费方默认在前台收集结果，也可把同一次运行放入通用 Job 运行时，而递归策略仍由进程外产品负责。每次调用都会创建一个全新的产品进程和一次不可续接的产品对话。`ctx.subagents` 负责具名请求解析与成对生命周期事件；`dsh-tool-subagent` 负责模型可见的调度以及前台与 Job 适配；`ctx.jobs` 和 `dsh-tool-jobs` 负责 Job id、状态、输出、控制、通知与父级 owner 取消；各产品提供方负责原生结果映射，`dsh-subprocess` 则负责凭证清洗、进程树终止以及整棵进程树的退出观测。
+这两个提供方都报告 `inheritsParentContext: false`，不声明任何可选的启动能力，并传递父会话 cwd，但不会复制父级对话。文档所示的工具使用 `backgroundMode: 'one-shot'` 与 `maxDepth: 'provider-managed'`：消费方默认在前台收集结果，也可把同一次运行放入通用 Job 运行时，而递归策略仍由进程外产品负责。每次调用都会创建一个全新的产品进程和一次不可续接的产品对话。`ctx.subagents` 负责具名请求解析与成对生命周期事件；`nomix-tool-subagent` 负责模型可见的调度以及前台与 Job 适配；`ctx.jobs` 和 `nomix-tool-jobs` 负责 Job id、状态、输出、控制、通知与父级 owner 取消；各产品提供方负责原生结果映射，`nomix-subprocess` 则负责凭证清洗、进程树终止以及整棵进程树的退出观测。
 
 ```text
-fixed tool -> dsh-tool-subagent -> ctx.subagents -> product provider -> product process
+fixed tool -> nomix-tool-subagent -> ctx.subagents -> product provider -> product process
   foreground <- final product outcome
-  background -> ctx.jobs / dsh-tool-jobs -> Job id / state / notice / controls
-  both -> provider disposal -> dsh-subprocess -> whole-tree exit
+  background -> ctx.jobs / nomix-tool-jobs -> Job id / state / notice / controls
+  both -> provider disposal -> nomix-subprocess -> whole-tree exit
 ```
 
 ### 归属与生命周期
@@ -28,9 +28,9 @@ fixed tool -> dsh-tool-subagent -> ctx.subagents -> product provider -> product 
 | 层级 | 责任方 | 职责 | 可观察结果 |
 | --- | --- | --- | --- |
 | 委派生命周期 | `ctx.subagents` | 解析具名提供方请求，并为已发布的 `SubagentRun` 配对生命周期事件 | 不受支持的上下文或格式错误的输入会在发布运行前报错；启动与终态事件保持成对 |
-| 调度与适配 | `dsh-tool-subagent` | 解释 `run_in_background`，选择前台收集或 one-shot Job 登记，并映射共享停止原因 | 前台返回产品结果；后台在登记完成后返回 Job id |
-| Job 状态与控制 | `ctx.jobs` 与 `dsh-tool-jobs` | 负责 Job 状态、输出、取消、owner 清理、完成通知与面向模型的控制工具 | 准确父级可以收集、列出或停止后台工作，并收到完成通知 |
-| 原生运行与清理 | 产品提供方与 `dsh-subprocess` | 产生一个原生结果、关闭产品协议、请求尽力而为的原生取消，并证明进程树退出 | 前台返回与 Job 结算都会等待幂等资源释放和整棵进程树退出 |
+| 调度与适配 | `nomix-tool-subagent` | 解释 `run_in_background`，选择前台收集或 one-shot Job 登记，并映射共享停止原因 | 前台返回产品结果；后台在登记完成后返回 Job id |
+| Job 状态与控制 | `ctx.jobs` 与 `nomix-tool-jobs` | 负责 Job 状态、输出、取消、owner 清理、完成通知与面向模型的控制工具 | 准确父级可以收集、列出或停止后台工作，并收到完成通知 |
+| 原生运行与清理 | 产品提供方与 `nomix-subprocess` | 产生一个原生结果、关闭产品协议、请求尽力而为的原生取消，并证明进程树退出 | 前台返回与 Job 结算都会等待幂等资源释放和整棵进程树退出 |
 
 ## Codex 提供方
 
@@ -48,7 +48,7 @@ Codex 0.147.0 使用 Responses 协议，而 DeepSeek 的公开 OpenAI 兼容端�
 
 ## Claude Code 提供方
 
-`@nomix-ai/nomix-subagent-claude-code` 注册固定的 `claude-code` 提供方，并调用 `@anthropic-ai/claude-agent-sdk@0.3.220`。每次运行前，提供方经宿主 subprocess 执行世界解析固定名称 `claude`，并把准确路径作为 `pathToClaudeCodeExecutable` 交给 SDK；SDK 因此使用启动 DSH 的原生产品，而不是选择自身的 platform `optionalDependency`。Windows `.cmd` 或 `.bat` 路径会作为带引号、仅供本次 spawn 使用的环境展开值穿过 `cmd.exe /v:off`，因此路径中的百分号、与号和感叹号仍只是数据，且无需改变共享子进程约定。提供方使用官方 `query()` 入口点，并将 SDK 的 `spawnClaudeCodeProcess` 参数、cwd、环境和转发的信号交给 `dsh-subprocess`；其私有 `SpawnedProcess` 适配器只公开 SDK 所需的流、事件、终止和退出事实。
+`@nomix-ai/nomix-subagent-claude-code` 注册固定的 `claude-code` 提供方，并调用 `@anthropic-ai/claude-agent-sdk@0.3.220`。每次运行前，提供方经宿主 subprocess 执行世界解析固定名称 `claude`，并把准确路径作为 `pathToClaudeCodeExecutable` 交给 SDK；SDK 因此使用启动 NOMIX 的原生产品，而不是选择自身的 platform `optionalDependency`。Windows `.cmd` 或 `.bat` 路径会作为带引号、仅供本次 spawn 使用的环境展开值穿过 `cmd.exe /v:off`，因此路径中的百分号、与号和感叹号仍只是数据，且无需改变共享子进程约定。提供方使用官方 `query()` 入口点，并将 SDK 的 `spawnClaudeCodeProcess` 参数、cwd、环境和转发的信号交给 `nomix-subprocess`；其私有 `SpawnedProcess` 适配器只公开 SDK 所需的流、事件、终止和退出事实。
 
 公开配置包含与 Codex 兄弟提供方相同、由部署方负责的两个值：显式的 `env` 覆盖项，以及须为正有限值且不得大于仓库共享 `MAX_TIMER_DELAY_MS` 的 `disposeGraceMs`。每次运行都会创建自己的 `AbortController`，设置 `persistSession: false` 并禁用 `AskUserQuestion`。提供方故意省略 `settingSources`，因此 SDK 会相对于父会话 cwd 读取宿主机常规的用户、项目和本地 Claude 设置。它既不复制也不过滤这些设置，也不会创建或修改登录状态。提供方不设置 `canUseTool`、elicitation 或对话回调，因此无人值守交互会经 SDK 失败，而不会等待本提供方不负责的用户界面。
 
@@ -88,7 +88,7 @@ Claude Code 证据锁定 Agent SDK 0.3.220，并使用 SDK 按平台分发的 Cl
 
 ## 后果
 
-用户通过官方产品集成支持的两个稳定一次性工具进行委派。显式 Profile 安装与 host plane 提供方放置由[生产安装排除决策](../simplification/2026-08-12-production-dsh-excludes-product-subagent-providers.md)负责；按 Preset 暴露工具以及默认前台且可选通用 Job 的调度方式由[产品一次性后台任务决策](2026-08-12-product-subagent-one-shot-background-tasks.md)负责。本说明规定的提供方生命周期会保留原生设置与行为，而共享服务继续独占作业结算与进程树完全停稳的责任。
+用户通过官方产品集成支持的两个稳定一次性工具进行委派。显式 Profile 安装与 host plane 提供方放置由[生产安装排除决策](../simplification/2026-08-12-production-nomix-excludes-product-subagent-providers.md)负责；按 Preset 暴露工具以及默认前台且可选通用 Job 的调度方式由[产品一次性后台任务决策](2026-08-12-product-subagent-one-shot-background-tasks.md)负责。本说明规定的提供方生命周期会保留原生设置与行为，而共享服务继续独占作业结算与进程树完全停稳的责任。
 
 每次委派都要承担新建产品进程和独立模型上下文的开销。到达父级的产品载荷仍只有最终文本；后台调度还会额外公开通用 Job id、状态、完成通知以及收集或取消结果。产品原生配置使行为取决于部署环境中安装的产品、账户状态和工作区设置。带密钥 e2e 运行还会消耗外部 API 配额，并依赖 DeepSeek 官方端点；对协议、失败、取消与审批的确定性覆盖仍由无密钥层级承担。提供方不会恢复会话、以流式方式传送进度、接受新的人工交互、回滚工具或文件副作用，也不会施加按实际经过时间触发的超时。
 

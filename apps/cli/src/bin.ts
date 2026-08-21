@@ -10,8 +10,8 @@
 
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
-import { loadLayeredEnv } from '@nomix-ai/nomix-app-boot'
-import { parseDshArgs } from './args.ts'
+import { loadLayeredEnv, rejectLegacyEnvironment } from '@nomix-ai/nomix-app-boot'
+import { parseNomixArgs } from './args.ts'
 
 // Both the source tree (apps/cli/src) and the bundled bin (apps/cli/lib) sit
 // one directory under apps/cli, so the checked-in manifest resolves with the
@@ -24,13 +24,14 @@ function readVersion(): string {
   return typeof manifest.version === 'string' ? manifest.version : '0.0.0'
 }
 
-const invocation = parseDshArgs(process.argv.slice(2), readVersion())
+rejectLegacyEnvironment(process.env)
+const invocation = parseNomixArgs(process.argv.slice(2), readVersion())
 
 switch (invocation.mode) {
   case 'profile': {
     const { runProfile } = await import('./profile-boot.ts')
     await runProfile({
-      environment: loadLayeredEnv('dsh'),
+      environment: loadLayeredEnv('nomix'),
       profile: invocation.profile,
       patchFiles: invocation.patches,
       args: invocation.args,

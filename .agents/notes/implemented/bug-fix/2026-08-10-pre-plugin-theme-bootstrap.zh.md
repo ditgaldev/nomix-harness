@@ -8,7 +8,7 @@ Status: implemented
 
 Web 壳在浏览器侧插件树激活前呈现 `Loading plugins…`。主题 token 已随壳样式加载，但 `color-scheme` 和 `body[data-ds-dark-theme]` 要等 ui-theme 的 ThemeRuntime 与 ui-layout 的 ThemePresenter 激活后才写入；持久化偏好为深色时，加载页因此先按浅色调色板绘制，再切为深色。
 
-`dshClient.immediately` 只把 bundle 纳入第一阶段预取，不会让插件在 HTML 解析或壳首次渲染前执行。仅调整客户端插件的加载档位无法关闭这段时间窗口。
+`nomixClient.immediately` 只把 bundle 纳入第一阶段预取，不会让插件在 HTML 解析或壳首次渲染前执行。仅调整客户端插件的加载档位无法关闭这段时间窗口。
 
 ## 决策
 

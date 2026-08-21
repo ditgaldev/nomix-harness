@@ -13,7 +13,6 @@ import { carrierKeyOf, type Scoped } from '@nomix-ai/nomix-scope'
 import { SessionId } from '@nomix-ai/nomix-session'
 import type SubagentRuntime from '@nomix-ai/nomix-subagent'
 import type { SubagentRunEndInfo } from '@nomix-ai/nomix-subagent'
-import * as LlmDeepSeek from '@nomix-ai/nomix-llm-deepseek'
 import type {
   InitializeParams,
   InitializeResult,
@@ -52,10 +51,9 @@ function successStatus(reason: string, options: HarnessSdkJsonRpcServerOptions):
  */
 export class HarnessSdkJsonRpcServer {
   private cwd = process.cwd()
-  private provider = 'deepseek-official'
-  private model = 'deepseek-official'
+  private provider = 'unconfigured'
+  private model = 'unconfigured'
   private maxTokens: number | undefined
-  private llmFiber: { dispose(): Promise<void> } | undefined
   private readonly sessions = new Map<string, SessionRecord>()
   private readonly sessionCreations = new Map<string, Promise<SessionRecord>>()
   private readonly disposers: (() => void)[] = []
@@ -104,7 +102,7 @@ export class HarnessSdkJsonRpcServer {
   }
 
   /**
-   * Configure the SDK route, mounting the DeepSeek fallback only when unowned.
+   * Configure the SDK route after verifying that its provider was explicitly registered.
    * @param params - SDK handshake parameters.
    * @returns server identity for the handshake.
    */
@@ -117,11 +115,8 @@ export class HarnessSdkJsonRpcServer {
     this.provider = params.provider
     this.model = params.model
     this.maxTokens = params.maxTokens
-    if (!this.hasAdapterFor(this.provider)) {
-      if (this.provider !== 'deepseek-official') throw new Error(`no adapter registered for provider "${this.provider}"`)
-      this.llmFiber = await this.ctx.plugin(LlmDeepSeek, {})
-    }
-    return { serverInfo: { name: 'deepseek-harness-sdk-runtime', version: '0.0.1' } }
+    if (!this.hasAdapterFor(this.provider)) throw new Error(`no adapter registered for provider "${this.provider}"`)
+    return { serverInfo: { name: 'nomix-harness-sdk-runtime', version: '0.0.1' } }
   }
 
   /**
@@ -167,11 +162,9 @@ export class HarnessSdkJsonRpcServer {
         failures.push(error)
       }
     }
-    const teardownResults = await Promise.allSettled([
-      ...records.map(rec => Promise.resolve().then(() => rec.handle.dispose())),
-      ...(this.llmFiber === undefined ? [] : [Promise.resolve().then(() => this.llmFiber?.dispose())]),
-    ])
-    this.llmFiber = undefined
+    const teardownResults = await Promise.allSettled(
+      records.map(rec => Promise.resolve().then(() => rec.handle.dispose())),
+    )
     failures.push(...teardownResults
       .filter((result): result is PromiseRejectedResult => result.status === 'rejected')
       .map(result => result.reason as unknown))
@@ -196,7 +189,7 @@ export class HarnessSdkJsonRpcServer {
       case 'shutdown':
         return this.shutdown()
       default:
-        throw new Error(`unknown DeepSeek Harness SDK runtime method: ${method}`)
+        throw new Error(`unknown Nomix Harness SDK runtime method: ${method}`)
     }
   }
 

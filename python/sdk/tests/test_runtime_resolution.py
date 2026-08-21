@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import deepseek_harness_runtime as runtime
+import nomix_harness_runtime as runtime
 import pytest
 
-from deepseek_harness_runtime import (
+from nomix_harness_runtime import (
     RUNTIME_MODE_ENV_VAR,
     bundled_default_config_path,
     bundled_package_dir,
@@ -49,9 +49,9 @@ def test_runtime_requires_spawn_helper_only_on_macos(
 ) -> None:
     runtime_dir = tmp_path / "runtime"
     runtime_dir.mkdir()
-    linux = runtime_dir / "dsh-jsonrpc-agent-pkg-linux-x64"
+    linux = runtime_dir / "nomix-jsonrpc-agent-pkg-linux-x64"
     linux.touch()
-    (runtime_dir / "dsh-jsonrpc-agent-pkg-macos-arm64").touch()
+    (runtime_dir / "nomix-jsonrpc-agent-pkg-macos-arm64").touch()
     monkeypatch.setattr(runtime, "bundled_package_dir", lambda: tmp_path)
 
     monkeypatch.setattr(runtime, "_current_platform_tag", lambda: "macos-arm64")

@@ -1,10 +1,10 @@
-# Unattended coding-agent deployment for the bundled dsh-jsonrpc-agent runtime.
+# Unattended coding-agent deployment for the bundled nomix-jsonrpc-agent runtime.
 # stdout is reserved for JSON-RPC; do not add a console logger or terminal UI.
 
 - id: sdk-jsonrpc-server
   name: '@nomix-ai/nomix-sdk-jsonrpc-server'
   config:
-    maxTokensAsSuccess: !!js "process.env.DSH_MAX_TOKENS_AS_SUCCESS === undefined ? true : JSON.parse(process.env.DSH_MAX_TOKENS_AS_SUCCESS)"
+    maxTokensAsSuccess: !!js "process.env.NOMIX_MAX_TOKENS_AS_SUCCESS === undefined ? true : JSON.parse(process.env.NOMIX_MAX_TOKENS_AS_SUCCESS)"
 
 # The DeepSeek adapter. Shipped default: full thinking at max effort on every
 # request; exact-model resolution materializes request defaults before logging.
@@ -22,13 +22,13 @@
 - id: bash
   name: '@nomix-ai/nomix-bash-local'
   config:
-    cwd: !!js process.env.DSH_CWD ?? process.cwd()
+    cwd: !!js process.env.NOMIX_CWD ?? process.cwd()
     timeoutMs: 60000
 
 - id: agent-spine
   name: '@nomix-ai/nomix-agent-spine-demo'
   config:
-    persona: !!js process.env.DSH_SYSTEM_PROMPT ?? 'You are a coding agent.'
+    persona: !!js process.env.NOMIX_SYSTEM_PROMPT ?? 'You are a coding agent.'
     workspaceContext: false
     skills:
       enabled: false
@@ -39,9 +39,9 @@
 - id: sessions
   name: '@nomix-ai/nomix-session-persistence-jsonl'
   config:
-    root: !!js process.env.DSH_SESSION_ROOT ?? './.sessions'
+    root: !!js process.env.NOMIX_SESSION_ROOT ?? './.sessions'
     # Snapshot runs read the raw JSONL back; production keeps zstd frames.
-    compression: !!js "process.env.DSH_SNAPSHOT === undefined ? 'zstd' : 'none'"
+    compression: !!js "process.env.NOMIX_SNAPSHOT === undefined ? 'zstd' : 'none'"
 
 - id: session-checkpoints
   name: '@nomix-ai/nomix-session-checkpoint-policy'
@@ -69,7 +69,7 @@
 - id: fs-local
   name: '@nomix-ai/nomix-fs-local'
   config:
-    cwd: !!js process.env.DSH_CWD ?? process.cwd()
+    cwd: !!js process.env.NOMIX_CWD ?? process.cwd()
 
 - id: fs-observation-policy
   name: '@nomix-ai/nomix-fs-observation-policy'

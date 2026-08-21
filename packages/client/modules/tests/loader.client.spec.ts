@@ -10,10 +10,10 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
   ClientModuleSystem,
-  type BootModuleRow, type ClientModuleLoader, type ClientPluginHandoff, type DshWindow,
+  type BootModuleRow, type ClientModuleLoader, type ClientPluginHandoff, type NomixWindow,
 } from '../src/client/index.ts'
 
-const win = globalThis as DshWindow
+const win = globalThis as NomixWindow
 
 type Factory = ClientPluginHandoff['factory']
 

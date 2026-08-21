@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-web-frontend",
   "description": "Web application entry: vite build over the @nomix-ai/nomix-client-web shell library; dist/ served by apps/cli's nomix web",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "publishConfig": {
     "access": "public"
   },

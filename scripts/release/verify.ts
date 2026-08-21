@@ -76,7 +76,7 @@ function main(): void {
     options: { family: { type: 'string' } },
     allowPositionals: false,
   })
-  if (values.family === undefined) throw new Error('usage: verify.ts --family <dsh|vendor>')
+  if (values.family === undefined) throw new Error('usage: verify.ts --family <nomix|vendor>')
 
   const family = releaseFamily(values.family)
   const versionMembers = family.members(process.cwd())

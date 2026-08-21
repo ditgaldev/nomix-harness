@@ -3,13 +3,13 @@
 # the composition base, while user-plane values resolve per request through
 # the two providers below.
 
-# User-settings document (`$DSH_HOME/settings.yaml`, hot-reloaded): a
+# User-settings document (`$NOMIX_HOME/settings.yaml`, hot-reloaded): a
 # `llm-deepseek:` section there overrides the adapter entry below without a
 # restart.
 - id: settings
   name: '@nomix-ai/nomix-settings-file'
 
-# Credential store: the live process environment over `$DSH_HOME/.credentials.yaml`
+# Credential store: the live process environment over `$NOMIX_HOME/.credentials.yaml`
 # (owner-only file, hot-reloaded). The adapter resolves `DEEPSEEK_API_KEY`
 # through it at each request, so no key is inlined in this file.
 - id: credentials
@@ -64,7 +64,7 @@
   name: '@nomix-ai/nomix-session-persistence-jsonl'
   config:
     root: './.sessions'
-    compression: !!js "process.env.DSH_SNAPSHOT === undefined ? 'zstd' : 'none'"
+    compression: !!js "process.env.NOMIX_SNAPSHOT === undefined ? 'zstd' : 'none'"
 
 - id: checkpoint-policy
   name: '@nomix-ai/nomix-session-checkpoint-policy'

@@ -22,7 +22,7 @@ The CLI, vendor framework, and native launcher each have one bump sequence and o
 
 | Sequence | Members | Version baseline | Tag | Workflow |
 |---|---|---|---|---|
-| dsh | one portable `@nomix-ai/nomix-harness` tarball containing its production dependency tree | product source packages, apps, and workspace root share one version | `nomix-v<version>` | `release.yml` |
+| nomix | one portable `@nomix-ai/nomix-harness` tarball containing its production dependency tree | product source packages, apps, and workspace root share one version | `nomix-v<version>` | `release.yml` |
 | vendored framework | the nine `vendor/*` packages | each package on its own version line | `vendor-<package>-v<version>` (one per package) | `release-vendor.yml` |
 | native | `native/landlock-run/packages/*` | its own `0.0.x` | `landlock-run-v<version>` | `landlock-run-release.yml` |
 
@@ -32,7 +32,7 @@ All three publish publicly to the `@nomix-ai` scope on npmjs.com, and each manif
 
 Each sequence has one bump-and-commit command: it derives the target version, writes it into the relevant manifests, runs `pnpm install --lockfile-only`, and commits the manifests with the lockfile. The published version is therefore readable from the repository. A human creates the tag after the commit merges to master; CI never writes to the repository and needs no write permission.
 
-`release:dsh` accepts `major`, `minor`, `patch`, or an explicit version, and writes that version across the product source packages, apps, and workspace root. This keeps the deployed tree's package identities aligned even though only its CLI root becomes a registry package. A version with a prerelease segment publishes under `--tag next`; anything else takes `latest`.
+`release:nomix` accepts `major`, `minor`, `patch`, or an explicit version, and writes that version across the product source packages, apps, and workspace root. This keeps the deployed tree's package identities aligned even though only its CLI root becomes a registry package. A version with a prerelease segment publishes under `--tag next`; anything else takes `latest`.
 
 ### vendor: publish what changed, and let tags be the ledger
 
@@ -103,7 +103,7 @@ The entity in this domain is a **release family**: a set of packages sharing one
 | `publish` | the three registry states above |
 | `process` / `tarball` | the one home for spawning commands and for reading a packed tarball, including the entry guard that keeps every script importable |
 
-The dsh family applies the repository's publication payload policy to the CLI's own files. Its bundled dependencies keep their package-owned payloads, including vendored exports. The vendored family likewise keeps upstream payloads because those manifests export `./src/*`.
+The nomix family applies the repository's publication payload policy to the CLI's own files. Its bundled dependencies keep their package-owned payloads, including vendored exports. The vendored family likewise keeps upstream payloads because those manifests export `./src/*`.
 
 ### Workflow shape: deploy once, then publish the verified bytes
 
@@ -111,7 +111,7 @@ The `pack` job runs `pnpm deploy` for the CLI with production dependencies and m
 
 `pack` carries no credentials and runs on every pull request and master push, so a pull request proves the release set still packs. `publish` is a manual dispatch, sits behind the `npm-publish` environment for human approval, and neither builds nor rebuilds — it uploads the bytes pack produced. Pack runs are grouped per ref so concurrent pull requests do not displace each other; the publish job carries the global group, because dist-tags are shared registry state.
 
-A dsh verification installs the vendored family's pack output too. The harness packages declare the vendored framework as a peer, those packages live in another sequence, and the credential-free job cannot fetch them from a private registry — so `release.yml` packs the vendored family for verification while publishing only its own set.
+A nomix verification installs the vendored family's pack output too. The harness packages declare the vendored framework as a peer, those packages live in another sequence, and the credential-free job cannot fetch them from a private registry — so `release.yml` packs the vendored family for verification while publishing only its own set.
 
 The installed probe preserves optional dependencies because the external native wrappers use them to select their platform binaries. It reads a directory by its contents rather than a pack order, because a directory can hold tarballs packed only to satisfy a cross-sequence dependency.
 
@@ -160,7 +160,7 @@ This Agent Note replaces the version scheme and the release-set boundary in [art
 
 The release scripts are importable modules behind a guarded entry point, and their judgements carry unit tests: tag naming, publish order and cycle reporting, version-baseline arithmetic, the payload change judgement, and each family's payload policy. Two defects the first draft carried — a publish command that ran the pack command on import, and a change judgement blind to `vendor/cordis` source edits — are exactly what a test at that seam catches.
 
-A pull request runs the full pack for both sequences without credentials and installs the packed dsh tarballs into a throwaway consumer, where plain Node drives `dsh --version`. That probe is deliberately one command: it proves `files` selected a complete payload and that the published ranges resolve, and says nothing about interactive behavior.
+A pull request runs the full pack for both sequences without credentials and installs the packed nomix tarballs into a throwaway consumer, where plain Node drives `nomix --version`. That probe is deliberately one command: it proves `files` selected a complete payload and that the published ranges resolve, and says nothing about interactive behavior.
 
 What this costs:
 
@@ -171,4 +171,4 @@ What this costs:
 - **`repository` names a different organization than the one running the workflows.** Token-based publication is unaffected; npm provenance (OIDC) requires the two to agree, so adopting it means either repointing `repository` or publishing from the organization it names.
 - **Byte reproducibility is assumed, not measured.** The skip-on-identical-integrity state rests on packing the same commit twice producing the same bytes. Nothing measures that yet: if the build embeds absolute paths or timestamps, a re-run reports a false failure. Measure it before the first publication a re-run might follow, and fall back to comparing per-file content hashes if it does not hold.
 - **Re-running publish over an older artifact can move `latest` backwards.** Publication is decided per version, so an older set republished after a newer one takes the stable dist-tag again. The rehearsals run from a prerelease version, which never takes `latest`.
-- **The first publication is one large step.** Nine vendored packages and the whole dsh set publish at once, so any payload defect surfaces in a single release, which is why a prerelease version drives the complete path first.
+- **The first publication is one large step.** Nine vendored packages and the whole nomix set publish at once, so any payload defect surfaces in a single release, which is why a prerelease version drives the complete path first.

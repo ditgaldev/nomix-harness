@@ -4,7 +4,7 @@ import AgentLoop from '@nomix-ai/nomix-agent-loop'
 import { renderPrompt } from '@nomix-ai/nomix-system-prompt'
 import { mountAgentLoopTestDependencies } from '../src/index.ts'
 
-describe('dsh-agent-loop-testkit', () => {
+describe('nomix-agent-loop-testkit', () => {
   it('mounts a configurable prerequisite spine that can activate AgentLoop', async () => {
     const ctx = new Context()
     await mountAgentLoopTestDependencies(ctx, {

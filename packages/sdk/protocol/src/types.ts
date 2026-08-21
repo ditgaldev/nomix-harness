@@ -1,9 +1,9 @@
 /**
- * Named wire types for the DeepSeek Harness SDK runtime protocol: the three
+ * Named wire types for the Nomix Harness SDK runtime protocol: the three
  * request/result pairs and the four server-to-client notification payloads
  * exchanged over the newline-delimited JSON-RPC stdio transport. The server
  * plugin (`@nomix-ai/nomix-sdk-jsonrpc-server`) and SDK clients share these shapes;
- * `serverInfo.name` stays the wire-stable `deepseek-harness-sdk-runtime`.
+ * `serverInfo.name` stays the wire-stable `nomix-harness-sdk-runtime`.
  *
  * @module @nomix-ai/nomix-sdk-protocol/types
  */
@@ -26,7 +26,7 @@ export interface InitializeParams {
 
 /** Wire-stable server identity returned by initialization. */
 export interface InitializeResult {
-  /** Wire-stable server identity (`deepseek-harness-sdk-runtime`) and version. */
+  /** Wire-stable server identity (`nomix-harness-sdk-runtime`) and version. */
   serverInfo: { name: string; version: string }
 }
 

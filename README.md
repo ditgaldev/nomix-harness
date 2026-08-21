@@ -1,14 +1,14 @@
-# DeepSeek Harness
+# Nomix Harness
 
 English | [中文](README.zh.md)
 
-DeepSeek Harness (`dsh`) is an open-source agent harness developed by [DeepSeek AI](https://deepseek.com).
+Nomix Harness (`nomix`) is an open-source, plugin-based agent harness.
 
 It uses an architecture where **everything is a plugin**, and is powered by [Cordis](https://github.com/cordiverse/cordis), whose design is described in [_A Programming Paradigm for Spatiotemporal Composability_](https://github.com/cordiverse/paper).
 
 ## Developer preview
 
-DeepSeek Harness is currently in _developer preview_ and is iterating rapidly. **THERE WILL BE COMPATIBILITY-BREAKING CHANGES.**
+Nomix Harness is currently in _developer preview_ and is iterating rapidly. **THERE WILL BE COMPATIBILITY-BREAKING CHANGES.**
 
 ## Run
 
@@ -28,17 +28,15 @@ To run from a repository checkout:
 
 ```sh
 git clone https://github.com/ditgaldev/nomix-harness.git
-cd deepseek-harness
+cd nomix-harness
 pnpm install
-pnpm run build
 pnpm nomix web
 ```
 
 ## Community and support
 
 - Feel free to submit feedback or bug reports through [GitHub Discussions](https://github.com/ditgaldev/nomix-harness/discussions).
-- Add the [`dsh-plugin`](https://github.com/topics/dsh-plugin) topic to your plugin repository for discoverability.
-- Join <a href="https://discord.gg/Ycq5dCaS4">DeepSeek Harness Discord community</a>.
+- Add the [`nomix-plugin`](https://github.com/topics/nomix-plugin) topic to your plugin repository for discoverability.
 
 ## Contributing
 

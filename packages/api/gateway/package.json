@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-api-gateway",
   "description": "Typert Remote Host dispatcher and Client API endpoint",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "publishConfig": {
     "access": "public"
   },
@@ -33,7 +33,7 @@
     "./src/*": "./src/*",
     "./package.json": "./package.json"
   },
-  "dsh": {
+  "nomix": {
     "client": {
       "inject": [
         "@nomix-ai/nomix-typert-registry",

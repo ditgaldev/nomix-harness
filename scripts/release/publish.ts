@@ -149,7 +149,7 @@ async function publishTarball(
     // command-line flag could not serve both and would override the manifest
     // that does. Each packed manifest decides, and
     // check-workspace-constraints holds every manifest to its sequence's level.
-    const result = attemptEchoed('npm', ['publish', tarball, ...tagArgs])
+    const result = attemptEchoed('npm', ['publish', tarball, '--provenance', ...tagArgs])
     const output = `${result.stdout}${result.stderr}`
     if (result.status === 0) return
 
@@ -177,7 +177,7 @@ async function main(): Promise<void> {
     allowPositionals: false,
   })
   if (values.family === undefined || values.from === undefined) {
-    throw new Error('usage: publish.ts --family <dsh|vendor> --from <packed directory>')
+    throw new Error('usage: publish.ts --family <nomix|vendor> --from <packed directory>')
   }
 
   const family = releaseFamily(values.family)

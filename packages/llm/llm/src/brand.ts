@@ -1,10 +1,10 @@
 /**
- * dsh-llm's owned branded ids: tool-call correlation and provider request
+ * nomix-llm's owned branded ids: tool-call correlation and provider request
  * diagnostics.
  *
  * The `Branded<B>` primitive itself lives in `@nomix-ai/nomix-brand` (a
  * zero-dependency type-only package) so every owner of a cross-boundary id can
- * brand it without depending on dsh-llm; see that package's README for the
+ * brand it without depending on nomix-llm; see that package's README for the
  * nominal-typing policy.
  *
  * @module @nomix-ai/nomix-llm/brand

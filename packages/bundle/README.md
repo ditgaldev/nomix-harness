@@ -2,11 +2,11 @@
 
 English | [中文](README.zh.md)
 
-Profile bundles: npm packages whose manifest declares `"dsh": { "bundle": { "patch": "./cordis.patch.yml" } }`, making them installable patch layers for `nomix --profile` compositions ([profile contract](../boot/app-boot/README.md#profiles)). A bundle's substance is its patch list; some also ship runtime glue plugins their patch mounts.
+Profile bundles: npm packages whose manifest declares `"nomix": { "bundle": { "patch": "./cordis.patch.yml" } }`, making them installable patch layers for `nomix --profile` compositions ([profile contract](../boot/app-boot/README.md#profiles)). A bundle's substance is its patch list; some also ship runtime glue plugins their patch mounts.
 
 | Package | Role | ctx key |
 |---|---|---|
-| [`base/`](base/README.md) | The shared dsh core every profile applies first | — (patch only) |
+| [`base/`](base/README.md) | The shared nomix core every profile applies first | — (patch only) |
 | [`web-app/`](web-app/README.md) | Browser surface: web patch layer + runtime glue plugin | mounts rows |
 | [`headless/`](headless/README.md) | Direct one-shot task mode over base, with no Host or Web layer | mounts `headless-runner` |
 

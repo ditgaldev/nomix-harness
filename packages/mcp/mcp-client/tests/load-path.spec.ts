@@ -14,7 +14,7 @@ import { describe, expect, it } from 'vitest'
 import Loader from '@nomix-ai/cordis-plugin-loader'
 import * as mcpClient from '@nomix-ai/nomix-mcp-client'
 
-describe('dsh-mcp-client real-load-path guard', () => {
+describe('nomix-mcp-client real-load-path guard', () => {
   it('has no default export and keeps name/inject/Config through unwrapExports', () => {
     expect('default' in mcpClient).toBe(false)
 

@@ -1,5 +1,5 @@
 /**
- * dsh-lsp's owned branded id: {@link LspProviderId}, the opaque identity a provider reserves on
+ * nomix-lsp's owned branded id: {@link LspProviderId}, the opaque identity a provider reserves on
  * `ctx.lsp`. The `Branded<B>` primitive lives in `@nomix-ai/nomix-brand`; keeping the type and its
  * factory together here lets `index.ts` re-export both under one name.
  * @module @nomix-ai/nomix-lsp/brand

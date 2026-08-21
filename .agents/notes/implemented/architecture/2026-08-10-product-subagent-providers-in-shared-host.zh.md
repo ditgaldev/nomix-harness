@@ -12,7 +12,7 @@ Status: implemented
 
 ## 决策
 
-产品提供方仍是进程级的 host plane（宿主平面）注册。[生产安装排除决策](../simplification/2026-08-12-production-dsh-excludes-product-subagent-providers.md)只取代本说明原先由 base bundle 安装提供方的选择：生产 `dsh-base` 既不依赖也不挂载它们。选择产品集成的 Profile 会安装目标提供方包，并在 host plane 挂载一次。加载任一插件只会注册一个休眠后端；对应的 Codex 或 Claude 进程直到第一次实际委派调用时才启动。Agent Preset 分别通过普通的 `dsh-tool-subagent` 行贡献 `subagent_codex` 与 `subagent_claude_code`，因此一个 preset 可以不暴露任何工具、只暴露其中一个或同时暴露两者，而无需更改提供方注册表。
+产品提供方仍是进程级的 host plane（宿主平面）注册。[生产安装排除决策](../simplification/2026-08-12-production-nomix-excludes-product-subagent-providers.md)只取代本说明原先由 base bundle 安装提供方的选择：生产 `nomix-base` 既不依赖也不挂载它们。选择产品集成的 Profile 会安装目标提供方包，并在 host plane 挂载一次。加载任一插件只会注册一个休眠后端；对应的 Codex 或 Claude 进程直到第一次实际委派调用时才启动。Agent Preset 分别通过普通的 `nomix-tool-subagent` 行贡献 `subagent_codex` 与 `subagent_claude_code`，因此一个 preset 可以不暴露任何工具、只暴露其中一个或同时暴露两者，而无需更改提供方注册表。
 
 本说明继续负责解释为什么已经挂载的产品提供方属于 host plane，而面向模型的工具属于 Agent Preset。生产安装排除决策负责哪些 Profile 安装这些可选包。提供方约定说明继续负责每个产品的协议、结果映射、取消、进程树生命周期与证据层级。[Agent Preset 架构](2026-08-03-per-session-agent-presets.md)仍负责宿主与 agent 的划分、preset 创作，以及改动只影响新组装会话的规则。
 
@@ -22,7 +22,7 @@ Status: implemented
 
 ## 验证
 
-base bundle 测试证明生产 `dsh-base` 既不包含产品提供方依赖，也不包含提供方配置行。Web 组装显式挂载两个可选提供方，并覆盖不暴露任何工具、仅暴露 Codex、仅暴露 Claude 和同时暴露两者这四种工具集合，也覆盖自行创作的 preset 发生改动后的代际隔离。由包负责的 Loader 组装证明 Codex-only 与双提供方按需启用路径会注册选中的提供方，而不会启动产品进程。无密钥 ACP（Agent Client Protocol）快照固定单个产品与两个产品同时启用时的模型可见工具 schema，提供方测试则另行证明原生可执行文件解析、失败、取消和进程树完全停稳。
+base bundle 测试证明生产 `nomix-base` 既不包含产品提供方依赖，也不包含提供方配置行。Web 组装显式挂载两个可选提供方，并覆盖不暴露任何工具、仅暴露 Codex、仅暴露 Claude 和同时暴露两者这四种工具集合，也覆盖自行创作的 preset 发生改动后的代际隔离。由包负责的 Loader 组装证明 Codex-only 与双提供方按需启用路径会注册选中的提供方，而不会启动产品进程。无密钥 ACP（Agent Client Protocol）快照固定单个产品与两个产品同时启用时的模型可见工具 schema，提供方测试则另行证明原生可执行文件解析、失败、取消和进程树完全停稳。
 
 ## 考虑过的替代方案
 

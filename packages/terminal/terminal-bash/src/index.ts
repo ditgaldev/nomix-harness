@@ -65,9 +65,9 @@ function childEnvironment(spec: TerminalBackendSpawnSpec): Record<string, string
     // rendering each prompt, so an override never survives to the next prompt.
     PROMPT_COMMAND: `printf "\\033]133;D;%s\\007" "$?"; PS1='${CONTROLLED_PROMPT}'`,
     BASH_SILENCE_DEPRECATION_WARNING: '1',
-    DSH_SHELL: '1',
-    DSH_SESSION_ID: spec.owner.id,
-    DSH_PTY_SESSION_ID: spec.sessionId,
+    NOMIX_SHELL: '1',
+    NOMIX_SESSION_ID: spec.owner.id,
+    NOMIX_PTY_SESSION_ID: spec.sessionId,
   }
 }
 

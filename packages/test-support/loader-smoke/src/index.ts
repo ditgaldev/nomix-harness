@@ -31,13 +31,13 @@ export const LOADER_SMOKE_TEST_TIMEOUT_MS = DEFAULT_PROCESS_TIMEOUT_MS + 15_000
 export type ExampleMode = 'src' | 'lib'
 
 /** Environment variable selecting the mode; CI sets it to `lib`, dev leaves it unset (`src`). */
-export const EXAMPLE_MODE_ENV = 'DSH_EXAMPLE_MODE'
+export const EXAMPLE_MODE_ENV = 'NOMIX_EXAMPLE_MODE'
 
 /**
  * Parse an {@link ExampleMode} from a raw string, defaulting to `src` when absent so an unset
  * environment reproduces the dev/tsx behavior. Throws on any other value rather than silently
  * falling back, so a typo in a gate's env fails loud.
- * @param raw - the raw value; defaults to `process.env.DSH_EXAMPLE_MODE`.
+ * @param raw - the raw value; defaults to `process.env.NOMIX_EXAMPLE_MODE`.
  * @returns the validated mode.
  */
 export function resolveExampleMode(raw: string | undefined = process.env[EXAMPLE_MODE_ENV]): ExampleMode {
@@ -139,7 +139,7 @@ export interface LoaderSmokeOptions {
   readonly tsconfigPath: string
   /** Boot from source via tsx (`src`) or built lib via plain Node (`lib`); defaults to the environment's mode. */
   readonly mode?: ExampleMode
-  /** Environment overrides layered over the parent and isolated DSH homes. */
+  /** Environment overrides layered over the parent and isolated NOMIX homes. */
   readonly env?: Readonly<NodeJS.ProcessEnv>
   /** Process deadline override for harness tests. */
   readonly processTimeoutMs?: number
@@ -182,7 +182,7 @@ export async function runLoaderSmoke(options: LoaderSmokeOptions): Promise<Loade
       configArgs: options.binArgs ?? [options.configPath],
       ...options.mode !== undefined ? { mode: options.mode } : {},
       tsconfigPath: options.tsconfigPath,
-      env: { DSH_HOME: join(cwd, '.dsh'), DSH_AGENTS_HOME: join(cwd, '.agents'), ...options.env },
+      env: { NOMIX_HOME: join(cwd, '.nomix'), NOMIX_AGENTS_HOME: join(cwd, '.agents'), ...options.env },
     })
     // `input: ''` writes nothing and closes stdin — the fixture-visible
     // stdin-close contract. `reject: false` folds spawn errors, the SIGKILL

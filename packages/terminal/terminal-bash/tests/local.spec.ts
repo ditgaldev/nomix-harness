@@ -50,7 +50,7 @@ async function harness(
   mode: 'danger-full-access' | 'workspace-write',
   timing: { idleSilenceMs?: number; handoffGraceMs?: number; timeoutMs?: number } = {},
 ) {
-  const root = mkdtempSync(join(tmpdir(), 'dsh-pty-local-'))
+  const root = mkdtempSync(join(tmpdir(), 'nomix-pty-local-'))
   roots.push(root)
   const ctx = new Context()
   contexts.push(ctx)
@@ -116,24 +116,24 @@ function processIsRunning(pid: number): boolean {
 
 describe('terminal-bash real shell', () => {
   it('persists cwd and environment across sends, scrubs secrets, and closes', async () => {
-    const previous = process.env.DSH_TEST_SECRET
-    process.env.DSH_TEST_SECRET = 'must-not-leak'
+    const previous = process.env.NOMIX_TEST_SECRET
+    process.env.NOMIX_TEST_SECRET = 'must-not-leak'
     try {
       const { ctx, root, agent } = await harness('danger-full-access')
       const created = await ctx.terminals.spawn(agent, { type: 'shell', name: 'main', cwd: root })
-      expect(created.motd).toContain('dsh> ')
+      expect(created.motd).toContain('nomix> ')
 
       const first = ctx.terminals.startSend(agent, created.sessionId, { text: 'export KEEP=ok; cd /', submit: true })
       expect((await first.done).waitReason).toBe('stdin_read')
-      const second = ctx.terminals.startSend(agent, created.sessionId, { text: 'printf "cwd=%s keep=%s secret=%s\\n" "$PWD" "$KEEP" "${DSH_TEST_SECRET-unset}"', submit: true })
+      const second = ctx.terminals.startSend(agent, created.sessionId, { text: 'printf "cwd=%s keep=%s secret=%s\\n" "$PWD" "$KEEP" "${NOMIX_TEST_SECRET-unset}"', submit: true })
       expect((await second.done).viewport).toContain('cwd=/ keep=ok secret=unset')
 
       expect(ctx.terminals.read(agent, created.sessionId, { offset: 0, count: 20 }).text).toContain('cwd=/ keep=ok secret=unset')
       expect(await ctx.terminals.kill(agent, created.sessionId)).toBe(true)
       expect(ctx.terminals.list(agent)).toEqual([])
     } finally {
-      if (previous === undefined) delete process.env.DSH_TEST_SECRET
-      else process.env.DSH_TEST_SECRET = previous
+      if (previous === undefined) delete process.env.NOMIX_TEST_SECRET
+      else process.env.NOMIX_TEST_SECRET = previous
     }
   }, 10_000)
 
@@ -153,7 +153,7 @@ describe('terminal-bash real shell', () => {
     const after = ctx.terminals.startSend(agent, created.sessionId, { text: 'printf "healed=[%s]\\n" "$PS1"', submit: true })
     const result = await after.done
     expect(result.waitReason).toBe('stdin_read')
-    expect(result.viewport).toContain('healed=[dsh> ]')
+    expect(result.viewport).toContain('healed=[nomix> ]')
     await ctx.terminals.kill(agent, created.sessionId)
   }, 20_000)
 
@@ -199,7 +199,7 @@ describe('terminal-bash real shell', () => {
     let pid: number | undefined
     try {
       const background = ctx.terminals.startSend(agent, created.sessionId, {
-        text: `sh -c 'trap "" TERM; printf "%s" "$$" > "$1"; sleep 60' dsh "${pidFile}" & disown`,
+        text: `sh -c 'trap "" TERM; printf "%s" "$$" > "$1"; sleep 60' nomix "${pidFile}" & disown`,
         submit: true,
       })
       await background.done

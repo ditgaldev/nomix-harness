@@ -127,11 +127,11 @@ describe('child env layering (through the subprocess seam)', () => {
     }
   })
 
-  it('forwards explicit DSH_* config entries to the child', async () => {
-    // A deployment sets child-harness facts like DSH_PERMISSION_MODE in
+  it('forwards explicit NOMIX_* config entries to the child', async () => {
+    // A deployment sets child-harness facts like NOMIX_PERMISSION_MODE in
     // config.env; the seam's scrub drops only the AMBIENT namesakes, so the
     // explicit entry merges after it and the child must see the value.
-    const ctx = await setup({ MOCK_ECHO_ENV: 'DSH_ACP_TEST_FACT', DSH_ACP_TEST_FACT: 'managed' })
+    const ctx = await setup({ MOCK_ECHO_ENV: 'NOMIX_ACP_TEST_FACT', NOMIX_ACP_TEST_FACT: 'managed' })
     const parent = { id: 'parent', session: { header: { cwd: process.cwd() } } } as unknown as Agent
     const run = await ctx.subagents.start('acp', {
       label: 'p', prompt: [{ type: 'text' as const, text: 'p' }], parent, signal: new AbortController().signal,
@@ -189,7 +189,7 @@ describe('disposeAcpChild (the backend-owned teardown ladder over seam verbs)', 
   it('observes a spawn-level rejection and returns without a process to reap', async () => {
     const child = spawnSubprocess({
       argv: [process.execPath, '--input-type=module', '--eval', ''],
-      cwd: '/nonexistent-dir-dsh-acp-ladder-test',
+      cwd: '/nonexistent-dir-nomix-acp-ladder-test',
       stdio: { stdin: 'ignore', stdout: { maxBytes: 1000 }, stderr: { maxBytes: 1000 } },
       graceMs: 200,
     })
@@ -264,7 +264,7 @@ describe('cwd resolution', () => {
 
   it('resolves a relative config cwd against the launch directory at load', async () => {
     // The child process AND its announced ACP session cwd must both get the
-    // ABSOLUTE form — DSH's own ACP server rejects a relative session cwd, and
+    // ABSOLUTE form — NOMIX's own ACP server rejects a relative session cwd, and
     // deferring resolution to spawn would hide the launch-dir dependency.
     const relative = 'packages/subagent/subagent-acp'
     const absolute = resolve(relative)
@@ -384,7 +384,7 @@ describe('cwd resolution', () => {
   })
 })
 
-describe('dsh-subagent-acp', () => {
+describe('nomix-subagent-acp', () => {
   it('drives child processes with parent-unique run ids and returns streamed output', async () => {
     const ctx = await setup({ MOCK_TEXT: 'hello from acp child', MOCK_STOP: 'end_turn', MOCK_SESSION_ID: 'acp-child-session' })
     const run = await ctx.subagents.start('acp', request('do X'))

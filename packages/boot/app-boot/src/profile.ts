@@ -2,13 +2,13 @@
  * Profile discovery, initialization, and patch-layer composition for the
  * `nomix --profile` launcher family.
  *
- * A profile is a directory under `$DSH_HOME/profiles/<name>` holding a
+ * A profile is a directory under `$NOMIX_HOME/profiles/<name>` holding a
  * `package.json` (out-of-tree plugin dependencies plus the profile manifest
- * `dsh.profile` with its ordered `bundles` list) and a `cordis.patch.yml`
+ * `nomix.profile` with its ordered `bundles` list) and a `cordis.patch.yml`
  * (the user's own patch layer, applied after every bundle layer). Bundles are
  * npm packages whose manifest declares
- * `"dsh": { "bundle": { "patch": "./cordis.patch.yml" } }`; the tree is
- * composed by applying each bundle's patch list in `dsh.profile.bundles` order over
+ * `"nomix": { "bundle": { "patch": "./cordis.patch.yml" } }`; the tree is
+ * composed by applying each bundle's patch list in `nomix.profile.bundles` order over
  * an empty entry list, then the profile's own patches, then any launcher
  * layers (`--patch` files and flag-derived patches).
  *
@@ -16,7 +16,7 @@
  * first from the nomix installation (the launcher's own package), then from the
  * profile directory. The Loader's `baseUrl` is the profile directory, whose
  * `node_modules` pnpm manages for out-of-tree plugins, while the maintained
- * flat fallback directory `$DSH_HOME/profiles/node_modules` (one symlink per
+ * flat fallback directory `$NOMIX_HOME/profiles/node_modules` (one symlink per
  * package the installation's app and bundles depend on) makes every in-box
  * plugin Node-resolvable from any profile through the ordinary parent-walk.
  * @module @nomix-ai/nomix-app-boot/profile
@@ -29,7 +29,8 @@ import {
 import { basename, dirname, join } from 'node:path'
 import type { EntryOptions } from '@nomix-ai/cordis-plugin-loader'
 import { applyEntryPatches, type PatchOptions } from '@nomix-ai/cordis-plugin-include'
-import { resolveDshHome } from '@nomix-ai/nomix-home-paths'
+import { resolveNomixHome } from '@nomix-ai/nomix-home-paths'
+import { rejectLegacyManifestSection } from './legacy-branding.ts'
 import { loadOverlayPatches } from './index.ts'
 
 /** Directory under the Harness home holding every profile. */
@@ -38,27 +39,27 @@ export const PROFILES_DIR = 'profiles'
 /** The user patch layer inside a profile directory (hot-reloaded on long-lived surfaces). */
 export const PROFILE_PATCH_FILENAME = 'cordis.patch.yml'
 
-/** The bundle half of the `dsh` manifest section: what a bundle package exports. */
-export interface DshBundleManifest {
+/** The bundle half of the `nomix` manifest section: what a bundle package exports. */
+export interface NomixBundleManifest {
   /** The patch layer this bundle exports, relative to its package root. */
   patch: string
 }
 
-/** The profile half of the `dsh` manifest section: what a profile directory composes. */
-export interface DshProfileManifest {
+/** The profile half of the `nomix` manifest section: what a profile directory composes. */
+export interface NomixProfileManifest {
   /** Ordered bundle layer list (package names). */
   bundles?: string[]
 }
 
 /**
- * The profile-launcher slice of the `dsh`-owned package.json section. A
+ * The profile-launcher slice of the `nomix`-owned package.json section. A
  * manifest may declare both roles; other consumers own additional keys.
  */
-export interface DshManifestSection {
+export interface NomixManifestSection {
   /** Bundle metadata consumed by the profile launcher. */
-  bundle?: DshBundleManifest
+  bundle?: NomixBundleManifest
   /** Profile metadata consumed by the profile launcher. */
-  profile?: DshProfileManifest
+  profile?: NomixProfileManifest
 }
 
 /** The slice of package.json both profiles and bundles use. */
@@ -66,12 +67,12 @@ export interface ProfileManifest {
   name?: string
   dependencies?: Record<string, string>
   peerDependencies?: Record<string, string>
-  dsh?: DshManifestSection
+  nomix?: NomixManifestSection
 }
 
 /** One resolved bundle layer of a profile. */
 export interface ProfileLayer {
-  /** The bundle's package name, as listed in `dsh.profile.bundles`. */
+  /** The bundle's package name, as listed in `nomix.profile.bundles`. */
   packageName: string
   /** Absolute directory of the resolved bundle package. */
   packageDir: string
@@ -87,7 +88,7 @@ export interface Profile {
   name: string
   /** Absolute profile directory. */
   dir: string
-  /** Bundle layers in `dsh.profile.bundles` order. */
+  /** Bundle layers in `nomix.profile.bundles` order. */
   layers: ProfileLayer[]
   /** Absolute path of the profile's own patch file. */
   patchPath: string
@@ -98,14 +99,14 @@ export interface Profile {
 /**
  * Resolve a profile's directory under the Harness home.
  * @param name - the profile name (`nomix --profile <name>`).
- * @param home - the Harness home; defaults to {@link resolveDshHome}.
+ * @param home - the Harness home; defaults to {@link resolveNomixHome}.
  * @returns the absolute profile directory (which may not exist yet).
  */
-export function resolveProfileDir(name: string, home: string = resolveDshHome()): string {
+export function resolveProfileDir(name: string, home: string = resolveNomixHome()): string {
   if (name === '' || name.includes('/') || name.includes('\\') || name === '.' || name === '..'
     // The launcher-maintained flat module fallback lives at this sibling path.
     || name === 'node_modules') {
-    throw new Error(`dsh: invalid profile name ${JSON.stringify(name)}`)
+    throw new Error(`nomix: invalid profile name ${JSON.stringify(name)}`)
   }
   return join(home, PROFILES_DIR, name)
 }
@@ -124,7 +125,7 @@ const INSTALLATION_OWNED_PROFILE_TUPLES: Record<string, readonly string[]> = {
 /** The bundle list a `nomix plugin` init uses for a name with no shipped template. */
 export const DEFAULT_PROFILE_BUNDLES: readonly string[] = ['@nomix-ai/nomix-base']
 
-const PROFILE_PATCH_TEMPLATE = `# Your patch layer for this dsh profile, applied after every bundle layer:
+const PROFILE_PATCH_TEMPLATE = `# Your patch layer for this nomix profile, applied after every bundle layer:
 # a top-level YAML array of loader patch entries (id-targeted config
 # overrides, disables, and insert lists; \`!!js\` expressions allowed).
 []
@@ -147,17 +148,17 @@ autoInstallPeers: false
  * pnpm settings out-of-tree plugins need. Existing files are never touched,
  * so re-running is a no-op on an initialized profile.
  * @param dir - the profile directory from {@link resolveProfileDir}.
- * @param bundles - the initial `dsh.profile.bundles` layer list.
+ * @param bundles - the initial `nomix.profile.bundles` layer list.
  */
 export function initProfile(dir: string, bundles: readonly string[]): void {
   mkdirSync(dir, { recursive: true })
   const manifestPath = join(dir, 'package.json')
   if (!existsSync(manifestPath)) {
     const manifest: ProfileManifest & { private: boolean } = {
-      name: `dsh-profile-${basename(dir)}`,
+      name: `nomix-profile-${basename(dir)}`,
       private: true,
       dependencies: {},
-      dsh: { profile: { bundles: [...bundles] } },
+      nomix: { profile: { bundles: [...bundles] } },
     }
     writeFileSync(manifestPath, JSON.stringify(manifest, undefined, 2) + '\n')
   }
@@ -179,7 +180,7 @@ function ensureSymlink(link: string, target: string): void {
   }
   if (stat !== undefined) {
     if (!stat.isSymbolicLink()) {
-      throw new Error(`dsh: ${link} exists and is not a symlink; remove it so dsh can manage the installation fallback`)
+      throw new Error(`nomix: ${link} exists and is not a symlink; remove it so nomix can manage the installation fallback`)
     }
     if (readlinkSync(link) === target) return
     // unlink deletes the reparse point itself on Windows too; rmSync treats a
@@ -202,25 +203,25 @@ function ensureSymlink(link: string, target: string): void {
 }
 
 /**
- * Maintain the flat module fallback `$DSH_HOME/profiles/node_modules`: one
- * symlink per package in the dsh app's resolvable dependency CLOSURE (BFS
+ * Maintain the flat module fallback `$NOMIX_HOME/profiles/node_modules`: one
+ * symlink per package in the nomix app's resolvable dependency CLOSURE (BFS
  * over `dependencies` from the app manifest), each resolved from its own
  * real location. Node's parent-directory walk from any profile finds this
  * directory after the profile's own `node_modules`, so every in-box plugin
  * resolves without pnpm ever managing it — the exact "bundles come from the
  * installation" contract. The closure (not just direct dependencies) is
  * required for out-of-tree plugins: their peer dependencies name Service
- * Definition packages (`dsh-compaction`, `dsh-invariants`, ...) that the app
+ * Definition packages (`nomix-compaction`, `nomix-invariants`, ...) that the app
  * reaches only through its Service Provider packages. Symlinked packages
  * resolve their own dependencies from their real directories (Node's default
  * symlink-following), so each package needs only its one flat link.
  * Idempotent: correct links are kept and moved installations are
  * re-pointed; a stale link to a vanished package stays until its name is
  * reused (dangling links are invisible to resolution).
- * @param installAnchor - absolute path of the dsh app's package.json.
- * @param home - the Harness home; defaults to {@link resolveDshHome}.
+ * @param installAnchor - absolute path of the nomix app's package.json.
+ * @param home - the Harness home; defaults to {@link resolveNomixHome}.
  */
-export function healProfilesModuleFallback(installAnchor: string, home: string = resolveDshHome()): void {
+export function healProfilesModuleFallback(installAnchor: string, home: string = resolveNomixHome()): void {
   const profilesDir = join(home, PROFILES_DIR)
   const modulesDir = join(profilesDir, 'node_modules')
   mkdirSync(modulesDir, { recursive: true })
@@ -232,8 +233,8 @@ export function healProfilesModuleFallback(installAnchor: string, home: string =
   // map itself (first resolution wins, matching Node's own nearest-wins).
   const queue: { anchor: string; manifest: ProfileManifest }[] = [{ anchor: installAnchor, manifest: appManifest }]
   for (let next = queue.shift(); next !== undefined; next = queue.shift()) {
-    // Peer dependencies participate: Service Definition packages (dsh-subprocess,
-    // dsh-compaction, ...) are peers of their implementations, never plain
+    // Peer dependencies participate: Service Definition packages (nomix-subprocess,
+    // nomix-compaction, ...) are peers of their implementations, never plain
     // dependencies, yet out-of-tree plugins import them directly.
     /* v8 ignore next -- a real app manifest always declares dependencies */
     for (const dep of [...Object.keys(next.manifest.dependencies ?? {}), ...Object.keys(next.manifest.peerDependencies ?? {})]) {
@@ -269,10 +270,11 @@ export function readProfileManifest(binName: string, dir: string): ProfileManife
     throw new Error(`${binName}: failed to read profile manifest ${path}: ${String(error)}`)
   }
   // The field checks below validate the file data before trusting the parse type.
-  const parsed = JSON.parse(raw) as ProfileManifest | null
+  const parsed = JSON.parse(raw) as (ProfileManifest & Record<string, unknown>) | null
   if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
     throw new Error(`${binName}: profile manifest ${path} must hold a JSON object`)
   }
+  rejectLegacyManifestSection(parsed, path)
   return parsed
 }
 
@@ -297,14 +299,14 @@ function sameBundles(left: readonly string[], right: readonly string[]): boolean
 function normalizeShippedProfile(name: string, dir: string, manifest: ProfileManifest): ProfileManifest {
   const installationOwned = INSTALLATION_OWNED_PROFILE_TUPLES[name]
   const current = PROFILE_TEMPLATES[name]
-  const bundles = manifest.dsh?.profile?.bundles
+  const bundles = manifest.nomix?.profile?.bundles
   if (installationOwned === undefined || current === undefined || bundles === undefined
     || !sameBundles(bundles, installationOwned)) return manifest
   const normalized: ProfileManifest = {
     ...manifest,
-    dsh: {
-      ...manifest.dsh,
-      profile: { ...manifest.dsh?.profile, bundles: [...current] },
+    nomix: {
+      ...manifest.nomix,
+      profile: { ...manifest.nomix?.profile, bundles: [...current] },
     },
   }
   writeProfileManifest(dir, normalized)
@@ -329,21 +331,31 @@ function packageDirFromAnchor(anchor: string, packageName: string): string | und
   return undefined
 }
 
+/** Resolve a bundle embedded in the aggregate npm package, if present. */
+function packagedBundleDir(installAnchor: string, packageName: string): string | undefined {
+  const prefix = '@nomix-ai/nomix-'
+  if (!packageName.startsWith(prefix)) return undefined
+  const candidate = join(dirname(installAnchor), 'dist', 'bundles', packageName.slice(prefix.length))
+  return existsSync(join(candidate, 'package.json')) ? candidate : undefined
+}
+
 /**
  * Resolve one bundle package's directory: installation anchor first, then the
  * profile directory. The installation-first order is the contract that
  * `@nomix-ai/nomix-base` (and every other in-box bundle) always comes from
- * the same installation as the running dsh, never from a profile-local copy.
+ * the same installation as the running nomix, never from a profile-local copy.
  * Resolution does not require the package to export `./package.json`.
  * @param binName - the diagnostic prefix on the thrown error.
- * @param packageName - the bundle's package name from `dsh.profile.bundles`.
- * @param installAnchor - absolute path of a file inside the dsh app package (its package.json).
+ * @param packageName - the bundle's package name from `nomix.profile.bundles`.
+ * @param installAnchor - absolute path of a file inside the nomix app package (its package.json).
  * @param profileDir - the profile directory (second anchor).
  * @returns the bundle package's absolute directory.
  */
 export function resolveBundleDir(
   binName: string, packageName: string, installAnchor: string, profileDir: string,
 ): string {
+  const packaged = packagedBundleDir(installAnchor, packageName)
+  if (packaged !== undefined) return packaged
   for (const anchor of [installAnchor, join(profileDir, 'package.json')]) {
     const dir = packageDirFromAnchor(anchor, packageName)
     if (dir !== undefined) return dir
@@ -355,21 +367,21 @@ export function resolveBundleDir(
 }
 
 /**
- * Load a profile: resolve every `dsh.profile.bundles` entry to its patch
+ * Load a profile: resolve every `nomix.profile.bundles` entry to its patch
  * layer and parse the profile's own patch file. A listed bundle without a
- * `dsh.bundle` manifest fails loud — naming a bundle-less package as a layer
+ * `nomix.bundle` manifest fails loud — naming a bundle-less package as a layer
  * is a misconfiguration, not "no patches".
  * @param binName - the diagnostic prefix on thrown errors.
  * @param name - the profile name.
- * @param installAnchor - absolute path of the dsh app's package.json (first resolution anchor).
- * @param home - the Harness home; defaults to {@link resolveDshHome}.
+ * @param installAnchor - absolute path of the nomix app's package.json (first resolution anchor).
+ * @param home - the Harness home; defaults to {@link resolveNomixHome}.
  * @param options - `userLayer: false` skips reading `cordis.patch.yml`, so a
  * bundles-only consumer (`--dump-default-config`, a recovery diagnostic)
  * cannot fail on a broken user layer.
  * @returns the loaded profile (empty `patches` when the user layer is skipped).
  */
 export function loadProfile(
-  binName: string, name: string, installAnchor: string, home: string = resolveDshHome(),
+  binName: string, name: string, installAnchor: string, home: string = resolveNomixHome(),
   options: { userLayer?: boolean } = {},
 ): Profile {
   const dir = resolveProfileDir(name, home)
@@ -383,14 +395,14 @@ export function loadProfile(
     initProfile(dir, template)
   }
   const manifest = normalizeShippedProfile(name, dir, readProfileManifest(binName, dir))
-  // A hand-written profile manifest may omit the dsh section entirely.
-  const bundles = manifest.dsh?.profile?.bundles ?? []
+  // A hand-written profile manifest may omit the nomix section entirely.
+  const bundles = manifest.nomix?.profile?.bundles ?? []
   const layers = bundles.map((packageName): ProfileLayer => {
     const packageDir = resolveBundleDir(binName, packageName, installAnchor, dir)
     const bundleManifest = JSON.parse(readFileSync(join(packageDir, 'package.json'), 'utf8')) as ProfileManifest
-    const declared = bundleManifest.dsh?.bundle?.patch
+    const declared = bundleManifest.nomix?.bundle?.patch
     if (declared === undefined) {
-      throw new Error(`${binName}: profile bundle ${JSON.stringify(packageName)} declares no dsh.bundle in its package.json`)
+      throw new Error(`${binName}: profile bundle ${JSON.stringify(packageName)} declares no nomix.bundle in its package.json`)
     }
     const patchPath = join(packageDir, declared)
     return { packageName, packageDir, patchPath, patches: loadOverlayPatches(binName, patchPath) }

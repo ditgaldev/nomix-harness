@@ -21,7 +21,7 @@ import { PLATFORM_MODULES } from './web/src/platform.ts'
  * (which requires @tsdown/css). The suffix matters: tsdown's guard matches ids
  * ending in `.css`, so the virtual id must not.
  */
-const CSS_VIRTUAL_PREFIX = '\0dsh-css:'
+const CSS_VIRTUAL_PREFIX = '\0nomix-css:'
 const CSS_VIRTUAL_SUFFIX = '.mjs'
 
 /**
@@ -97,7 +97,7 @@ export function clientBundle(
 ): BuildFaceConfig {
   const lib = clientLibraryConfig(id, libEntry, options.lib)
   return ({ env }) => {
-    const face = buildFace(env?.DSH_BUILD_FACE)
+    const face = buildFace(env?.NOMIX_BUILD_FACE)
     const client = clientConfig(id, face === undefined
       ? 'src/client/index.ts'
       : 'lib/types/client/index.js')
@@ -125,7 +125,7 @@ export function clientLibrary(id: string, libEntry: readonly string[]): BuildFac
  * @returns ENV-selected tsdown config for the Client build face.
  */
 export function clientOnly(configs: readonly UserConfig[]): BuildFaceConfig {
-  return ({ env }) => buildFace(env?.DSH_BUILD_FACE) === 'host'
+  return ({ env }) => buildFace(env?.NOMIX_BUILD_FACE) === 'host'
     ? [SKIP_WORKSPACE_BUILD]
     : [...configs]
 }
@@ -145,7 +145,7 @@ type BuildFaceConfig = (inlineConfig: Pick<UserConfig, 'env'>) => UserConfig[]
 
 function buildFace(value: unknown): BuildFace {
   if (value === undefined || value === 'host' || value === 'client') return value
-  throw new Error(`tsdown: --env.DSH_BUILD_FACE must be host or client, received ${String(value)}`)
+  throw new Error(`tsdown: --env.NOMIX_BUILD_FACE must be host or client, received ${String(value)}`)
 }
 
 function clientLibraryConfig(
@@ -212,7 +212,7 @@ function clientConfig(id: string, entry: string): UserConfig {
       // cross-plugin value import either inlines a duplicate runtime instance
       // or requires a specifier the frozen module table cannot answer.
       // Cross-plugin collaboration goes through cordis services instead.
-      name: 'dsh-client-bundle-purity',
+      name: 'nomix-client-bundle-purity',
       resolveId(source: string) {
         if (!source.startsWith('@nomix-ai/')) return null
         if (CLIENT_EXTERNALS.includes(source)) return null // platform module: external wins
@@ -224,7 +224,7 @@ function clientConfig(id: string, entry: string): UserConfig {
         )
       },
     }, {
-      name: 'dsh-css-modules-inline',
+      name: 'nomix-css-modules-inline',
       resolveId(source: string, importer: string | undefined) {
         if (!source.endsWith('.module.css')) return null
         const abs = importer !== undefined ? sourceAssetPath(source, importer) : source

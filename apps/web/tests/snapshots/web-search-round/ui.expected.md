@@ -9,17 +9,17 @@
   - tablist:
     - tab "Chat" [selected]
     - tab "Trajectory"
-- text: Use web_search to search exactly "DeepSeek Harness snapshot search". Then reply exactly SEARCH_DONE and stop. {{clock}}
+- text: Use web_search to search exactly "Nomix Harness snapshot search". Then reply exactly SEARCH_DONE and stop. {{clock}}
 - button "Copy":
   - img
 - button "Context injection @nomix-ai/nomix-system-prompt":
   - img
   - img
   - text: Context injection @nomix-ai/nomix-system-prompt
-- button "Search DeepSeek Harness snapshot search":
+- button "Search Nomix Harness snapshot search":
   - img
   - img
-  - text: Search DeepSeek Harness snapshot search
+  - text: Search Nomix Harness snapshot search
 - paragraph: SEARCH_DONE
 - button "Copy":
   - img

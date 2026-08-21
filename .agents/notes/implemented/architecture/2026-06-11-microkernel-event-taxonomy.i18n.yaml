@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-06-11-microkernel-event-taxonomy.md
-2026-06-11-microkernel-event-taxonomy.md: 0ef42b6d3a3df5b2da329f66e9495c08f2323f6b
-2026-06-11-microkernel-event-taxonomy.zh.md: 2cc95d242b2157d78bee2f865a5fca1fa0402641
+2026-06-11-microkernel-event-taxonomy.md: 2dbe98f2472db227aab3995e2b854d01cb0c4642
+2026-06-11-microkernel-event-taxonomy.zh.md: 6d0d9fee613998386e993974ce8012371a3fdd87

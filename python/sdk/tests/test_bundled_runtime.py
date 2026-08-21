@@ -10,9 +10,9 @@ from pathlib import Path
 
 import pytest
 
-from deepseek_harness import DeepSeekHarness, HarnessClient, HarnessConfig
-from deepseek_harness.errors import TransportClosedError
-from deepseek_harness_runtime import resolve_bundled_launch_args
+from nomix_harness import NomixHarness, HarnessClient, HarnessConfig
+from nomix_harness.errors import SdkProtocolError, TransportClosedError
+from nomix_harness_runtime import resolve_bundled_launch_args
 
 _MODES = ("exe", "node")
 _REPO_ROOT = Path(__file__).parents[3]
@@ -26,6 +26,8 @@ _CORDIS_YML = """\
   name: '@nomix-ai/nomix-agent-spine-demo'
   config:
     workspaceContext: false
+- id: llm-deepseek
+  name: '@nomix-ai/nomix-llm-deepseek'
 - id: sessions
   name: '@nomix-ai/nomix-session-persistence-jsonl'
   config:
@@ -58,9 +60,9 @@ def _client(tmp_path: Path, launch_args: tuple[str, ...]) -> HarnessClient:
             launch_args_override=launch_args,
             cwd=str(tmp_path),
             env={
-                "DSH_CORDIS_CONFIG": "./cordis.yml",
-                "DSH_SESSION_ROOT": str(tmp_path / "sessions"),
-                "DSH_CWD": str(tmp_path),
+                "NOMIX_CORDIS_CONFIG": "./cordis.yml",
+                "NOMIX_SESSION_ROOT": str(tmp_path / "sessions"),
+                "NOMIX_CWD": str(tmp_path),
                 # The lazily mounted adapter requires a key even without a model call.
                 "DEEPSEEK_API_KEY": "sk-dummy-for-boot",
                 "DEEPSEEK_BASE_URL": "http://127.0.0.1:9",
@@ -79,25 +81,26 @@ def test_bundled_runtime_boots_a_cordis_config(tmp_path: Path, mode: str) -> Non
         init = client.initialize(provider="deepseek-official", cwd=str(tmp_path), model="deepseek-v4-pro")
 
     assert init.serverInfo is not None
-    assert init.serverInfo.name == "deepseek-harness-sdk-runtime"
+    assert init.serverInfo.name == "nomix-harness-sdk-runtime"
 
 
 @pytest.mark.parametrize("mode", _MODES)
 def test_python_sdk_boots_minimal_jsonrpc_config(tmp_path: Path, mode: str) -> None:
     launch_args = _launch_args(mode)
     model = "minimal-environment-model"
-    harness = DeepSeekHarness(
+    harness = NomixHarness(
+        provider="deepseek-official",
         model=model,
         cwd=str(tmp_path),
         session_root=str(tmp_path / "sessions"),
         cordis=str(_MINIMAL_CONFIG),
         env={
-            "DSH_MODEL": model,
-            "DSH_CONTEXT_WINDOW": "1000000",
-            "DSH_SYSTEM_PROMPT": "You are the Python SDK minimal boot test agent.",
+            "DEEPSEEK_API_KEY": "sk-dummy-for-boot",
+            "DEEPSEEK_BASE_URL": "http://127.0.0.1:9",
+            "NOMIX_MODEL": model,
+            "NOMIX_CONTEXT_WINDOW": "1000000",
+            "NOMIX_SYSTEM_PROMPT": "You are the Python SDK minimal boot test agent.",
         },
-        api_key="sk-dummy-for-boot",
-        base_url="http://127.0.0.1:9",
         launch_args_override=launch_args,
         request_timeout_seconds=120,
     )
@@ -126,23 +129,27 @@ def test_bundled_runtime_surfaces_unbundled_plugin_failure(tmp_path: Path, mode:
 
 @pytest.mark.parametrize("mode", _MODES)
 @pytest.mark.parametrize("ambient_config", [None, ""], ids=["unset", "empty-counts-as-absent"])
-def test_zero_config_run_injects_bundled_default_cordis_config(
+def test_zero_config_run_requires_an_explicit_provider_plugin(
     tmp_path: Path, mode: str, ambient_config: str | None, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     _launch_args(mode)  # skip early when this carrier is unavailable
-    monkeypatch.setenv("DSH_RUNTIME_MODE", mode)
+    monkeypatch.setenv("NOMIX_RUNTIME_MODE", mode)
     if ambient_config is None:
-        monkeypatch.delenv("DSH_CORDIS_CONFIG", raising=False)
+        monkeypatch.delenv("NOMIX_CORDIS_CONFIG", raising=False)
     else:
-        monkeypatch.setenv("DSH_CORDIS_CONFIG", ambient_config)
+        monkeypatch.setenv("NOMIX_CORDIS_CONFIG", ambient_config)
 
-    harness = DeepSeekHarness(
+    harness = NomixHarness(
+        provider="deepseek-official",
         model="deepseek-v4-pro",
         cwd=str(tmp_path),
         session_root=str(tmp_path / "sessions"),
-        api_key="sk-dummy-for-boot",
-        base_url="http://127.0.0.1:9",
+        env={
+            "DEEPSEEK_API_KEY": "sk-dummy-for-boot",
+            "DEEPSEEK_BASE_URL": "http://127.0.0.1:9",
+        },
         request_timeout_seconds=120,
     )
-    with harness:
-        pass
+    with pytest.raises(SdkProtocolError, match='no adapter registered for provider "deepseek-official"'):
+        with harness:
+            pass

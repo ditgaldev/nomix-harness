@@ -1,4 +1,4 @@
-/** Canonical tool-definition fixtures for repository tests. @module dsh-tools/testing */
+/** Canonical tool-definition fixtures for repository tests. @module nomix-tools/testing */
 
 import type { ContentBlock } from '@nomix-ai/nomix-llm'
 import type { JsonValue } from '@nomix-ai/nomix-session'

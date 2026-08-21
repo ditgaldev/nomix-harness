@@ -1,5 +1,5 @@
 /**
- * @nomix-ai/nomix-cmdline — the command line a dsh launcher hands to the app
+ * @nomix-ai/nomix-cmdline — the command line a nomix launcher hands to the app
  * it boots.
  *
  * The launcher parses only its own flags (`--profile`, `--patch`, the config

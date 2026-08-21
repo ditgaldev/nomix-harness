@@ -5,7 +5,7 @@
  * activate, against that plugin context) and the entry `disabled` field (at
  * every mount decision, against the loader context). Every other entry
  * metadata field stays static, so an expression there remains truthy data and
- * silently changes composition. Example configs and the dsh Web composition
+ * silently changes composition. Example configs and the nomix Web composition
  * resolve named plugins from their owning workspace manifests. Local example
  * packages must also be in the root TypeScript project graph.
  */
@@ -31,7 +31,7 @@ interface PluginReference {
 }
 
 const root = resolve(import.meta.dirname, '..')
-// These example files are overlays consumed by the built dsh app, so their bare
+// These example files are overlays consumed by the built nomix app, so their bare
 // specifiers resolve from apps/cli rather than the examples workspace.
 const appOverlayFiles = new Set([
   'examples/web-cordis/cordis.yml',
@@ -102,7 +102,7 @@ if (import.meta.main) {
  * A browser plugin must declare the browser half it ships.
  *
  * The browser roster is discovered by scanning composed packages for a
- * `dsh.client` block, and the node half of a surface plugin is an empty
+ * `nomix.client` block, and the node half of a surface plugin is an empty
  * `apply`. A `packages/client` package that exports `./client` without that
  * block therefore composes, activates, and contributes nothing — its bundle is
  * never served and no error is raised anywhere. The mismatch is invisible in
@@ -110,20 +110,20 @@ if (import.meta.main) {
  * this group is checked: a Host package's `./client` export is the typed wire
  * face its browser consumers import, not a plugin the roster serves.
  * @returns one violation per client package whose `./client` export and
- * `dsh.client` declaration disagree.
+ * `nomix.client` declaration disagree.
  */
 function validateClientHalvesDeclared(): string[] {
   return globSync('packages/client/*/package.json', { cwd: root }).flatMap((manifestPath) => {
     const manifest = readManifest(manifestPath) as PackageManifest & {
       exports?: Record<string, unknown>
-      dsh?: { client?: unknown }
+      nomix?: { client?: unknown }
     }
     const shipsClient = manifest.exports !== undefined && Object.hasOwn(manifest.exports, './client')
-    const declaresClient = manifest.dsh?.client !== undefined
+    const declaresClient = manifest.nomix?.client !== undefined
     if (shipsClient === declaresClient) return []
     return [shipsClient
-      ? `${manifestPath}: exports "./client" but declares no dsh.client, so its browser half is never served`
-      : `${manifestPath}: declares dsh.client but exports no "./client" entry to serve`]
+      ? `${manifestPath}: exports "./client" but declares no nomix.client, so its browser half is never served`
+      : `${manifestPath}: declares nomix.client but exports no "./client" entry to serve`]
   })
 }
 
@@ -137,7 +137,7 @@ function validateClientHalvesDeclared(): string[] {
  * contributor to that service reaches nobody; a row that registers into a host
  * singleton registers once per live session, so the second one collides.
  *
- * Both have happened. `shell-env` in a preset realm left `DSH_WEB_URL` reaching
+ * Both have happened. `shell-env` in a preset realm left `NOMIX_WEB_URL` reaching
  * no shell, and `tool-subagent-report` handed every child `report` once per live
  * session until the second registration threw. Neither changes a tool catalog,
  * so no catalog assertion can see them — and the shipped presets are near-copies
@@ -261,7 +261,7 @@ function validateExampleResolution(): string[] {
 function validateAppResolution(): string[] {
   const violations: string[] = []
   // App overlays (and any config left under apps/cli/config) resolve from the
-  // dsh app's own dependency surface — the profile module fallback mirrors it.
+  // nomix app's own dependency surface — the profile module fallback mirrors it.
   const appDependencies = {
     ...readManifest('apps/cli/package.json').dependencies,
     // The fallback also links every bundle's own dependencies (healProfilesModuleFallback).
@@ -290,7 +290,7 @@ function validateAppResolution(): string[] {
 
 /**
  * Every configured specifier of a local workspace package must resolve through
- * the tsconfig `paths` facade to a `.ts`/`.tsx` source file. The `dsh` source
+ * the tsconfig `paths` facade to a `.ts`/`.tsx` source file. The `nomix` source
  * launch (tsx) and vitest resolve in the source plane; without a `paths` match
  * they fall back to package `exports`, which reach built `lib/` — present on a
  * built dev tree, absent on a clean one — so a missing mapping boots locally

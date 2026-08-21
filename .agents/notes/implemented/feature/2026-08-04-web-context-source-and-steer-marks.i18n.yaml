@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-08-04-web-context-source-and-steer-marks.md
-2026-08-04-web-context-source-and-steer-marks.md: 738d2f465cf44972505205f39549491e82d7b7d7
-2026-08-04-web-context-source-and-steer-marks.zh.md: 9b483c66dcce78d4fc5664d692bd7779b12a67af
+2026-08-04-web-context-source-and-steer-marks.md: 85a59c57af22159f4085641856cf5150647d4d52
+2026-08-04-web-context-source-and-steer-marks.zh.md: 1e4238eeda0899b97de2ee93a87b8ecad2037f0b

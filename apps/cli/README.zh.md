@@ -8,7 +8,7 @@
 
 | 命令 | 用途 |
 |---|---|
-| `nomix --profile <name>` | 启动位于 `$DSH_HOME/profiles/<name>` 的指定 profile。 |
+| `nomix --profile <name>` | 启动位于 `$NOMIX_HOME/profiles/<name>` 的指定 profile。 |
 | `nomix --profile headless "job"` | 运行一个全新的持久化会话，打印最终答案并退出。 |
 | `nomix web` | `--profile web` 的别名。 |
 | `nomix plugin --profile <name> <pnpm args>` | 通过在 profile 目录中转发给 pnpm 来管理该 profile 的插件。 |
@@ -24,26 +24,26 @@ npx --yes --package @nomix-ai/nomix-harness@0.1.2 nomix --profile headless "task
 
 ## 应用参数
 
-启动器只解析自身的 flag，并将其后的所有内容交给已启动的 profile；注入该 profile 的任意应用插件都可以解析这份共享的不可变快照（[`dsh-cmdline`](../../packages/boot/cmdline/README.md)）。因此，启动器的 flag 必须写在最前面；启动器无法识别的第一个 token 标志着应用参数的开始：
+启动器只解析自身的 flag，并将其后的所有内容交给已启动的 profile；注入该 profile 的任意应用插件都可以解析这份共享的不可变快照（[`nomix-cmdline`](../../packages/boot/cmdline/README.md)）。因此，启动器的 flag 必须写在最前面；启动器无法识别的第一个 token 标志着应用参数的开始：
 
 ```sh
 nomix --profile web --port 8080       # --port belongs to the web app
 nomix --profile tui --resume <id>     # example, assuming the tui profile is installed; --resume belongs to the terminal app
 nomix --profile headless "run the tests"
 nomix --profile web --help            # the web app's flags, not the launcher's
-dsh --help                          # the launcher's own help
+nomix --help                          # the launcher's own help
 ```
 
 ## Profile
 
-profile 目录包含一个 `package.json`，其中记录树外插件依赖，以及 profile manifest（元数据清单）`dsh.profile` 和其中按顺序排列的 `bundles` 列表；还包含一个 `cordis.patch.yml`，其中保存用户自己的 patch 层。
+profile 目录包含一个 `package.json`，其中记录树外插件依赖，以及 profile manifest（元数据清单）`nomix.profile` 和其中按顺序排列的 `bundles` 列表；还包含一个 `cordis.patch.yml`，其中保存用户自己的 patch 层。
 
 配置树以空根为起点，依次叠加以下配置层：
-- `dsh.profile.bundles` 中各组合包的 patch
-- profile 自身的 `cordis.patch.yml`，然后是 home 级的 `$DSH_HOME/cordis.patch.yml`
+- `nomix.profile.bundles` 中各组合包的 patch
+- profile 自身的 `cordis.patch.yml`，然后是 home 级的 `$NOMIX_HOME/cordis.patch.yml`
 - `--patch` 指定的覆盖层
 
-`dsh.profile.bundles` 中列出的组合包先从 dsh 安装目录解析（`@nomix-ai/nomix-base`、`@nomix-ai/nomix-web-app`、`@nomix-ai/nomix-headless`），再从 profile 自身的 `node_modules` 解析；pnpm 会将树外插件安装到该目录。
+`nomix.profile.bundles` 中列出的组合包先从 nomix 安装目录解析（`@nomix-ai/nomix-base`、`@nomix-ai/nomix-web-app`、`@nomix-ai/nomix-headless`），再从 profile 自身的 `node_modules` 解析；pnpm 会将树外插件安装到该目录。
 
 使用 `--dump-default-config` 和 `--dump-config` 可在不启动的情况下检查组合后的配置树。
 

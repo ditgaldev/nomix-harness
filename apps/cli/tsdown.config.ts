@@ -20,7 +20,15 @@ export default defineConfig([
   { ...common, entry: ['lib/types/bin.js'] },
   {
     ...common,
-    entry: ['lib/types/install-runtime.js'],
-    deps: { alwaysBundle: ['tar'] },
+    entry: [
+      'lib/types/index.js',
+      'lib/types/config.js',
+      'lib/types/public-plugin.js',
+      'lib/types/plugins.js',
+      'lib/types/bundles.js',
+      'lib/types/runtime.js',
+      'lib/types/sdk.js',
+      'lib/types/testing.js',
+    ],
   },
 ])

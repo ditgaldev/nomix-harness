@@ -18,13 +18,13 @@ export default clientOnly([{
   dts: false,
   clean: false,
   plugins: [{
-    name: 'dsh-css-stub',
+    name: 'nomix-css-stub',
     resolveId(source: string) {
       if (!source.endsWith('.css')) return null
-      return `\0dsh-css-stub:${source}.mjs`
+      return `\0nomix-css-stub:${source}.mjs`
     },
     load(id: string) {
-      if (!id.startsWith('\0dsh-css-stub:')) return null
+      if (!id.startsWith('\0nomix-css-stub:')) return null
       return 'export default {};'
     },
   }],

@@ -2,7 +2,7 @@
  * Provider-owned request-retry policy configuration and resolution.
  *
  * Adapters expose one resolved policy per registered provider route; the
- * optional dsh-llm-retry plugin executes it on the agent's failed-step extension point.
+ * optional nomix-llm-retry plugin executes it on the agent's failed-step extension point.
  *
  * @module @nomix-ai/nomix-llm/retry-policy
  */

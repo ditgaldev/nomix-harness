@@ -1,4 +1,4 @@
-# The dsh-base bundle patch: the shared core of every dsh profile, applied as
+# The nomix-base bundle patch: the shared core of every nomix profile, applied as
 # ONE insert over the empty profile root. Later bundle patches and the user's
 # profile cordis.patch.yml address these rows by id, with the last write
 # winning per row.
@@ -63,8 +63,8 @@
     - id: agent-default-model
       name: '@nomix-ai/nomix-agent-default-model'
       config:
-        provider: deepseek-official
-        model: deepseek-v4-flash
+        provider: unconfigured
+        model: unconfigured
 
     - id: jobs
       name: '@nomix-ai/nomix-jobs-local'
@@ -72,14 +72,13 @@
     - id: llm-retry
       name: '@nomix-ai/nomix-llm-retry'
 
-    # User-settings document (`$DSH_HOME/settings.yaml`, hot-reloaded): a
-    # `llm-deepseek:` or `llm-pi-ai:` section there overrides the adapter entries
-    # below without a restart, and is what the web Models page writes.
+    # User-settings document (`$NOMIX_HOME/settings.yaml`, hot-reloaded):
+    # provider sections override explicitly registered adapters without a restart.
     - id: settings
       name: '@nomix-ai/nomix-settings-file'
 
     # Credential sources: inherited environment over the managed
-    # `$DSH_HOME/.credentials.yaml`, with project and user `.env` fallbacks.
+    # `$NOMIX_HOME/.credentials.yaml`, with project and user `.env` fallbacks.
     # Adapters resolve references per request; the Models page writes only the
     # managed document, which is never materialized into the process environment.
     - id: credentials
@@ -98,7 +97,7 @@
     - id: session-persistence-jsonl
       name: '@nomix-ai/nomix-session-persistence-jsonl'
       config:
-        root: !!js dshHomePath('sessions')
+        root: !!js nomixHomePath('sessions')
 
     # Durable image bytes live outside the append-only session log. Messages
     # keep content-addressed references that this shared backend resolves for
@@ -126,15 +125,15 @@
     - id: session-projection
       name: '@nomix-ai/nomix-session-projection'
 
-    # Session telemetry is mounted but disabled by default. DSH_TELEMETRY_MODE
+    # Session telemetry is mounted but disabled by default. NOMIX_TELEMETRY_MODE
     # explicitly opts into FULL or FEEDBACK_ONLY reporting; uploading mirrors
     # session-log records onto OTLP/HTTP logs with no session-telemetry/record redaction
     # rule, so exports are the raw captured copy. The deployment stance, env
     # seams, and follow-ups are pinned in the default-off Agent Note.
-    # DSH_TELEMETRY_OTLP_URL overrides the production endpoint. A non-empty
-    # DSH_TELEMETRY_DISABLED — any value, including '0'/'false' — opts the
+    # NOMIX_TELEMETRY_OTLP_URL overrides the production endpoint. A non-empty
+    # NOMIX_TELEMETRY_DISABLED — any value, including '0'/'false' — opts the
     # process out (the launchers patch the row disabled; config cannot disable
-    # a row). Exports carry the harness home's anonymous user id ($DSH_HOME/.anonymous-user-id,
+    # a row). Exports carry the harness home's anonymous user id ($NOMIX_HOME/.anonymous-user-id,
     # random UUID; delete the file to reset the identity) as the Resource's
     # user.id. The exporter/processor values normally bound the shutdown drain
     # to ~1s against an unreachable collector: exporter.timeoutMillis is both
@@ -148,12 +147,8 @@
     - id: session-telemetry-otel
       name: '@nomix-ai/nomix-session-telemetry-otel'
       config:
-        mode: !!js process.env.DSH_TELEMETRY_MODE || 'DISABLED'
+        mode: !!js process.env.NOMIX_TELEMETRY_MODE || 'DISABLED'
         shutdownTimeoutMillis: 3000
-        exporter:
-          url: !!js process.env.DSH_TELEMETRY_OTLP_URL ?? 'https://harness-telemetry.deepseeksvc.com/v1/logs'
-          compression: gzip
-          timeoutMillis: 1000
         processor:
           scheduledDelayMillis: 10000
           maxQueueSize: 2048
@@ -172,7 +167,7 @@
     - id: sandbox-policy
       name: '@nomix-ai/nomix-sandbox-policy'
       config:
-        mode: !!js process.env.DSH_PERMISSION_MODE ?? 'workspace-write'
+        mode: !!js process.env.NOMIX_PERMISSION_MODE ?? 'workspace-write'
         workspaceRoot: !!js process.cwd()
 
     - id: bash-sandbox
@@ -188,7 +183,7 @@
     - id: approval
       name: '@nomix-ai/nomix-user-approval'
       config:
-        policy: !!js "(process.env.DSH_PERMISSION_MODE ?? 'workspace-write') === 'danger-full-access' ? 'never' : 'ask'"
+        policy: !!js "(process.env.NOMIX_PERMISSION_MODE ?? 'workspace-write') === 'danger-full-access' ? 'never' : 'ask'"
 
     - id: permission
       name: '@nomix-ai/nomix-permission-presets'
@@ -393,23 +388,10 @@
         thresholds: [3, 5, 8]
         argumentsPreviewChars: 500
 
-    # Every mode enables the stable model-facing web_search tool. DeepSeek search
-    # resolves the same DEEPSEEK_API_KEY credential the Models page manages for
-    # chat, at each search; its Messages endpoint is separate from the
-    # chat-completions endpoint, so it takes its own base-URL override. Fetch stays
-    # disabled and no fetch provider is mounted: that provider defers SSRF
-    # protection and the model would choose the request target. Search is a full
-    # auxiliary model request with server-side retrieval, so this shipped DeepSeek
-    # route gets 60s while the provider-neutral tool default remains 30s.
+    # The base exposes the provider-neutral web tool without selecting a search
+    # provider. Deployments register and select a provider explicitly.
     - id: web
       name: '@nomix-ai/nomix-web'
-      config:
-        searchProvider: deepseek-official
-
-    - id: web-search-deepseek
-      name: '@nomix-ai/nomix-web-search-deepseek'
-      config:
-        apiKeyEnv: DEEPSEEK_API_KEY
 
     - id: tool-web
       name: '@nomix-ai/nomix-tool-web'
@@ -442,10 +424,3 @@
     # overlay can pin another workspace.
     - id: fs-sandbox
       name: '@nomix-ai/nomix-fs-sandbox'
-
-    # The native DeepSeek adapter. No key or endpoint is inlined: both resolve per
-    # request from the `llm-deepseek:` settings section over this entry, with the
-    # key coming from the credential store below. Thinking defaults are a deployment
-    # choice.
-    - id: llm-deepseek
-      name: '@nomix-ai/nomix-llm-deepseek'

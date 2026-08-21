@@ -1,0 +1,4 @@
+interface:
+  display_name: "NOMIX Documentation Site Sync"
+  short_description: "Publish repository docs through the NOMIX website manifest"
+  default_prompt: "Use $nomix-doc-site-sync to publish or update a Nomix Harness documentation page on the website."

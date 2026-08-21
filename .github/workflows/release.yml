@@ -1,49 +1,27 @@
-# Pack and publish Nomix as one portable CLI package. Product packages remain on
-# one source version, while the CLI tarball bundles their production dependency
-# tree. The vendored framework and native packages keep separate release lines.
-#
-# Pack runs without credentials on every pull request and master push, so a
-# pull request proves the portable artifact still packs. Publication is a
-# manual dispatch from a nomix-v* tag and consumes exactly the packed bytes.
 name: Release (Nomix)
 
 on:
   pull_request:
   push:
     branches: [master]
-  workflow_dispatch:
-    inputs:
-      publish:
-        description: Publish the packed tarballs to npm. Must run from a nomix-v* tag.
-        required: true
-        type: boolean
-        default: false
-      repair_access:
-        description: Reapply public npm access without packing or publishing.
-        required: true
-        type: boolean
-        default: false
+    tags: ['nomix-v*']
 
 permissions:
   contents: read
 
 concurrency:
-  # Pack runs per ref so concurrent pull requests never displace each
-  # other; the publish job below serializes the shared dist-tag state.
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 
 env:
   PRIMARY_NODE_VERSION: '24'
-  DSH_TELEMETRY_DISABLED: '1'
+  NOMIX_TELEMETRY_DISABLED: '1'
 
 jobs:
   pack:
-    name: Pack npm tarballs
-    if: ${{ !inputs.repair_access }}
+    name: Build and pack npm artifact
     runs-on: ubuntu-24.04
     steps:
-      # Complete history: the release scripts read tags.
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
@@ -57,37 +35,28 @@ jobs:
         with:
           node-version: ${{ env.PRIMARY_NODE_VERSION }}
 
-      - name: Configure pnpm store path
-        id: pnpm-store
-        run: |
-          store_root="$HOME/.local/share/pnpm/store"
-          echo "PNPM_CONFIG_STORE_DIR=$store_root" >> "$GITHUB_ENV"
-          store_path=$(PNPM_CONFIG_STORE_DIR="$store_root" pnpm store path --silent)
-          echo "path=$store_path" >> "$GITHUB_OUTPUT"
-
-      - uses: actions/cache/restore@v4
-        with:
-          path: ${{ steps.pnpm-store.outputs.path }}
-          key: ${{ runner.os }}-node-${{ env.PRIMARY_NODE_VERSION }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ env.PRIMARY_NODE_VERSION }}-pnpm-
+      - name: Use the trusted-publishing npm client
+        run: npm install --global npm@12.0.2
 
       - name: Install (immutable)
         run: pnpm install --frozen-lockfile
 
       - name: Verify release version
         env:
-          RELEASE_PUBLISH: ${{ inputs.publish }}
-        run: pnpm run release:verify --family dsh
+          RELEASE_PUBLISH: ${{ startsWith(github.ref, 'refs/tags/nomix-v') && 'true' || 'false' }}
+        run: pnpm run release:verify --family nomix
 
-      - name: Build
+      - name: Verify Nomix branding
+        run: pnpm run verify-nomix-branding
+
+      - name: Build workspaces and native npm distribution
         run: pnpm run build
 
-      - name: Pack release tarballs
-        run: pnpm run release:pack --family dsh --out dist/npm
+      - name: Pack release tarball
+        run: pnpm run release:pack --family nomix --out dist/npm
 
-      - name: Verify packed install
-        run: node scripts/release/verify-packed-install.ts --family dsh --from dist/npm
+      - name: Verify Linux packed install
+        run: pnpm run release:verify-packed-install --family nomix --from dist/npm
 
       - uses: actions/upload-artifact@v4
         with:
@@ -108,7 +77,7 @@ jobs:
           - name: macOS
             os: macos-15
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v6
         with:
@@ -123,33 +92,51 @@ jobs:
           name: nomix-npm-tarballs
           path: dist/npm
 
-      - name: Verify packed install and Web application load
-        run: node scripts/release/verify-packed-install.ts --family dsh --from dist/npm
+      - name: Verify script-free packed install
+        run: node scripts/release/verify-packed-install.ts --family nomix --from dist/npm
+
+  verify-consumer:
+    name: Verify ${{ matrix.manager }} consumer
+    needs: pack
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        manager: [npm, pnpm, yarn]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@v4
+        with:
+          dest: ${{ runner.temp }}/setup-pnpm
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.PRIMARY_NODE_VERSION }}
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: nomix-npm-tarballs
+          path: dist/npm
+
+      - name: Verify script-free consumer install
+        run: node scripts/release/verify-packed-install.ts --family nomix --from dist/npm --manager ${{ matrix.manager }}
 
   publish:
-    name: Publish to npm
-    if: inputs.publish
-    needs: [pack, verify-platform]
+    name: Publish npm package with provenance
+    if: startsWith(github.ref, 'refs/tags/nomix-v')
+    needs: [pack, verify-platform, verify-consumer]
     runs-on: ubuntu-24.04
-    # Required reviewers and the allowed tags live on the environment; this is
-    # the only step in the sequence that can write to the registry.
     environment: npm-publish
     concurrency:
       group: Release-publish
       cancel-in-progress: false
     permissions:
       contents: read
-    env:
-      # The public registry rate-limits a new scope publishing hundreds of
-      # packages. Four writes per minute plus long E429 backoff keeps this
-      # release resumable without hammering the registry.
-      NOMIX_NPM_PUBLISH_ATTEMPTS: '8'
-      NOMIX_NPM_PUBLISH_SPACING_MS: '20000'
-      NOMIX_NPM_PUBLISH_RETRY_BASE_MS: '120000'
-      NOMIX_NPM_PUBLISH_RETRY_MAX_MS: '600000'
+      id-token: write
     steps:
-      # Checkout and install carry the release scripts only. There is no build
-      # step: publication uploads the bytes the pack job produced.
       - uses: actions/checkout@v6
         with:
           persist-credentials: false
@@ -163,12 +150,10 @@ jobs:
           node-version: ${{ env.PRIMARY_NODE_VERSION }}
           registry-url: https://registry.npmjs.org
 
-      - name: Verify npm credentials
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm whoami --registry https://registry.npmjs.org
+      - name: Use the trusted-publishing npm client
+        run: npm install --global npm@12.0.2
 
-      - name: Install (immutable, no package scripts)
+      - name: Install release scripts only
         run: pnpm install --frozen-lockfile --ignore-scripts
 
       - uses: actions/download-artifact@v4
@@ -176,57 +161,31 @@ jobs:
           name: nomix-npm-tarballs
           path: dist/npm
 
-      - name: Publish tarballs
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: pnpm run release:publish --family dsh --from dist/npm
+      - name: Publish exact packed bytes
+        run: pnpm run release:publish --family nomix --from dist/npm
 
-      - name: Verify anonymous registry metadata
+      - name: Verify version, latest, integrity, and provenance
         shell: bash
         run: |
-          for attempt in {1..12}; do
-            if NPM_CONFIG_USERCONFIG=/dev/null npm view @nomix-ai/nomix-harness version --registry https://registry.npmjs.org >/dev/null 2>&1; then
-              NPM_CONFIG_USERCONFIG=/dev/null npm view @nomix-ai/nomix-harness version --registry https://registry.npmjs.org
-              exit 0
+          version="${GITHUB_REF_NAME#nomix-v}"
+          for attempt in {1..18}; do
+            published=$(npm view @nomix-ai/nomix-harness version --registry https://registry.npmjs.org 2>/dev/null || true)
+            latest=$(npm view @nomix-ai/nomix-harness dist-tags.latest --registry https://registry.npmjs.org 2>/dev/null || true)
+            integrity=$(npm view "@nomix-ai/nomix-harness@$version" dist.integrity --registry https://registry.npmjs.org 2>/dev/null || true)
+            attestation=$(npm view "@nomix-ai/nomix-harness@$version" dist.attestations.url --registry https://registry.npmjs.org 2>/dev/null || true)
+            if [[ "$published" == "$version" && "$latest" == "$version" && -n "$integrity" && -n "$attestation" ]]; then
+              break
             fi
             sleep 10
           done
-          NPM_CONFIG_USERCONFIG=/dev/null npm view @nomix-ai/nomix-harness version --registry https://registry.npmjs.org
+          if [[ "$published" != "$version" || "$latest" != "$version" || -z "$integrity" || -z "$attestation" ]]; then
+            printf 'registry verification failed: version=%s latest=%s integrity=%s attestation=%s\n' "$published" "$latest" "$integrity" "$attestation" >&2
+            exit 1
+          fi
 
-  repair-access:
-    name: Repair public npm access
-    if: inputs.repair_access
-    runs-on: ubuntu-24.04
-    environment: npm-publish
-    concurrency:
-      group: Release-publish
-      cancel-in-progress: false
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/setup-node@v6
-        with:
-          node-version: ${{ env.PRIMARY_NODE_VERSION }}
-          registry-url: https://registry.npmjs.org
-
-      - name: Verify npm credentials
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm whoami --registry https://registry.npmjs.org
-
-      - name: Set package access to public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm access set status=public @nomix-ai/nomix-harness --registry https://registry.npmjs.org
-
-      - name: Verify anonymous registry metadata
-        shell: bash
-        run: |
-          for attempt in {1..12}; do
-            if NPM_CONFIG_USERCONFIG=/dev/null npm view @nomix-ai/nomix-harness version --registry https://registry.npmjs.org >/dev/null 2>&1; then
-              NPM_CONFIG_USERCONFIG=/dev/null npm view @nomix-ai/nomix-harness version --registry https://registry.npmjs.org
-              exit 0
-            fi
-            sleep 10
-          done
-          NPM_CONFIG_USERCONFIG=/dev/null npm view @nomix-ai/nomix-harness version --registry https://registry.npmjs.org
+          audit_dir=$(mktemp -d)
+          cd "$audit_dir"
+          npm init --yes >/dev/null
+          npm install --ignore-scripts --save-exact "@nomix-ai/nomix-harness@$version"
+          npm audit signatures
+          printf 'verified %s latest=%s integrity=%s attestation=%s\n' "$published" "$latest" "$integrity" "$attestation"

@@ -1,13 +1,13 @@
 /**
  * Generic-task adaptation for background pwsh process handles — the shell-agnostic
- * twin of `dsh-tool-bash`'s background adaptation.
+ * twin of `nomix-tool-bash`'s background adaptation.
  *
  * @module @nomix-ai/nomix-tool-pwsh/background
  */
 
 import type { ShellProcess } from '@nomix-ai/nomix-shell'
 
-/* jscpd:ignore-start -- deliberate twin of dsh-tool-bash/background.ts (Agent Note). */
+/* jscpd:ignore-start -- deliberate twin of nomix-tool-bash/background.ts (Agent Note). */
 
 /**
  * Map a settled background process onto the generic task-outcome vocabulary:

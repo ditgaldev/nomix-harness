@@ -6,9 +6,9 @@ Status: implemented
 
 ## 问题
 
-`dsh` 交付了两棵完整的配置树，其中有 43 个共享配置项。`apps/cli/cordis.yml` 以 74 个平铺配置项组合 web surface，而 TUI 启动的是 `examples/tui-agent/cordis.yml`——其中单独一行 `@nomix-ai/nomix-tui-demo` 挂载了十二个插件，并把它们的配置重新声明为自己那份二十个键、仅作透传的 `Config`。
+`nomix` 交付了两棵完整的配置树，其中有 43 个共享配置项。`apps/cli/cordis.yml` 以 74 个平铺配置项组合 web surface，而 TUI 启动的是 `examples/tui-agent/cordis.yml`——其中单独一行 `@nomix-ai/nomix-tui-demo` 挂载了十二个插件，并把它们的配置重新声明为自己那份二十个键、仅作透传的 `Config`。
 
-这两份文件都名不副实。`examples/tui-agent` 并不是示例：`apps/cli/src/tui.ts` 把它硬编码为产品的默认配置；它还拥有 TUI 的 PTY 冒烟测试、八个终端快照场景，以及被 `cordis-agent` 叶节点 import 的 PTY harness。`dsh-tui-demo` 也不是 demo——它就是应用本身，由交付的二进制从 `packages/examples/` 中挂载。
+这两份文件都名不副实。`examples/tui-agent` 并不是示例：`apps/cli/src/tui.ts` 把它硬编码为产品的默认配置；它还拥有 TUI 的 PTY 冒烟测试、八个终端快照场景，以及被 `cordis-agent` 叶节点 import 的 PTY harness。`nomix-tui-demo` 也不是 demo——它就是应用本身，由交付的二进制从 `packages/examples/` 中挂载。
 
 真正决定性的问题是重复。43 个共享配置项中，38 个逐字节相同，5 个因各 surface 的正当理由而不同；因此每次能力改动都必须改两处，而且可能无声漂移。该组合包还反转了一个默认值：`composeTuiApp` 读取 `config.goals ?? {}`，于是交付的 TUI 挂载了 goals、`tool-goal`、`goal-round-driver` 和 `/goal`——尽管没有任何配置键要求它们。
 
@@ -18,11 +18,11 @@ Status: implemented
 
 `apps/cli/config/base.cordis.yml` 持有两个 surface 都会挂载的 43 个配置项。`apps/cli/config/tui.cordis.yml` 与 `apps/cli/config/web.cordis.yml` 是 **patch 列表**，不是配置树：各自声明少数取值因 surface 而异的配置项，并 insert 自己的配置项。启动器只 include base 一次，并把每个 overlay 作为**同一** include 层级上的平级 patch 列表应用——因为 include patch 不会跨越 include 边界，把 overlay 堆叠成嵌套 include 会使其静默地无法触达 base 配置项。
 
-优先级即列表顺序，逐配置项后写者胜：base，然后是 surface overlay，接着是 `--config` overlay 或个人 `~/.dsh/config.yaml`，最后是启动器自身的 flag 与 profile patch。
+优先级即列表顺序，逐配置项后写者胜：base，然后是 surface overlay，接着是 `--config` overlay 或个人 `~/.nomix/config.yaml`，最后是启动器自身的 flag 与 profile patch。
 
 `--config <path>` 现在应用一个 overlay 来**取代**个人 overlay，因此 demo 或测试用的树绝不会继承用户的提供方与 model。`--config-replace <path>` 则把某个文件作为整棵树启动，同时绕过 base、surface overlay 与个人 overlay；这正是旧 `--config` 的行为，所以像 `examples/web-cordis` 这样的树改用了新 flag。两个 flag 都会在 `/resume` 的 execve 交接中保留，否则恢复时会静默更换 agent（智能体）。
 
-patch 会整体替换目标配置项的 `config` 而不合并。因此，取值因 surface 而异的配置项住在 overlay 中，绝不住在 base 里，从而没有任何配置项会被三层同时 patch。会话身份根本不能经由配置键传递——它迁移到了 `dsh-agent-loop` 的 `CONFIGURED_AGENT_IDENTITIES_KEY`，正如启动器持有身份的记录所述。
+patch 会整体替换目标配置项的 `config` 而不合并。因此，取值因 surface 而异的配置项住在 overlay 中，绝不住在 base 里，从而没有任何配置项会被三层同时 patch。会话身份根本不能经由配置键传递——它迁移到了 `nomix-agent-loop` 的 `CONFIGURED_AGENT_IDENTITIES_KEY`，正如启动器持有身份的记录所述。
 
 `examples/tui-agent`、`examples/cordis-agent`、`examples/code-mode` 与 `packages/examples/tui-demo` 均被删除。TUI 测试迁往 `apps/cli/tests/`，cordis 工具集的 e2e 迁入 `packages/extensions/tool-cordis/tests/`，受支持的 Code Mode demo 则保留为 `examples/acp-agent/code-mode.cordis.yml` 中的 ACP（Agent Client Protocol）overlay。
 

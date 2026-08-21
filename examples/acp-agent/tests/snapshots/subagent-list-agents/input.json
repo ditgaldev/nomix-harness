@@ -12,7 +12,7 @@
     },
     {
       "op": "waitForFile",
-      "path": ".dsh-snapshot-subagent-settled"
+      "path": ".nomix-snapshot-subagent-settled"
     },
     {
       "op": "waitForTurnStart",

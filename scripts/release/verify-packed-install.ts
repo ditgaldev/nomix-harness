@@ -1,16 +1,15 @@
 /**
- * Install a packed CLI once and execute its local bin through npm exec in a
- * throwaway consumer outside the repository.
+ * Install a packed CLI without lifecycle scripts and execute its local bin through a supported
+ * package manager in a throwaway consumer outside the repository.
  *
  * Every registry package the installed tree owns comes from `--from`. For the
- * dsh family that is one portable CLI tarball whose bundled production tree
- * restores the product and vendored workspace packages from its compressed
- * runtime during installation; verification therefore does not depend on
- * those internal package names existing in the registry
+ * nomix family that is one native ESM tarball whose dist tree already contains
+ * the internal product runtime; verification therefore does not depend on
+ * install scripts or internal package names existing in the registry
  * ([rationale](../../.agents/notes/implemented/process/2026-08-10-npm-release-sequences.md)).
  *
- * What this proves is that npm installs the entry, its lifecycle restores the
- * compressed runtime, and npm exec resolves its command. A workspace link or
+ * What this proves is that a supported package manager installs the entry with scripts disabled
+ * and resolves its command. A workspace link or
  * stale `lib/` in the checkout cannot stand in for a missing file here.
  */
 
@@ -24,8 +23,8 @@ import { capture, isEntry, run } from './process.ts'
 import { packedIdentity } from './tarball.ts'
 
 /**
- * Environment for the installed artifact: no host Node hooks, no host DeepSeek
- * Harness home, and no ambient npm user agent that would confuse npm.
+ * Environment for the installed artifact: no host Node hooks, no host Nomix home, and no ambient
+ * package-manager user agent that would confuse the install.
  * @param consumerRoot - the throwaway consumer directory.
  * @returns The child environment.
  */
@@ -35,9 +34,9 @@ function consumerEnvironment(consumerRoot: string): NodeJS.ProcessEnv {
   delete environment.NPM_CONFIG_USER_AGENT
   delete environment.NODE_OPTIONS
   delete environment.NODE_PATH
-  environment.DSH_HOME = resolve(consumerRoot, '.dsh')
-  environment.DSH_AGENTS_HOME = resolve(consumerRoot, '.agents')
-  environment.DSH_TELEMETRY_DISABLED = '1'
+  environment.NOMIX_HOME = resolve(consumerRoot, '.nomix')
+  environment.NOMIX_AGENTS_HOME = resolve(consumerRoot, '.agents')
+  environment.NOMIX_TELEMETRY_DISABLED = '1'
   return environment
 }
 
@@ -64,16 +63,51 @@ function packedDependencies(directories: readonly string[]): Map<string, { url: 
   return dependencies
 }
 
+type PackageManager = 'npm' | 'pnpm' | 'yarn'
+
+function packageManager(value: string | undefined): PackageManager {
+  if (value === undefined || value === 'npm') return 'npm'
+  if (value === 'pnpm' || value === 'yarn') return value
+  throw new Error(`unsupported package manager ${value}; expected npm, pnpm, or yarn`)
+}
+
+function install(manager: PackageManager, cwd: string, environment: NodeJS.ProcessEnv): void {
+  if (manager === 'npm') {
+    run('npm', ['install', '--ignore-scripts', '--no-audit', '--no-fund'], { cwd, env: environment })
+  } else if (manager === 'pnpm') {
+    run('pnpm', ['install', '--ignore-scripts', '--no-frozen-lockfile'], { cwd, env: environment })
+  } else {
+    run('corepack', ['yarn', 'install', '--mode=skip-builds'], { cwd, env: environment })
+  }
+}
+
+function execute(
+  manager: PackageManager,
+  command: string,
+  args: readonly string[],
+  cwd: string,
+  environment: NodeJS.ProcessEnv,
+): string {
+  if (manager === 'npm') return capture('npm', ['exec', '--offline', '--', command, ...args], { cwd, env: environment })
+  if (manager === 'pnpm') return capture('pnpm', ['exec', command, ...args], { cwd, env: environment })
+  return capture('corepack', ['yarn', 'exec', command, ...args], { cwd, env: environment })
+}
+
 /** Install every tarball under `--from` and drive the `--family` entry. */
 function main(): void {
   const { values } = parseArgs({
-    options: { family: { type: 'string' }, from: { type: 'string', multiple: true } },
+    options: {
+      family: { type: 'string' },
+      from: { type: 'string', multiple: true },
+      manager: { type: 'string' },
+    },
     allowPositionals: false,
   })
   if (values.family === undefined || values.from === undefined || values.from.length === 0) {
-    throw new Error('usage: verify-packed-install.ts --family <dsh|vendor> --from <packed directory> [--from ...]')
+    throw new Error('usage: verify-packed-install.ts --family <nomix|vendor> --from <packed directory> [--from ...]')
   }
 
+  const manager = packageManager(values.manager)
   const family = releaseFamily(values.family)
   const entry = family.installedEntry
   if (entry === undefined) {
@@ -86,43 +120,27 @@ function main(): void {
   const expected = packed.get(entry.packageName)
   if (expected === undefined) throw new Error(`${entry.packageName} is not among the packed tarballs`)
 
-  const consumerRoot = mkdtempSync(join(tmpdir(), `dsh-packed-${family.id}-`))
+  const consumerRoot = mkdtempSync(join(tmpdir(), `nomix-packed-${family.id}-`))
   try {
     writeFileSync(join(consumerRoot, 'package.json'), `${JSON.stringify({
-      name: `dsh-packed-install-${family.id}`,
+      name: `nomix-packed-install-${family.id}`,
       version: '0.0.0',
       private: true,
+      ...(manager === 'yarn' ? { packageManager: 'yarn@4.17.1' } : {}),
       dependencies: { [entry.packageName]: expected.url },
     }, null, 2)}\n`)
 
     const environment = consumerEnvironment(consumerRoot)
-    console.log(`release verify-packed-install: installing ${expected.url} once in ${consumerRoot}`)
-    run('npm', [
-      'install',
-      '--ignore-scripts=false',
-      '--no-audit',
-      '--no-fund',
-    ], { cwd: consumerRoot, env: environment })
-    console.log(`release verify-packed-install: executing installed ${entry.command} in ${consumerRoot}`)
-    const version = capture('npm', [
-      'exec',
-      '--offline',
-      '--',
-      entry.command,
-      '--version',
-    ], { cwd: consumerRoot, env: environment })
+    console.log(`release verify-packed-install: installing ${expected.url} with ${manager} in ${consumerRoot}`)
+    install(manager, consumerRoot, environment)
+    console.log(`release verify-packed-install: executing installed ${entry.command} with ${manager} in ${consumerRoot}`)
+    const version = execute(manager, entry.command, ['--version'], consumerRoot, environment)
     if (version !== expected.version) {
       throw new Error(`installed ${entry.packageName} --version reported ${JSON.stringify(version)}, expected ${expected.version}`)
     }
     console.log(`release verify-packed-install: installed ${entry.packageName} reports ${version}`)
     if (entry.smokeArgs !== undefined) {
-      const output = capture('npm', [
-        'exec',
-        '--offline',
-        '--',
-        entry.command,
-        ...entry.smokeArgs,
-      ], { cwd: consumerRoot, env: environment })
+      const output = execute(manager, entry.command, entry.smokeArgs, consumerRoot, environment)
       if (entry.smokeOutput !== undefined && !output.includes(entry.smokeOutput)) {
         throw new Error(
           `installed ${entry.packageName} smoke output omitted ${JSON.stringify(entry.smokeOutput)}: ${JSON.stringify(output)}`,

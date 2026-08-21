@@ -144,7 +144,7 @@ export interface SessionBinding {
 }
 
 // Scope primitives live in ../agents/scope.ts (the client mirror of host
-// dsh-scope, keyed by Agent identity); re-exported here so existing
+// nomix-scope, keyed by Agent identity); re-exported here so existing
 // consumers keep their import site.
 export { scopeOf } from '../agents/scope.ts'
 
@@ -283,7 +283,7 @@ export class SessionRuntime implements ISessions {
   ) {
     this.selection = createSnapshotStore<SessionSelection>(
       {},
-      { persist: { name: 'dsh.sessions.current' } })
+      { persist: { name: 'nomix.sessions.current' } })
     const restored = this.selection.getSnapshot()
     const conversationEvents = rootCtx.get('conversationEvents')
     const conversationViews = rootCtx.get('conversationViews')

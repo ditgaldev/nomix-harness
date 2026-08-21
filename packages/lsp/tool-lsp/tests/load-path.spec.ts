@@ -9,7 +9,7 @@ import { describe, expect, it } from 'vitest'
 import Loader from '@nomix-ai/cordis-plugin-loader'
 import * as toolLsp from '@nomix-ai/nomix-tool-lsp'
 
-describe('dsh-tool-lsp Loader export-shape guard', () => {
+describe('nomix-tool-lsp Loader export-shape guard', () => {
   it('has no default export and keeps name/inject/Config through unwrapExports', () => {
     expect('default' in toolLsp).toBe(false)
 

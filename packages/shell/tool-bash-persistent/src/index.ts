@@ -61,8 +61,8 @@ function maybeTruncate(content: string, maxOutputChars: number, incomplete = fal
 function markers(): CommandMarkers {
   const nonce = randomUUID()
   return {
-    start: `__DSH_PERSISTENT_BASH_START_${nonce}__`,
-    end: `__DSH_PERSISTENT_BASH_END_${nonce}:`,
+    start: `__NOMIX_PERSISTENT_BASH_START_${nonce}__`,
+    end: `__NOMIX_PERSISTENT_BASH_END_${nonce}:`,
   }
 }
 
@@ -78,7 +78,7 @@ function wrapCommand(command: string, marker: CommandMarkers): string {
   // Keep the wrapper on one physical line. An interactive bash prints PS2 for
   // embedded newlines before executing the buffer, which would leak terminal
   // prompts and marker source text into the model-facing result.
-  return `printf '%s\\n' ${quoteForBash(marker.start)}; eval -- ${quoteForBash(command)}; __dsh_persistent_bash_status=$?; printf '%s%s\\n' ${quoteForBash(marker.end)} "$__dsh_persistent_bash_status"`
+  return `printf '%s\\n' ${quoteForBash(marker.start)}; eval -- ${quoteForBash(command)}; __nomix_persistent_bash_status=$?; printf '%s%s\\n' ${quoteForBash(marker.end)} "$__nomix_persistent_bash_status"`
 }
 
 function trimTrailingNewline(text: string): string {

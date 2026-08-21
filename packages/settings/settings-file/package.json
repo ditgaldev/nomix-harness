@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-settings-file",
   "description": "File-backed settings provider (settings.yaml) for the Nomix Harness",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "publishConfig": {
     "access": "public"
   },

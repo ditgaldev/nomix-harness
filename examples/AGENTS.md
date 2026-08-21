@@ -15,6 +15,6 @@ Keyless process smokes use `@nomix-ai/nomix-loader-smoke` for Loader launch reso
 
 Do not inventory example tests here; the `tests/` trees and root scripts are authoritative.
 
-In `cordis.yml`, comment only non-obvious wiring, load-order consequences, replay, security boundaries, and configuration scope. Do not narrate visible entries; use [dsh-prose-standard](../.agents/skills/dsh-prose-standard/SKILL.md) for required coverage and editorial judgment.
+In `cordis.yml`, comment only non-obvious wiring, load-order consequences, replay, security boundaries, and configuration scope. Do not narrate visible entries; use [nomix-prose-standard](../.agents/skills/nomix-prose-standard/SKILL.md) for required coverage and editorial judgment.
 
 See [the root AGENTS.md](../AGENTS.md) for repo-wide conventions and [docs/architecture.md](../docs/architecture.md) for the design.

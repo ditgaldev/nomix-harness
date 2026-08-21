@@ -24,7 +24,7 @@
         name: '@nomix-ai/nomix-session-persistence-jsonl'
         config:
           root: './.sessions'
-          compression: !!js "process.env.DSH_SNAPSHOT === undefined ? 'zstd' : 'none'"
+          compression: !!js "process.env.NOMIX_SNAPSHOT === undefined ? 'zstd' : 'none'"
       - insert:
           - id: code-runtime
             name: '@nomix-ai/nomix-code-runtime-worker-thread'
