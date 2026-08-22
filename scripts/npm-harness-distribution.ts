@@ -171,8 +171,29 @@ function normalizedDependencyVersion(name: string, range: string, all: ReadonlyM
   return selector === '^' || selector === '*' ? `^${version}` : selector === '~' ? `~${version}` : selector
 }
 
-function mergeDependencyRanges(name: string, left: string | undefined, right: string): string {
+const DEPENDENCY_CONVERGENCE: Readonly<Record<string, {
+  readonly acceptedRanges: readonly string[]
+  readonly outputRange: string
+}>> = {
+  chokidar: {
+    acceptedRanges: ['^4.0.3', '^5.0.0'],
+    outputRange: '^5.0.0',
+  },
+}
+
+/**
+ * Merge external ranges for the flattened npm distribution.
+ * @param name - external dependency name.
+ * @param left - range already selected from an earlier workspace.
+ * @param right - range declared by the next workspace.
+ * @returns one range that satisfies the distribution's declared convergence policy.
+ */
+export function mergeDependencyRanges(name: string, left: string | undefined, right: string): string {
   if (left === undefined || left === right) return right
+  const convergence = DEPENDENCY_CONVERGENCE[name]
+  if (convergence !== undefined
+    && convergence.acceptedRanges.includes(left)
+    && convergence.acceptedRanges.includes(right)) return convergence.outputRange
   const parse = (range: string): { operator: '^' | '~'; parts: [number, number, number] } | undefined => {
     const match = /^(\^|~)(\d+)\.(\d+)\.(\d+)$/u.exec(range)
     return match === null
