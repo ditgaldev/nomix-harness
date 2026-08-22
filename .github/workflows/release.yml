@@ -3,7 +3,7 @@ name: Release (Nomix)
 on:
   pull_request:
   push:
-    branches: [master]
+    branches: [codex/npm-native-harness]
     tags: ['nomix-v*']
 
 permissions:
