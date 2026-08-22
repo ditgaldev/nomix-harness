@@ -24,4 +24,4 @@ Tags matching `nomix-v*` publish the already verified tarball from GitHub Action
 - `npm ci --ignore-scripts` is a supported installation path.
 - The build fails when a workspace lacks a distribution classification, a required plugin is absent from the manifest, or the tarball exposes a forbidden path.
 - 0.2 is intentionally incompatible with old environment variables, profile fields, home paths, SDK type names, and Python imports.
-- Publishing still requires the repository administrator to configure the `npm-publish` environment and npm Trusted Publisher before creating the release tag.
+- Publishing requires the repository administrator to configure the `npm-publish` environment with an `NPM_TOKEN` repository secret that can publish public packages in the `@nomix-ai` scope. The publish job exposes it only as `NODE_AUTH_TOKEN`; GitHub OIDC remains enabled solely for npm provenance.

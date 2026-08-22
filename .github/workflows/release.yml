@@ -35,7 +35,7 @@ jobs:
         with:
           node-version: ${{ env.PRIMARY_NODE_VERSION }}
 
-      - name: Use the trusted-publishing npm client
+      - name: Use the pinned npm client
         run: npm install --global npm@12.0.2
 
       - name: Install (immutable)
@@ -150,7 +150,7 @@ jobs:
           node-version: ${{ env.PRIMARY_NODE_VERSION }}
           registry-url: https://registry.npmjs.org
 
-      - name: Use the trusted-publishing npm client
+      - name: Use the pinned npm client
         run: npm install --global npm@12.0.2
 
       - name: Install release scripts only
@@ -163,6 +163,8 @@ jobs:
 
       - name: Publish exact packed bytes
         run: pnpm run release:publish --family nomix --from dist/npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Verify version, latest, integrity, and provenance
         shell: bash

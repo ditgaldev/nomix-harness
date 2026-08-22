@@ -24,4 +24,4 @@
 - `npm ci --ignore-scripts` 是受支持的安装方式。
 - workspace 缺少分发分类、插件清单遗漏或 tarball 暴露禁止路径时，构建会失败。
 - 0.2 有意不兼容旧环境变量、Profile 字段、home 路径、SDK 类型名和 Python 导入。
-- 创建发布标签前，仓库管理员仍需配置 `npm-publish` Environment 和 npm Trusted Publisher。
+- 创建发布标签前，仓库管理员必须配置 `npm-publish` Environment，并添加能够向 `@nomix-ai` scope 发布公共包的 `NPM_TOKEN` Repository Secret。发布 job 只通过 `NODE_AUTH_TOKEN` 暴露该密钥；GitHub OIDC 仅用于生成 npm provenance。
