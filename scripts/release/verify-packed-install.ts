@@ -77,7 +77,7 @@ function install(manager: PackageManager, cwd: string, environment: NodeJS.Proce
   } else if (manager === 'pnpm') {
     run('pnpm', ['install', '--ignore-scripts', '--no-frozen-lockfile'], { cwd, env: environment })
   } else {
-    run('corepack', ['yarn', 'install', '--mode=skip-build'], { cwd, env: environment })
+    run('corepack', ['yarn', 'install', '--no-immutable', '--mode=skip-build'], { cwd, env: environment })
   }
 }
 
