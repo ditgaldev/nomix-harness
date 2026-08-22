@@ -216,6 +216,9 @@ importers:
       '@nomix-ai/nomix-schedule':
         specifier: workspace:^
         version: link:../../packages/schedule/schedule
+      '@nomix-ai/nomix-sdk-client':
+        specifier: workspace:^
+        version: link:../../packages/sdk/client
       '@nomix-ai/nomix-session-projection':
         specifier: workspace:^
         version: link:../../packages/session/session-projection

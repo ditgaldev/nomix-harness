@@ -78,6 +78,7 @@
     "@nomix-ai/nomix-tool-pwsh": "workspace:^",
     "@nomix-ai/nomix-tool-ralph": "workspace:^",
     "@nomix-ai/nomix-schedule": "workspace:^",
+    "@nomix-ai/nomix-sdk-client": "workspace:^",
     "@nomix-ai/nomix-tool-skill": "workspace:^",
     "@nomix-ai/nomix-tool-str-replace-editor": "workspace:^",
     "@nomix-ai/nomix-tool-subagent": "workspace:^",
