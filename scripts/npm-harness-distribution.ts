@@ -132,6 +132,18 @@ export function publishableArtifactPath(path: string): boolean {
     && !/(^|\/)README(?:\.|$)/iu.test(normalized)
 }
 
+/**
+ * Retarget a built CLI package anchor after moving the module under dist/cli.
+ * @param contents - compiled CLI module text.
+ * @returns module text whose package anchor resolves the public package root.
+ */
+export function rewriteHarnessPackageAnchor(contents: string): string {
+  return contents.replace(
+    /new URL\((['"])\.\.\/package\.json\1, import\.meta\.url\)/gu,
+    (_match, quote: string) => `new URL(${quote}../../package.json${quote}, import.meta.url)`,
+  )
+}
+
 function rewriteInternalImports(
   path: string,
   owner: WorkspacePackage,
@@ -149,7 +161,7 @@ function rewriteInternalImports(
     return `${quote}${specifier}${quote}`
   })
   if (owner.name === '@nomix-ai/nomix-harness') {
-    contents = contents.replaceAll("new URL('../package.json', import.meta.url)", "new URL('../../package.json', import.meta.url)")
+    contents = rewriteHarnessPackageAnchor(contents)
   }
   writeFileSync(path, contents)
 }
