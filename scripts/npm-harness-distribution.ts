@@ -144,6 +144,25 @@ export function rewriteHarnessPackageAnchor(contents: string): string {
   )
 }
 
+/**
+ * Rewrite only JavaScript/TypeScript module specifiers, leaving product data strings unchanged.
+ * @param contents - compiled JavaScript or declaration text.
+ * @param resolveSpecifier - maps one internal package name and optional subpath to its package-relative target.
+ * @returns text with static imports, dynamic imports, and require calls rewritten.
+ */
+export function rewriteInternalModuleSpecifiers(
+  contents: string,
+  resolveSpecifier: (name: string, subpath: string) => string | undefined,
+): string {
+  return contents.replace(
+    /(\bfrom\s+|\bimport\s*\(\s*|\brequire\s*\(\s*|\bimport\s+)(['"])(@nomix-ai\/[^/'"]+)(?:\/([^'"]+))?\2/gu,
+    (match, prefix: string, quote: string, name: string, subpath = '') => {
+      const replacement = resolveSpecifier(name, subpath)
+      return replacement === undefined ? match : `${prefix}${quote}${replacement}${quote}`
+    },
+  )
+}
+
 function rewriteInternalImports(
   path: string,
   owner: WorkspacePackage,
@@ -152,13 +171,13 @@ function rewriteInternalImports(
 ): void {
   if (!textFile(path)) return
   let contents = readFileSync(path, 'utf8')
-  contents = contents.replace(/(['"])(@nomix-ai\/[^/'"]+)(?:\/([^'"]+))?\1/gu, (match, quote: string, name: string, subpath = '') => {
+  contents = rewriteInternalModuleSpecifiers(contents, (name, subpath) => {
     const target = internal.get(name)
-    if (target === undefined) return match
+    if (target === undefined) return undefined
     const targetPath = join(destinationRoot, 'dist', 'kernel', target.id, exportTarget(target.manifest, subpath))
     let specifier = relative(dirname(path), targetPath).split(sep).join('/')
     if (!specifier.startsWith('.')) specifier = `./${specifier}`
-    return `${quote}${specifier}${quote}`
+    return specifier
   })
   if (owner.name === '@nomix-ai/nomix-harness') {
     contents = rewriteHarnessPackageAnchor(contents)

@@ -4,6 +4,7 @@ import {
   mergeDependencyRanges,
   publishableArtifactPath,
   rewriteHarnessPackageAnchor,
+  rewriteInternalModuleSpecifiers,
 } from './npm-harness-distribution.ts'
 
 describe('npm Harness workspace classification', () => {
@@ -47,5 +48,19 @@ describe('npm Harness artifact filtering', () => {
       .toBe("new URL('../../package.json', import.meta.url)")
     expect(rewriteHarnessPackageAnchor('new URL("../package.json", import.meta.url)'))
       .toBe('new URL("../../package.json", import.meta.url)')
+  })
+
+  it('rewrites module specifiers without changing package-name data', () => {
+    const source = [
+      'import value from \'@nomix-ai/nomix-example\'',
+      'const lazy = import(\'@nomix-ai/nomix-example/subpath\')',
+      'const profile = [\'@nomix-ai/nomix-example\']',
+    ].join('\n')
+    expect(rewriteInternalModuleSpecifiers(source, (name, subpath) => `../kernel/${name.slice(16)}/${subpath || 'index.js'}`))
+      .toBe([
+        'import value from \'../kernel/example/index.js\'',
+        'const lazy = import(\'../kernel/example/subpath\')',
+        'const profile = [\'@nomix-ai/nomix-example\']',
+      ].join('\n'))
   })
 })
