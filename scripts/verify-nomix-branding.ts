@@ -39,6 +39,7 @@ function isAllowed(path: string): boolean {
     || path === 'packages/boot/app-boot/tests/legacy-branding.spec.ts'
     || path === 'docs/user/migrating-to-nomix-0.2.md'
     || path === 'docs/user/migrating-to-nomix-0.2.zh.md'
+    || path === 'THIRD_PARTY_NOTICES.md'
     || /(?:^|\/)LICEN[CS]E(?:\.|$)/i.test(path)
 }
 
