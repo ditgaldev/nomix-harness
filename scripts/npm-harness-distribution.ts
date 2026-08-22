@@ -117,6 +117,21 @@ function textFile(path: string): boolean {
   return [...TEXT_EXTENSIONS].some(extension => path.endsWith(extension))
 }
 
+/**
+ * Decide whether one built path may enter the public npm artifact.
+ * @param path - source or repository-relative artifact path.
+ * @returns true for distributable runtime files and false for source, tests, documentation, source maps, or compiler state.
+ */
+export function publishableArtifactPath(path: string): boolean {
+  const normalized = path.replaceAll('\\', '/')
+  return !normalized.includes('/src/')
+    && !normalized.startsWith('src/')
+    && !normalized.includes('/tests/')
+    && !normalized.endsWith('.map')
+    && !normalized.endsWith('.tsbuildinfo')
+    && !/(^|\/)README(?:\.|$)/iu.test(normalized)
+}
+
 function rewriteInternalImports(
   path: string,
   owner: WorkspacePackage,
@@ -153,8 +168,7 @@ function copyRuntimeFiles(pkg: WorkspacePackage, destination: string): void {
   for (const match of globSync('lib/**/*', { cwd: source })) candidates.add(match)
   for (const item of [...candidates].sort()) {
     const normalized = item.replaceAll('\\', '/')
-    if (normalized.includes('/src/') || normalized.startsWith('src/') || normalized.includes('/tests/')
-      || normalized.endsWith('.map') || /(^|\/)README(?:\.|$)/iu.test(normalized)) continue
+    if (!publishableArtifactPath(normalized)) continue
     const from = join(source, item)
     if (!existsSync(from) || statSync(from).isDirectory()) continue
     const to = join(destination, item)
@@ -366,7 +380,12 @@ export function buildNpmHarnessDistribution(destinationRoot: string): void {
   writeFileSync(join(destinationRoot, 'dist', 'plugins', 'manifest.json'), `${JSON.stringify(pluginManifest, null, 2)}\n`)
 
   const webAssets = join(ROOT, 'apps/web/dist')
-  if (existsSync(webAssets)) cpSync(webAssets, join(destinationRoot, 'dist', 'assets', 'web'), { recursive: true })
+  if (existsSync(webAssets)) {
+    cpSync(webAssets, join(destinationRoot, 'dist', 'assets', 'web'), {
+      recursive: true,
+      filter: publishableArtifactPath,
+    })
+  }
   cpSync(join(ROOT, 'apps/cli/config'), join(destinationRoot, 'dist', 'config'), { recursive: true })
 
   const { dependencies, optionalDependencies } = aggregateDependencies([harness, ...included], byName, internal)

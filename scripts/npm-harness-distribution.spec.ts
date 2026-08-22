@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import { classifyWorkspace, mergeDependencyRanges } from './npm-harness-distribution.ts'
+import {
+  classifyWorkspace,
+  mergeDependencyRanges,
+  publishableArtifactPath,
+} from './npm-harness-distribution.ts'
 
 describe('npm Harness workspace classification', () => {
   it('classifies every public distribution role explicitly', () => {
@@ -27,5 +31,13 @@ describe('npm Harness dependency convergence', () => {
       .toThrow('conflicting dependency ranges for example')
     expect(() => mergeDependencyRanges('chokidar', '^5.0.0', '^6.0.0'))
       .toThrow('conflicting dependency ranges for chokidar')
+  })
+})
+
+describe('npm Harness artifact filtering', () => {
+  it('excludes source maps and compiler state from every copied artifact tree', () => {
+    expect(publishableArtifactPath('apps/web/dist/assets/index.js')).toBe(true)
+    expect(publishableArtifactPath('apps/web/dist/assets/index.js.map')).toBe(false)
+    expect(publishableArtifactPath('packages/core/agent/lib/tsconfig.tsbuildinfo')).toBe(false)
   })
 })
