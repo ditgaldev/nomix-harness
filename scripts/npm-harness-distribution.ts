@@ -316,7 +316,7 @@ function writeRegistry(destinationRoot: string, plugins: readonly WorkspacePacka
       entries.push(`  ['${id}', () => import('../kernel/${pkg.id}/${target}')],`)
     }
   }
-  const source = `/** Generated lazy registry for packaged Nomix plugins. */\n\nexport function registerNomixBuiltins(ctx) {\n  const cache = new Map()\n  for (const [id, load] of [\n${entries.join('\n')}\n  ]) {\n    Object.defineProperty(ctx.loader.builtins, id, {\n      configurable: true,\n      get() {\n        let pending = cache.get(id)\n        if (pending === undefined) { pending = load(); cache.set(id, pending) }\n        return pending\n      },\n    })\n  }\n}\n`
+  const source = `/** Generated lazy registry for packaged Nomix plugins. */\n\nexport function registerNomixBuiltins(ctx) {\n  const cache = new Map()\n  for (const [id, load] of [\n${entries.join('\n')}\n  ]) {\n    Object.defineProperty(ctx.loader.builtins, id, {\n      configurable: true,\n      enumerable: true,\n      get() {\n        let pending = cache.get(id)\n        if (pending === undefined) { pending = load(); cache.set(id, pending) }\n        return pending\n      },\n    })\n  }\n}\n`
   writeFileSync(join(destinationRoot, 'dist', 'cli', 'builtin-registry.js'), source)
 }
 

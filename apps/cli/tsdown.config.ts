@@ -11,6 +11,7 @@ const common = {
   format: ['esm'],
   platform: 'node',
   target: 'es2024',
+  deps: { neverBundle: [/builtin-registry\.js$/u] },
   fixedExtension: false,
   dts: false,
   clean: false,
