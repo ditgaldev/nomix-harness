@@ -1055,9 +1055,6 @@ importers:
       '@nomix-ai/nomix-llm':
         specifier: workspace:^
         version: link:../../llm/llm
-      '@nomix-ai/nomix-llm-deepseek':
-        specifier: workspace:^
-        version: link:../../llm/llm-deepseek
       '@nomix-ai/nomix-llm-pi-ai':
         specifier: workspace:^
         version: link:../../llm/llm-pi-ai
@@ -1211,9 +1208,6 @@ importers:
       '@nomix-ai/nomix-web':
         specifier: workspace:^
         version: link:../../web/web
-      '@nomix-ai/nomix-web-search-deepseek':
-        specifier: workspace:^
-        version: link:../../web/web-search-deepseek
       '@nomix-ai/nomix-workflow-worker-thread':
         specifier: workspace:^
         version: link:../../workflow/workflow-worker-thread
