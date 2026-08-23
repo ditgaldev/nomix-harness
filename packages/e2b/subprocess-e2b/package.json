@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-subprocess-e2b",
   "description": "E2B subprocess implementation for Nomix Harness",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "publishConfig": {
     "access": "public"
   },

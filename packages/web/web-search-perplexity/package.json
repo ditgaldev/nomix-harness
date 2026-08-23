@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-web-search-perplexity",
   "description": "Perplexity-backed search provider for the Nomix Harness web capability seam (ctx.web)",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "publishConfig": {
     "access": "public"
   },

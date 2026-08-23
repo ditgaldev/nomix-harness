@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-message-feedback",
   "description": "Lifecycle-bound per-message rating and note sidecar for the Nomix Harness",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "publishConfig": {
     "access": "public"
   },

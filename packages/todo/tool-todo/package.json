@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-tool-todo",
   "description": "Model-facing todo_write tool over the Nomix Harness event-sourced session log",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "publishConfig": {
     "access": "public"
   },
