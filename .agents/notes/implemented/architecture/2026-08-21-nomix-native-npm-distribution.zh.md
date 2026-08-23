@@ -10,7 +10,7 @@
 
 ## 决策
 
-`@nomix-ai/nomix-harness` 0.2 是唯一公开的产品包。构建会把每个生产 workspace 投影成分类明确的 ESM 分发，写入 `dist/` 下的 CLI、kernel 模块、插件 API、惰性插件注册表、Bundle、runtime、SDK、测试辅助能力和资产。内部产品包导入会改写成包内相对 ESM 路径；外部库保持普通 dependency，原生平台 wrapper 保持 optional dependency。打包制品不包含嵌套 `node_modules`、runtime 归档、安装脚本、源码、测试、内部文档或 source map。
+`@nomix-ai/nomix-harness` 0.2 是唯一公开的产品包。构建会把每个生产 workspace 投影成分类明确的 ESM 分发，写入 `dist/` 下的 CLI、kernel 模块、插件 API、惰性插件注册表、Bundle、runtime、SDK、测试辅助能力和资产。Node 制品中的内部产品包导入会改写成包内相对 ESM 路径。浏览器 Client factory 会保留冻结 Client 模块表提供的规范 specifier，因为其中注入的 `require` 不执行文件系统解析。外部库保持普通 dependency，原生平台 wrapper 保持 optional dependency。打包制品不包含嵌套 `node_modules`、runtime 归档、安装脚本、源码、测试、内部文档或 source map。
 
 内置工厂只返回 Loader 描述，不导入也不初始化实现。`resolveProfile` 会把业务应用选中的描述转换为 Loader 条目，并拒绝未知 profile。描述、打包后的 Bundle 行和 Preset 行都保留规范的 `@nomix-ai/nomix-*` 包名。聚合包携带生成的 kernel manifest，Profile 启动时会维护从 `$NOMIX_HOME/profiles/node_modules` 到对应 `dist/kernel/*` 目录的包名链接。Loader 仍按需导入，而 Client 与 Typert 的元数据发现继续使用 workspace 中的同一包身份。激活、依赖注入、effect、审计和卸载仍由 Cordis 负责。默认 Bundle 不注册模型 Provider；DeepSeek 会作为可选 Provider 编译，只有显式选择后才加载。
 

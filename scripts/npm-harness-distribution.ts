@@ -153,13 +153,44 @@ export function rewriteHarnessPackageAnchor(contents: string): string {
 export function rewriteInternalModuleSpecifiers(
   contents: string,
   resolveSpecifier: (name: string, subpath: string) => string | undefined,
+  preserveSpecifier: (name: string, subpath: string) => boolean = () => false,
 ): string {
   return contents.replace(
     /(\bfrom\s+|\bimport\s*\(\s*|\brequire\s*\(\s*|\bimport\s+)(['"])(@nomix-ai\/[^/'"]+)(?:\/([^'"]+))?\2/gu,
     (match, prefix: string, quote: string, name: string, subpath: string = '') => {
+      if (preserveSpecifier(name, subpath)) return match
       const replacement = resolveSpecifier(name, subpath)
       return replacement === undefined ? match : `${prefix}${quote}${replacement}${quote}`
     },
+  )
+}
+
+/**
+ * Whether one copied artifact is the browser factory declared by `nomix.client`.
+ * @param manifest - owning workspace manifest.
+ * @param artifactPath - path relative to the copied workspace kernel directory.
+ * @returns true when module-table specifiers must retain their canonical names.
+ */
+export function isBrowserClientBundle(manifest: Record<string, unknown>, artifactPath: string): boolean {
+  const nomix = manifest.nomix
+  if (nomix === null || typeof nomix !== 'object' || Array.isArray(nomix)) return false
+  const client = (nomix as Record<string, unknown>).client
+  if (client === null || typeof client !== 'object' || Array.isArray(client)) return false
+  if ((client as Record<string, unknown>).platform !== 'web') return false
+  return artifactPath.replaceAll('\\', '/') === exportTarget(manifest, 'client')
+}
+
+/**
+ * Reject filesystem-relative requires that the browser module table cannot resolve.
+ * @param contents - one generated browser client factory.
+ * @param ownerName - package name used in the diagnostic.
+ */
+export function verifyBrowserClientRequires(contents: string, ownerName: string): void {
+  const relativeRequires = [...contents.matchAll(/\brequire\(\s*(['"])(\.[^'"]+)\1\s*\)/gu)]
+    .map(match => match[2])
+  if (relativeRequires.length === 0) return
+  throw new Error(
+    `${ownerName} browser client factory contains filesystem-relative module-table requires: ${relativeRequires.join(', ')}`,
   )
 }
 
@@ -171,6 +202,8 @@ function rewriteInternalImports(
 ): void {
   if (!textFile(path)) return
   let contents = readFileSync(path, 'utf8')
+  const ownerRoot = join(destinationRoot, 'dist', 'kernel', owner.id)
+  const preserveClientModuleTable = isBrowserClientBundle(owner.manifest, relative(ownerRoot, path))
   contents = rewriteInternalModuleSpecifiers(contents, (name, subpath) => {
     const target = internal.get(name)
     if (target === undefined) return undefined
@@ -178,10 +211,11 @@ function rewriteInternalImports(
     let specifier = relative(dirname(path), targetPath).split(sep).join('/')
     if (!specifier.startsWith('.')) specifier = `./${specifier}`
     return specifier
-  })
+  }, () => preserveClientModuleTable)
   if (owner.name === '@nomix-ai/nomix-harness') {
     contents = rewriteHarnessPackageAnchor(contents)
   }
+  if (preserveClientModuleTable) verifyBrowserClientRequires(contents, owner.name)
   writeFileSync(path, contents)
 }
 

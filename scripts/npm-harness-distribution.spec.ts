@@ -1,10 +1,12 @@
 import { describe, expect, it } from 'vitest'
 import {
   classifyWorkspace,
+  isBrowserClientBundle,
   mergeDependencyRanges,
   publishableArtifactPath,
   rewriteHarnessPackageAnchor,
   rewriteInternalModuleSpecifiers,
+  verifyBrowserClientRequires,
 } from './npm-harness-distribution.ts'
 
 describe('npm Harness workspace classification', () => {
@@ -62,5 +64,30 @@ describe('npm Harness artifact filtering', () => {
         'const lazy = import(\'../kernel/example/subpath\')',
         'const profile = [\'@nomix-ai/nomix-example\']',
       ].join('\n'))
+  })
+
+  it('keeps browser client factory requires on canonical module-table keys', () => {
+    const manifest = {
+      exports: {
+        './client': { default: './lib/client.js' },
+      },
+      nomix: { client: { platform: 'web' } },
+    }
+    expect(isBrowserClientBundle(manifest, 'lib/client.js')).toBe(true)
+    expect(isBrowserClientBundle(manifest, 'lib/index.js')).toBe(false)
+
+    const source = 'const slots = require("@nomix-ai/nomix-client-ui-slots")'
+    expect(rewriteInternalModuleSpecifiers(
+      source,
+      () => '../../client-ui-slots/lib/index.js',
+      () => true,
+    )).toBe(source)
+    expect(() => { verifyBrowserClientRequires(source, '@nomix-ai/nomix-client-runtime') }).not.toThrow()
+    expect(() => {
+      verifyBrowserClientRequires(
+        'const slots = require("../../client-ui-slots/lib/index.js")',
+        '@nomix-ai/nomix-client-runtime',
+      )
+    }).toThrow('filesystem-relative module-table requires: ../../client-ui-slots/lib/index.js')
   })
 })
