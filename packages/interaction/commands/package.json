@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-commands",
   "description": "Plugin-owned human command registry for Nomix Harness UIs",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "publishConfig": {
     "access": "public"
   },

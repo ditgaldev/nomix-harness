@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-skill-badge",
   "description": "Bundled nomix badge skill provider for Nomix Harness",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "publishConfig": {
     "access": "public"
   },
