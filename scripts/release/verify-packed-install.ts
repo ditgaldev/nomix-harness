@@ -14,13 +14,13 @@
  */
 
 import { spawn } from 'node:child_process'
-import { mkdtempSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
-import { join, resolve } from 'node:path'
+import { dirname, join, resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { parseArgs } from 'node:util'
 import { releaseFamily } from './families.ts'
-import { capture, commandInvocation, isEntry, run } from './process.ts'
+import { capture, commandInvocation, isEntry, run, type CommandInvocation } from './process.ts'
 import { packedIdentity } from './tarball.ts'
 
 /**
@@ -100,9 +100,30 @@ function managerInvocation(manager: PackageManager, command: string, args: reado
   return commandInvocation('corepack', ['yarn', 'exec', command, ...args], environment)
 }
 
+function installedBinInvocation(
+  packageName: string,
+  command: string,
+  args: readonly string[],
+  cwd: string,
+): CommandInvocation | undefined {
+  const manifestPath = join(cwd, 'node_modules', packageName, 'package.json')
+  if (!existsSync(manifestPath)) return undefined
+  const manifest = JSON.parse(readFileSync(manifestPath, 'utf8')) as Record<string, unknown>
+  const declared = typeof manifest.bin === 'string'
+    ? manifest.bin
+    : manifest.bin !== null && typeof manifest.bin === 'object' && !Array.isArray(manifest.bin)
+      ? (manifest.bin as Record<string, unknown>)[command]
+      : undefined
+  if (typeof declared !== 'string') {
+    throw new Error(`installed ${packageName} does not declare the ${command} executable`)
+  }
+  return { command: process.execPath, args: [resolve(dirname(manifestPath), declared), ...args] }
+}
+
 /** Start an installed persistent application, require readiness, then stop it through its signal handler. */
 function executeUntilOutput(
   manager: PackageManager,
+  packageName: string,
   command: string,
   args: readonly string[],
   expectedOutput: string,
@@ -110,17 +131,34 @@ function executeUntilOutput(
   environment: NodeJS.ProcessEnv,
 ): Promise<void> {
   return new Promise((resolveStartup, rejectStartup) => {
-    const invocation = managerInvocation(manager, command, args, environment)
+    const direct = installedBinInvocation(packageName, command, args, cwd)
+    const invocation = direct ?? managerInvocation(manager, command, args, environment)
+    // Yarn PnP has no physical package directory, so its wrapper remains the
+    // parent. A separate POSIX group lets readiness cleanup reach both it and
+    // the CLI process it owns.
+    const detached = direct === undefined && process.platform !== 'win32'
     const child = spawn(invocation.command, [...invocation.args], {
       cwd,
       env: environment,
       stdio: ['ignore', 'pipe', 'pipe'],
+      detached,
     })
     let stdout = ''
     let stderr = ''
     let ready = false
+    const stop = (signal: NodeJS.Signals): void => {
+      if (!detached || child.pid === undefined) {
+        child.kill(signal)
+        return
+      }
+      try {
+        process.kill(-child.pid, signal)
+      } catch (error) {
+        if ((error as NodeJS.ErrnoException).code !== 'ESRCH') throw error
+      }
+    }
     const timer = setTimeout(() => {
-      child.kill('SIGKILL')
+      stop('SIGKILL')
       rejectStartup(new Error(
         `installed ${command} did not print ${JSON.stringify(expectedOutput)} within 60s\nstdout:\n${stdout}\nstderr:\n${stderr}`,
       ))
@@ -131,7 +169,7 @@ function executeUntilOutput(
       stdout += chunk
       if (!ready && stdout.includes(expectedOutput)) {
         ready = true
-        child.kill('SIGTERM')
+        stop('SIGTERM')
       }
     })
     child.stderr.on('data', (chunk: string) => { stderr += chunk })
@@ -147,7 +185,7 @@ function executeUntilOutput(
         ))
         return
       }
-      if (code !== 0) {
+      if (code !== 0 && signal !== 'SIGTERM') {
         rejectStartup(new Error(
           `installed ${command} exited with ${String(code ?? signal)} after readiness\nstdout:\n${stdout}\nstderr:\n${stderr}`,
         ))
@@ -216,6 +254,7 @@ async function main(): Promise<void> {
     if (entry.startupArgs !== undefined && entry.startupOutput !== undefined) {
       await executeUntilOutput(
         manager,
+        entry.packageName,
         entry.command,
         entry.startupArgs,
         entry.startupOutput,
