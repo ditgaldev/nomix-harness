@@ -22,6 +22,12 @@ npx @nomix-ai/nomix-harness web
 
 The command starts the Web UI, served at `http://127.0.0.1:3080` by default. See [Web UI guide](docs/user/guide/index.md).
 
+Yarn projects must use the `node-modules` linker because Nomix loads registered plugins dynamically:
+
+```yaml
+nodeLinker: node-modules
+```
+
 ### Run from source
 
 To run from a repository checkout:

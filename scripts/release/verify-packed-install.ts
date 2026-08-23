@@ -232,6 +232,12 @@ async function main(): Promise<void> {
       ...(manager === 'yarn' ? { packageManager: 'yarn@4.17.1' } : {}),
       dependencies: { [entry.packageName]: expected.url },
     }, null, 2)}\n`)
+    if (manager === 'yarn') {
+      // Cordis resolves configured plugins dynamically. Yarn's PnP resolver
+      // attributes those imports to the loader package instead of the owning
+      // application, so supported Yarn consumers use its node_modules linker.
+      writeFileSync(join(consumerRoot, '.yarnrc.yml'), 'nodeLinker: node-modules\n')
+    }
 
     const environment = consumerEnvironment(consumerRoot)
     console.log(`release verify-packed-install: installing ${expected.url} with ${manager} in ${consumerRoot}`)

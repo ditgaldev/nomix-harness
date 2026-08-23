@@ -22,6 +22,12 @@ npx @nomix-ai/nomix-harness web
 
 该命令会启动 Web UI，默认地址为 `http://127.0.0.1:3080`。详见 [Web UI 指南](docs/user/guide/index.md)。
 
+Nomix 会动态加载已注册的插件，因此 Yarn 项目必须使用 `node-modules` linker：
+
+```yaml
+nodeLinker: node-modules
+```
+
 ### 从源码运行
 
 如需从仓库源码运行：
