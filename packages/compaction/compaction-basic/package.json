@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-compaction-basic",
   "description": "Token-meter-driven compaction policy and LLM summarization backend for the Nomix Harness",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "publishConfig": {
     "access": "public"
   },
