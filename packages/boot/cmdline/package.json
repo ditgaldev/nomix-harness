@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-cmdline",
   "description": "Immutable command-line handoff from a nomix launcher to any app plugin that injects cmdlineArgs",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "publishConfig": {
     "access": "public"
   },
