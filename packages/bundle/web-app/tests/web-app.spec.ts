@@ -225,7 +225,7 @@ describe('web-app runtime glue', () => {
     try {
       expect(originalResolve()).toMatch(/dist[/\\]index\.html$/)
     } catch (error) {
-      expect((error as Error).message).toContain('frontend dist not built')
+      expect((error as Error).message).toContain('workspace frontend dist is not built')
     }
   })
 })

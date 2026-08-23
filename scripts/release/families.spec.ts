@@ -183,6 +183,7 @@ describe('release families', () => {
         'package/dist/plugin-api/index.js',
         'package/dist/plugins/manifest.json',
         'package/dist/bundles/manifest.json',
+        'package/dist/kernel/manifest.json',
         'package/dist/sdk/index.js',
       ])
     }).not.toThrow()
@@ -193,6 +194,7 @@ describe('release families', () => {
         'package/dist/plugin-api/index.js',
         'package/dist/plugins/manifest.json',
         'package/dist/bundles/manifest.json',
+        'package/dist/kernel/manifest.json',
         'package/dist/sdk/index.js',
         'package/dist/node_modules/example/index.js',
       ])
@@ -207,6 +209,8 @@ describe('release families', () => {
       command: 'nomix',
       smokeArgs: ['web', '--help'],
       smokeOutput: 'Usage: nomix --profile web',
+      startupArgs: ['web', '--host', '127.0.0.1', '--port', '0'],
+      startupOutput: 'nomix web: http://127.0.0.1:',
     })
     expect(releaseFamily('vendor').installedEntry).toBeUndefined()
   })

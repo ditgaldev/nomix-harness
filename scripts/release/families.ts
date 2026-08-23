@@ -98,10 +98,14 @@ export interface InstalledEntry {
   readonly packageName: string
   /** Command npm exec resolves from that package. */
   readonly command: string
-  /** Arguments that load the assembled application without starting a persistent service. */
+  /** Arguments for a bounded command smoke. */
   readonly smokeArgs?: readonly string[]
   /** Text the smoke command must print. */
   readonly smokeOutput?: string
+  /** Arguments for a persistent application that the verifier stops after readiness. */
+  readonly startupArgs?: readonly string[]
+  /** Readiness text required before the verifier stops the persistent application. */
+  readonly startupOutput?: string
 }
 
 /** A release sequence: its version members, publish set, and tag naming. */
@@ -372,6 +376,7 @@ class NomixFamily extends ReleaseFamily {
     for (const required of [
       'package/dist/plugins/manifest.json',
       'package/dist/bundles/manifest.json',
+      'package/dist/kernel/manifest.json',
       'package/dist/cli/bin.js',
       'package/dist/plugin-api/index.js',
       'package/dist/sdk/index.js',
@@ -386,6 +391,8 @@ class NomixFamily extends ReleaseFamily {
     command: 'nomix',
     smokeArgs: ['web', '--help'],
     smokeOutput: 'Usage: nomix --profile web',
+    startupArgs: ['web', '--host', '127.0.0.1', '--port', '0'],
+    startupOutput: 'nomix web: http://127.0.0.1:',
   }
 }
 

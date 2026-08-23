@@ -2,7 +2,7 @@
 
 [English](README.md) | 中文
 
-`nomix` 是用于启动 profile 的产品命令；profile 由多个插件组合包 patch 层按顺序叠加而成，其上再应用用户自己的覆盖配置。npm 发布物是一个可移植的 `@nomix-ai/nomix-harness` tarball，其安装生命周期优先使用宿主机的 `tar` 命令恢复仓库内运行时包，并在该命令不存在时回退到随包提供的 JavaScript 解压器；`sharp`、`koffi` 和内置模块加载器则由 npm 根据消费者的 Windows、macOS 或 Linux 平台安装。安装时必须允许运行 package 生命周期脚本和安装 optional dependencies；使用 `--ignore-scripts` 或 `--omit=optional` 会导致运行时不可用。[`src/args.ts`](src/args.ts) 负责命令语法，[`src/bin.ts`](src/bin.ts) 只加载选中的 runner（运行器）。无效命令、来自其他模式的选项、配置错误和启动失败都会以非零状态退出。
+`nomix` 是用于启动 profile 的产品命令；profile 由多个插件组合包 patch 层按顺序叠加而成，其上再应用用户自己的覆盖配置。npm 发布物是一个无需安装脚本的 `@nomix-ai/nomix-harness` tarball，其中包含已编译的运行时、内置插件、Bundle、Web 资产、SDK 和平台无关资源。系统支持 `npm install --ignore-scripts`；省略 optional dependencies 只会禁用由它们提供的平台能力。[`src/args.ts`](src/args.ts) 负责命令语法，[`src/bin.ts`](src/bin.ts) 只加载选中的 runner（运行器）。无效命令、来自其他模式的选项、配置错误和启动失败都会以非零状态退出。
 
 ## 入口模式
 
@@ -16,8 +16,8 @@
 如果不需要持久安装，npm 可以从缓存安装并执行同一个 CLI：
 
 ```sh
-npx --yes --package @nomix-ai/nomix-harness@0.1.2 nomix --version
-npx --yes --package @nomix-ai/nomix-harness@0.1.2 nomix --profile headless "task"
+npx --yes --package @nomix-ai/nomix-harness nomix --version
+npx --yes --package @nomix-ai/nomix-harness nomix --profile headless "task"
 ```
 
 运行命令时所在的目录将作为默认 workspace 根目录。`web` 和 `headless` profile 在首次使用时会从随附模板自动初始化；其他任何 profile 都必须通过 `nomix plugin` 创建。
@@ -43,7 +43,7 @@ profile 目录包含一个 `package.json`，其中记录树外插件依赖，以
 - profile 自身的 `cordis.patch.yml`，然后是 home 级的 `$NOMIX_HOME/cordis.patch.yml`
 - `--patch` 指定的覆盖层
 
-`nomix.profile.bundles` 中列出的组合包先从 nomix 安装目录解析（`@nomix-ai/nomix-base`、`@nomix-ai/nomix-web-app`、`@nomix-ai/nomix-headless`），再从 profile 自身的 `node_modules` 解析；pnpm 会将树外插件安装到该目录。
+`nomix.profile.bundles` 中列出的组合包先从 nomix 安装目录解析（`@nomix-ai/nomix-base`、`@nomix-ai/nomix-web-app`、`@nomix-ai/nomix-headless`），再从 profile 自身的 `node_modules` 解析；pnpm 会将树外插件安装到该目录。启动器会维护从 `$NOMIX_HOME/profiles/node_modules` 到聚合包内部 kernel 的包名链接，使 Loader 导入和包元数据发现使用同一组规范名称。
 
 使用 `--dump-default-config` 和 `--dump-config` 可在不启动的情况下检查组合后的配置树。
 

@@ -2,7 +2,7 @@
 
 English | [中文](README.zh.md)
 
-The `nomix` command is the product launcher for profiles: ordered stacks of plugin-bundle patch layers under the user's own overrides. The npm release is one portable `@nomix-ai/nomix-harness` tarball whose install lifecycle restores the in-repository runtime packages with the host `tar` command and falls back to its JavaScript extractor when that command is unavailable; npm installs `sharp`, `koffi`, and the built-in loader for the consumer's Windows, macOS, or Linux platform. Installation must allow package lifecycle scripts and optional dependencies; `--ignore-scripts` or `--omit=optional` leaves the runtime unavailable. [`src/args.ts`](src/args.ts) owns the command grammar, and [`src/bin.ts`](src/bin.ts) loads only the selected runner. Invalid commands, options from another mode, configuration errors, and boot failures exit nonzero.
+The `nomix` command is the product launcher for profiles: ordered stacks of plugin-bundle patch layers under the user's own overrides. The npm release is one script-free `@nomix-ai/nomix-harness` tarball containing the compiled runtime, built-in plugins, bundles, Web assets, SDK, and platform-independent resources. `npm install --ignore-scripts` is supported; omitting optional dependencies disables only the platform capabilities they provide. [`src/args.ts`](src/args.ts) owns the command grammar, and [`src/bin.ts`](src/bin.ts) loads only the selected runner. Invalid commands, options from another mode, configuration errors, and boot failures exit nonzero.
 
 ## Entry modes
 
@@ -16,8 +16,8 @@ The `nomix` command is the product launcher for profiles: ordered stacks of plug
 Without a persistent installation, npm can install and execute the same CLI from its cache:
 
 ```sh
-npx --yes --package @nomix-ai/nomix-harness@0.1.2 nomix --version
-npx --yes --package @nomix-ai/nomix-harness@0.1.2 nomix --profile headless "task"
+npx --yes --package @nomix-ai/nomix-harness nomix --version
+npx --yes --package @nomix-ai/nomix-harness nomix --profile headless "task"
 ```
 
 The invoking directory is the default workspace root. The `web` and `headless` profiles auto-initialize on first use from shipped templates; any other profile must be created through `nomix plugin`.
@@ -43,7 +43,7 @@ The tree composes over an empty root:
 - then the profile's `cordis.patch.yml`, then the home-level `$NOMIX_HOME/cordis.patch.yml`
 - then `--patch` overlays
 
-Bundles named in `nomix.profile.bundles` resolve from the nomix installation first (`@nomix-ai/nomix-base`, `@nomix-ai/nomix-web-app`, `@nomix-ai/nomix-headless`), then from the profile's own `node_modules`, where pnpm installs out-of-tree plugins.
+Bundles named in `nomix.profile.bundles` resolve from the nomix installation first (`@nomix-ai/nomix-base`, `@nomix-ai/nomix-web-app`, `@nomix-ai/nomix-headless`), then from the profile's own `node_modules`, where pnpm installs out-of-tree plugins. The launcher maintains package-name links from `$NOMIX_HOME/profiles/node_modules` into the aggregate package's internal kernel so Loader imports and package metadata discovery use the same canonical names.
 
 Use `--dump-default-config` and `--dump-config` to inspect the composed tree without booting it.
 

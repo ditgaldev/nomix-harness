@@ -156,7 +156,7 @@ export function rewriteInternalModuleSpecifiers(
 ): string {
   return contents.replace(
     /(\bfrom\s+|\bimport\s*\(\s*|\brequire\s*\(\s*|\bimport\s+)(['"])(@nomix-ai\/[^/'"]+)(?:\/([^'"]+))?\2/gu,
-    (match, prefix: string, quote: string, name: string, subpath = '') => {
+    (match, prefix: string, quote: string, name: string, subpath: string = '') => {
       const replacement = resolveSpecifier(name, subpath)
       return replacement === undefined ? match : `${prefix}${quote}${replacement}${quote}`
     },
@@ -289,15 +289,6 @@ function aggregateDependencies(
   return { dependencies, optionalDependencies }
 }
 
-function transformBundle(contents: string, internal: ReadonlyMap<string, WorkspacePackage>): string {
-  return contents.replace(/(['"])(@nomix-ai\/nomix-[^/'"]+)(?:\/([^'"]+))?\1/gu, (
-    match, quote: string, name: string, subpath = '',
-  ) => {
-    const pkg = internal.get(name)
-    return pkg === undefined ? match : `${quote}cordis:nomix/${pkg.id}${subpath === '' ? '' : `/${subpath}`}${quote}`
-  })
-}
-
 function writeRegistry(destinationRoot: string, plugins: readonly WorkspacePackage[]): void {
   const entries: string[] = []
   for (const pkg of plugins) {
@@ -318,6 +309,14 @@ function writeRegistry(destinationRoot: string, plugins: readonly WorkspacePacka
   }
   const source = `/** Generated lazy registry for packaged Nomix plugins. */\n\nexport function registerNomixBuiltins(ctx) {\n  const cache = new Map()\n  for (const [id, load] of [\n${entries.join('\n')}\n  ]) {\n    Object.defineProperty(ctx.loader.builtins, id, {\n      configurable: true,\n      enumerable: true,\n      get() {\n        let pending = cache.get(id)\n        if (pending === undefined) { pending = load(); cache.set(id, pending) }\n        return pending\n      },\n    })\n  }\n}\n`
   writeFileSync(join(destinationRoot, 'dist', 'cli', 'builtin-registry.js'), source)
+}
+
+function writeKernelManifest(destinationRoot: string, packages: readonly WorkspacePackage[]): void {
+  const manifest = Object.fromEntries(packages.map(pkg => [pkg.name, `./${pkg.id}`]))
+  writeFileSync(
+    join(destinationRoot, 'dist', 'kernel', 'manifest.json'),
+    `${JSON.stringify(manifest, null, 2)}\n`,
+  )
 }
 
 function copyPublicFace(destinationRoot: string): void {
@@ -385,6 +384,7 @@ export function buildNpmHarnessDistribution(destinationRoot: string): void {
     if (statSync(path).isFile()) rewriteInternalImports(path, harness, destinationRoot, internal)
   }
   writeRegistry(destinationRoot, included)
+  writeKernelManifest(destinationRoot, included)
 
   const bundleManifest: Record<string, { packageName: string; patch: string }> = {}
   for (const pkg of included.filter(pkg => pkg.classification === 'bundle')) {
@@ -393,7 +393,10 @@ export function buildNpmHarnessDistribution(destinationRoot: string): void {
     const source = join(ROOT, pkg.directory, declared)
     const directory = join(destinationRoot, 'dist', 'bundles', pkg.id)
     mkdirSync(directory, { recursive: true })
-    writeFileSync(join(directory, 'cordis.patch.yml'), transformBundle(readFileSync(source, 'utf8'), internal))
+    // Keep canonical package names in configuration data. The installed
+    // profile fallback links them to package-internal kernel directories,
+    // preserving package metadata discovery for Client and Typert plugins.
+    writeFileSync(join(directory, 'cordis.patch.yml'), readFileSync(source, 'utf8'))
     writeFileSync(join(directory, 'package.json'), `${JSON.stringify({
       name: pkg.name,
       type: 'module',
@@ -411,12 +414,13 @@ export function buildNpmHarnessDistribution(destinationRoot: string): void {
   writeFileSync(join(destinationRoot, 'dist', 'plugins', 'manifest.json'), `${JSON.stringify(pluginManifest, null, 2)}\n`)
 
   const webAssets = join(ROOT, 'apps/web/dist')
-  if (existsSync(webAssets)) {
-    cpSync(webAssets, join(destinationRoot, 'dist', 'assets', 'web'), {
-      recursive: true,
-      filter: publishableArtifactPath,
-    })
+  if (!existsSync(join(webAssets, 'index.html'))) {
+    throw new Error(`built Web frontend is missing: ${join(webAssets, 'index.html')}`)
   }
+  cpSync(webAssets, join(destinationRoot, 'dist', 'assets', 'web'), {
+    recursive: true,
+    filter: publishableArtifactPath,
+  })
   cpSync(join(ROOT, 'apps/cli/config'), join(destinationRoot, 'dist', 'config'), { recursive: true })
 
   const { dependencies, optionalDependencies } = aggregateDependencies([harness, ...included], byName, internal)

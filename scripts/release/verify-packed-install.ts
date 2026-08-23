@@ -13,13 +13,14 @@
  * stale `lib/` in the checkout cannot stand in for a missing file here.
  */
 
+import { spawn } from 'node:child_process'
 import { mkdtempSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { parseArgs } from 'node:util'
 import { releaseFamily } from './families.ts'
-import { capture, isEntry, run } from './process.ts'
+import { capture, commandInvocation, isEntry, run } from './process.ts'
 import { packedIdentity } from './tarball.ts'
 
 /**
@@ -93,8 +94,72 @@ function execute(
   return capture('corepack', ['yarn', 'exec', command, ...args], { cwd, env: environment })
 }
 
+function managerInvocation(manager: PackageManager, command: string, args: readonly string[], environment: NodeJS.ProcessEnv) {
+  if (manager === 'npm') return commandInvocation('npm', ['exec', '--offline', '--', command, ...args], environment)
+  if (manager === 'pnpm') return commandInvocation('pnpm', ['exec', command, ...args], environment)
+  return commandInvocation('corepack', ['yarn', 'exec', command, ...args], environment)
+}
+
+/** Start an installed persistent application, require readiness, then stop it through its signal handler. */
+function executeUntilOutput(
+  manager: PackageManager,
+  command: string,
+  args: readonly string[],
+  expectedOutput: string,
+  cwd: string,
+  environment: NodeJS.ProcessEnv,
+): Promise<void> {
+  return new Promise((resolveStartup, rejectStartup) => {
+    const invocation = managerInvocation(manager, command, args, environment)
+    const child = spawn(invocation.command, [...invocation.args], {
+      cwd,
+      env: environment,
+      stdio: ['ignore', 'pipe', 'pipe'],
+    })
+    let stdout = ''
+    let stderr = ''
+    let ready = false
+    const timer = setTimeout(() => {
+      child.kill('SIGKILL')
+      rejectStartup(new Error(
+        `installed ${command} did not print ${JSON.stringify(expectedOutput)} within 60s\nstdout:\n${stdout}\nstderr:\n${stderr}`,
+      ))
+    }, 60_000)
+    child.stdout.setEncoding('utf8')
+    child.stderr.setEncoding('utf8')
+    child.stdout.on('data', (chunk: string) => {
+      stdout += chunk
+      if (!ready && stdout.includes(expectedOutput)) {
+        ready = true
+        child.kill('SIGTERM')
+      }
+    })
+    child.stderr.on('data', (chunk: string) => { stderr += chunk })
+    child.on('error', (error) => {
+      clearTimeout(timer)
+      rejectStartup(error)
+    })
+    child.on('close', (code, signal) => {
+      clearTimeout(timer)
+      if (!ready) {
+        rejectStartup(new Error(
+          `installed ${command} exited before readiness with ${String(code ?? signal)}\nstdout:\n${stdout}\nstderr:\n${stderr}`,
+        ))
+        return
+      }
+      if (code !== 0) {
+        rejectStartup(new Error(
+          `installed ${command} exited with ${String(code ?? signal)} after readiness\nstdout:\n${stdout}\nstderr:\n${stderr}`,
+        ))
+        return
+      }
+      resolveStartup()
+    })
+  })
+}
+
 /** Install every tarball under `--from` and drive the `--family` entry. */
-function main(): void {
+async function main(): Promise<void> {
   const { values } = parseArgs({
     options: {
       family: { type: 'string' },
@@ -148,9 +213,20 @@ function main(): void {
       }
       console.log(`release verify-packed-install: installed ${entry.packageName} application smoke passed`)
     }
+    if (entry.startupArgs !== undefined && entry.startupOutput !== undefined) {
+      await executeUntilOutput(
+        manager,
+        entry.command,
+        entry.startupArgs,
+        entry.startupOutput,
+        consumerRoot,
+        environment,
+      )
+      console.log(`release verify-packed-install: installed ${entry.packageName} reached application readiness`)
+    }
   } finally {
     rmSync(consumerRoot, { recursive: true, force: true })
   }
 }
 
-if (isEntry(import.meta.url)) main()
+if (isEntry(import.meta.url)) await main()

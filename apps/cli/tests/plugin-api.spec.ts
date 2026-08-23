@@ -17,9 +17,9 @@ describe('public plugin registration API', () => {
     })
 
     expect(config.profiles.web.plugins).toEqual([
-      { id: 'session-persistence-sqlite', name: 'cordis:nomix/session-persistence-sqlite' },
-      { id: 'agent-loop', name: 'cordis:nomix/agent-loop' },
-      { id: 'llm-deepseek', name: 'cordis:nomix/llm-deepseek', config: { apiKeyEnv: 'DEEPSEEK_API_KEY' } },
+      { id: 'session-persistence-sqlite', name: '@nomix-ai/nomix-session-persistence-sqlite' },
+      { id: 'agent-loop', name: '@nomix-ai/nomix-agent-loop' },
+      { id: 'llm-deepseek', name: '@nomix-ai/nomix-llm-deepseek', config: { apiKeyEnv: 'DEEPSEEK_API_KEY' } },
     ])
     expect(resolveProfile(config, 'web')).toEqual(config.profiles.web.plugins)
     expect(() => resolveProfile(config, 'missing')).toThrow('Nomix profile "missing" is not registered')

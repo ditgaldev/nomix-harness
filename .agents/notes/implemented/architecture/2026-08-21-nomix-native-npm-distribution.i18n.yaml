@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-08-21-nomix-native-npm-distribution.md
-2026-08-21-nomix-native-npm-distribution.md: dd2eeb7fd79cffc87ac2f357d82ebc5d77e98f22
-2026-08-21-nomix-native-npm-distribution.zh.md: b5a882c3ecfef39046f2e4d00c7de49f3e9ae948
+2026-08-21-nomix-native-npm-distribution.md: 2bc9fe65e6ee65a574be032e53b9e38642e022e4
+2026-08-21-nomix-native-npm-distribution.zh.md: bd0d9a5126492d19943fd99739e0be81218ac27c

@@ -239,6 +239,53 @@ describe('healProfilesModuleFallback', () => {
     expect(before).toContain('dep-of-a')
   })
 
+  it('links every package embedded in the aggregate npm kernel', () => {
+    const anchor = stageInstallation({})
+    const appDir = join(anchor, '..')
+    const kernelDir = join(appDir, 'dist', 'kernel', 'agent-loop')
+    mkdirSync(kernelDir, { recursive: true })
+    writeFileSync(join(kernelDir, 'package.json'), JSON.stringify({
+      name: '@nomix-ai/nomix-agent-loop',
+      version: '0.2.0',
+    }))
+    writeFileSync(join(appDir, 'dist', 'kernel', 'manifest.json'), JSON.stringify({
+      '@nomix-ai/nomix-agent-loop': './agent-loop',
+    }))
+
+    const home = tmp()
+    healProfilesModuleFallback(anchor, home)
+
+    const link = join(home, 'profiles', 'node_modules', '@nomix-ai', 'nomix-agent-loop')
+    expect(lstatSync(link).isSymbolicLink()).toBe(true)
+    expect(readlinkSync(link)).toContain('agent-loop')
+  })
+
+  it('rejects invalid aggregate kernel manifest entries', () => {
+    const anchor = stageInstallation({})
+    const appDir = join(anchor, '..')
+    const manifestPath = join(appDir, 'dist', 'kernel', 'manifest.json')
+    mkdirSync(join(appDir, 'dist', 'kernel'), { recursive: true })
+    const home = tmp()
+
+    writeFileSync(manifestPath, '[]')
+    expect(() => { healProfilesModuleFallback(anchor, home) }).toThrow('must hold a JSON object')
+
+    writeFileSync(manifestPath, JSON.stringify({ external: './external' }))
+    expect(() => { healProfilesModuleFallback(anchor, home) }).toThrow('invalid packaged kernel manifest entry')
+
+    writeFileSync(manifestPath, JSON.stringify({ '@nomix-ai/nomix-agent': '../outside' }))
+    expect(() => { healProfilesModuleFallback(anchor, home) }).toThrow('escapes dist/kernel')
+
+    writeFileSync(manifestPath, JSON.stringify({ '@nomix-ai/nomix-agent': './missing' }))
+    expect(() => { healProfilesModuleFallback(anchor, home) }).toThrow('has no package.json')
+
+    const wrong = join(appDir, 'dist', 'kernel', 'wrong')
+    mkdirSync(wrong, { recursive: true })
+    writeFileSync(join(wrong, 'package.json'), JSON.stringify({ name: '@nomix-ai/nomix-other' }))
+    writeFileSync(manifestPath, JSON.stringify({ '@nomix-ai/nomix-agent': './wrong' }))
+    expect(() => { healProfilesModuleFallback(anchor, home) }).toThrow('declares "@nomix-ai/nomix-other"')
+  })
+
   it('throws when a fallback entry is a real directory', () => {
     const anchor = stageInstallation({})
     const home = tmp()

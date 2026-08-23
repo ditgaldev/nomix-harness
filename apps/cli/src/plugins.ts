@@ -4,7 +4,7 @@ import { definePlugin, type PluginFactory } from './public-plugin.ts'
 
 /** Create a descriptor for any built-in plugin id listed in the packaged manifest. */
 export function builtin<Config = Record<string, unknown>>(id: string): PluginFactory<Config> {
-  return definePlugin<Config>(id, `cordis:nomix/${id}`)
+  return definePlugin<Config>(id, `@nomix-ai/nomix-${id}`)
 }
 
 /** Frequently used built-ins with stable, typed discovery paths. */

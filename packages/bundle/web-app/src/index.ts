@@ -10,6 +10,7 @@
  * @module @nomix-ai/nomix-web-app
  */
 
+import { existsSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import { networkInterfaces } from 'node:os'
 import { fileURLToPath } from 'node:url'
@@ -114,12 +115,14 @@ function localWebUrl(ctx: Context): string {
 
 /** Dist location is workspace knowledge of this bundle: resolved through the frontend package exports, not configured. */
 function resolveDistIndex(): string {
+  const packaged = fileURLToPath(new URL('../../../assets/web/index.html', import.meta.url))
+  if (existsSync(packaged)) return packaged
   const require = createRequire(import.meta.url)
   try {
     return require.resolve('@nomix-ai/nomix-web-frontend/dist/index.html')
   } catch {
     /* v8 ignore next 2 -- reachable only on a checkout without a built dist; the test tree builds it */
-    throw new Error('web-app: frontend dist not built; run pnpm run build from the repository root first')
+    throw new Error('web-app: packaged frontend asset is missing and the workspace frontend dist is not built')
   }
 }
 
