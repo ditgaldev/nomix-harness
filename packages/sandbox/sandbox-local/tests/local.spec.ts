@@ -405,8 +405,8 @@ describe('the windows-acl probe (runner invocation contract)', () => {
   })
 
   it('runs the REAL default probe against the resolved runner invocation when none is injected', async () => {
-    // No entry injected: this covers the production resolution through
-    // import.meta.resolve. Which arm of the existsSync check it takes depends
+    // No entry injected: this covers production resolution through the sibling
+    // package URL. Which arm of the existsSync check it takes depends
     // on whether the checkout has run build:lib:host (which emits
     // sandbox-windows-acl/lib/runner.js), so this asserts only what holds
     // either way — the runner cannot init off win32, so the probe reads

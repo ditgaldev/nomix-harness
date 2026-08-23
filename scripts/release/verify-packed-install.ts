@@ -120,6 +120,31 @@ function installedBinInvocation(
   return { command: process.execPath, args: [resolve(dirname(manifestPath), declared), ...args] }
 }
 
+/** Exercise the installed sandbox's private Windows runner lookup against the flattened kernel. */
+function verifyNomixKernel(packageName: string, cwd: string, environment: NodeJS.ProcessEnv): void {
+  const moduleUrl = pathToFileURL(join(
+    cwd,
+    'node_modules',
+    packageName,
+    'dist',
+    'kernel',
+    'sandbox-local',
+    'lib',
+    'index.js',
+  )).href
+  const probe = [
+    'const { fileURLToPath } = await import("node:url")',
+    'const loaded = await import(process.argv[1])',
+    'const sandbox = Object.create(loaded.LocalSandboxProvider.prototype)',
+    'sandbox.internals = {}',
+    'const invocation = sandbox.windowsAclRunnerInvocation()',
+    'const expected = fileURLToPath(new URL("../../sandbox-windows-acl/lib/runner.js", process.argv[1]))',
+    'if (invocation[0] !== process.execPath) throw new Error(`unexpected runner executable: ${JSON.stringify(invocation)}`)',
+    'if (invocation[1] !== expected) throw new Error(`unexpected runner entry: ${JSON.stringify(invocation)}, expected ${expected}`)',
+  ].join(';')
+  run(process.execPath, ['--input-type=module', '--eval', probe, moduleUrl], { cwd, env: environment })
+}
+
 /** Start an installed persistent application, require readiness, then stop it through its signal handler. */
 function executeUntilOutput(
   manager: PackageManager,
@@ -248,6 +273,10 @@ async function main(): Promise<void> {
       throw new Error(`installed ${entry.packageName} --version reported ${JSON.stringify(version)}, expected ${expected.version}`)
     }
     console.log(`release verify-packed-install: installed ${entry.packageName} reports ${version}`)
+    if (family.id === 'nomix') {
+      verifyNomixKernel(entry.packageName, consumerRoot, environment)
+      console.log(`release verify-packed-install: installed ${entry.packageName} kernel runner resolution passed`)
+    }
     if (entry.smokeArgs !== undefined) {
       const output = execute(manager, entry.command, entry.smokeArgs, consumerRoot, environment)
       if (entry.smokeOutput !== undefined && !output.includes(entry.smokeOutput)) {

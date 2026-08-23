@@ -140,8 +140,9 @@ const packageFileExtras: Readonly<Record<string, readonly string[]>> = {
   // keeps config-owned bare-package resolution through lib/bin.js.
   '@nomix-ai/nomix-sdk-jsonrpc-demo': ['lib/packaged-bin.js'],
   // The argv-prefix runner entry ships beside the lib as its own bundle;
-  // sandbox-local resolves it through the package's ./runner export. tsdown
-  // also shares its generated FFI code through a hashed runtime chunk.
+  // sandbox-local addresses that sibling artifact by relative URL so the same
+  // lookup survives the flattened npm kernel. tsdown also shares its generated
+  // FFI code through a hashed runtime chunk.
   '@nomix-ai/nomix-sandbox-windows-acl': ['lib/runner.js', 'lib/types-*.js'],
   '@nomix-ai/nomix-skill-badge': ['assets'],
   '@nomix-ai/nomix-subprocess-local': ['scripts/ensure-spawn-helper.mjs'],

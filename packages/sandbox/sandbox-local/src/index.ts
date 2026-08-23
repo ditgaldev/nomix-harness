@@ -550,16 +550,19 @@ export class LocalSandboxProvider extends SandboxProvider {
 
   /**
    * The windows-acl runner argv prefix: the built lib/runner.js entry when
-   * present (production), else the package source through tsx (development).
+   * present beside this package (production), else the sibling package source
+   * through tsx (development). Relative URLs work in both workspace output and
+   * the flattened npm kernel without requiring an internal package install.
    * The prefix stays `[node, runner, ...]` — a future native-exe runner keeps
    * the same argv contract and only swaps these entries.
    */
   private windowsAclRunnerInvocation(): string[] {
     const override = this.internals.windowsAclRunnerArgs
     if (override !== undefined) return override
-    const builtEntry = this.internals.windowsAclRunnerEntry ?? fileURLToPath(import.meta.resolve('@nomix-ai/nomix-sandbox-windows-acl/runner'))
+    const builtEntry = this.internals.windowsAclRunnerEntry
+      ?? fileURLToPath(new URL('../../sandbox-windows-acl/lib/runner.js', import.meta.url))
     if (existsSync(builtEntry)) return [process.execPath, builtEntry]
-    const sourceEntry = fileURLToPath(import.meta.resolve('@nomix-ai/nomix-sandbox-windows-acl/src/runner.ts'))
+    const sourceEntry = fileURLToPath(new URL('../../sandbox-windows-acl/src/runner.ts', import.meta.url))
     return [process.execPath, '--import', 'tsx/esm', sourceEntry]
   }
 }
