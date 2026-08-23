@@ -133,6 +133,7 @@ function verifyNomixKernel(packageName: string, cwd: string, environment: NodeJS
     'index.js',
   )).href
   const probe = [
+    'const { realpathSync } = await import("node:fs")',
     'const { fileURLToPath } = await import("node:url")',
     'const loaded = await import(process.argv[1])',
     'const sandbox = Object.create(loaded.LocalSandboxProvider.prototype)',
@@ -140,7 +141,7 @@ function verifyNomixKernel(packageName: string, cwd: string, environment: NodeJS
     'const invocation = sandbox.windowsAclRunnerInvocation()',
     'const expected = fileURLToPath(new URL("../../sandbox-windows-acl/lib/runner.js", process.argv[1]))',
     'if (invocation[0] !== process.execPath) throw new Error(`unexpected runner executable: ${JSON.stringify(invocation)}`)',
-    'if (invocation[1] !== expected) throw new Error(`unexpected runner entry: ${JSON.stringify(invocation)}, expected ${expected}`)',
+    'if (realpathSync(invocation[1]) !== realpathSync(expected)) throw new Error(`unexpected runner entry: ${JSON.stringify(invocation)}, expected ${expected}`)',
   ].join(';')
   run(process.execPath, ['--input-type=module', '--eval', probe, moduleUrl], { cwd, env: environment })
 }
