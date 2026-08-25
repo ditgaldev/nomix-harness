@@ -14,6 +14,7 @@
  * environment. Test injection is by function parameter.
  */
 import { spawnSync } from 'node:child_process'
+import { existsSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -52,23 +53,25 @@ export interface LauncherGrants {
 }
 
 /**
- * Path of the launcher binary for this host: resolved from the per-platform
- * npm package `@nomix-ai/node-addon-landlock-run-<platform>-<arch>` (npm's
- * `os`/`cpu` fields make installers fetch only the matching one). When the
- * package is not resolvable — a platform without one, or an install that
- * skipped the optional dependency — the returned fallback path points inside
- * this package's own `node_modules` and simply never exists. Existence is
- * deliberately not checked either way: {@link probe} is the single
- * availability signal (a missing binary probes `unusable` the same way an
- * unenforcing kernel does).
+ * Path of the launcher binary for this host. An aggregate Harness installation
+ * resolves its embedded `dist/native/landlock-run/<platform>-<arch>` binary;
+ * a source workspace falls back to the matching platform package. Unsupported
+ * platforms return a deterministic nonexistent path. {@link probe} remains
+ * the availability signal, so a missing binary and an unenforcing kernel both
+ * report `unusable`.
  * @param resolvePackageJson - test hook over `require.resolve` (the default
  *   covers real installs); receives the platform package's `package.json`
  *   specifier and returns its absolute path, throwing when unresolvable.
+ * @param bundledExists - test hook for the aggregate binary existence check.
  * @returns the absolute launcher path to probe and exec.
  */
 export function launcherPath(
   resolvePackageJson: (specifier: string) => string = createRequire(import.meta.url).resolve,
+  bundledExists: (path: string) => boolean = existsSync,
 ): string {
+  const platform = `${process.platform}-${process.arch}`
+  const bundled = fileURLToPath(new URL(`../../../native/landlock-run/${platform}/${LAUNCHER_BIN}`, import.meta.url))
+  if (bundledExists(bundled)) return bundled
   const platformPackage = `@nomix-ai/node-addon-landlock-run-${process.platform}-${process.arch}`
   try {
     return join(dirname(resolvePackageJson(`${platformPackage}/package.json`)), 'bin', LAUNCHER_BIN)

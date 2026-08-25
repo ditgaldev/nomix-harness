@@ -243,21 +243,31 @@ describe('healProfilesModuleFallback', () => {
     const anchor = stageInstallation({})
     const appDir = join(anchor, '..')
     const kernelDir = join(appDir, 'dist', 'kernel', 'agent-loop')
+    const cordisDir = join(appDir, 'dist', 'kernel', 'cordis')
     mkdirSync(kernelDir, { recursive: true })
+    mkdirSync(cordisDir, { recursive: true })
     writeFileSync(join(kernelDir, 'package.json'), JSON.stringify({
       name: '@nomix-ai/nomix-agent-loop',
       version: '0.2.0',
     }))
+    writeFileSync(join(cordisDir, 'package.json'), JSON.stringify({
+      name: '@nomix-ai/cordis',
+      version: '4.0.1',
+    }))
     writeFileSync(join(appDir, 'dist', 'kernel', 'manifest.json'), JSON.stringify({
       '@nomix-ai/nomix-agent-loop': './agent-loop',
+      '@nomix-ai/cordis': './cordis',
     }))
 
     const home = tmp()
     healProfilesModuleFallback(anchor, home)
 
     const link = join(home, 'profiles', 'node_modules', '@nomix-ai', 'nomix-agent-loop')
+    const cordisLink = join(home, 'profiles', 'node_modules', '@nomix-ai', 'cordis')
     expect(lstatSync(link).isSymbolicLink()).toBe(true)
     expect(readlinkSync(link)).toContain('agent-loop')
+    expect(lstatSync(cordisLink).isSymbolicLink()).toBe(true)
+    expect(readlinkSync(cordisLink)).toContain('cordis')
   })
 
   it('rejects invalid aggregate kernel manifest entries', () => {

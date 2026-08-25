@@ -6,7 +6,7 @@
  * nomix family that is one native ESM tarball whose dist tree already contains
  * the internal product runtime; verification therefore does not depend on
  * install scripts or internal package names existing in the registry
- * ([rationale](../../.agents/notes/implemented/process/2026-08-10-npm-release-sequences.md)).
+ * ([rationale](../../.agents/notes/archived/process/2026-08-10-npm-release-sequences.md)).
  *
  * What this proves is that a supported package manager installs the entry with scripts disabled
  * and resolves its command. A workspace link or

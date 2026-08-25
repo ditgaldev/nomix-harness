@@ -2,9 +2,7 @@
   "name": "@nomix-ai/schemastery",
   "description": "Type driven schema validator",
   "version": "3.18.1",
-  "publishConfig": {
-    "access": "public"
-  },
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ditgaldev/nomix-harness.git",

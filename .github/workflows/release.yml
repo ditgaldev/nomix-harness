@@ -18,8 +18,57 @@ env:
   NOMIX_TELEMETRY_DISABLED: '1'
 
 jobs:
+  landlock-matrix:
+    name: Landlock matrix
+    runs-on: ubuntu-24.04
+    outputs:
+      prebuilds: ${{ steps.matrix.outputs.prebuilds }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - id: matrix
+        run: echo "prebuilds=$(node native/landlock-run/scripts/github-matrix.mjs release-prebuild)" >> "$GITHUB_OUTPUT"
+
+  build-landlock:
+    name: Build ${{ matrix.package }}
+    needs: landlock-matrix
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.landlock-matrix.outputs.prebuilds) }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.PRIMARY_NODE_VERSION }}
+
+      - name: Install native workspace
+        run: pnpm install --filter @nomix-ai/node-addon-landlock-run-workspace... --frozen-lockfile
+
+      - name: Install musl toolchain
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -yq musl-tools
+
+      - name: Build native binary
+        run: pnpm --dir native/landlock-run build:native
+
+      - name: Verify binary metadata
+        run: node native/landlock-run/scripts/verify-launcher-binary.mjs ${{ matrix.dir }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: native/landlock-run/${{ matrix.dir }}/bin/*
+          if-no-files-found: error
+          retention-days: 7
+
   pack:
     name: Build and pack npm artifact
+    needs: build-landlock
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
@@ -41,6 +90,15 @@ jobs:
       - name: Install (immutable)
         run: pnpm install --frozen-lockfile
 
+      - name: Download Landlock prebuilds
+        uses: actions/download-artifact@v4
+        with:
+          pattern: prebuild-*
+          path: native/landlock-run/.release/prebuild-artifacts
+
+      - name: Assemble Landlock prebuilds
+        run: node native/landlock-run/scripts/assemble-prebuilds.mjs native/landlock-run/.release/prebuild-artifacts
+
       - name: Verify release version
         env:
           RELEASE_PUBLISH: ${{ github.ref == 'refs/heads/npm-nomix-harness' && 'true' || 'false' }}
@@ -49,7 +107,7 @@ jobs:
       - name: Verify Nomix branding
         run: pnpm run verify-nomix-branding
 
-      - name: Build workspaces and native npm distribution
+      - name: Build workspaces
         run: pnpm run build
 
       - name: Pack release tarball

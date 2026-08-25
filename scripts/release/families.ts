@@ -3,7 +3,7 @@
  * (`packages/` + `apps/`, `vendor/`, and `native/`) and the two this module
  * owns: `nomix` and `vendor`. Each family carries its own version baseline, tag
  * naming, and publish set, so releasing one never republishes another
- * ([rationale](../../.agents/notes/implemented/process/2026-08-10-npm-release-sequences.md)).
+ * ([rationale](../../.agents/notes/archived/process/2026-08-10-npm-release-sequences.md)).
  *
  * The family dimension lives here only. A new sequence adds a subclass and a
  * `releaseFamilies()` entry; nothing else in the release scripts branches on it.
@@ -171,7 +171,7 @@ export abstract class ReleaseFamily {
    * reports rather than works around. Peer edges order what they can and are
    * dropped where honouring one would deadlock: sibling packages declare each
    * other as peers, and npm treats an unmet peer as a warning rather than a
-   * resolution failure ([rationale](../../.agents/notes/implemented/process/2026-08-10-npm-release-sequences.md)).
+   * resolution failure ([rationale](../../.agents/notes/archived/process/2026-08-10-npm-release-sequences.md)).
    * Every dropped edge is reported, because dropping one is a decision about a
    * real release rather than an implementation detail.
    * @param members - this family's members.
@@ -394,6 +394,9 @@ class NomixFamily extends ReleaseFamily {
       'package/dist/cli/bin.js',
       'package/dist/plugin-api/index.js',
       'package/dist/sdk/index.js',
+      'package/dist/native/landlock-run/linux-x64/landlock-run',
+      'package/dist/native/landlock-run/linux-arm64/landlock-run',
+      'package/dist/licenses/landlock-run.LICENSE',
     ]) if (!files.includes(required)) throw new Error(`${member.name} carries no ${required.slice('package/'.length)}`)
     if (files.some(file => file.includes('/node_modules/') || file.endsWith('.map') || file.includes('/src/'))) {
       throw new Error(`${member.name} exposes forbidden source, source-map, or node_modules members`)

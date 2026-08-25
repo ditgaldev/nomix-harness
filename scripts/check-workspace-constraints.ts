@@ -31,7 +31,7 @@ const vendoredPackages = new Set([
   '@nomix-ai/cordis-plugin-hmr',
   '@nomix-ai/cordis-plugin-logger-console',
 ])
-const publicLandlockPackages = new Set([
+const embeddedLandlockPackages = new Set([
   '@nomix-ai/node-addon-landlock-run',
   '@nomix-ai/node-addon-landlock-run-linux-arm64',
   '@nomix-ai/node-addon-landlock-run-linux-x64',
@@ -47,12 +47,12 @@ const repositoryUrl = 'git+https://github.com/ditgaldev/nomix-harness.git'
  * their trusted publishing against the repository that runs the workflow.
  */
 const publishedRepositoryUrl = 'git+https://github.com/ditgaldev/nomix-harness.git'
-/** Directories whose packages this repository publishes: one release member each. */
-const releaseMemberDirectory = /^(?:packages\/[^/]+\/[^/]+|apps\/[^/]+|vendor\/[^/]+)$/
+/** Source directories that participate in the aggregate Nomix version line. */
+const releaseMemberDirectory = /^(?:packages\/[^/]+\/[^/]+|apps\/[^/]+)$/
 
 const localArtifactDirs = new Set(['node_modules'])
 const appPackageFiles: Readonly<Record<string, readonly string[]>> = {
-  '@nomix-ai/nomix-harness': ['lib/*.js', 'config'],
+  '@nomix-ai/nomix-harness': ['dist'],
   // The Web build emits sourcemaps for browser debugging; publishing them is
   // what the payload policy forbids, so the bundle ships without them.
   '@nomix-ai/nomix-web-frontend': ['dist', '!dist/**/*.map'],
@@ -224,34 +224,31 @@ function checkWorkspace({ dir, manifest }: WorkspaceManifest): string[] {
   const errors: string[] = []
   const label = manifest.name ?? dir
   const isLandlockPackageDir = dir.startsWith('native/landlock-run/packages/')
-  const isPublicLandlockPackage = isLandlockPackageDir
+  const isEmbeddedLandlockPackage = isLandlockPackageDir
     && manifest.name !== undefined
-    && publicLandlockPackages.has(manifest.name)
+    && embeddedLandlockPackages.has(manifest.name)
 
-  if (isPublicLandlockPackage) {
-    if (manifest.private === true) {
-      errors.push(`${label}: published Landlock package must not set "private": true`)
+  if (isEmbeddedLandlockPackage || dir.startsWith('vendor/')) {
+    if (manifest.private !== true) {
+      errors.push(`${label}: embedded workspace must set "private": true`)
     }
-    if (manifest.publishConfig?.access !== 'public') {
-      errors.push(`${label}: published Landlock package must set publishConfig.access to "public"`)
+    if (manifest.publishConfig !== undefined) {
+      errors.push(`${label}: embedded workspace must not set publishConfig`)
     }
     const expectedDirectory = dir
     if (manifest.repository?.type !== 'git'
       || manifest.repository.url !== repositoryUrl
       || manifest.repository.directory !== expectedDirectory) {
-      errors.push(`${label}: published Landlock package repository must use ${repositoryUrl} with directory ${expectedDirectory} for trusted publishing`)
+      errors.push(`${label}: embedded workspace repository must use ${repositoryUrl} with directory ${expectedDirectory}`)
     }
   } else if (releaseMemberDirectory.test(dir)) {
     // Release members state that they are publishable: npm refuses a private
     // package, and the repository field is how a consumer finds the source of
     // the package it installed.
     //
-    // Access is per release sequence, not per scope: the vendored framework and
-    // the Landlock packages publish publicly because outside consumers install
-    // them, while the nomix family stays restricted until its own sequence goes
-    // public. A mixed scope is why no publish path passes `--access` — one flag
-    // cannot serve both, so each packed manifest decides
-    // ([rationale](../.agents/notes/implemented/process/2026-08-13-public-vendor-and-native-sequences.md)).
+    // These manifests provide the version and payload metadata consumed by the
+    // aggregate builder; only @nomix-ai/nomix-harness reaches npm
+    // ([rationale](../.agents/notes/implemented/process/2026-08-25-single-npm-harness-distribution.md)).
     if (manifest.private === true) {
       errors.push(`${label}: release member must not set "private": true`)
     }
@@ -290,8 +287,8 @@ function checkWorkspace({ dir, manifest }: WorkspaceManifest): string[] {
   }
 
   if (isLandlockPackageDir) {
-    if (!isPublicLandlockPackage) {
-      errors.push(`${label}: unexpected package in the public Landlock package family`)
+    if (!isEmbeddedLandlockPackage) {
+      errors.push(`${label}: unexpected package in the embedded Landlock workspace family`)
     }
     if (manifest.version !== landlockVersion) {
       errors.push(`${label}: package.json version must match Landlock workspace version ${landlockVersion ?? '(missing)'}`)

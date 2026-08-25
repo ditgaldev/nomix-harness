@@ -1,6 +1,6 @@
 /**
- * Build every native tool this host can build, into its per-platform
- * package.
+ * Build every native tool this host can build into its private per-platform
+ * workspace for aggregate Harness assembly.
  *
  * Targets are derived from the checked-in matrix: each
  * `packages/<name>/prebuilds.json` whose `platform` matches this host names
@@ -12,9 +12,8 @@
  * exists here on purpose: native runners replace it, and the audit surface
  * is the reviewed C source plus the CI job that built the binary.
  *
- * Binaries land in `packages/<name>/bin/` — git-ignored (root
- * `.gitignore`), packed into the platform package's npm tarball behind its
- * `prepack` gate (`scripts/verify-launcher-binary.mjs`).
+ * Binaries land in `packages/<name>/bin/` — git-ignored and copied into the
+ * aggregate Harness package after `verify-launcher-binary.mjs` accepts them.
  *
  * Run: `pnpm run build:native` (Linux with musl-gcc on PATH:
  * `apt-get install musl-tools`). Non-Linux hosts fail fast — no platform
@@ -32,7 +31,7 @@ const TOOLS: Record<string, { source: string }> = {
 const repoRoot = resolve(import.meta.dirname, '..')
 
 if (process.platform !== 'linux') {
-  console.error(`build: native tools are built natively per Linux architecture (no cross toolchain) — nothing to build on ${process.platform}. CI's per-arch runners build and rehearse every platform package.`)
+  console.error(`build: native tools are built natively per Linux architecture (no cross toolchain) — nothing to build on ${process.platform}. CI's per-arch runners build and verify every embedded target.`)
   process.exit(1)
 }
 const hostPlatform = `linux-${process.arch}`

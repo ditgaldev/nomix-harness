@@ -2,9 +2,7 @@
   "name": "@nomix-ai/cosmokit",
   "description": "A collection of common utilities",
   "version": "1.8.2",
-  "publishConfig": {
-    "access": "public"
-  },
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ditgaldev/nomix-harness.git",

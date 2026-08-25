@@ -4,7 +4,7 @@
  *
  * Publication happens only from GitHub Actions, so the ref and publishability
  * checks are gates on the workflow, not advisory local warnings
- * ([rationale](../../.agents/notes/implemented/process/2026-08-10-npm-release-sequences.md)).
+ * ([rationale](../../.agents/notes/archived/process/2026-08-10-npm-release-sequences.md)).
  */
 
 import { parseArgs } from 'node:util'

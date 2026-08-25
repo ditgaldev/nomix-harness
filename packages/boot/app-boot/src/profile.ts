@@ -253,7 +253,7 @@ export function healProfilesModuleFallback(installAnchor: string, home: string =
       throw new Error('nomix: packaged kernel manifest must hold a JSON object')
     }
     for (const [packageName, targetRelative] of Object.entries(packaged)) {
-      if (!packageName.startsWith('@nomix-ai/nomix-') || typeof targetRelative !== 'string') {
+      if (!packageName.startsWith('@nomix-ai/') || typeof targetRelative !== 'string') {
         throw new Error(`nomix: invalid packaged kernel manifest entry ${JSON.stringify(packageName)}`)
       }
       const target = resolve(kernelRoot, targetRelative)

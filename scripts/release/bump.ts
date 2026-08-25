@@ -1,7 +1,7 @@
 /**
  * Bump one release family's version and commit it, so the published version is
  * readable from the repository rather than derived inside CI
- * ([rationale](../../.agents/notes/implemented/process/2026-08-10-npm-release-sequences.md)).
+ * ([rationale](../../.agents/notes/archived/process/2026-08-10-npm-release-sequences.md)).
  *
  * The nomix source family shares one version across its members and workspace root,
  * although only its portable CLI artifact is published:

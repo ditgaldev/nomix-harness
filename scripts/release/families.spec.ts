@@ -176,28 +176,27 @@ describe('release families', () => {
     const vendor = releaseFamily('vendor')
     const harness = member('packages/a/library', '@nomix-ai/nomix-library')
     const vendored = member('vendor/cordis', '@nomix-ai/cordis')
+    const completePayload = [
+      'package/dist/cli/bin.js',
+      'package/dist/plugin-api/index.js',
+      'package/dist/plugins/manifest.json',
+      'package/dist/bundles/manifest.json',
+      'package/dist/kernel/manifest.json',
+      'package/dist/sdk/index.js',
+      'package/dist/native/landlock-run/linux-x64/landlock-run',
+      'package/dist/native/landlock-run/linux-arm64/landlock-run',
+      'package/dist/licenses/landlock-run.LICENSE',
+    ]
 
     expect(() => { nomix.validatePayload(harness, ['package/lib/index.js', 'package/src/index.ts']) })
       .toThrow(/publishes source file/)
     expect(() => {
-      nomix.validatePayload(harness, [
-        'package/dist/cli/bin.js',
-        'package/dist/plugin-api/index.js',
-        'package/dist/plugins/manifest.json',
-        'package/dist/bundles/manifest.json',
-        'package/dist/kernel/manifest.json',
-        'package/dist/sdk/index.js',
-      ])
+      nomix.validatePayload(harness, completePayload)
     }).not.toThrow()
     expect(() => { nomix.validatePayload(harness, ['package/dist/cli/bin.js']) }).toThrow(/carries no dist\/plugins\/manifest.json/)
     expect(() => {
       nomix.validatePayload(harness, [
-        'package/dist/cli/bin.js',
-        'package/dist/plugin-api/index.js',
-        'package/dist/plugins/manifest.json',
-        'package/dist/bundles/manifest.json',
-        'package/dist/kernel/manifest.json',
-        'package/dist/sdk/index.js',
+        ...completePayload,
         'package/dist/node_modules/example/index.js',
       ])
     }).toThrow(/forbidden source, source-map, or node_modules/)

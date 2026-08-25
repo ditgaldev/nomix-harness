@@ -16,7 +16,9 @@ describe('npm Harness workspace classification', () => {
     expect(classifyWorkspace('packages/boot/app-boot')).toBe('runtime')
     expect(classifyWorkspace('packages/sdk/client')).toBe('sdk')
     expect(classifyWorkspace('packages/test-support/loader-smoke')).toBe('development-only')
-    expect(classifyWorkspace('vendor/cordis')).toBe('separate-distribution')
+    expect(classifyWorkspace('vendor/cordis')).toBe('runtime')
+    expect(classifyWorkspace('native/landlock-run/packages/entry')).toBe('runtime')
+    expect(classifyWorkspace('native/landlock-run/packages/linux-x64')).toBe('separate-distribution')
   })
 
   it('rejects an unclassified workspace', () => {

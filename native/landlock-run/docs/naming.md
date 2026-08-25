@@ -1,8 +1,8 @@
 # Naming
 
-## npm packages
+## Private workspaces
 
-The public package family belongs to the `@nomix-ai` scope and uses the `node-addon-landlock-run` package prefix; platform packages append platform information only:
+The source workspaces use the `@nomix-ai/node-addon-landlock-run` prefix but set `private: true` and never publish independently:
 
 ```text
 @nomix-ai/node-addon-landlock-run
@@ -13,7 +13,7 @@ Platform suffixes carry no libc component (binaries are static musl) and no vari
 
 ## Binaries
 
-The launcher executable is `landlock-run`, shipped at `bin/landlock-run` inside each platform package.
+The launcher executable is `landlock-run`, built at `bin/landlock-run` in each platform workspace and shipped under `dist/native/landlock-run/<platform>/landlock-run` in Harness.
 
 ## Environment variables
 

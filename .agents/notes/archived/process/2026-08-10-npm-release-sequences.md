@@ -1,6 +1,7 @@
 # Agent Note: npm publication as three independent sequences
 
 Status: implemented
+Archived: 2026-08-25
 
 English | [中文](2026-08-10-npm-release-sequences.zh.md)
 

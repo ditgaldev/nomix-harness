@@ -6,7 +6,7 @@
  * version whose published tarball has the same integrity is skipped, and a
  * version whose published tarball differs fails the run — that last case means
  * the content changed without a version bump
- * ([rationale](../../.agents/notes/implemented/process/2026-08-10-npm-release-sequences.md)).
+ * ([rationale](../../.agents/notes/archived/process/2026-08-10-npm-release-sequences.md)).
  *
  * Skipping on identical integrity is what makes re-running the publish step over
  * the same artifact safe.
@@ -170,14 +170,14 @@ async function publishTarball(
   }
 }
 
-/** Publish the family named by `--family` from the directory named by `--from`. */
+/** Publish the aggregate Nomix package from the directory named by `--from`. */
 async function main(): Promise<void> {
   const { values } = parseArgs({
     options: { family: { type: 'string' }, from: { type: 'string' } },
     allowPositionals: false,
   })
-  if (values.family === undefined || values.from === undefined) {
-    throw new Error('usage: publish.ts --family <nomix|vendor> --from <packed directory>')
+  if (values.family !== 'nomix' || values.from === undefined) {
+    throw new Error('usage: publish.ts --family nomix --from <packed directory>')
   }
 
   const family = releaseFamily(values.family)

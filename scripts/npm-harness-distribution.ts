@@ -38,9 +38,9 @@ const TEXT_EXTENSIONS = new Set(['.js', '.mjs', '.cjs', '.d.ts', '.json', '.yml'
 /** Classify a workspace by ownership and runtime role. */
 export function classifyWorkspace(directory: string): WorkspaceDistribution {
   const normalized = directory.replaceAll('\\', '/')
-  if (normalized.startsWith('vendor/') || normalized.startsWith('native/') || normalized.startsWith('python/')) {
-    return 'separate-distribution'
-  }
+  if (normalized.startsWith('vendor/')) return 'runtime'
+  if (normalized === 'native/landlock-run/packages/entry') return 'runtime'
+  if (normalized.startsWith('native/') || normalized.startsWith('python/')) return 'separate-distribution'
   if (normalized === 'website' || normalized.startsWith('packages/test-support/') || normalized.startsWith('packages/examples/')) {
     return 'development-only'
   }
@@ -242,6 +242,42 @@ function copyRuntimeFiles(pkg: WorkspacePackage, destination: string): void {
   }
 }
 
+/** Copy every checked-in Landlock platform target into the aggregate package. */
+function copyLandlockPrebuilds(destinationRoot: string): void {
+  const manifests = globSync('native/landlock-run/packages/linux-*/prebuilds.json', { cwd: ROOT }).sort()
+  if (manifests.length === 0) throw new Error('Landlock distribution declares no platform prebuilds')
+  for (const manifestPath of manifests) {
+    const manifest = readJson(join(ROOT, manifestPath))
+    const platform = manifest.platform
+    const binaries = manifest.binaries
+    if (typeof platform !== 'string' || !/^[a-z0-9]+-[a-z0-9]+$/u.test(platform)) {
+      throw new Error(`${manifestPath} declares an invalid platform`)
+    }
+    if (!Array.isArray(binaries) || binaries.length === 0) {
+      throw new Error(`${manifestPath} declares no binaries`)
+    }
+    for (const binary of binaries) {
+      if (binary === null || typeof binary !== 'object' || Array.isArray(binary)) {
+        throw new Error(`${manifestPath} contains an invalid binary entry`)
+      }
+      const binaryPath = (binary as Record<string, unknown>).path
+      if (typeof binaryPath !== 'string' || !/^bin\/[a-z0-9-]+$/u.test(binaryPath)) {
+        throw new Error(`${manifestPath} contains an invalid binary path`)
+      }
+      const source = join(ROOT, dirname(manifestPath), binaryPath)
+      if (!existsSync(source)) throw new Error(`built Landlock binary is missing: ${source}`)
+      const target = join(destinationRoot, 'dist', 'native', 'landlock-run', platform, basename(binaryPath))
+      mkdirSync(dirname(target), { recursive: true })
+      cpSync(source, target)
+      if ((statSync(target).mode & 0o111) === 0) throw new Error(`embedded Landlock binary is not executable: ${target}`)
+    }
+  }
+  const license = join(ROOT, 'native', 'landlock-run', 'LICENSE')
+  const target = join(destinationRoot, 'dist', 'licenses', 'landlock-run.LICENSE')
+  mkdirSync(dirname(target), { recursive: true })
+  cpSync(license, target)
+}
+
 function normalizedDependencyVersion(name: string, range: string, all: ReadonlyMap<string, WorkspacePackage>): string {
   if (!range.startsWith('workspace:')) return range
   const version = all.get(name)?.manifest.version
@@ -311,7 +347,7 @@ function aggregateDependencies(
       const values = pkg.manifest[section]
       if (values === null || typeof values !== 'object' || Array.isArray(values)) continue
       for (const [name, raw] of Object.entries(values)) {
-        if (internal.has(name) || typeof raw !== 'string') continue
+        if (internal.has(name) || name.startsWith('@nomix-ai/node-addon-landlock-run-linux-') || typeof raw !== 'string') continue
         const range = normalizedDependencyVersion(name, raw, all)
         const target = section === 'optionalDependencies' || name.startsWith('@nomix-ai/node-addon-')
           ? optionalDependencies
@@ -389,7 +425,7 @@ export function buildNpmHarnessDistribution(destinationRoot: string): void {
   const byName = new Map(packages.map(pkg => [pkg.name, pkg]))
   const included = packages.filter(pkg => ['plugin', 'bundle', 'runtime', 'sdk'].includes(pkg.classification)
     && pkg.name !== '@nomix-ai/nomix-harness')
-  const internal = new Map(included.filter(pkg => pkg.name.startsWith(INTERNAL_PREFIX)).map(pkg => [pkg.name, pkg]))
+  const internal = new Map(included.filter(pkg => pkg.name.startsWith('@nomix-ai/')).map(pkg => [pkg.name, pkg]))
   const harness = byName.get('@nomix-ai/nomix-harness')
   if (harness === undefined) throw new Error('workspace has no @nomix-ai/nomix-harness package')
 
@@ -401,6 +437,7 @@ export function buildNpmHarnessDistribution(destinationRoot: string): void {
     cpSync(source, target)
   }
   for (const pkg of included) copyRuntimeFiles(pkg, join(destinationRoot, 'dist', 'kernel', pkg.id))
+  copyLandlockPrebuilds(destinationRoot)
   for (const file of globSync('dist/{cli,kernel}/**/*', { cwd: destinationRoot })) {
     const path = join(destinationRoot, file)
     if (!statSync(path).isFile()) continue
