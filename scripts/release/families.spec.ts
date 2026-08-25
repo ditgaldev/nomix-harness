@@ -24,6 +24,8 @@ describe('release families', () => {
 
     expect(nomix.tagFor(cli)).toBe('nomix-v0.0.1')
     expect(vendor.tagFor(cordis)).toBe('vendor-cordis-v4.0.1')
+    expect(nomix.publicationRefs([cli])).toEqual(['refs/heads/npm-nomix-harness'])
+    expect(vendor.publicationRefs([cordis])).toEqual(['refs/tags/vendor-cordis-v4.0.1'])
     // The prefix is constructed, not recovered from a tag: a version with a
     // hyphen would defeat any suffix-stripping.
     expect(vendor.tagPrefixFor({ ...cordis, version: '4.0.0-rc.7' })).toBe('vendor-cordis-v')

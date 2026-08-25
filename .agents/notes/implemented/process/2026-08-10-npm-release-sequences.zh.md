@@ -30,7 +30,7 @@ CLI、vendor 框架和 native 启动器各自一条 bump 序列、各自一次�
 
 ### 版本由本地命令写进仓库，CI 只核对与上传
 
-每条序列有一条 bump-and-commit 命令：算出目标版本，写进相关 manifest，跑 `pnpm install --lockfile-only`，再把 manifest 连 lockfile 一起 commit。发布版本因此在仓库里查得到。tag 由人工在 commit 合入 master 后打；CI 不写仓库，也不需要写权限。
+每条序列有一条 bump-and-commit 命令：算出目标版本，写进相关 manifest，跑 `pnpm install --lockfile-only`，再把 manifest 连 lockfile 一起 commit。发布版本因此在仓库里查得到。Nomix 从向 `npm-nomix-harness` 的 push 发布；vendor 发布 tag 仍由人工创建，作为 commit 指针。CI 不写仓库，也不需要写权限。
 
 `release:nomix` 接受 `major`、`minor`、`patch` 或显式版本号，并把该版本写入产品源码包、apps 与 workspace 根。虽然只有 CLI 根包会成为 registry package，这仍会让 deployed tree 中各包的身份保持一致。版本带预发布段就发布到 `next`，否则进入 `latest`。
 
@@ -98,7 +98,7 @@ tag 只是 commit 指针，不是发布成功的证明。bump 会向 registry �
 | `ReleaseMember` | 一个可发布包：目录、包名、版本、manifest |
 | `publishOrder` | 按 npm 会安装的依赖段加 peer 声明做拓扑序，同层按包名排；安装依赖成环是报错而不是随意定序，任何排不进去的 peer 边被丢弃并点名 |
 | `pack` | 把整族打进一个目录并记录上传顺序 |
-| `verify` | 族的版本基线、完整打印出来的发布顺序；发布时还要求本次运行来自该族的 tag、且成员可发布 |
+| `verify` | 族的版本基线、完整打印出来的发布顺序；发布时还要求本次运行来自获准发布的 Git ref、且成员可发布 |
 | `verify-packed-install` | 把一个或多个 pack 目录的 tarball 装进一次性 consumer，并驱动已安装的可执行入口 |
 | `publish` | 上面那三态 |
 | `process` / `tarball` | 启动命令、读取打包 tarball 的唯一正家，其中的入口守卫让每个脚本都可被 import |
@@ -109,7 +109,7 @@ nomix 族只对 CLI 自身文件应用仓库发布 payload 策略；其 bundled 
 
 `pack` job 对 CLI 及其生产依赖运行 `pnpm deploy` 并物化其中的链接。它移除已按构建机平台选出的 `sharp`、`koffi` 与 `node-addon-require-builtin`，把它们的精确版本声明为普通 npm 依赖，再把其余依赖树压缩成单个 `nomix-runtime.tgz` 成员，并把可移植包放到标准的 `package/` 归档根下。因此，这些包装器的原生 optional packages 由 npm 根据消费者的操作系统和架构选择，而不是把打包机上的 Linux 二进制交给消费者。安装生命周期使用宿主机的 `tar` 命令恢复运行时，避免 Windows 通过 JavaScript 创建整棵文件树耗费数分钟；只有 `tar` 不存在时才回退到随包提供的 JavaScript 解压器。禁用 package 脚本或 optional dependencies 的安装方式不受支持。pack 会在安装一次 tarball、通过已安装的 npm-exec bin 检查 `nomix --version` 并通过 `nomix web --help` 加载 Web 应用之前，拒绝根目录之外的路径、硬链接条目、缺失的运行时归档，或作为 npm 成员暴露的展开运行时。Windows x64 与 macOS job 会对 Linux 生成的同一 tarball 重复这项安装产物探针，之后发布才能开始。`publish` job 下载并上传这些已验证的字节，不再构建。内部 workspace 包仍是仓库和安装产物中的实现单元，不再是独立 npm 发布。
 
-`pack` 无凭据，在每个 pull request 和每次 master push 上跑，所以一个 pull request 就能证明发布集仍能完整打出来。`publish` 是手动 dispatch，挂在 `npm-publish` environment 后面等人工审批，且既不构建也不重建——它上传的就是 pack 产出的字节。pack 的 run 按 ref 分组，并发的 pull request 不会互相顶掉；全局分组落在 publish job 上，因为 dist-tag 是共享的 registry 状态。
+`pack` 无凭据，在每个 pull request、每次向 `npm-nomix-harness` 的 push 和每次 `nomix-v*` 标签 push 上跑，所以 pull request 或版本标签都能证明发布集仍能完整打出来。`publish` 只为 `npm-nomix-harness` 运行，挂在 `npm-publish` environment 后面等人工审批，且既不构建也不重建——它上传的就是 pack 产出的字节。pack 的 run 按 ref 分组，并发的 pull request 不会互相顶掉；可能发布的分支 run 不会取消，且全局分组落在 publish job 上，因为 dist-tag 是共享的 registry 状态。
 
 nomix 的验证会一并安装 vendored 族的 pack 产物。harness 的包把 vendored 框架声明成 peer，而那些包属于另一条序列，无凭据的 job 无法从私有 registry 取到——所以 `release.yml` 为验证而打包 vendored 族，发布的仍只有自己那一份。
 
@@ -144,7 +144,7 @@ nomix 的验证会一并安装 vendored 族的 pack 产物。harness 的包把 v
 
 **只按版本号判断「是否已发布」，不比对内容。** 参照流程根本不查 registry：publish 逐个上传，重复版本由 npm 拒绝。只按版本号跳过会漏掉「改了代码没 bump」，而这是唯一会安静地把旧字节留在 registry 上的错误。代价是引入一次 registry 查询和对构建可复现性的依赖。
 
-**只做打包后安装验证，不起本地 registry。** 参照流程是把 tarball 解包成一棵树、用普通 Node 驱动，这绕过了版本范围解析。曾提议在 CI 里起本地 registry 补这一层，被否：产物正确性已由既有测试覆盖，发布路径由 master 的排练覆盖，而 pull request 只需证明发布集能打出来。用 `file:` 说明符安装依然会对每个内部依赖走一遍范围解析。
+**只做打包后安装验证，不起本地 registry。** 参照流程是把 tarball 解包成一棵树、用普通 Node 驱动，这绕过了版本范围解析。曾提议在 CI 里起本地 registry 补这一层，被否：产物正确性已由既有测试覆盖，发布路径由专用发布分支覆盖，而 pull request 只需证明发布集能打出来。用 `file:` 说明符安装依然会对每个内部依赖走一遍范围解析。
 
 **按入口闭包挑一部分包发。** 从 `@nomix-ai/nomix-harness` 与 `@nomix-ai/nomix-web-frontend` 沿 `dependencies` 爬得到 156 个包，比全量少 61 个。但本仓的插件是 `cordis.yml` 按名字挂载的、不是被 import 的：`vendor/cordis-plugin-group` 与 `vendor/cordis-plugin-logger-console` 落在依赖闭包之外，却是运行时必需。照代码依赖挑的失败形态是「消费方装完起不来」，而且要额外持续证明「没漏任何挂载项」。私有 scope 下多出来的包对组织外不可见。`python/`、根 `examples/`、`docs/` 与 `website/` 不是成员。
 

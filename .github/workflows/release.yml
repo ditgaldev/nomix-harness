@@ -3,7 +3,7 @@ name: Release (Nomix)
 on:
   pull_request:
   push:
-    branches: [codex/npm-native-harness]
+    branches: [npm-nomix-harness]
     tags: ['nomix-v*']
 
 permissions:
@@ -11,7 +11,7 @@ permissions:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/nomix-v') }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/npm-nomix-harness' }}
 
 env:
   PRIMARY_NODE_VERSION: '24'
@@ -43,7 +43,7 @@ jobs:
 
       - name: Verify release version
         env:
-          RELEASE_PUBLISH: ${{ startsWith(github.ref, 'refs/tags/nomix-v') && 'true' || 'false' }}
+          RELEASE_PUBLISH: ${{ github.ref == 'refs/heads/npm-nomix-harness' && 'true' || 'false' }}
         run: pnpm run release:verify --family nomix
 
       - name: Verify Nomix branding
@@ -126,7 +126,7 @@ jobs:
 
   publish:
     name: Publish npm package with provenance
-    if: startsWith(github.ref, 'refs/tags/nomix-v')
+    if: github.ref == 'refs/heads/npm-nomix-harness'
     needs: [pack, verify-platform, verify-consumer]
     runs-on: ubuntu-24.04
     environment: npm-publish
@@ -169,7 +169,7 @@ jobs:
       - name: Verify version, latest, integrity, and provenance
         shell: bash
         run: |
-          version="${GITHUB_REF_NAME#nomix-v}"
+          version=$(node -p "require('./apps/cli/package.json').version")
           for attempt in {1..18}; do
             published=$(npm view @nomix-ai/nomix-harness version --registry https://registry.npmjs.org 2>/dev/null || true)
             latest=$(npm view @nomix-ai/nomix-harness dist-tags.latest --registry https://registry.npmjs.org 2>/dev/null || true)

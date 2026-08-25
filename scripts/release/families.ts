@@ -108,7 +108,7 @@ export interface InstalledEntry {
   readonly startupOutput?: string
 }
 
-/** A release sequence: its version members, publish set, and tag naming. */
+/** A release sequence: its version members, publish set, tag naming, and publication refs. */
 export abstract class ReleaseFamily {
   /** Workflow-facing identifier, also the `--family` argument. */
   abstract readonly id: string
@@ -119,7 +119,7 @@ export abstract class ReleaseFamily {
   /** How each member becomes a publishable tarball. */
   abstract readonly packing: 'package' | 'native-bundle'
 
-  /** Git tag prefix this family publishes from. */
+  /** Git tag prefix used to record this family's versions. */
   abstract readonly tagPrefix: string
 
   /**
@@ -303,12 +303,21 @@ export abstract class ReleaseFamily {
   abstract tagPrefixFor(member: ReleaseMember): string
 
   /**
-   * The tag a member publishes from.
+   * The version tag recorded for a member.
    * @param member - the member being published.
    * @returns The full tag name, without `refs/tags/`.
    */
   tagFor(member: ReleaseMember): string {
     return `${this.tagPrefixFor(member)}${member.version}`
+  }
+
+  /**
+   * Git refs permitted to publish this family.
+   * @param members - members selected for publication.
+   * @returns Full Git refs accepted by the release verifier.
+   */
+  publicationRefs(members: readonly ReleaseMember[]): readonly string[] {
+    return [...new Set(members.map(member => `refs/tags/${this.tagFor(member)}`))]
   }
 
   /**
@@ -331,6 +340,11 @@ class NomixFamily extends ReleaseFamily {
   readonly patterns = ['packages/*/*/package.json', 'apps/*/package.json'] as const
   readonly packing = 'native-bundle' as const
   readonly tagPrefix = 'nomix-v'
+
+  /** Publish Nomix only from its dedicated npm release branch. */
+  override publicationRefs(): readonly string[] {
+    return ['refs/heads/npm-nomix-harness']
+  }
 
   /**
    * Publish only the aggregate Harness package; its dist tree contains the
