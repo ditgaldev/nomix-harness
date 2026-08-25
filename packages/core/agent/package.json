@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-agent",
   "description": "Agent interface, registry, initiator scope, and event vocabulary for the Nomix Harness",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "publishConfig": {
     "access": "public"
   },

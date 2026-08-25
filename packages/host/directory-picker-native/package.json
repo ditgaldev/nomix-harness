@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-host-directory-picker-native",
   "description": "Native-OS-chooser backend of the directory-picker seam for the Nomix Harness web GUI host",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "publishConfig": {
     "access": "public"
   },
