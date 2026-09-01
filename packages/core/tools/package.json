@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-tools",
   "description": "Tool registry and execution pipeline for the Nomix Harness",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "publishConfig": {
     "access": "public"
   },

@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-client-ui-brand-official",
   "description": "Official Nomix Harness brand occupants for the Web client's sidebar and conversation Hero slots",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "publishConfig": {
     "access": "public"
   },
