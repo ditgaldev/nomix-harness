@@ -104,8 +104,8 @@ jobs:
           RELEASE_PUBLISH: ${{ github.ref == 'refs/heads/npm-nomix-harness' && 'true' || 'false' }}
         run: pnpm run release:verify --family nomix
 
-      - name: Build workspaces
-        run: pnpm run build
+      - name: Build official workspaces
+        run: pnpm run build:official
 
       - name: Pack release tarball
         run: pnpm run release:pack --family nomix --out dist/npm
