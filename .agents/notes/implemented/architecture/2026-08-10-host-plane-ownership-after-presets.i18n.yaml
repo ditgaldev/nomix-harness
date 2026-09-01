@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-08-10-host-plane-ownership-after-presets.md
 2026-08-10-host-plane-ownership-after-presets.md: c0d99c6fb7ad039e84cc6d26680029cef1059627
-2026-08-10-host-plane-ownership-after-presets.zh.md: 748036a1ecdf0bcb690c5041be00a49f8e038403
+2026-08-10-host-plane-ownership-after-presets.zh.md: 2d078e4c5c8f60f34263e9065fb6f0126df4291d

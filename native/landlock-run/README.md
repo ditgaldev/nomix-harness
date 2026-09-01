@@ -2,17 +2,25 @@
 
 English | [中文](README.zh.md)
 
-A [Landlock](https://landlock.io/) self-restrict-then-exec launcher for confining subprocesses on Linux, embedded in the aggregate Nomix Harness npm package with a thin JS entry module that resolves the binary and speaks its CLI contract.
+A [Landlock](https://landlock.io/) self-restrict-then-exec launcher for confining subprocesses on Linux, distributed as prebuilt per-platform npm packages plus a thin JS entry package that resolves the binary and speaks its CLI contract. Built for agent harnesses and other hosts that need to run untrusted commands under a filesystem allow-list without confining themselves.
 
 The tool is **`landlock-run`** — a self-restrict-then-exec [Landlock](https://landlock.io/) launcher (~300 lines of C11 over the raw kernel UAPI, statically linked against musl). It installs a Landlock ruleset on itself and `exec`s the wrapped command; the ruleset is inherited across `execve`, so the command and every process it spawns run confined while the invoking process stays unrestricted. Fail-closed: if the kernel cannot enforce, it exits without running the command.
 
 ## Install
 
 ```sh
-npm install @nomix-ai/nomix-harness
+npm install @nomix-ai/node-addon-landlock-run
 ```
 
-The Landlock workspaces are private and publish no standalone npm packages. Harness carries both supported Linux binaries; there is no install-time build fallback. On an unsupported host the resolved path never exists, the probe reports `unusable`, and the consumer falls closed.
+Published packages use an entry package plus platform optional packages:
+
+```text
+@nomix-ai/node-addon-landlock-run
+@nomix-ai/node-addon-landlock-run-linux-x64
+@nomix-ai/node-addon-landlock-run-linux-arm64
+```
+
+npm's `os`/`cpu` fields make installers fetch only the matching platform package. There is no install-time build fallback on purpose: on a host without a platform package the resolved path never exists, the probe reports `unusable`, and the consumer falls closed.
 
 ## Usage
 
@@ -26,7 +34,7 @@ if (probe(launcher) !== 'unusable') {
 }
 ```
 
-The internal entry API is intentionally small:
+The public API is intentionally small:
 
 - `launcherPath()`: absolute path of this host's launcher (existence deliberately unchecked — the probe is the availability signal).
 - `probe(launcher?, { timeoutMs? })`: functional enforcement probe — `'full' | 'partial' | 'unusable'`.
@@ -37,7 +45,7 @@ The full binary contract (argv grammar, exit codes, report lines) is pinned in [
 
 ## Support
 
-linux-x64 and linux-arm64, kernel with Landlock enabled (5.13+; ABI level determines `full` vs `partial` enforcement — see [docs/support-matrix.md](docs/support-matrix.md)). Other platforms deliberately have no embedded launcher: consumers run different confinement backends there.
+linux-x64 and linux-arm64, kernel with Landlock enabled (5.13+; ABI level determines `full` vs `partial` enforcement — see [docs/support-matrix.md](docs/support-matrix.md)). Other platforms deliberately have no package: consumers run different confinement backends there.
 
 ## Development
 
@@ -49,4 +57,4 @@ pnpm build:native    # this Linux architecture's binaries (apt-get install musl-
 pnpm test
 ```
 
-Binaries are git-ignored and built natively per architecture — locally for your own machine, by CI's per-arch runners for the aggregate Harness artifact. Release flow: [docs/release.md](docs/release.md).
+Binaries are git-ignored and built natively per architecture — locally for your own machine, by CI's per-arch runners as the builders of record. Release flow: [docs/release.md](docs/release.md).

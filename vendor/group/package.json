@@ -2,7 +2,9 @@
   "name": "@nomix-ai/cordis-plugin-group",
   "description": "Nested plugin group for cordis",
   "version": "1.0.1",
-  "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ditgaldev/nomix-harness.git",

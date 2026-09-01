@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/proposed/architecture/2026-08-10-unary-apiproxy-remote-migration.md
 2026-08-10-unary-apiproxy-remote-migration.md: 618f935c5af67c22b8e7f28c68d7b02bd9fbbcbf
-2026-08-10-unary-apiproxy-remote-migration.zh.md: c38e6ee7cc78cc30d3c5698b4da1c2b565a8ede7
+2026-08-10-unary-apiproxy-remote-migration.zh.md: 57c4f62b3f7c3a7013e8f8dfd762dba3004dc6df

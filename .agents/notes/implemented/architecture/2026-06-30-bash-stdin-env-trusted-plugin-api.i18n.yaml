@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-06-30-bash-stdin-env-trusted-plugin-api.md
 2026-06-30-bash-stdin-env-trusted-plugin-api.md: 8ca5201ab2021d8c4d1796c2c94b7fff80a7250d
-2026-06-30-bash-stdin-env-trusted-plugin-api.zh.md: e9ef73685153e10aaca9bce750fd6b63b19b1ae4
+2026-06-30-bash-stdin-env-trusted-plugin-api.zh.md: 7cbce333821d7fd70d5900baecaf2834747f3f20

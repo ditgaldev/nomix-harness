@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-client-ui-theme",
   "description": "Theme plugin: Host bootstrap for the pre-plugin palette; DOM-free ThemeRuntime for light/dark/system state; --dsw-* token styles and Appearance settings row",
-  "version": "0.2.5",
+  "version": "0.1.1-rc.2",
   "publishConfig": {
     "access": "public"
   },
@@ -26,7 +26,6 @@
       "types": "./lib/types/client/index.d.ts",
       "default": "./lib/client.js"
     },
-    "./styles/*": "./lib/styles/*",
     "./src/*": "./src/*",
     "./package.json": "./package.json"
   },
@@ -50,16 +49,15 @@
     "@nomix-ai/nomix-client-connection": "workspace:^",
     "@nomix-ai/nomix-client-locale": "workspace:^",
     "@nomix-ai/nomix-client-runtime": "workspace:^",
-    "@nomix-ai/nomix-client-ui-primitives": "workspace:^",
     "@nomix-ai/nomix-client-ui-settings": "workspace:^",
-    "@nomix-ai/nomix-client-ui-slots": "workspace:^",
     "@nomix-ai/nomix-host-webserver": "workspace:^",
     "@nomix-ai/nomix-invariants": "workspace:^",
-    "react": "^18.2.0"
+    "@nomix-ai/nomix-settings": "workspace:^"
   },
   "devDependencies": {
     "@nomix-ai/cordis": "workspace:^",
     "@nomix-ai/nomix-api-remotes": "workspace:^",
+    "@nomix-ai/nomix-client-connection": "workspace:^",
     "@nomix-ai/nomix-client-locale": "workspace:^",
     "@nomix-ai/nomix-client-runtime": "workspace:^",
     "@nomix-ai/nomix-client-test-runtime": "workspace:^",
@@ -68,6 +66,7 @@
     "@nomix-ai/nomix-client-ui-slots": "workspace:^",
     "@nomix-ai/nomix-host-webserver": "workspace:^",
     "@nomix-ai/nomix-invariants": "workspace:^",
+    "@nomix-ai/nomix-settings": "workspace:^",
     "@types/react": "~18.3.1",
     "react": "^18.2.0"
   },
@@ -83,7 +82,6 @@
     "watch": "tsdown --watch"
   },
   "dependencies": {
-    "@nomix-ai/nomix-settings": "workspace:^",
     "clsx": "^2.0.0",
     "@nomix-ai/schemastery": "workspace:^"
   }

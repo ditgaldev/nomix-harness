@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-07-20-routed-model-context-and-compaction-policy.md
 2026-07-20-routed-model-context-and-compaction-policy.md: a9bc32999fecda3d4a109339e6a979a333577c84
-2026-07-20-routed-model-context-and-compaction-policy.zh.md: 96d91f3ca24c4db2c4bf028efd84a2abfc887fcd
+2026-07-20-routed-model-context-and-compaction-policy.zh.md: a001e7425b8fdd6c221f3dcc9e2bd1f9abac7c3d

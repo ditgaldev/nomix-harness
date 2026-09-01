@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-07-21-instruction-load-all-dedup.md
 2026-07-21-instruction-load-all-dedup.md: 7d9facd6c045a77b6fa8238072166ecbd727f8ae
-2026-07-21-instruction-load-all-dedup.zh.md: 8b10beb7591445dd80dd765342b0f46271cf31cd
+2026-07-21-instruction-load-all-dedup.zh.md: b3a2cd1a1a5615e29b61e811acae8c6fa38f3428

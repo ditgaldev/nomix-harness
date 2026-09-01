@@ -4,16 +4,20 @@ import type { Context } from '@nomix-ai/cordis'
 import commandsRemote from '@nomix-ai/nomix-commands/remote'
 import goalsRemote from '@nomix-ai/nomix-goal/remote'
 import dynamicRemote from '@nomix-ai/nomix-cordis-host-runner/remote'
+import fileReferencesRemote from '@nomix-ai/nomix-file-reference/remote'
 import pluginInventoryRemote from '@nomix-ai/nomix-host-plugin-inventory/remote'
 import messageFeedbackRemote from '@nomix-ai/nomix-message-feedback/remote'
+import sessionReferencesRemote from '@nomix-ai/nomix-session-reference/remote'
 import type { TypertClientRemote } from '@nomix-ai/nomix-typert-protocol'
 
 export type { TypertClientRemote as ClientRemote } from '@nomix-ai/nomix-typert-protocol'
 export type { PluginInventorySnapshot } from '@nomix-ai/nomix-host-plugin-inventory/types'
 export type {} from '@nomix-ai/nomix-commands/remote'
+export type {} from '@nomix-ai/nomix-file-reference/remote'
 export type {} from '@nomix-ai/nomix-goal/remote'
 export type {} from '@nomix-ai/nomix-host-plugin-inventory/remote'
 export type {} from '@nomix-ai/nomix-message-feedback/remote'
+export type {} from '@nomix-ai/nomix-session-reference/remote'
 // The forwarded-event allowlist's selection seat: without it in the consumer's
 // compilation face `TypertRemoteEvent` is `never` and every `$on` call fails.
 export type { ApiRemoteForwardedEvent } from '../types.ts'
@@ -86,6 +90,10 @@ export type {
 // reason: a Client contribution names what it sends without importing a Host
 // package, and this assembly is where both planes legitimately meet.
 export type { JsonValue } from '@nomix-ai/nomix-session/types'
+// Reference-discovery result vocabulary for the fileReferences and
+// sessionReferenceResolver namespaces.
+export type { FileReferenceCandidate } from '@nomix-ai/nomix-file-reference/types'
+export type { SessionReferenceMentionCandidate } from '@nomix-ai/nomix-session-reference/types'
 
 declare module '@nomix-ai/cordis' {
   interface Context {
@@ -106,7 +114,8 @@ export async function apply(ctx: Context): Promise<() => Promise<void>> {
   const disposers: Array<() => Promise<void>> = []
   try {
     for (const contribution of [
-      commandsRemote, goalsRemote, dynamicRemote, pluginInventoryRemote, messageFeedbackRemote,
+      commandsRemote, goalsRemote, dynamicRemote, fileReferencesRemote,
+      pluginInventoryRemote, messageFeedbackRemote, sessionReferencesRemote,
     ]) {
       disposers.push(await ctx.remote.$mount(contribution))
     }

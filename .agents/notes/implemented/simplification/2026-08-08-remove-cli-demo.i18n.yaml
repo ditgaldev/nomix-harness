@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/simplification/2026-08-08-remove-cli-demo.md
 2026-08-08-remove-cli-demo.md: 78441a1976ce569d3efcbf18a8593eb866f0843c
-2026-08-08-remove-cli-demo.zh.md: 641bd57addb80c0320c5a0717fa70fa35acbb936
+2026-08-08-remove-cli-demo.zh.md: 570a13c56292a5046328216af67b5716198a1f16

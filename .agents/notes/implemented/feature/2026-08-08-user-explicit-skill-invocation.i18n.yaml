@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-08-08-user-explicit-skill-invocation.md
 2026-08-08-user-explicit-skill-invocation.md: 7a6ec94217d8eb63e54957ad51255745fff32592
-2026-08-08-user-explicit-skill-invocation.zh.md: b799d89538c52c7071df1c6bd870302824359777
+2026-08-08-user-explicit-skill-invocation.zh.md: 346554f37d63d5a9a728af4a30feb5cc9f12c785

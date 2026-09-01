@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/examples/agent-spine-demo/README.md
 README.md: 1ed65d272cf515e269488411d8150ffefeffa3ab
-README.zh.md: 152d592e18fb2a1ba7022558a52c78b3d1504c36
+README.zh.md: 4d0448d23e551383d539e71e17d9ad62bf9d4412

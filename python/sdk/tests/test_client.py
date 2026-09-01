@@ -1,8 +1,7 @@
 from __future__ import annotations
 
-import importlib.util
-import inspect
 import json
+import inspect
 import sys
 import threading
 import time
@@ -11,14 +10,6 @@ from pathlib import Path
 import pytest
 
 from nomix_harness import NomixHarness, HarnessClient, HarnessConfig, Notification, SdkProtocolError
-
-
-def test_removed_product_names_do_not_fall_back(monkeypatch: pytest.MonkeyPatch) -> None:
-    old_prefix = "D" + "SH"
-    monkeypatch.setenv(f"{old_prefix}_HOME", "/legacy")
-    with pytest.raises(RuntimeError, match="NOMIX_HOME"):
-        HarnessClient()
-    assert importlib.util.find_spec("deepseek" + "_harness") is None
 
 
 def test_high_level_sdk_runs_turn_and_collects_final_response(tmp_path: Path) -> None:

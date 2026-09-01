@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-07-28-feedback-command.md
 2026-07-28-feedback-command.md: 2655c98083ac7626629296959616c55d55eb14c2
-2026-07-28-feedback-command.zh.md: bda94f01c28c17b6d20efe2d9f4fbd442bf3a7c2
+2026-07-28-feedback-command.zh.md: f750603d7024ed7fc954ca47f73e83d1171915be

@@ -22,12 +22,6 @@ Each renamed family has one vocabulary. Its directory, npm package name, imports
 
 No family exposes two public vocabularies.
 
-### Publish the fork under one npm namespace
-
-The repository publishes its owned packages under `@nomix-ai`. The CLI package is `@nomix-ai/nomix-harness`; packages formerly named with the `nomix-` prefix use `nomix-` with the same role suffix, and the vendored Cordis and native launcher packages retain their unscoped suffix under `@nomix-ai`. Package manifests, workspace dependencies, module specifiers, TypeScript paths, release checks, packed-install probes, examples, and current documentation use these names together. Published manifests point to `ditgaldev/nomix-harness`.
-
-The installed executable is `nomix`, and the source launcher is `pnpm nomix`. The `nomix` manifest keys, `NOMIX_*` environment variables, `.nomix` state directory, and durable or wire identifiers remain unchanged because they identify configuration and persisted runtime data rather than the executable.
-
 ### Use `SDK` for one thing
 
 `SDK` means the JSON-RPC-based client/server protocol used by the supported Python and TypeScript SDKs. The repository keeps `@nomix-ai/nomix-sdk-client`, `@nomix-ai/nomix-sdk-protocol`, and the wire identity `nomix-harness-sdk-runtime`; the JSON-RPC server belongs to the same family. Nomix Harness itself is not an SDK, and the removed project generator, launcher, helper, and launcher telemetry packages stay absent.

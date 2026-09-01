@@ -8,7 +8,7 @@
 
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { bindSnapshotSelector } from '@nomix-ai/nomix-client-web-react'
+import { bindSnapshotSelector } from '@nomix-ai/nomix-client-test-runtime'
 import { createSnapshotStore } from '@nomix-ai/nomix-client-runtime/client'
 import { AgentPresetSection } from '../src/client/AgentPresetSection.tsx'
 import type { AgentPresetSectionProps } from '../src/client/AgentPresetSection.tsx'

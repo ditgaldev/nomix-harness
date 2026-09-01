@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-client-ui-layout",
   "description": "Shell plugin: three-column AppFrame with drag handles, ctx.layout viewing-state service (navigation + panels)",
-  "version": "0.2.5",
+  "version": "0.1.1-rc.2",
   "publishConfig": {
     "access": "public"
   },
@@ -45,11 +45,9 @@
   "license": "MIT",
   "peerDependencies": {
     "@nomix-ai/nomix-client-runtime": "workspace:^",
-    "@nomix-ai/nomix-client-ui-slots": "workspace:^",
     "@nomix-ai/nomix-client-ui-theme": "workspace:^",
     "@nomix-ai/nomix-invariants": "workspace:^",
-    "@nomix-ai/cordis": "workspace:^",
-    "react": "^18.2.0"
+    "@nomix-ai/cordis": "workspace:^"
   },
   "devDependencies": {
     "@nomix-ai/nomix-client-locale": "workspace:^",

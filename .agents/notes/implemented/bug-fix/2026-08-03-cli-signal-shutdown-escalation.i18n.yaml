@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-08-03-cli-signal-shutdown-escalation.md
 2026-08-03-cli-signal-shutdown-escalation.md: 16d00c59f4af46760253a5554efdcbb4fb1513bc
-2026-08-03-cli-signal-shutdown-escalation.zh.md: 907610be21b335a8a2d25cce9d37284fbff28a76
+2026-08-03-cli-signal-shutdown-escalation.zh.md: 741624037fac101b9ca31f290c01ffc1db9fbf92

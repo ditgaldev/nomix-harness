@@ -1,14 +1,14 @@
-# CI for the embedded landlock-run source under native/landlock-run. A separate
-# workflow from ci.yml keeps its native OS/architecture matrix independent of
-# the harness Node matrix. The Nomix release workflow assembles both binaries
-# into the single Harness npm package.
+# CI for the landlock-run packages under native/landlock-run. A separate
+# workflow from ci.yml keeps the native OS/architecture matrix independent of
+# the harness Node matrix. Release assembly and publication use the companion
+# Landlock Run Release workflow.
 name: Landlock Run
 
 on:
   pull_request:
     paths:
       - '.github/workflows/landlock-run.yml'
-      - '.github/workflows/release.yml'
+      - '.github/workflows/landlock-run-release.yml'
       - 'native/landlock-run/**'
       - 'package.json'
       - 'pnpm-lock.yaml'
@@ -17,7 +17,7 @@ on:
     branches: [master]
     paths:
       - '.github/workflows/landlock-run.yml'
-      - '.github/workflows/release.yml'
+      - '.github/workflows/landlock-run-release.yml'
       - 'native/landlock-run/**'
       - 'package.json'
       - 'pnpm-lock.yaml'

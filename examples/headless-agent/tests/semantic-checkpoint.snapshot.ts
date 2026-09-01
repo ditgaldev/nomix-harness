@@ -2,7 +2,7 @@ import { readFile, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { Context } from '@nomix-ai/cordis'
-import { normalizeSessionLog, scrubRequestHeaders, type NormalizeContext } from '@nomix-ai/nomix-acp-snapshot'
+import { normalizeSessionSnapshot, type NormalizeContext } from '@nomix-ai/nomix-acp-snapshot'
 import { LOADER_SMOKE_TEST_TIMEOUT_MS, runLoaderSmoke } from '@nomix-ai/nomix-loader-smoke'
 import { createUserMessage, CallId , createMessage } from '@nomix-ai/nomix-llm'
 import SessionStore, { SESSION_FORMAT_VERSION, SessionId, type SessionEvent, type SessionHeader } from '@nomix-ai/nomix-session'
@@ -101,7 +101,7 @@ describe('semantic checkpoint recovery snapshot', () => {
       },
       inspect: async () => {
         const normalization: NormalizeContext = { sessionIds: [sessionId], cwd }
-        const session = scrubRequestHeaders(normalizeSessionLog(await readFile(sessionPath, 'utf8'), normalization))
+        const session = normalizeSessionSnapshot(await readFile(sessionPath, 'utf8'), normalization)
         if (refreshing) await writeFile(sessionExpected, session)
         expect(session).toBe(await readFile(sessionExpected, 'utf8'))
         expect(session).toContain('TOOL_OUTCOME_UNKNOWN')

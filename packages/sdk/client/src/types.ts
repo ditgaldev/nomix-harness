@@ -50,10 +50,10 @@ export interface NomixHarnessOptions {
   launch: HarnessClientOptions
   /** Workspace cwd recorded on every SDK-created session (default: the launch cwd, else `process.cwd()`). */
   cwd?: string
-  /** Explicitly registered provider route for SDK-created agents. */
-  provider: string
-  /** Provider-owned model id for SDK-created agents. */
-  model: string
+  /** Provider route for SDK-created agents (default `deepseek-official`). */
+  provider?: string
+  /** Model for SDK-created agents (default `deepseek-v4-flash`). */
+  model?: string
   /** Maximum output tokens for each conversation-model request. */
   maxTokens?: number
 }

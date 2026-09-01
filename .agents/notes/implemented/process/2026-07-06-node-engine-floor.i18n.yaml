@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/process/2026-07-06-node-engine-floor.md
 2026-07-06-node-engine-floor.md: a2c2477643d9315e006498470bb20be0897b71f0
-2026-07-06-node-engine-floor.zh.md: fadb26ec65e75b578890b9dabbf9909b36ee2b16
+2026-07-06-node-engine-floor.zh.md: 365b16c647975bfe6c46d4174f1badb38d13b907

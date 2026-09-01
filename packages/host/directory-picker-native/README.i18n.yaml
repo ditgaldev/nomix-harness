@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/host/directory-picker-native/README.md
 README.md: b0babafec5f2e439eb6acfa632a72543800e4a6c
-README.zh.md: 3081c7997d9f34020351760ae5f5dc8f11fec9b1
+README.zh.md: 5079c0f11353b2371c5d49461cbd46da848d2540

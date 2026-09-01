@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-07-29-package-regrouping.md
 2026-07-29-package-regrouping.md: 5897954c0e82bef90ce1126101df473e694dffe9
-2026-07-29-package-regrouping.zh.md: 3e193b6f360e916b826e0602f70b7f2786f2a0ae
+2026-07-29-package-regrouping.zh.md: 149c2c5009cc789242785f6be9112837cbec6404

@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/subagent/subagent-nomix-sdk/README.md
 README.md: 9b926a592b28e5e86a9a4ee650b1f20f0d526e32
-README.zh.md: 2cfc3269e933cffc86c93769f6893e252254467c
+README.zh.md: b3aa04307eec23cfb2e4672ca9a48f0ec100843f

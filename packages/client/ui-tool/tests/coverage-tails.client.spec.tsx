@@ -4,7 +4,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { cleanup, render } from '@testing-library/react'
 import { createSnapshotStore } from '@nomix-ai/nomix-client-runtime/client'
-import { bindSnapshotSelector } from '@nomix-ai/nomix-client-web-react'
+import { bindSnapshotSelector } from '@nomix-ai/nomix-client-test-runtime'
 import type { RunningToolCall, SessionId, SessionListState, ToolResultNode } from '@nomix-ai/nomix-client-runtime/client'
 import { makeTranslate } from '@nomix-ai/nomix-client-test-runtime'
 import { zh as commonZh } from '@nomix-ai/nomix-client-locale/src/locales/zh.ts'

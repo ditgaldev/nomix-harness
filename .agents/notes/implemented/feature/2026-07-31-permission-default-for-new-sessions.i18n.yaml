@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-07-31-permission-default-for-new-sessions.md
 2026-07-31-permission-default-for-new-sessions.md: 938ac4f998519a2a0c8f9a5f1fb63f40dc2ae916
-2026-07-31-permission-default-for-new-sessions.zh.md: 8927509d5d2cce91cb2b1fec111f75b0f592b9eb
+2026-07-31-permission-default-for-new-sessions.zh.md: 3c0f2318f10e3efd6d02560299a41a3193fe0752

@@ -4,7 +4,7 @@ import { execa } from 'execa'
 import { describe, expect, it } from 'vitest'
 
 /**
- * Keyless smoke for source `nomix` execution: run `apps/cli/src/bin.ts`
+ * Keyless smoke for SOURCE `nomix` execution: run `apps/cli/src/bin.ts`
  * with the exact production runtime vector (`node --import tsx/esm`, the
  * vector the root `nomix` script invokes directly) and assert the
  * required-config diagnostic. The Node compatibility matrix runs this
@@ -16,7 +16,7 @@ import { describe, expect, it } from 'vitest'
 const repoRoot = fileURLToPath(new URL('../../../', import.meta.url))
 const nomixSourceBin = 'apps/cli/src/bin.ts'
 
-describe('nomix source launcher (node --import tsx/esm)', () => {
+describe('nomix SOURCE launcher (node --import tsx/esm)', () => {
   it('launches the source CLI without building', async () => {
     const rootPackage = JSON.parse(await readFile(new URL('../../../package.json', import.meta.url), 'utf8')) as {
       readonly scripts?: Record<string, string>

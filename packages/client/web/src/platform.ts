@@ -8,10 +8,12 @@
 export const PLATFORM_MODULES = [
   'react', 'react/jsx-runtime', 'react-dom', 'react-dom/client', '@nomix-ai/cordis',
   '@nomix-ai/nomix-client-ui-slots',
-  '@nomix-ai/nomix-client-web-react',
   '@nomix-ai/nomix-client-ui-primitives',
-  '@nomix-ai/nomix-client-ui-attachment',
-  '@nomix-ai/nomix-client-schema-form',
+] as const
+
+/** Client-bundle specifiers whose factories the parser preloads before the shell starts. */
+export const PRELOADED_CLIENT_EXTERNALS = [
+  '@nomix-ai/nomix-client-runtime/client',
 ] as const
 
 /** One platform module specifier (a seed-table key). */

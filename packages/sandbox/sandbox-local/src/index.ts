@@ -66,7 +66,7 @@ export interface Config {
 
 /** Probe whether `bwrap` can create the profile; the provider caches the bounded result. */
 function defaultProbeBwrap(timeoutMs: number): boolean {
-  const probe = spawnSync('bwrap', ['--ro-bind', '/', '/', '--dev', '/dev', '--proc', '/proc', '--die-with-parent', '--', 'true'], {
+  const probe = spawnSync('bwrap', [...bwrapProfileArgs({ mode: 'read-only', workspaceRoot: '/' }), '--', 'true'], {
     timeout: timeoutMs,
     stdio: 'ignore',
   })
@@ -550,19 +550,16 @@ export class LocalSandboxProvider extends SandboxProvider {
 
   /**
    * The windows-acl runner argv prefix: the built lib/runner.js entry when
-   * present beside this package (production), else the sibling package source
-   * through tsx (development). Relative URLs work in both workspace output and
-   * the flattened npm kernel without requiring an internal package install.
+   * present (production), else the package source through tsx (development).
    * The prefix stays `[node, runner, ...]` — a future native-exe runner keeps
    * the same argv contract and only swaps these entries.
    */
   private windowsAclRunnerInvocation(): string[] {
     const override = this.internals.windowsAclRunnerArgs
     if (override !== undefined) return override
-    const builtEntry = this.internals.windowsAclRunnerEntry
-      ?? fileURLToPath(new URL('../../sandbox-windows-acl/lib/runner.js', import.meta.url))
+    const builtEntry = this.internals.windowsAclRunnerEntry ?? fileURLToPath(import.meta.resolve('@nomix-ai/nomix-sandbox-windows-acl/runner'))
     if (existsSync(builtEntry)) return [process.execPath, builtEntry]
-    const sourceEntry = fileURLToPath(new URL('../../sandbox-windows-acl/src/runner.ts', import.meta.url))
+    const sourceEntry = fileURLToPath(import.meta.resolve('@nomix-ai/nomix-sandbox-windows-acl/src/runner.ts'))
     return [process.execPath, '--import', 'tsx/esm', sourceEntry]
   }
 }

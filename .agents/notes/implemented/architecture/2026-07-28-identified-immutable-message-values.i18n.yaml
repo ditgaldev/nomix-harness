@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-07-28-identified-immutable-message-values.md
 2026-07-28-identified-immutable-message-values.md: 844bbc3c8540039758354e051b170795ebecd603
-2026-07-28-identified-immutable-message-values.zh.md: de53cfeb63b258c23aaae23b0978a30563fb7528
+2026-07-28-identified-immutable-message-values.zh.md: 61c93ca7a9740a015920a72cb98b3e3bcc1177a4

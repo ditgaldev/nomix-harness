@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-07-31-web-telemetry-default-mount.md
 2026-07-31-web-telemetry-default-mount.md: b810f4f4217c6367ca9b94de9f32a7afcc01ec2b
-2026-07-31-web-telemetry-default-mount.zh.md: 3f7fca52152224b19ad19cf91db2f265c8abecd6
+2026-07-31-web-telemetry-default-mount.zh.md: 470ecd596e3210bbaa4afb4b5ce762a036824ccf

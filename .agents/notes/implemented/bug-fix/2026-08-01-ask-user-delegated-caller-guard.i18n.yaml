@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-08-01-ask-user-delegated-caller-guard.md
 2026-08-01-ask-user-delegated-caller-guard.md: 05d00d2ac0b2f0c50d18b06d0c0290d567c6cfc8
-2026-08-01-ask-user-delegated-caller-guard.zh.md: 9800ba7b96d536c57bfa712685af29dc5426bbb9
+2026-08-01-ask-user-delegated-caller-guard.zh.md: bce31f5693dac352c1eff357408ee4e395f32c2a

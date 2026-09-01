@@ -1,8 +1,12 @@
 /** Release family discovery, publish order, tag naming, and the bump judgements. */
 
-import { describe, expect, it } from 'vitest'
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { dirname, join, resolve } from 'node:path'
+import { afterEach, describe, expect, it, vi } from 'vitest'
+import { officialClientBuildEnvironment, writeClientBuildRecord } from '../client-build-environment.ts'
 import { releaseFamily, type ReleaseMember } from './families.ts'
-import { compareVersions, nextVendorVersion, reachesPayload } from './bump.ts'
+import { compareVersions, nextVendorVersion, planShared, reachesPayload } from './bump.ts'
 
 /**
  * A release member standing in for a manifest on disk.
@@ -15,7 +19,53 @@ function member(directory: string, name: string, manifest: Record<string, unknow
   return { directory, name, version: '0.0.1', manifest }
 }
 
+const roots: string[] = []
+
+function write(path: string, content: string): void {
+  mkdirSync(dirname(path), { recursive: true })
+  writeFileSync(path, content)
+}
+
+function buildFixture(environment: Record<string, string>): string {
+  const root = mkdtempSync(join(tmpdir(), 'nomix-release-build-'))
+  roots.push(root)
+  write(join(root, 'apps/web/dist/index.html'), '<main></main>')
+  write(join(root, 'packages/client/example/lib/client.js'), 'module.exports = {}\n')
+  writeClientBuildRecord(root, environment)
+  return root
+}
+
+afterEach(() => {
+  for (const root of roots.splice(0)) rmSync(root, { recursive: true, force: true })
+  vi.unstubAllEnvs()
+})
+
 describe('release families', () => {
+  it('excludes private experimental packages from the nomix release', () => {
+    const members = releaseFamily('nomix').members(resolve(import.meta.dirname, '../..'))
+
+    expect(members.some(member => member.directory.startsWith('packages/experimental/'))).toBe(false)
+    expect(members.map(member => member.name)).not.toContain('@nomix-ai/nomix-experimental-agent-team')
+  })
+
+  it('bumps private nomix packages without adding release tags', () => {
+    const root = mkdtempSync(join(tmpdir(), 'nomix-release-version-'))
+    roots.push(root)
+    write(join(root, 'package.json'), '{"version":"0.0.1"}\n')
+    write(join(root, 'packages/experimental/prototype/package.json'), '{"version":"0.0.1","private":true}\n')
+    write(join(root, 'packages/core/unselected/package.json'), '{"version":"0.0.1"}\n')
+
+    const nomix = releaseFamily('nomix')
+    const published = member('packages/core/published', '@nomix-ai/nomix-published')
+    const { planned } = planShared(nomix, root, [published], '0.0.2')
+
+    expect(planned.map(entry => ({ path: entry.manifestPath, tag: entry.tag }))).toEqual([
+      { path: 'package.json', tag: undefined },
+      { path: 'packages/core/published/package.json', tag: 'nomix-v0.0.2' },
+      { path: 'packages/experimental/prototype/package.json', tag: undefined },
+    ])
+  })
+
   it('names one tag for the whole nomix family and one per vendored package', () => {
     const nomix = releaseFamily('nomix')
     const vendor = releaseFamily('vendor')
@@ -24,21 +74,10 @@ describe('release families', () => {
 
     expect(nomix.tagFor(cli)).toBe('nomix-v0.0.1')
     expect(vendor.tagFor(cordis)).toBe('vendor-cordis-v4.0.1')
-    expect(nomix.publicationRefs([cli])).toEqual(['refs/heads/npm-nomix-harness'])
-    expect(vendor.publicationRefs([cordis])).toEqual(['refs/tags/vendor-cordis-v4.0.1'])
     // The prefix is constructed, not recovered from a tag: a version with a
     // hyphen would defeat any suffix-stripping.
     expect(vendor.tagPrefixFor({ ...cordis, version: '4.0.0-rc.7' })).toBe('vendor-cordis-v')
     expect(vendor.tagFor({ ...cordis, version: '4.0.0-rc.7' })).toBe('vendor-cordis-v4.0.0-rc.7')
-  })
-
-  it('publishes the product as one native ESM Harness package', () => {
-    const nomix = releaseFamily('nomix')
-    const harness = member('apps/cli', '@nomix-ai/nomix-harness')
-    const library = member('packages/core/library', '@nomix-ai/nomix-library')
-
-    expect(nomix.publicationMembers([library, harness])).toEqual([harness])
-    expect(nomix.packing).toBe('native-bundle')
   })
 
   it('rejects a family whose members disagree on the shared version', () => {
@@ -58,6 +97,23 @@ describe('release families', () => {
 
     expect(() => { vendor.verifyVersions(members) }).not.toThrow()
     expect(() => { vendor.verifyVersions([{ ...members[0]!, version: 'latest' }]) }).toThrow(/unpublishable version/)
+  })
+
+  it('requires a current official client build only for nomix artifacts', () => {
+    const nomix = releaseFamily('nomix')
+    const vendor = releaseFamily('vendor')
+    const officialEnvironment = officialClientBuildEnvironment(resolve(import.meta.dirname, '../..'))
+    vi.stubEnv('NOMIX_CLIENT_COMMIT_HASH', officialEnvironment.NOMIX_CLIENT_COMMIT_HASH)
+    const official = buildFixture(officialEnvironment)
+    const defaultBuild = buildFixture({})
+
+    expect(() => { nomix.verifyBuildArtifacts(official) }).not.toThrow()
+    expect(() => { nomix.verifyBuildArtifacts(defaultBuild) }).toThrow(/NOMIX_CLIENT_TITLE/)
+    expect(() => { nomix.verifyBuildArtifacts(join(defaultBuild, 'missing')) }).toThrow(/record.*missing/)
+    expect(() => { vendor.verifyBuildArtifacts(join(defaultBuild, 'missing')) }).not.toThrow()
+
+    write(join(official, 'packages/client/example/lib/client.js'), 'module.exports = { changed: true }\n')
+    expect(() => { nomix.verifyBuildArtifacts(official) }).toThrow(/artifacts differ/)
   })
 
   it('publishes a dependency before its consumer, and orders ties by name', () => {
@@ -176,43 +232,15 @@ describe('release families', () => {
     const vendor = releaseFamily('vendor')
     const harness = member('packages/a/library', '@nomix-ai/nomix-library')
     const vendored = member('vendor/cordis', '@nomix-ai/cordis')
-    const completePayload = [
-      'package/dist/cli/bin.js',
-      'package/dist/plugin-api/index.js',
-      'package/dist/plugins/manifest.json',
-      'package/dist/bundles/manifest.json',
-      'package/dist/kernel/manifest.json',
-      'package/dist/sdk/index.js',
-      'package/dist/native/landlock-run/linux-x64/landlock-run',
-      'package/dist/native/landlock-run/linux-arm64/landlock-run',
-      'package/dist/licenses/landlock-run.LICENSE',
-    ]
 
     expect(() => { nomix.validatePayload(harness, ['package/lib/index.js', 'package/src/index.ts']) })
       .toThrow(/publishes source file/)
-    expect(() => {
-      nomix.validatePayload(harness, completePayload)
-    }).not.toThrow()
-    expect(() => { nomix.validatePayload(harness, ['package/dist/cli/bin.js']) }).toThrow(/carries no dist\/plugins\/manifest.json/)
-    expect(() => {
-      nomix.validatePayload(harness, [
-        ...completePayload,
-        'package/dist/node_modules/example/index.js',
-      ])
-    }).toThrow(/forbidden source, source-map, or node_modules/)
     expect(() => { vendor.validatePayload(vendored, ['package/lib/index.js', 'package/src/index.ts']) }).not.toThrow()
     expect(() => { vendor.validatePayload(vendored, []) }).toThrow(/empty tarball/)
   })
 
   it('drives the installed entry only for the family that publishes one', () => {
-    expect(releaseFamily('nomix').installedEntry).toEqual({
-      packageName: '@nomix-ai/nomix-harness',
-      command: 'nomix',
-      smokeArgs: ['web', '--help'],
-      smokeOutput: 'Usage: nomix --profile web',
-      startupArgs: ['web', '--host', '127.0.0.1', '--port', '0'],
-      startupOutput: 'nomix web: http://127.0.0.1:',
-    })
+    expect(releaseFamily('nomix').installedEntry).toEqual({ packageName: '@nomix-ai/nomix-harness', binPath: 'lib/bin.js' })
     expect(releaseFamily('vendor').installedEntry).toBeUndefined()
   })
 

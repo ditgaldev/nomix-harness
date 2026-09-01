@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-07-26-code-dispatch-ui-foundation.md
 2026-07-26-code-dispatch-ui-foundation.md: 0476b4934e4fcad57cdf80ec28cda73a895e34f2
-2026-07-26-code-dispatch-ui-foundation.zh.md: aa925ba7f94b7353db0c02ba74dc4952158eb3c8
+2026-07-26-code-dispatch-ui-foundation.zh.md: 49850b20bd7fbdc87dec12ffcb641e273babafa7

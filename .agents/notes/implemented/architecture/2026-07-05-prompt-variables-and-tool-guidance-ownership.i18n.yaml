@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-07-05-prompt-variables-and-tool-guidance-ownership.md
 2026-07-05-prompt-variables-and-tool-guidance-ownership.md: c4bb530d9fc3f58a89c8372eb05472051f25d5f8
-2026-07-05-prompt-variables-and-tool-guidance-ownership.zh.md: 6f9a613867b6c383869b3ab7759a34eb352551b6
+2026-07-05-prompt-variables-and-tool-guidance-ownership.zh.md: d8e6d1d02e448aee45cfcdb2ff5d2906c29ebd3c

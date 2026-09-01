@@ -10,7 +10,7 @@
 
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
-import { loadLayeredEnv, rejectLegacyEnvironment } from '@nomix-ai/nomix-app-boot'
+import { loadLayeredEnv } from '@nomix-ai/nomix-app-boot'
 import { parseNomixArgs } from './args.ts'
 
 // Both the source tree (apps/cli/src) and the bundled bin (apps/cli/lib) sit
@@ -24,7 +24,6 @@ function readVersion(): string {
   return typeof manifest.version === 'string' ? manifest.version : '0.0.0'
 }
 
-rejectLegacyEnvironment(process.env)
 const invocation = parseNomixArgs(process.argv.slice(2), readVersion())
 
 switch (invocation.mode) {

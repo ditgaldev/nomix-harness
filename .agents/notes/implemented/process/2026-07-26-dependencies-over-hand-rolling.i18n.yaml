@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/process/2026-07-26-dependencies-over-hand-rolling.md
 2026-07-26-dependencies-over-hand-rolling.md: c99cafb729161fb1f1d4fab22fc820b2b959b46e
-2026-07-26-dependencies-over-hand-rolling.zh.md: 4987765bef91ca1f611fad41ec0ef7f906ce9919
+2026-07-26-dependencies-over-hand-rolling.zh.md: 7faeac27f03ecc428e2cac36f10755a27975527d

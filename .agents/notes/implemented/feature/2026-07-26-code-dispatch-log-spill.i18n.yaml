@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-07-26-code-dispatch-log-spill.md
 2026-07-26-code-dispatch-log-spill.md: 71c99c306b450823e6aaea65d86d34db2f3f87d1
-2026-07-26-code-dispatch-log-spill.zh.md: 5b28f48f92095d3636db043a1d5571929532fc21
+2026-07-26-code-dispatch-log-spill.zh.md: 603d484af7edbfb7993a8b1c71e9e316bd56c9d6

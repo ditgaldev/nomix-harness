@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-06-20-generic-long-running-tool-runtime.md
 2026-06-20-generic-long-running-tool-runtime.md: 154c07ad3305725359326dbdb1ad384962844913
-2026-06-20-generic-long-running-tool-runtime.zh.md: 17bd6f1832e0c085645a7681e4653ae4c3ce43e5
+2026-06-20-generic-long-running-tool-runtime.zh.md: 0d7863e573dd55c09a27e22112446738b4e33800

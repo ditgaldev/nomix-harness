@@ -5,13 +5,13 @@
 
 [English](config-catalog.md) | 中文
 
-每个 `config:` 块均可由 `cordis.yml` 条目设置：针对每个可加载的 harness 包，原样列出其 `apply` 函数或服务构造函数接收的配置声明（包括 JSDoc），并附上所有引用类型——包内类型直接粘贴，其他类型则提供链接。粘贴的内容是插件声明的完整配置类型——运行时 schema 有意排除的字段是仅供运行时使用的 seam（其自身的 JSDoc 会如此说明），不能通过 `cordis.yml` 设置。这是以**部署**为轴的参考文档——插件作者所依据的连接方式请参阅各[子系统页面](subsystems/core.md)中的生成 `cordis-surface` 区域，面向模型的工具 schema 请参阅[工具目录](tool-catalog.md)，而 [subsystems/](subsystems/core.md) 则记录了这些声明所引用的类型。
+每个 `config:` 块均可由 `cordis.yml` 条目设置：针对每个可加载的 harness 包，原样列出其 `apply` 函数或服务构造函数接收的配置声明（包括 JSDoc），并附上所有引用类型——包内类型直接粘贴，其他类型则提供链接。粘贴的内容是插件声明的完整配置类型——运行时 schema 有意排除的字段是仅供运行时使用的 seam（其自身的 JSDoc 会如此说明），不能通过 `cordis.yml` 设置。这是以**部署**为轴的参考文档——插件作者所依据的连接方式请参阅各[子系统页面](subsystems/core.zh.md)中的生成 `cordis-surface` 区域，面向模型的工具 schema 请参阅[工具目录](tool-catalog.zh.md)，而 [subsystems/](subsystems/core.zh.md) 则记录了这些声明所引用的类型。
 
 英文源文件由源代码（`scripts/gen-config-catalog.ts`）生成，并通过 `pnpm run verify-config-catalog`（`doc-sync` 的一部分）验证新鲜度；本中文文件作为经评审对侧通过双语配对维护。声明块使用 `ts config-catalog` 围栏（doc-typecheck 会跳过它，因为单独引用导入项的声明无法独立编译）。英文生成器还会将运行时 schemastery schema 与粘贴的声明进行交叉核对——每个经 schema 验证的键（包括嵌套键）都必须能在声明的配置类型中找到——因此，粘贴内容无法隐藏加载器接受的字段。
 
 `Requires:` 行列出插件通过 `inject` 注入的服务键：其 `cordis.yml` 树还必须加载这些服务的提供者。范围限定为 harness 层级（`packages/`）；配置树还可能加载的 vendored cordis 插件（`hmr`、控制台日志记录器等）固定为上游源代码（参见 [vendoring policy](../vendor/README.md)），未收录于此目录。
 
-<a id="nomix-ainomix-acp"></a>
+<a id="deepseek-aidsh-acp"></a>
 
 ## `@nomix-ai/nomix-acp`
 
@@ -33,7 +33,7 @@ export interface AcpConfig {
 
 来源：[`packages/acp/acp/src/index.ts:71`](../packages/acp/acp/src/index.ts)
 
-<a id="nomix-ainomix-acp-demo"></a>
+<a id="deepseek-aidsh-acp-demo"></a>
 
 ## `@nomix-ai/nomix-acp-demo`
 
@@ -84,11 +84,11 @@ export interface Config {
 }
 ```
 
-依赖：[`agentCore`](../packages/examples/agent-spine-demo/src/index.ts) · [`JsonlCompression`](../packages/session/session-persistence-jsonl/src/index.ts) · [`ToolsConfig`](#nomix-ainomix-tools)
+依赖：[`agentCore`](../packages/examples/agent-spine-demo/src/index.ts) · [`JsonlCompression`](../packages/session/session-persistence-jsonl/src/index.ts) · [`ToolsConfig`](#deepseek-aidsh-tools)
 
 来源：[`packages/examples/acp-demo/src/index.ts:39`](../packages/examples/acp-demo/src/index.ts)
 
-<a id="nomix-ainomix-agent-default-model"></a>
+<a id="deepseek-aidsh-agent-default-model"></a>
 
 ## `@nomix-ai/nomix-agent-default-model`
 
@@ -104,7 +104,7 @@ export interface Config {
 
 来源：[`packages/core/agent-default-model/src/index.ts:41`](../packages/core/agent-default-model/src/index.ts)
 
-<a id="nomix-ainomix-agent-instructions"></a>
+<a id="deepseek-aidsh-agent-instructions"></a>
 
 ## `@nomix-ai/nomix-agent-instructions`
 
@@ -134,7 +134,7 @@ export interface Config {
 
 来源：[`packages/context/agent-instructions/src/config.ts:18`](../packages/context/agent-instructions/src/config.ts)
 
-<a id="nomix-ainomix-agent-loop"></a>
+<a id="deepseek-aidsh-agent-loop"></a>
 
 ## `@nomix-ai/nomix-agent-loop`
 
@@ -162,11 +162,11 @@ export interface Config {
 }
 ```
 
-依赖：[`AgentOptions`](subsystems/core.md) · [`SessionId`](subsystems/core.md)
+依赖：[`AgentOptions`](subsystems/core.zh.md) · [`SessionId`](subsystems/core.zh.md)
 
 来源：[`packages/core/agent-loop/src/index.ts:255`](../packages/core/agent-loop/src/index.ts)
 
-<a id="nomix-ainomix-agent-presets"></a>
+<a id="deepseek-aidsh-agent-presets"></a>
 
 ## `@nomix-ai/nomix-agent-presets`
 
@@ -204,7 +204,7 @@ export type PresetTrust = 'system' | 'user'
 
 来源：[`packages/preset/agent-presets/src/preset.ts:52`](../packages/preset/agent-presets/src/preset.ts)
 
-<a id="nomix-ainomix-agent-spine-demo"></a>
+<a id="deepseek-aidsh-agent-spine-demo"></a>
 
 ## `@nomix-ai/nomix-agent-spine-demo`
 
@@ -292,11 +292,11 @@ export interface GoalConfig {
 }
 ```
 
-依赖：[`AgentLoopConfig`](#nomix-ainomix-agent-loop) · [`GoalDomainConfig`](#nomix-ainomix-goal) · [`InvariantConfig`](#nomix-ainomix-invariants) · [`JobsConfig`](#nomix-ainomix-jobs-local) · [`SessionTitleConfig`](#nomix-ainomix-session-title) · [`SkillFileSystem`](../packages/skill/skill-filesystem/src/index.ts) · [`SkillRegistryConfig`](#nomix-ainomix-skill) · [`SystemPromptConfig`](#nomix-ainomix-system-prompt) · [`toolBash`](../packages/shell/tool-bash/src/index.ts) · [`toolGoal`](../packages/goal/tool-goal/src/index.ts) · [`toolJobs`](../packages/jobs/tool-jobs/src/index.ts) · [`ToolsConfig`](#nomix-ainomix-tools) · [`toolSkill`](../packages/skill/tool-skill/src/index.ts) · [`workspaceContext`](../packages/context/agent-instructions/src/index.ts)
+依赖：[`AgentLoopConfig`](#deepseek-aidsh-agent-loop) · [`GoalDomainConfig`](#deepseek-aidsh-goal) · [`InvariantConfig`](#deepseek-aidsh-invariants) · [`JobsConfig`](#deepseek-aidsh-jobs-local) · [`SessionTitleConfig`](#deepseek-aidsh-session-title) · [`SkillFileSystem`](../packages/skill/skill-filesystem/src/index.ts) · [`SkillRegistryConfig`](#deepseek-aidsh-skill) · [`SystemPromptConfig`](#deepseek-aidsh-system-prompt) · [`toolBash`](../packages/shell/tool-bash/src/index.ts) · [`toolGoal`](../packages/goal/tool-goal/src/index.ts) · [`toolJobs`](../packages/jobs/tool-jobs/src/index.ts) · [`ToolsConfig`](#deepseek-aidsh-tools) · [`toolSkill`](../packages/skill/tool-skill/src/index.ts) · [`workspaceContext`](../packages/context/agent-instructions/src/index.ts)
 
 来源：[`packages/examples/agent-spine-demo/src/index.ts:92`](../packages/examples/agent-spine-demo/src/index.ts)
 
-<a id="nomix-ainomix-agent-tool-presentation"></a>
+<a id="deepseek-aidsh-agent-tool-presentation"></a>
 
 ## `@nomix-ai/nomix-agent-tool-presentation`
 
@@ -316,11 +316,11 @@ export interface Config {
 }
 ```
 
-依赖：[`ToolPresentationMode`](subsystems/tools.md)
+依赖：[`ToolPresentationMode`](subsystems/tools.zh.md)
 
 来源：[`packages/core/agent-tool-presentation/src/index.ts:38`](../packages/core/agent-tool-presentation/src/index.ts)
 
-<a id="nomix-ainomix-attachment-local"></a>
+<a id="deepseek-aidsh-attachment-local"></a>
 
 ## `@nomix-ai/nomix-attachment-local`
 
@@ -329,20 +329,28 @@ export interface Config {
 export interface Config {
   /** Explicit harness home; omitted follows `NOMIX_HOME`, then `~/.nomix`. */
   nomixHome?: string
-  /** Maximum encoded bytes accepted for one image. */
+  /** Maximum encoded bytes accepted for one submitted image. Default: 20 MiB. */
   maxImageBytes?: number
-  /** Maximum image count accepted in one submitted message. */
+  /** Maximum image count accepted in one submitted message. Default: 20. */
   maxImagesPerMessage?: number
-  /** Maximum aggregate encoded image bytes accepted in one submitted message. */
+  /** Maximum aggregate encoded image bytes accepted in one submitted message. Default: 200 MiB. */
   maxMessageImageBytes?: number
-  /** Maximum intrinsic width multiplied by height accepted for one image. */
+  /** Maximum intrinsic width multiplied by height accepted for one submitted image. Default: 64,000,000. */
   maxImagePixels?: number
+  /** Maximum intrinsic width and maximum intrinsic height accepted for one submitted image. Default: 8192px. */
+  maxImageDimension?: number
+  /** Long-edge pixel cap of the stored provider-independent normalized image. */
+  normalizedImageMaxDimension?: number
+  /** Encoded-byte safety cap of the stored provider-independent normalized image. */
+  normalizedImageMaxBytes?: number
+  /** Maximum simultaneous normalization or request-image transformations in this service instance. */
+  imageCompressionConcurrency?: number
 }
 ```
 
-来源：[`packages/attachment/attachment-local/src/index.ts:24`](../packages/attachment/attachment-local/src/index.ts)
+来源：[`packages/attachment/attachment-local/src/index.ts:51`](../packages/attachment/attachment-local/src/index.ts)
 
-<a id="nomix-ainomix-bash-local"></a>
+<a id="deepseek-aidsh-bash-local"></a>
 
 ## `@nomix-ai/nomix-bash-local`
 
@@ -368,7 +376,7 @@ export interface Config {
 
 来源：[`packages/shell/bash-local/src/index.ts:41`](../packages/shell/bash-local/src/index.ts)
 
-<a id="nomix-ainomix-bash-sandbox"></a>
+<a id="deepseek-aidsh-bash-sandbox"></a>
 
 ## `@nomix-ai/nomix-bash-sandbox`
 
@@ -385,11 +393,11 @@ export interface Config {
 export type Config = LocalConfig
 ```
 
-依赖：[`LocalConfig`](#nomix-ainomix-bash-local)
+依赖：[`LocalConfig`](#deepseek-aidsh-bash-local)
 
 来源：[`packages/shell/bash-sandbox/src/index.ts:35`](../packages/shell/bash-sandbox/src/index.ts)
 
-<a id="nomix-ainomix-client-connection"></a>
+<a id="deepseek-aidsh-client-connection"></a>
 
 ## `@nomix-ai/nomix-client-connection`
 
@@ -407,18 +415,18 @@ export interface ConnectionConfig {
    * that is not a bare, canonical authority fails the plugin load.
    */
   trustedHosts?: string[]
-  /** Maximum buffered JSON body for every `/api` request. */
+  /** Maximum buffered JSON body for every `/api` request. Default: 300 MiB. */
   maxRequestBodyBytes?: number
 }
 ```
 
 来源：[`packages/client/connection/src/index.ts:50`](../packages/client/connection/src/index.ts)
 
-<a id="nomix-ainomix-client-hmr"></a>
+<a id="deepseek-aidsh-client-hmr"></a>
 
 ## `@nomix-ai/nomix-client-hmr`
 
-需要：`clientModuleHost` · `webServer`
+需要：`clientModules` · `webServer`
 
 ```ts config-catalog
 /** Plugin config, validated by the same-named schemastery schema. */
@@ -430,7 +438,7 @@ export interface Config {
 
 来源：[`packages/client/hmr/src/index.ts:31`](../packages/client/hmr/src/index.ts)
 
-<a id="nomix-ainomix-code-runtime-worker-thread"></a>
+<a id="deepseek-aidsh-code-runtime-worker-thread"></a>
 
 ## `@nomix-ai/nomix-code-runtime-worker-thread`
 
@@ -467,7 +475,7 @@ export interface Config {
 
 来源：[`packages/code-runtime/code-runtime-worker-thread/src/index.ts:25`](../packages/code-runtime/code-runtime-worker-thread/src/index.ts)
 
-<a id="nomix-ainomix-compaction-basic"></a>
+<a id="deepseek-aidsh-compaction-basic"></a>
 
 ## `@nomix-ai/nomix-compaction-basic`
 
@@ -513,7 +521,7 @@ export interface ModelCompactPolicyConfig extends CompactionPolicyConfig {
 
 来源：[`packages/compaction/compaction-basic/src/types.ts:38`](../packages/compaction/compaction-basic/src/types.ts)
 
-<a id="nomix-ainomix-compaction-tool-result-pruner"></a>
+<a id="deepseek-aidsh-compaction-tool-result-pruner"></a>
 
 ## `@nomix-ai/nomix-compaction-tool-result-pruner`
 
@@ -533,7 +541,7 @@ export interface ToolResultPruneConfig {
 
 来源：[`packages/compaction/compaction-tool-result-pruner/src/types.ts:4`](../packages/compaction/compaction-tool-result-pruner/src/types.ts)
 
-<a id="nomix-ainomix-cordis-host-runner"></a>
+<a id="deepseek-aidsh-cordis-host-runner"></a>
 
 ## `@nomix-ai/nomix-cordis-host-runner`
 
@@ -549,7 +557,7 @@ export interface Config {
 
 来源：[`packages/extensions/cordis-host-runner/src/index.ts:88`](../packages/extensions/cordis-host-runner/src/index.ts)
 
-<a id="nomix-ainomix-credentials-local"></a>
+<a id="deepseek-aidsh-credentials-local"></a>
 
 ## `@nomix-ai/nomix-credentials-local`
 
@@ -567,9 +575,9 @@ export interface Config {
 }
 ```
 
-来源：[`packages/credentials/credentials-local/src/index.ts:55`](../packages/credentials/credentials-local/src/index.ts)
+来源：[`packages/credentials/credentials-local/src/index.ts:64`](../packages/credentials/credentials-local/src/index.ts)
 
-<a id="nomix-ainomix-e2b"></a>
+<a id="deepseek-aidsh-e2b"></a>
 
 ## `@nomix-ai/nomix-e2b`
 
@@ -587,7 +595,69 @@ export interface Config {
 
 来源：[`packages/e2b/e2b/src/index.ts:43`](../packages/e2b/e2b/src/index.ts)
 
-<a id="nomix-ainomix-fs-local"></a>
+<a id="deepseek-aidsh-experimental-agent-team"></a>
+
+## `@nomix-ai/nomix-experimental-agent-team`
+
+需要：`agents` · `sessions` · `sessionPersistence` · `subagents`
+
+```ts config-catalog
+/** Team-service deployment limits. */
+export interface Config {
+  /** Maximum immutable teammate names retained by one Team. */
+  readonly maxMembers?: number
+  /** Maximum non-deleted tasks retained by one Team. */
+  readonly maxTasks?: number
+  /** Maximum queued-minus-delivered messages for one target member. */
+  readonly maxPendingMessagesPerMember?: number
+  /** Maximum UTF-8 bytes in one complete sender-framed delivery. */
+  readonly maxMessageBytes?: number
+  /** Maximum milliseconds allowed for Team-owned runtime disposal. */
+  readonly disposalTimeoutMs?: number
+}
+```
+
+来源：[`packages/experimental/agent-team/src/types.ts:125`](../packages/experimental/agent-team/src/types.ts)
+
+<a id="deepseek-aidsh-experimental-tool-agent-team"></a>
+
+## `@nomix-ai/nomix-experimental-tool-agent-team`
+
+需要：`agents` · `agentTeams` · `tools` · `systemPrompt`
+
+```ts config-catalog
+/** Tool routing configuration. */
+export interface Config {
+  /** Continuable-subagent provider used for fresh teammates. */
+  readonly freshProvider?: string
+  /** Continuable-subagent provider used for completed-prefix fork teammates. */
+  readonly forkProvider?: string
+}
+```
+
+来源：[`packages/experimental/tool-agent-team/src/index.ts:17`](../packages/experimental/tool-agent-team/src/index.ts)
+
+<a id="deepseek-aidsh-file-reference-local"></a>
+
+## `@nomix-ai/nomix-file-reference-local`
+
+需要：`agents`
+
+```ts config-catalog
+/** Local file-reference discovery configuration. */
+export interface Config {
+  /** Maximum ranked candidates returned for one query. */
+  maxResults?: number
+  /** Maximum indexed files and directories per agent workspace. */
+  maxEntries?: number
+  /** Directory basenames never traversed or offered. */
+  excludedDirectories?: string[]
+}
+```
+
+来源：[`packages/context/file-reference-local/src/index.ts:35`](../packages/context/file-reference-local/src/index.ts)
+
+<a id="deepseek-aidsh-fs-local"></a>
 
 ## `@nomix-ai/nomix-fs-local`
 
@@ -606,7 +676,7 @@ export interface Config {
 
 来源：[`packages/fs/fs-local/src/index.ts:41`](../packages/fs/fs-local/src/index.ts)
 
-<a id="nomix-ainomix-fs-sandbox"></a>
+<a id="deepseek-aidsh-fs-sandbox"></a>
 
 ## `@nomix-ai/nomix-fs-sandbox`
 
@@ -622,11 +692,11 @@ export interface Config {
 export type Config = LocalConfig
 ```
 
-依赖：[`LocalConfig`](#nomix-ainomix-fs-local)
+依赖：[`LocalConfig`](#deepseek-aidsh-fs-local)
 
 来源：[`packages/fs/fs-sandbox/src/index.ts:49`](../packages/fs/fs-sandbox/src/index.ts)
 
-<a id="nomix-ainomix-goal"></a>
+<a id="deepseek-aidsh-goal"></a>
 
 ## `@nomix-ai/nomix-goal`
 
@@ -642,7 +712,7 @@ export interface Config {
 
 来源：[`packages/goal/goal/src/index.ts:116`](../packages/goal/goal/src/index.ts)
 
-<a id="nomix-ainomix-headless"></a>
+<a id="deepseek-aidsh-headless"></a>
 
 ## `@nomix-ai/nomix-headless`
 
@@ -658,11 +728,11 @@ export interface Config {
 
 来源：[`packages/bundle/headless/src/index.ts:31`](../packages/bundle/headless/src/index.ts)
 
-<a id="nomix-ainomix-hooks-claude-code"></a>
+<a id="deepseek-aidsh-hooks-claude-code"></a>
 
 ## `@nomix-ai/nomix-hooks-claude-code`
 
-需要：`bash`
+需要：`shell`
 
 ```ts config-catalog
 /** Plugin config: where the CC hook config lives + substitution roots. */
@@ -696,11 +766,11 @@ export interface Config {
 
 来源：[`packages/hooks/hooks-claude-code/src/index.ts:45`](../packages/hooks/hooks-claude-code/src/index.ts)
 
-<a id="nomix-ainomix-hooks-codex"></a>
+<a id="deepseek-aidsh-hooks-codex"></a>
 
 ## `@nomix-ai/nomix-hooks-codex`
 
-需要：`bash`
+需要：`shell`
 
 ```ts config-catalog
 /** Plugin config: where the Codex hooks.json lives + the model name for payloads. */
@@ -723,11 +793,11 @@ export interface Config {
 
 来源：[`packages/hooks/hooks-codex/src/index.ts:44`](../packages/hooks/hooks-codex/src/index.ts)
 
-<a id="nomix-ainomix-host-apiproxy"></a>
+<a id="deepseek-aidsh-host-apiproxy"></a>
 
 ## `@nomix-ai/nomix-host-apiproxy`
 
-需要：`agentDefaultModel` · `agents` · `attachments` · `directoryPicker` · `llm` · `sessions` · `subagents` · `sessionQuery` · `tools` · `userInteraction` · `workspace`
+需要：`agentDefaultModel` · `agents` · `attachments` · `directoryPicker` · `llm` · `sessions` · `subagents` · `sessionQuery` · `tools` · `userQuestions` · `workspaceRegistry`
 
 ```ts config-catalog
 /** Gateway plugin configuration. */
@@ -757,7 +827,7 @@ export interface Config {
 
 来源：[`packages/host/apiproxy/src/index.ts:41`](../packages/host/apiproxy/src/index.ts)
 
-<a id="nomix-ainomix-host-directory-picker-browse"></a>
+<a id="deepseek-aidsh-host-directory-picker-browse"></a>
 
 ## `@nomix-ai/nomix-host-directory-picker-browse`
 
@@ -771,7 +841,7 @@ export interface Config {
 
 来源：[`packages/host/directory-picker-browse/src/index.ts:181`](../packages/host/directory-picker-browse/src/index.ts)
 
-<a id="nomix-ainomix-host-frontend-static"></a>
+<a id="deepseek-aidsh-host-frontend-static"></a>
 
 ## `@nomix-ai/nomix-host-frontend-static`
 
@@ -787,7 +857,7 @@ export interface Config {
 
 来源：[`packages/host/frontend-static/src/index.ts:28`](../packages/host/frontend-static/src/index.ts)
 
-<a id="nomix-ainomix-host-webserver"></a>
+<a id="deepseek-aidsh-host-webserver"></a>
 
 ## `@nomix-ai/nomix-host-webserver`
 
@@ -801,9 +871,9 @@ export interface Config {
 }
 ```
 
-来源：[`packages/host/webserver/src/index.ts:45`](../packages/host/webserver/src/index.ts)
+来源：[`packages/host/webserver/src/index.ts:59`](../packages/host/webserver/src/index.ts)
 
-<a id="nomix-ainomix-invariants"></a>
+<a id="deepseek-aidsh-invariants"></a>
 
 ## `@nomix-ai/nomix-invariants`
 
@@ -821,7 +891,7 @@ export interface Config {
 
 来源：[`packages/runtime-diagnostics/invariants/src/index.ts:15`](../packages/runtime-diagnostics/invariants/src/index.ts)
 
-<a id="nomix-ainomix-jobs-local"></a>
+<a id="deepseek-aidsh-jobs-local"></a>
 
 ## `@nomix-ai/nomix-jobs-local`
 
@@ -838,7 +908,7 @@ export interface Config {
 
 来源：[`packages/jobs/jobs-local/src/index.ts:31`](../packages/jobs/jobs-local/src/index.ts)
 
-<a id="nomix-ainomix-llm-deepseek"></a>
+<a id="deepseek-aidsh-llm-deepseek"></a>
 
 ## `@nomix-ai/nomix-llm-deepseek`
 
@@ -866,11 +936,31 @@ export interface Config {
   maxTokens?: number
   /** Positive context capacity used when the selected model has no exact value (default 1,000,000). */
   defaultContextWindow?: number
-  /** Advisory models shown by discovery consumers; defaults to V4 Flash and V4 Pro. */
+  /** Advisory models shown by discovery consumers; defaults to V4 Flash, V4 Pro, and V4 Flash Vision Exp. */
   models?: DeepSeekCatalogModel[]
   /** Maximum provider idle time while one stream read is outstanding (default five minutes). */
   streamIdleTimeoutMs?: number
-  /** Provider-owned model-request retry policy; omission uses normal defaults. */
+  /** Maximum accumulated file-referenced image bytes per chat request (default 128 MiB). */
+  maxRequestFilesBytes?: number
+  /** Maximum accumulated base64 image payload after Files API fallback (default 20 MiB). */
+  maxInlineRequestImageBytes?: number
+  /** Maximum number of represented images per chat request (default 600). */
+  maxImagesPerRequest?: number
+  /** Raw-byte removal step after the request exceeds its file bound (default 64 MiB). */
+  imageOffloadByteQuantum?: number
+  /** Base64-byte removal step after inline fallback exceeds its bound (default 10 MiB). */
+  inlineImageOffloadByteQuantum?: number
+  /** Image-count removal step after the request exceeds its count bound (default 20). */
+  imageOffloadCountQuantum?: number
+  /** Maximum duration of one request-image Files API resolution (default one minute). */
+  filesApiTimeoutMs?: number
+  /** Explicit lifetime assigned to each uploaded image (default seven days). */
+  fileExpiresAfterSeconds?: number
+  /** Remaining lifetime below which an indexed file is replaced (default one hour). */
+  fileRefreshMarginSeconds?: number
+  /** Oldest harness-owned files deleted before one quota-recovery upload retry (default 100). */
+  fileQuotaCleanupBatch?: number
+  /** Provider-owned model-request retry policy; omission uses normal mode with five retries. */
   retryPolicy?: RetryPolicyConfig
 }
 
@@ -886,14 +976,22 @@ export interface DeepSeekCatalogModel {
   contextWindow?: number
   /** Per-request output cap for this model; omission falls back to the profile's {@link DeepSeekConnectionOptions.maxTokens}. */
   maxTokens?: number
+  /** Accepted request modalities; omission is text-only. */
+  inputModalities?: ModelModality[]
+  /** Total-pixel budget for one deterministic request preview. */
+  imagePixelBudget?: number
+  /** Encoded-byte cap for one deterministic request preview. */
+  imageMaxBytes?: number
+  /** Provider detail tier; `low` uses the 512-by-512 total-pixel default. */
+  imageDetail?: 'auto' | 'low'
 }
 ```
 
-依赖：[`RetryPolicyConfig`](../packages/llm/llm/src/index.ts)
+依赖：[`ModelModality`](../packages/llm/llm/src/index.ts) · [`RetryPolicyConfig`](../packages/llm/llm/src/index.ts)
 
-来源：[`packages/llm/llm-deepseek/src/index.ts:62`](../packages/llm/llm-deepseek/src/index.ts)
+来源：[`packages/llm/llm-deepseek/src/index.ts:106`](../packages/llm/llm-deepseek/src/index.ts)
 
-<a id="nomix-ainomix-llm-pi-ai"></a>
+<a id="deepseek-aidsh-llm-pi-ai"></a>
 
 ## `@nomix-ai/nomix-llm-pi-ai`
 
@@ -940,10 +1038,11 @@ export interface PiAiProviderProfile {
    */
   modelOverrides?: Record<string, PiAiModelOverride>
   /**
-   * Reasoning-dispatch switches for every `openai-completions` model on this
-   * route; each model's own `compat` overrides per field. What neither sets
-   * keeps the installed catalog entry's value, then pi-ai's baseURL-derived
-   * detection.
+   * pi-ai wire-compatibility switches defaulting every model on this route
+   * whose protocol declares them; each model's own `compat` overrides per
+   * field. What neither sets keeps the installed catalog entry's value, then
+   * pi-ai's own detection. A switch no model on the route could read is
+   * refused rather than left looking applied.
    */
   compat?: PiAiCompatProfile
   /**
@@ -985,7 +1084,18 @@ export interface PiAiProviderProfile {
   websocketConnectTimeoutMs?: number
   /** Maximum provider idle time while one stream read is outstanding. */
   streamIdleTimeoutMs?: number
-  /** Provider-owned model-request retry policy; omission uses normal defaults. */
+  /**
+   * Maximum base64-encoded image payload per request. When a request's
+   * accumulated images exceed it, the oldest images are replaced by text
+   * placeholders until the request fits, so a long session keeps completing
+   * requests instead of being rejected by a request-size cap.
+   */
+  maxRequestImageBytes?: number
+  /** Total-pixel budget for each deterministic inline request version. */
+  requestImagePixelBudget?: number
+  /** Raw encoded-byte cap for each deterministic inline request version. */
+  requestImageMaxBytes?: number
+  /** Provider-owned model-request retry policy; omission uses normal mode with five retries. */
   retryPolicy?: RetryPolicyConfig
 }
 
@@ -1024,7 +1134,7 @@ export interface PiAiModelProfile {
    * declares the offered levels and their wire spellings.
    */
   reasoningEfforts?: false | PiAiReasoningEfforts
-  /** Reasoning-dispatch switches for this model, winning over the route's. */
+  /** pi-ai wire-compatibility switches for this model, winning over the route's per field; one its protocol does not declare is refused. */
   compat?: PiAiCompatProfile
 }
 
@@ -1038,19 +1148,80 @@ export interface PiAiModelProfile {
 export type PiAiModelOverride = Omit<PiAiModelProfile, 'id'>
 
 /**
- * Reasoning-dispatch compatibility switches, set on the route (its models'
- * default) or per model (winning over the route). Only the switches pi-ai's
- * reasoning dispatch reads are offered; the rest of pi-ai's compat surface
- * keeps its baseURL-derived auto-detection. pi-ai types both fields only on
- * `OpenAICompletionsCompat` — the other wire protocols define their reasoning
- * fields in the protocol itself — so resolution rejects a model-level switch
- * anywhere else, while a route-level default skips past models it cannot fit.
+ * pi-ai wire-compatibility switches, set on the route (its models' default) or
+ * per model (winning over the route, field by field).
+ *
+ * pi-ai decides each of these from the provider id and baseURL when no layer
+ * sets it, and a private gateway's URL says nothing: for an endpoint it does
+ * not recognize the detection answers as though it were OpenAI itself, which
+ * is wrong for most OpenAI-compatible gateways. So every field here is one a
+ * deployment must be able to state because nothing can infer it, while the
+ * fields pi-ai's catalog sets for a named vendor stay withheld.
+ *
+ * A field belongs to the protocols whose upstream compat type declares it: a
+ * model-level switch its protocol does not take fails resolution, and a
+ * route-level one skips past models it cannot fit. "The three Responses
+ * protocols" below means `openai-responses`, `azure-openai-responses`, and
+ * `openai-codex-responses`, which pi-ai gives one shared compat type, so a
+ * switch settable on one is settable on all three.
  */
 export interface PiAiCompatProfile {
-  /** Reasoning parameter format the endpoint expects; absent keeps the catalog entry's, then pi-ai's baseURL-derived guess. */
-  thinkingFormat?: PiAiThinkingFormat
-  /** Whether the endpoint accepts `reasoning_effort`; absent keeps the catalog entry's, then pi-ai's baseURL-derived guess. */
+  /** Whether the endpoint accepts `store`; `openai-completions`. */
+  supportsStore?: boolean
+  /**
+   * Whether the endpoint accepts the `developer` role for the system prompt,
+   * which pi-ai sends only to a reasoning model; `false` keeps `system`.
+   * `openai-completions` and the three Responses protocols.
+   */
+  supportsDeveloperRole?: boolean
+  /** Whether the endpoint accepts `reasoning_effort`; `openai-completions`. */
   supportsReasoningEffort?: boolean
+  /** Whether the endpoint accepts `stream_options: {include_usage: true}`; `openai-completions`. */
+  supportsUsageInStreaming?: boolean
+  /** Which output-cap field the endpoint reads; `openai-completions`. */
+  maxTokensField?: NonNullable<OpenAICompletionsCompat['maxTokensField']>
+  /** Whether tool results must carry `name`; `openai-completions`. */
+  requiresToolResultName?: boolean
+  /** Whether a user message after tool results needs an assistant message between; `openai-completions`. */
+  requiresAssistantAfterToolResult?: boolean
+  /** Whether thinking blocks must travel as text in `<thinking>` delimiters; `openai-completions`. */
+  requiresThinkingAsText?: boolean
+  /** Whether replayed assistant messages need an empty `reasoning_content` while reasoning is on; `openai-completions`. */
+  requiresReasoningContentOnAssistantMessages?: boolean
+  /** Reasoning parameter format the endpoint expects; `openai-completions`. */
+  thinkingFormat?: PiAiThinkingFormat
+  /**
+   * Kwargs sent as `chat_template_kwargs`, which pi-ai reads only under the
+   * two `chat-template` thinking formats; `openai-completions`. Nothing checks
+   * that pairing: the format in force may come from the installed catalog
+   * entry or from pi-ai's own baseURL detection, neither of which resolution
+   * can read, so kwargs set beside another format are sent nowhere.
+   */
+  chatTemplateKwargs?: NonNullable<OpenAICompletionsCompat['chatTemplateKwargs']>
+  /**
+   * Whether the endpoint accepts `strict` in tool definitions;
+   * `openai-completions`, the three Responses protocols, `bedrock-converse-stream`.
+   */
+  supportsStrictMode?: boolean
+  /** Prompt-cache marker convention; `openai-completions`. */
+  cacheControlFormat?: NonNullable<OpenAICompletionsCompat['cacheControlFormat']>
+  /**
+   * Whether the endpoint accepts long prompt-cache retention;
+   * `openai-completions`, the three Responses protocols, `anthropic-messages`.
+   */
+  supportsLongCacheRetention?: boolean
+  /** Whether the endpoint accepts per-tool `eager_input_streaming`; `anthropic-messages`. */
+  supportsEagerToolInputStreaming?: boolean
+  /** Whether the endpoint accepts `cache_control` on tool definitions; `anthropic-messages`. */
+  supportsCacheControlOnTools?: boolean
+  /** Whether the endpoint accepts the `temperature` request field; `anthropic-messages`. */
+  supportsTemperature?: boolean
+  /** Whether to force adaptive thinking regardless of model id; `anthropic-messages`. */
+  forceAdaptiveThinking?: boolean
+  /** Whether to replay an empty thinking signature instead of converting thinking to text; `anthropic-messages`. */
+  allowEmptySignature?: boolean
+  /** Whether the endpoint accepts Anthropic strict tool schemas; `anthropic-messages`. */
+  supportsStrictTools?: boolean
 }
 
 /** One request modality a pi-ai model may accept. */
@@ -1067,23 +1238,14 @@ export type PiAiModality = Model<Api>['input'][number]
 export type PiAiReasoningEfforts = Partial<Record<ModelThinkingLevel, string | null>>
 
 /** One reasoning-dispatch wire format a profile may name. */
-export type PiAiThinkingFormat = Exclude<PiThinkingFormat, WithheldThinkingFormat>
-
-/** The `compat.thinkingFormat` spellings pi-ai accepts on an `openai-completions` model. */
-type PiThinkingFormat = NonNullable<OpenAICompletionsCompat['thinkingFormat']>
-
-/**
- * pi-ai thinking formats a profile cannot name: both drive the request through
- * `chatTemplateKwargs`, which this configuration does not expose.
- */
-type WithheldThinkingFormat = 'chat-template' | 'qwen-chat-template'
+export type PiAiThinkingFormat = NonNullable<OpenAICompletionsCompat['thinkingFormat']>
 ```
 
-依赖：`Api`（`@earendil-works/pi-ai`）· `CacheRetention`（`@earendil-works/pi-ai`）· `Model`（`@earendil-works/pi-ai`）· `ModelThinkingLevel`（`@earendil-works/pi-ai`）· `OpenAICompletionsCompat`（`@earendil-works/pi-ai`）· [`RetryPolicyConfig`](../packages/llm/llm/src/index.ts) · `ThinkingBudgets`（`@earendil-works/pi-ai`）· `Transport`（`@earendil-works/pi-ai`）
+依赖：`Api`（`@earendil-works/pi-ai`）· `CacheRetention`（`@earendil-works/pi-ai`）· `Model`（`@earendil-works/pi-ai`）· `ModelThinkingLevel`（`@earendil-works/pi-ai`）· `OpenAICompletionsCompat`（`@earendil-works/pi-ai`）· [`RetryPolicyConfig`](../packages/llm/llm/src/index.ts) · `ThinkingBudgets`（`@earendil-works/pi-ai`）· `Transport`（`@earendil-works/pi-ai`)
 
-来源：[`packages/llm/llm-pi-ai/src/config.ts:172`](../packages/llm/llm-pi-ai/src/config.ts)
+来源：[`packages/llm/llm-pi-ai/src/config.ts:213`](../packages/llm/llm-pi-ai/src/config.ts)
 
-<a id="nomix-ainomix-llm-replay"></a>
+<a id="deepseek-aidsh-llm-replay"></a>
 
 ## `@nomix-ai/nomix-llm-replay`
 
@@ -1149,9 +1311,9 @@ export interface ReplayModelConfig {
 
 依赖：[`ModelModality`](../packages/llm/llm/src/index.ts) · [`RetryPolicyConfig`](../packages/llm/llm/src/index.ts)
 
-来源：[`packages/test-support/llm-replay/src/index.ts:776`](../packages/test-support/llm-replay/src/index.ts)
+来源：[`packages/test-support/llm-replay/src/index.ts:809`](../packages/test-support/llm-replay/src/index.ts)
 
-<a id="nomix-ainomix-llm-retry"></a>
+<a id="deepseek-aidsh-llm-retry"></a>
 
 ## `@nomix-ai/nomix-llm-retry`
 
@@ -1164,7 +1326,7 @@ export type Config = Readonly<Record<string, never>>
 
 来源：[`packages/llm/llm-retry/src/index.ts:24`](../packages/llm/llm-retry/src/index.ts)
 
-<a id="nomix-ainomix-lsp-stdio"></a>
+<a id="deepseek-aidsh-lsp-stdio"></a>
 
 ## `@nomix-ai/nomix-lsp-stdio`
 
@@ -1206,7 +1368,7 @@ export interface LspLocalServerConfig {
 
 来源：[`packages/lsp/lsp-stdio/src/index.ts:82`](../packages/lsp/lsp-stdio/src/index.ts)
 
-<a id="nomix-ainomix-mcp-client"></a>
+<a id="deepseek-aidsh-mcp-client"></a>
 
 ## `@nomix-ai/nomix-mcp-client`
 
@@ -1279,7 +1441,7 @@ export interface ReconnectConfig {
 
 来源：[`packages/mcp/mcp-client/src/index.ts:98`](../packages/mcp/mcp-client/src/index.ts)
 
-<a id="nomix-ainomix-message-feedback"></a>
+<a id="deepseek-aidsh-message-feedback"></a>
 
 ## `@nomix-ai/nomix-message-feedback`
 
@@ -1295,11 +1457,11 @@ export interface Config {
 
 来源：[`packages/feedback/message-feedback/src/index.ts:49`](../packages/feedback/message-feedback/src/index.ts)
 
-<a id="nomix-ainomix-permission-presets"></a>
+<a id="deepseek-aidsh-permission-presets"></a>
 
 ## `@nomix-ai/nomix-permission-presets`
 
-需要：`bash` · `approval` · `sessions`
+需要：`shell` · `approval` · `sessions`
 
 ```ts config-catalog
 /** The {@link PermissionPresetService} config: preset table and composition default. */
@@ -1330,11 +1492,11 @@ export interface PresetSpec {
 }
 ```
 
-依赖：[`ApprovalPolicy`](subsystems/approval.md) · [`SandboxMode`](subsystems/sandbox.md)
+依赖：[`ApprovalPolicy`](subsystems/approval.zh.md) · [`SandboxMode`](subsystems/sandbox.zh.md)
 
-来源：[`packages/interaction/permission-presets/src/index.ts:140`](../packages/interaction/permission-presets/src/index.ts)
+来源：[`packages/interaction/permission-presets/src/index.ts:156`](../packages/interaction/permission-presets/src/index.ts)
 
-<a id="nomix-ainomix-persona"></a>
+<a id="deepseek-aidsh-persona"></a>
 
 ## `@nomix-ai/nomix-persona`
 
@@ -1358,7 +1520,7 @@ export interface Config {
 
 来源：[`packages/preset/persona/src/index.ts:34`](../packages/preset/persona/src/index.ts)
 
-<a id="nomix-ainomix-plan-mode"></a>
+<a id="deepseek-aidsh-plan-mode"></a>
 
 ## `@nomix-ai/nomix-plan-mode`
 
@@ -1374,7 +1536,7 @@ export interface PlanModeConfig {
 
 来源：[`packages/plan/plan-mode/src/index.ts:70`](../packages/plan/plan-mode/src/index.ts)
 
-<a id="nomix-ainomix-pwsh-local"></a>
+<a id="deepseek-aidsh-pwsh-local"></a>
 
 ## `@nomix-ai/nomix-pwsh-local`
 
@@ -1407,7 +1569,7 @@ export interface Config {
 
 来源：[`packages/shell/pwsh-local/src/index.ts:58`](../packages/shell/pwsh-local/src/index.ts)
 
-<a id="nomix-ainomix-pwsh-sandbox"></a>
+<a id="deepseek-aidsh-pwsh-sandbox"></a>
 
 ## `@nomix-ai/nomix-pwsh-sandbox`
 
@@ -1425,11 +1587,11 @@ export interface Config {
 export type Config = LocalConfig
 ```
 
-依赖：[`LocalConfig`](#nomix-ainomix-pwsh-local)
+依赖：[`LocalConfig`](#deepseek-aidsh-pwsh-local)
 
 来源：[`packages/shell/pwsh-sandbox/src/index.ts:40`](../packages/shell/pwsh-sandbox/src/index.ts)
 
-<a id="nomix-ainomix-repeat-tool-reminder"></a>
+<a id="deepseek-aidsh-repeat-tool-reminder"></a>
 
 ## `@nomix-ai/nomix-repeat-tool-reminder`
 
@@ -1463,7 +1625,7 @@ export interface Config {
 
 来源：[`packages/guard/repeat-tool-reminder/src/index.ts:28`](../packages/guard/repeat-tool-reminder/src/index.ts)
 
-<a id="nomix-ainomix-sandbox-local"></a>
+<a id="deepseek-aidsh-sandbox-local"></a>
 
 ## `@nomix-ai/nomix-sandbox-local`
 
@@ -1495,7 +1657,7 @@ export interface Config {
 
 来源：[`packages/sandbox/sandbox-local/src/index.ts:44`](../packages/sandbox/sandbox-local/src/index.ts)
 
-<a id="nomix-ainomix-sandbox-policy"></a>
+<a id="deepseek-aidsh-sandbox-policy"></a>
 
 ## `@nomix-ai/nomix-sandbox-policy`
 
@@ -1518,11 +1680,11 @@ export interface Config {
 }
 ```
 
-依赖：[`SandboxMode`](subsystems/sandbox.md)
+依赖：[`SandboxMode`](subsystems/sandbox.zh.md)
 
 来源：[`packages/sandbox/sandbox-policy/src/index.ts:67`](../packages/sandbox/sandbox-policy/src/index.ts)
 
-<a id="nomix-ainomix-sdk-jsonrpc-server"></a>
+<a id="deepseek-aidsh-sdk-jsonrpc-server"></a>
 
 ## `@nomix-ai/nomix-sdk-jsonrpc-server`
 
@@ -1546,7 +1708,7 @@ export interface JsonRpcConfig {
 
 来源：[`packages/sdk/server/src/index.ts:29`](../packages/sdk/server/src/index.ts)
 
-<a id="nomix-ainomix-session-persistence-jsonl"></a>
+<a id="deepseek-aidsh-session-persistence-jsonl"></a>
 
 ## `@nomix-ai/nomix-session-persistence-jsonl`
 
@@ -1585,7 +1747,7 @@ export type JsonlCompression = 'zstd' | 'none'
 
 来源：[`packages/session/session-persistence-jsonl/src/index.ts:60`](../packages/session/session-persistence-jsonl/src/index.ts)
 
-<a id="nomix-ainomix-session-persistence-sqlite"></a>
+<a id="deepseek-aidsh-session-persistence-sqlite"></a>
 
 ## `@nomix-ai/nomix-session-persistence-sqlite`
 
@@ -1594,43 +1756,25 @@ export type JsonlCompression = 'zstd' | 'none'
 ```ts config-catalog
 /** Plugin configuration. */
 export interface Config {
-  /**
-   * Filesystem path to the SQLite database file. The special value `:memory:`
-   * opens an in-process database (tests). On filesystems with POSIX modes,
-   * missing directories and databases are created owner-only; existing path
-   * modes are preserved. Filesystem setup errors other than an existing database
-   * fail initialization. The backend does not protect confidentiality or
-   * integrity when another principal can replace the database entry in its
-   * parent directory.
-   */
+  /** SQLite database path, or `:memory:` for an in-process database. */
   path: string
-  /**
-   * SQLite `journal_mode` pragma. `wal` (the default) is the recorded
-   * durability model; pick a rollback-journal mode (`delete`/`truncate`/
-   * `persist`) on filesystems where WAL's shared-memory files do not work
-   * (network mounts). See {@link JournalMode}.
-   */
+  /** Durable SQLite journal mode; defaults to `wal`. */
   journalMode?: JournalMode
+  /** Maximum wait for another SQLite connection's lock; defaults to 5,000 ms. */
+  busyTimeoutMs?: number
   /** Maximum cold Session preparations retained for history-to-resume reuse. */
   preparedSessionCacheSize?: number
   /** Fixed live-event coalescing window; not a backend completion deadline. */
   writeBatchMaxDelayMs?: number
 }
 
-/**
- * Journal modes the backend will run under. `wal` is the default and the
- * durability model the persistence ADR records; the rollback-journal modes
- * (`delete`/`truncate`/`persist`) exist for filesystems where WAL's
- * shared-memory files do not work (network mounts). `memory`/`off` are
- * excluded: dropping journal durability silently contradicts what this
- * backend promises.
- */
+/** Durable journal modes accepted by the backend. */
 export type JournalMode = 'wal' | 'delete' | 'truncate' | 'persist'
 ```
 
-来源：[`packages/session/session-persistence-sqlite/src/index.ts:70`](../packages/session/session-persistence-sqlite/src/index.ts)
+来源：[`packages/session/session-persistence-sqlite/src/index.ts:36`](../packages/session/session-persistence-sqlite/src/index.ts)
 
-<a id="nomix-ainomix-session-projection-cache"></a>
+<a id="deepseek-aidsh-session-projection-cache"></a>
 
 ## `@nomix-ai/nomix-session-projection-cache`
 
@@ -1653,7 +1797,7 @@ export interface Config {
 
 来源：[`packages/session/session-projection-cache/src/index.ts:42`](../packages/session/session-projection-cache/src/index.ts)
 
-<a id="nomix-ainomix-session-query-sqlite"></a>
+<a id="deepseek-aidsh-session-query-sqlite"></a>
 
 ## `@nomix-ai/nomix-session-query-sqlite`
 
@@ -1699,7 +1843,7 @@ export type JournalMode = 'wal' | 'delete' | 'truncate' | 'persist'
 
 来源：[`packages/session-query/session-query-sqlite/src/index.ts:89`](../packages/session-query/session-query-sqlite/src/index.ts)
 
-<a id="nomix-ainomix-session-reference"></a>
+<a id="deepseek-aidsh-session-reference"></a>
 
 ## `@nomix-ai/nomix-session-reference`
 
@@ -1719,7 +1863,7 @@ export interface Config {
 
 来源：[`packages/context/session-reference/src/config.ts:11`](../packages/context/session-reference/src/config.ts)
 
-<a id="nomix-ainomix-session-telemetry-otel"></a>
+<a id="deepseek-aidsh-session-telemetry-otel"></a>
 
 ## `@nomix-ai/nomix-session-telemetry-otel`
 
@@ -1765,7 +1909,7 @@ export enum SessionTelemetryMode {
 
 来源：[`packages/session/session-telemetry-otel/src/index.ts:91`](../packages/session/session-telemetry-otel/src/index.ts)
 
-<a id="nomix-ainomix-session-title"></a>
+<a id="deepseek-aidsh-session-title"></a>
 
 ## `@nomix-ai/nomix-session-title`
 
@@ -1785,7 +1929,7 @@ export interface Config {
 
 来源：[`packages/session/session-title/src/index.ts:79`](../packages/session/session-title/src/index.ts)
 
-<a id="nomix-ainomix-session-title-all-prompts-llm"></a>
+<a id="deepseek-aidsh-session-title-all-prompts-llm"></a>
 
 ## `@nomix-ai/nomix-session-title-all-prompts-llm`
 
@@ -1800,7 +1944,7 @@ export type Config = SessionTitleLlmConfig
 
 来源：[`packages/session/session-title-all-prompts-llm/src/index.ts:15`](../packages/session/session-title-all-prompts-llm/src/index.ts)
 
-<a id="nomix-ainomix-session-title-first-prompt-llm"></a>
+<a id="deepseek-aidsh-session-title-first-prompt-llm"></a>
 
 ## `@nomix-ai/nomix-session-title-first-prompt-llm`
 
@@ -1815,7 +1959,7 @@ export type Config = SessionTitleLlmConfig
 
 来源：[`packages/session/session-title-first-prompt-llm/src/index.ts:15`](../packages/session/session-title-first-prompt-llm/src/index.ts)
 
-<a id="nomix-ainomix-settings-file"></a>
+<a id="deepseek-aidsh-settings-file"></a>
 
 ## `@nomix-ai/nomix-settings-file`
 
@@ -1835,7 +1979,7 @@ export interface Config {
 
 来源：[`packages/settings/settings-file/src/index.ts:21`](../packages/settings/settings-file/src/index.ts)
 
-<a id="nomix-ainomix-shell-env"></a>
+<a id="deepseek-aidsh-shell-env"></a>
 
 ## `@nomix-ai/nomix-shell-env`
 
@@ -1849,7 +1993,7 @@ export interface Config {
 
 来源：[`packages/shell/shell-env/src/index.ts:29`](../packages/shell/shell-env/src/index.ts)
 
-<a id="nomix-ainomix-skill"></a>
+<a id="deepseek-aidsh-skill"></a>
 
 ## `@nomix-ai/nomix-skill`
 
@@ -1863,7 +2007,7 @@ export interface Config {
 
 来源：[`packages/skill/skill/src/index.ts:279`](../packages/skill/skill/src/index.ts)
 
-<a id="nomix-ainomix-skill-filesystem"></a>
+<a id="deepseek-aidsh-skill-filesystem"></a>
 
 ## `@nomix-ai/nomix-skill-filesystem`
 
@@ -1901,7 +2045,7 @@ export interface Config {
 
 来源：[`packages/skill/skill-filesystem/src/index.ts:49`](../packages/skill/skill-filesystem/src/index.ts)
 
-<a id="nomix-ainomix-spill-local"></a>
+<a id="deepseek-aidsh-spill-local"></a>
 
 ## `@nomix-ai/nomix-spill-local`
 
@@ -1919,7 +2063,7 @@ export interface Config {
 
 来源：[`packages/spill/spill-local/src/index.ts:22`](../packages/spill/spill-local/src/index.ts)
 
-<a id="nomix-ainomix-spill-policy"></a>
+<a id="deepseek-aidsh-spill-policy"></a>
 
 ## `@nomix-ai/nomix-spill-policy`
 
@@ -1939,7 +2083,7 @@ export interface Config {
 
 来源：[`packages/spill/spill-policy/src/index.ts:60`](../packages/spill/spill-policy/src/index.ts)
 
-<a id="nomix-ainomix-storage-domain"></a>
+<a id="deepseek-aidsh-storage-domain"></a>
 
 ## `@nomix-ai/nomix-storage-domain`
 
@@ -1962,7 +2106,7 @@ export interface Config {
 
 来源：[`packages/storage/storage-domain/src/index.ts:52`](../packages/storage/storage-domain/src/index.ts)
 
-<a id="nomix-ainomix-storage-json"></a>
+<a id="deepseek-aidsh-storage-json"></a>
 
 ## `@nomix-ai/nomix-storage-json`
 
@@ -1983,7 +2127,7 @@ export interface Config {
 
 来源：[`packages/storage/storage-json/src/index.ts:27`](../packages/storage/storage-json/src/index.ts)
 
-<a id="nomix-ainomix-storage-sqlite"></a>
+<a id="deepseek-aidsh-storage-sqlite"></a>
 
 ## `@nomix-ai/nomix-storage-sqlite`
 
@@ -2023,7 +2167,7 @@ export type JournalMode = 'wal' | 'delete' | 'truncate' | 'persist'
 
 来源：[`packages/storage/storage-sqlite/src/index.ts:24`](../packages/storage/storage-sqlite/src/index.ts)
 
-<a id="nomix-ainomix-subagent-acp"></a>
+<a id="deepseek-aidsh-subagent-acp"></a>
 
 ## `@nomix-ai/nomix-subagent-acp`
 
@@ -2076,49 +2220,71 @@ export type PermissionPolicy = 'allow' | 'reject'
 
 来源：[`packages/subagent/subagent-acp/src/index.ts:27`](../packages/subagent/subagent-acp/src/index.ts)
 
-<a id="nomix-ainomix-subagent-claude-code"></a>
+<a id="deepseek-aidsh-subagent-claude-code"></a>
 
 ## `@nomix-ai/nomix-subagent-claude-code`
 
 需要：`subagents` · `subprocess`
 
 ```ts config-catalog
-/** Deployment-owned environment and process-release bound. */
+/** Deployment-owned permission, environment, and process-release settings. */
 export interface Config {
+  /** Provider name on `ctx.subagents` (default `claude-code`). */
+  providerName?: string
   /**
    * Explicit environment entries layered over the subprocess seam's
    * credential-scrubbed parent environment.
    */
   env?: Record<string, string>
+  /**
+   * Native non-interactive mode fixed for this Provider instance. Defaults to
+   * `dontAsk`; `acceptEdits` accepts edits, `auto` uses the native classifier,
+   * `plan` returns a plan without approving execution, and
+   * `bypassPermissions` explicitly skips permission checks.
+   */
+  permissionMode?: ClaudeCodePermissionMode
   /** Grace in milliseconds for Claude Code process-tree termination. */
   disposeGraceMs?: number
 }
+
+/** Profile-selectable non-interactive Claude Code permission mode. */
+export type ClaudeCodePermissionMode = typeof CLAUDE_CODE_PERMISSION_MODES[number]
 ```
 
-来源：[`packages/subagent/subagent-claude-code/src/index.ts:32`](../packages/subagent/subagent-claude-code/src/index.ts)
+来源：[`packages/subagent/subagent-claude-code/src/index.ts:38`](../packages/subagent/subagent-claude-code/src/index.ts)
 
-<a id="nomix-ainomix-subagent-codex"></a>
+<a id="deepseek-aidsh-subagent-codex"></a>
 
 ## `@nomix-ai/nomix-subagent-codex`
 
 需要：`subagents` · `subprocess`
 
 ```ts config-catalog
-/** Deployment-owned environment and process-release bound. */
+/** Deployment-owned permission, environment, and process-release settings. */
 export interface Config {
+  /** Provider name on `ctx.subagents` (default `codex`). */
+  providerName?: string
   /**
    * Explicit environment entries layered over the subprocess seam's
    * credential-scrubbed parent environment.
    */
   env?: Record<string, string>
+  /** Native non-interactive permission mode fixed for this Provider instance. */
+  permissionMode?: CodexPermissionMode
   /** Grace in milliseconds for app-server process-tree termination. */
   disposeGraceMs?: number
 }
+
+/** Profile-selectable non-interactive Codex permission mode. */
+export type CodexPermissionMode =
+  | 'never'
+  | 'approve-for-me'
+  | 'dangerously-bypass-approvals-and-sandbox'
 ```
 
-来源：[`packages/subagent/subagent-codex/src/index.ts:30`](../packages/subagent/subagent-codex/src/index.ts)
+来源：[`packages/subagent/subagent-codex/src/index.ts:36`](../packages/subagent/subagent-codex/src/index.ts)
 
-<a id="nomix-ainomix-subagent-nomix-sdk"></a>
+<a id="deepseek-aidsh-subagent-nomix-sdk"></a>
 
 ## `@nomix-ai/nomix-subagent-nomix-sdk`
 
@@ -2171,7 +2337,7 @@ export interface Config {
 
 来源：[`packages/subagent/subagent-nomix-sdk/src/index.ts:29`](../packages/subagent/subagent-nomix-sdk/src/index.ts)
 
-<a id="nomix-ainomix-subagent-fork-in-process"></a>
+<a id="deepseek-aidsh-subagent-fork-in-process"></a>
 
 ## `@nomix-ai/nomix-subagent-fork-in-process`
 
@@ -2187,7 +2353,7 @@ export interface Config {
 
 来源：[`packages/subagent/subagent-fork-in-process/src/index.ts:31`](../packages/subagent/subagent-fork-in-process/src/index.ts)
 
-<a id="nomix-ainomix-subagent-spawn-in-process"></a>
+<a id="deepseek-aidsh-subagent-spawn-in-process"></a>
 
 ## `@nomix-ai/nomix-subagent-spawn-in-process`
 
@@ -2203,7 +2369,7 @@ export interface Config {
 
 来源：[`packages/subagent/subagent-spawn-in-process/src/index.ts:25`](../packages/subagent/subagent-spawn-in-process/src/index.ts)
 
-<a id="nomix-ainomix-subprocess-e2b"></a>
+<a id="deepseek-aidsh-subprocess-e2b"></a>
 
 ## `@nomix-ai/nomix-subprocess-e2b`
 
@@ -2219,7 +2385,7 @@ export interface Config {
 
 来源：[`packages/e2b/subprocess-e2b/src/index.ts:25`](../packages/e2b/subprocess-e2b/src/index.ts)
 
-<a id="nomix-ainomix-system-prompt"></a>
+<a id="deepseek-aidsh-system-prompt"></a>
 
 ## `@nomix-ai/nomix-system-prompt`
 
@@ -2246,20 +2412,22 @@ export interface Config {
 
 来源：[`packages/core/system-prompt/src/index.ts:186`](../packages/core/system-prompt/src/index.ts)
 
-<a id="nomix-ainomix-terminal-bash"></a>
+<a id="deepseek-aidsh-terminal-bash"></a>
 
 ## `@nomix-ai/nomix-terminal-bash`
 
-需要：`pty` · `sandboxPolicy` · `subprocess`
+需要：`terminals` · `sandboxPolicy` · `subprocess`
 
 ```ts config-catalog
 /** Public plugin configuration. */
 export interface Config {
   /** Backend registry type (default: `shell`). */
   backendType?: string
-  /** Interactive shell executable (default: `/bin/bash`). */
+  /** Interactive shell dialect (default: `bash`); selects the argv/env/startup defaults. */
+  shellDialect?: ShellDialect
+  /** Interactive shell executable (default per dialect: `/bin/bash`, or the resolved pwsh). */
   shellPath?: string
-  /** Shell arguments (default: `--noprofile --norc -i`). */
+  /** Shell arguments (default per dialect: bash `--noprofile --norc -i`, pwsh `-NoLogo -NoProfile`). */
   shellArgs?: string[]
   /** Terminal rows. */
   rows?: number
@@ -2287,11 +2455,14 @@ export interface Config {
   /** Grace before teardown escalates to `SIGKILL`. */
   disposeGraceMs?: number
 }
+
+/** One supported interactive shell dialect. */
+export type ShellDialect = 'bash' | 'pwsh'
 ```
 
-来源：[`packages/terminal/terminal-bash/src/config.ts:6`](../packages/terminal/terminal-bash/src/config.ts)
+来源：[`packages/terminal/terminal-bash/src/config.ts:10`](../packages/terminal/terminal-bash/src/config.ts)
 
-<a id="nomix-ainomix-time-context"></a>
+<a id="deepseek-aidsh-time-context"></a>
 
 ## `@nomix-ai/nomix-time-context`
 
@@ -2309,7 +2480,7 @@ export interface Config {
 
 来源：[`packages/context/time-context/src/index.ts:27`](../packages/context/time-context/src/index.ts)
 
-<a id="nomix-ainomix-tmux-context"></a>
+<a id="deepseek-aidsh-tmux-context"></a>
 
 ## `@nomix-ai/nomix-tmux-context`
 
@@ -2325,7 +2496,7 @@ export interface Config {
 
 来源：[`packages/context/tmux-context/src/index.ts:34`](../packages/context/tmux-context/src/index.ts)
 
-<a id="nomix-ainomix-token-meter"></a>
+<a id="deepseek-aidsh-token-meter"></a>
 
 ## `@nomix-ai/nomix-token-meter`
 
@@ -2336,11 +2507,11 @@ export type TokenMeterConfig = Record<string, never>
 
 来源：[`packages/llm/token-meter/src/types.ts:12`](../packages/llm/token-meter/src/types.ts)
 
-<a id="nomix-ainomix-tool-bash"></a>
+<a id="deepseek-aidsh-tool-bash"></a>
 
 ## `@nomix-ai/nomix-tool-bash`
 
-需要：`tools` · `bash` · `systemPrompt` · `bashEnv`
+需要：`tools` · `shell` · `systemPrompt` · `shellEnv`
 
 ```ts config-catalog
 /** Configuration for the bash tool. */
@@ -2352,11 +2523,11 @@ export interface Config {
 
 来源：[`packages/shell/tool-bash/src/index.ts:34`](../packages/shell/tool-bash/src/index.ts)
 
-<a id="nomix-ainomix-tool-bash-persistent"></a>
+<a id="deepseek-aidsh-tool-bash-persistent"></a>
 
 ## `@nomix-ai/nomix-tool-bash-persistent`
 
-需要：`tools` · `pty`
+需要：`tools` · `terminals`
 
 ```ts config-catalog
 /** Configuration for the persistent Bash tool. */
@@ -2372,9 +2543,9 @@ export interface Config {
 }
 ```
 
-来源：[`packages/shell/tool-bash-persistent/src/index.ts:400`](../packages/shell/tool-bash-persistent/src/index.ts)
+来源：[`packages/shell/tool-bash-persistent/src/index.ts:432`](../packages/shell/tool-bash-persistent/src/index.ts)
 
-<a id="nomix-ainomix-tool-fs"></a>
+<a id="deepseek-aidsh-tool-fs"></a>
 
 ## `@nomix-ai/nomix-tool-fs`
 
@@ -2396,7 +2567,7 @@ export interface Config {
 
 来源：[`packages/fs/tool-fs/src/index.ts:25`](../packages/fs/tool-fs/src/index.ts)
 
-<a id="nomix-ainomix-tool-fs-search"></a>
+<a id="deepseek-aidsh-tool-fs-search"></a>
 
 ## `@nomix-ai/nomix-tool-fs-search`
 
@@ -2431,7 +2602,7 @@ export interface Config {
 
 来源：[`packages/fs/tool-fs-search/src/index.ts:73`](../packages/fs/tool-fs-search/src/index.ts)
 
-<a id="nomix-ainomix-tool-goal"></a>
+<a id="deepseek-aidsh-tool-goal"></a>
 
 ## `@nomix-ai/nomix-tool-goal`
 
@@ -2447,11 +2618,11 @@ export interface Config {
 
 来源：[`packages/goal/tool-goal/src/index.ts:26`](../packages/goal/tool-goal/src/index.ts)
 
-<a id="nomix-ainomix-tool-jobs"></a>
+<a id="deepseek-aidsh-tool-jobs"></a>
 
 ## `@nomix-ai/nomix-tool-jobs`
 
-需要：`tools` · `tasks` · `systemPrompt`
+需要：`tools` · `jobs` · `systemPrompt`
 
 ```ts config-catalog
 /** Configures bounded `job_output` waits and completion-notice delivery. */
@@ -2481,7 +2652,7 @@ export type CompletionDelivery = 'quiet' | 'wakeup'
 
 来源：[`packages/jobs/tool-jobs/src/index.ts:32`](../packages/jobs/tool-jobs/src/index.ts)
 
-<a id="nomix-ainomix-tool-lsp"></a>
+<a id="deepseek-aidsh-tool-lsp"></a>
 
 ## `@nomix-ai/nomix-tool-lsp`
 
@@ -2501,11 +2672,11 @@ export interface Config {
 
 来源：[`packages/lsp/tool-lsp/src/index.ts:58`](../packages/lsp/tool-lsp/src/index.ts)
 
-<a id="nomix-ainomix-tool-pwsh"></a>
+<a id="deepseek-aidsh-tool-pwsh"></a>
 
 ## `@nomix-ai/nomix-tool-pwsh`
 
-需要：`tools` · `bash` · `systemPrompt` · `bashEnv`
+需要：`tools` · `shell` · `systemPrompt` · `shellEnv`
 
 ```ts config-catalog
 /** Configuration for the pwsh tool. */
@@ -2517,11 +2688,33 @@ export interface Config {
 
 来源：[`packages/shell/tool-pwsh/src/index.ts:52`](../packages/shell/tool-pwsh/src/index.ts)
 
-<a id="nomix-ainomix-tool-ralph"></a>
+<a id="deepseek-aidsh-tool-pwsh-persistent"></a>
+
+## `@nomix-ai/nomix-tool-pwsh-persistent`
+
+需要：`tools` · `terminals`
+
+```ts config-catalog
+/** Configuration for the persistent pwsh tool. */
+export interface Config {
+  /** PTY backend used for each owner-isolated persistent shell (default `shell`). */
+  backendType?: string
+  /** Wall-clock limit for one command (default 300000). */
+  timeoutMs?: number
+  /** Maximum returned command-output characters before clipping (default 16000). */
+  maxOutputChars?: number
+  /** Model-facing tool description; deployments may describe their environment. */
+  description?: string
+}
+```
+
+来源：[`packages/shell/tool-pwsh-persistent/src/index.ts:472`](../packages/shell/tool-pwsh-persistent/src/index.ts)
+
+<a id="deepseek-aidsh-tool-ralph"></a>
 
 ## `@nomix-ai/nomix-tool-ralph`
 
-需要：`tools` · `workflows` · `subagents` · `systemPrompt`
+需要：`tools` · `workflowEngine` · `subagents` · `systemPrompt`
 
 ```ts config-catalog
 /** Deployment policy for the fixed Ralph workflow. */
@@ -2539,7 +2732,7 @@ export interface Config {
 
 来源：[`packages/workflow/tool-ralph/src/index.ts:23`](../packages/workflow/tool-ralph/src/index.ts)
 
-<a id="nomix-ainomix-tool-session-query"></a>
+<a id="deepseek-aidsh-tool-session-query"></a>
 
 ## `@nomix-ai/nomix-tool-session-query`
 
@@ -2557,7 +2750,7 @@ export interface Config {
 
 来源：[`packages/session-query/tool-session-query/src/index.ts:29`](../packages/session-query/tool-session-query/src/index.ts)
 
-<a id="nomix-ainomix-tool-skill"></a>
+<a id="deepseek-aidsh-tool-skill"></a>
 
 ## `@nomix-ai/nomix-tool-skill`
 
@@ -2573,7 +2766,7 @@ export interface Config {
 
 来源：[`packages/skill/tool-skill/src/index.ts:61`](../packages/skill/tool-skill/src/index.ts)
 
-<a id="nomix-ainomix-tool-str-replace-editor"></a>
+<a id="deepseek-aidsh-tool-str-replace-editor"></a>
 
 ## `@nomix-ai/nomix-tool-str-replace-editor`
 
@@ -2591,7 +2784,7 @@ export interface Config {
 
 来源：[`packages/fs/tool-str-replace-editor/src/index.ts:497`](../packages/fs/tool-str-replace-editor/src/index.ts)
 
-<a id="nomix-ainomix-tool-subagent"></a>
+<a id="deepseek-aidsh-tool-subagent"></a>
 
 ## `@nomix-ai/nomix-tool-subagent`
 
@@ -2652,11 +2845,11 @@ export interface Config {
 }
 ```
 
-依赖：[`AgentOptions`](subsystems/core.md)
+依赖：[`AgentOptions`](subsystems/core.zh.md)
 
 来源：[`packages/subagent/tool-subagent/src/index.ts:29`](../packages/subagent/tool-subagent/src/index.ts)
 
-<a id="nomix-ainomix-tool-subagent-report"></a>
+<a id="deepseek-aidsh-tool-subagent-report"></a>
 
 ## `@nomix-ai/nomix-tool-subagent-report`
 
@@ -2666,23 +2859,23 @@ export interface Config {
 /** Config: how accepted reports are scheduled on the parent. */
 export interface Config {
   /**
-   * Parent scheduling (default `wakeup`). `wakeup` creates one ordinary later
-   * parent turn; `quiet` adds context without waking, so a parked parent learns
-   * of the report only when something else wakes it.
+   * Parent scheduling (default `next-step`). `next-step` wakes the parent and
+   * enters at its nearest step boundary; `quiet` adds the same context without
+   * waking, so a parked parent waits for another waking input.
    */
   reportDelivery?: SubagentReportDelivery
 }
 ```
 
-依赖：[`SubagentReportDelivery`](subsystems/subagent.md)
+依赖：[`SubagentReportDelivery`](subsystems/subagent.zh.md)
 
 来源：[`packages/subagent/tool-subagent-report/src/index.ts:27`](../packages/subagent/tool-subagent-report/src/index.ts)
 
-<a id="nomix-ainomix-tool-terminal"></a>
+<a id="deepseek-aidsh-tool-terminal"></a>
 
 ## `@nomix-ai/nomix-tool-terminal`
 
-需要：`pty` · `tools` · `systemPrompt`
+需要：`terminals` · `tools` · `systemPrompt`
 
 ```ts config-catalog
 /** Model-facing terminal tool configuration. */
@@ -2696,7 +2889,7 @@ export interface Config {
 
 来源：[`packages/terminal/tool-terminal/src/index.ts:35`](../packages/terminal/tool-terminal/src/index.ts)
 
-<a id="nomix-ainomix-tool-todo"></a>
+<a id="deepseek-aidsh-tool-todo"></a>
 
 ## `@nomix-ai/nomix-tool-todo`
 
@@ -2718,14 +2911,14 @@ export interface Config {
 
 来源：[`packages/todo/tool-todo/src/index.ts:29`](../packages/todo/tool-todo/src/index.ts)
 
-<a id="nomix-ainomix-tool-web"></a>
+<a id="deepseek-aidsh-tool-web"></a>
 
 ## `@nomix-ai/nomix-tool-web`
 
 需要：`tools` · `web` · `systemPrompt`
 
 ```ts config-catalog
-/** Plugin config: which web tools to register, the source cap, per-tool budgets, and the fetch output cap. */
+/** Plugin config: which web tools to register, search bounds, per-tool budgets, and the fetch output cap. */
 export interface Config {
   /** Register `web_search`. Defaults to true. */
   search?: boolean
@@ -2733,6 +2926,8 @@ export interface Config {
   fetch?: boolean
   /** Upper bound on sources returned by one `web_search` call. */
   searchMaxResults?: number
+  /** Upper bound on queries accepted by one `web_search` call. */
+  searchMaxQueries?: number
   /** Cooperative timeout budget (ms) for `web_fetch`. Defaults to 30000. */
   fetchTimeoutMs?: number
   /** Cooperative timeout budget (ms) for `web_search`. Defaults to 30000. */
@@ -2744,11 +2939,11 @@ export interface Config {
 
 来源：[`packages/web/tool-web/src/index.ts:37`](../packages/web/tool-web/src/index.ts)
 
-<a id="nomix-ainomix-tool-workflow"></a>
+<a id="deepseek-aidsh-tool-workflow"></a>
 
 ## `@nomix-ai/nomix-tool-workflow`
 
-需要：`tools` · `workflows` · `systemPrompt`
+需要：`tools` · `workflowEngine` · `systemPrompt`
 
 ```ts config-catalog
 /** Config: the model-facing tool name plus result rendering caps. */
@@ -2762,7 +2957,7 @@ export interface Config {
 
 来源：[`packages/workflow/tool-workflow/src/index.ts:33`](../packages/workflow/tool-workflow/src/index.ts)
 
-<a id="nomix-ainomix-tools"></a>
+<a id="deepseek-aidsh-tools"></a>
 
 ## `@nomix-ai/nomix-tools`
 
@@ -2798,7 +2993,7 @@ export type ToolPresentationMode = 'native' | 'code' | 'both'
 
 来源：[`packages/core/tools/src/index.ts:654`](../packages/core/tools/src/index.ts)
 
-<a id="nomix-ainomix-typert-loader"></a>
+<a id="deepseek-aidsh-typert-loader"></a>
 
 ## `@nomix-ai/nomix-typert-loader`
 
@@ -2814,7 +3009,7 @@ export interface Config {
 
 来源：[`packages/typert/loader/src/index.ts:47`](../packages/typert/loader/src/index.ts)
 
-<a id="nomix-ainomix-user-approval"></a>
+<a id="deepseek-aidsh-user-approval"></a>
 
 ## `@nomix-ai/nomix-user-approval`
 
@@ -2845,7 +3040,7 @@ export type ApprovalPolicy = 'ask' | 'never'
 
 来源：[`packages/interaction/user-approval/src/index.ts:177`](../packages/interaction/user-approval/src/index.ts)
 
-<a id="nomix-ainomix-web"></a>
+<a id="deepseek-aidsh-web"></a>
 
 ## `@nomix-ai/nomix-web`
 
@@ -2866,7 +3061,7 @@ export interface WebRuntimeConfig {
 
 来源：[`packages/web/web/src/index.ts:55`](../packages/web/web/src/index.ts)
 
-<a id="nomix-ainomix-web-app"></a>
+<a id="deepseek-aidsh-web-app"></a>
 
 ## `@nomix-ai/nomix-web-app`
 
@@ -2875,6 +3070,8 @@ export interface WebRuntimeConfig {
 ```ts config-catalog
 /** Plugin config: composed deployment settings plus per-invocation command-line values. */
 export interface Config {
+  /** Permit default-browser handoff after the Loader tree settles; an SSH launch suppresses it. */
+  openBrowser: boolean
   /** Print the URL line on activation; a non-interactive layer can turn it off. */
   printUrl: boolean
   /**
@@ -2889,9 +3086,9 @@ export interface Config {
 }
 ```
 
-来源：[`packages/bundle/web-app/src/index.ts:38`](../packages/bundle/web-app/src/index.ts)
+来源：[`packages/bundle/web-app/src/index.ts:42`](../packages/bundle/web-app/src/index.ts)
 
-<a id="nomix-ainomix-web-fetch-http"></a>
+<a id="deepseek-aidsh-web-fetch-http"></a>
 
 ## `@nomix-ai/nomix-web-fetch-http`
 
@@ -2917,7 +3114,7 @@ export interface Config {
 
 来源：[`packages/web/web-fetch-http/src/index.ts:34`](../packages/web/web-fetch-http/src/index.ts)
 
-<a id="nomix-ainomix-web-search-deepseek"></a>
+<a id="deepseek-aidsh-web-search-deepseek"></a>
 
 ## `@nomix-ai/nomix-web-search-deepseek`
 
@@ -2945,7 +3142,7 @@ export interface Config {
 
 来源：[`packages/web/web-search-deepseek/src/index.ts:46`](../packages/web/web-search-deepseek/src/index.ts)
 
-<a id="nomix-ainomix-web-search-exa"></a>
+<a id="deepseek-aidsh-web-search-exa"></a>
 
 ## `@nomix-ai/nomix-web-search-exa`
 
@@ -2969,7 +3166,7 @@ export interface Config {
 
 来源：[`packages/web/web-search-exa/src/index.ts:38`](../packages/web/web-search-exa/src/index.ts)
 
-<a id="nomix-ainomix-web-search-perplexity"></a>
+<a id="deepseek-aidsh-web-search-perplexity"></a>
 
 ## `@nomix-ai/nomix-web-search-perplexity`
 
@@ -2993,7 +3190,7 @@ export interface Config {
 
 来源：[`packages/web/web-search-perplexity/src/index.ts:32`](../packages/web/web-search-perplexity/src/index.ts)
 
-<a id="nomix-ainomix-workflow-worker-thread"></a>
+<a id="deepseek-aidsh-workflow-worker-thread"></a>
 
 ## `@nomix-ai/nomix-workflow-worker-thread`
 
@@ -3030,10 +3227,13 @@ export interface Config {
 - `@nomix-ai/nomix-agent`（[`packages/core/agent/src/index.ts`](../packages/core/agent/src/index.ts)）
 - `@nomix-ai/nomix-api-gateway` — 需要 `typert`（[`packages/api/gateway/src/index.ts`](../packages/api/gateway/src/index.ts)）
 - `@nomix-ai/nomix-api-remotes`（[`packages/api/remotes/src/index.ts`](../packages/api/remotes/src/index.ts)）
+- `@nomix-ai/nomix-authorization` — 需要 `credentials`（[`packages/credentials/authorization/src/index.ts`](../packages/credentials/authorization/src/index.ts)）
 - `@nomix-ai/nomix-client-locale`（[`packages/client/locale/src/index.ts`](../packages/client/locale/src/index.ts)）
 - `@nomix-ai/nomix-client-modules` — 需要 `webServer` · `loader`（[`packages/client/modules/src/index.ts`](../packages/client/modules/src/index.ts)）
 - `@nomix-ai/nomix-client-runtime`（[`packages/client/runtime/src/index.ts`](../packages/client/runtime/src/index.ts)）
 - `@nomix-ai/nomix-client-ui-agent-preset`（[`packages/client/ui-agent-preset/src/index.ts`](../packages/client/ui-agent-preset/src/index.ts)）
+- `@nomix-ai/nomix-client-ui-attachment`（[`packages/client/ui-attachment/src/index.ts`](../packages/client/ui-attachment/src/index.ts)）
+- `@nomix-ai/nomix-client-ui-brand-official`（[`packages/client/ui-brand-official/src/index.ts`](../packages/client/ui-brand-official/src/index.ts)）
 - `@nomix-ai/nomix-client-ui-commands`（[`packages/client/ui-commands/src/index.ts`](../packages/client/ui-commands/src/index.ts)）
 - `@nomix-ai/nomix-client-ui-conversation`（[`packages/client/ui-conversation/src/index.ts`](../packages/client/ui-conversation/src/index.ts)）
 - `@nomix-ai/nomix-client-ui-cordis`（[`packages/extensions/ui-cordis/src/index.ts`](../packages/extensions/ui-cordis/src/index.ts)）
@@ -3048,6 +3248,8 @@ export interface Config {
 - `@nomix-ai/nomix-client-ui-model-selection`（[`packages/client/ui-model-selection/src/index.ts`](../packages/client/ui-model-selection/src/index.ts)）
 - `@nomix-ai/nomix-client-ui-permission-presets`（[`packages/client/ui-permission-presets/src/index.ts`](../packages/client/ui-permission-presets/src/index.ts)）
 - `@nomix-ai/nomix-client-ui-plan`（[`packages/client/ui-plan/src/index.ts`](../packages/client/ui-plan/src/index.ts)）
+- `@nomix-ai/nomix-client-ui-reference`（[`packages/client/ui-reference/src/index.ts`](../packages/client/ui-reference/src/index.ts)）
+- `@nomix-ai/nomix-client-ui-renderer`（[`packages/client/ui-renderer/src/index.ts`](../packages/client/ui-renderer/src/index.ts)）
 - `@nomix-ai/nomix-client-ui-settings`（[`packages/client/ui-settings/src/index.ts`](../packages/client/ui-settings/src/index.ts)）
 - `@nomix-ai/nomix-client-ui-settings-general`（[`packages/client/ui-settings-general/src/index.ts`](../packages/client/ui-settings-general/src/index.ts)）
 - `@nomix-ai/nomix-client-ui-settings-models`（[`packages/client/ui-settings-models/src/index.ts`](../packages/client/ui-settings-models/src/index.ts)）
@@ -3095,12 +3297,13 @@ export interface Config {
 
 ## Seam 包（不可直接加载）
 
-抽象服务类——部署时应改为加载具体的实现包（参见[能力 seam](../.agents/notes/implemented/architecture/2026-06-13-capability-seams.md)）。
+抽象服务类——部署时应改为加载具体的实现包（参见[能力 seam](../.agents/notes/implemented/architecture/2026-06-13-capability-seams.zh.md)）。
 
 - `@nomix-ai/nomix-attachment` — 抽象 `AttachmentStore`（[`packages/attachment/attachment/src/index.ts`](../packages/attachment/attachment/src/index.ts)）
 - `@nomix-ai/nomix-code-runtime` — 抽象 `CodeRuntime`（[`packages/code-runtime/code-runtime/src/index.ts`](../packages/code-runtime/code-runtime/src/index.ts)）
 - `@nomix-ai/nomix-compaction` — 抽象 `CompactionEngine`（[`packages/compaction/compaction/src/index.ts`](../packages/compaction/compaction/src/index.ts)）
 - `@nomix-ai/nomix-credentials` — 抽象 `Credentials`（[`packages/credentials/credentials/src/index.ts`](../packages/credentials/credentials/src/index.ts)）
+- `@nomix-ai/nomix-file-reference` — 抽象 `FileReferenceService`（[`packages/context/file-reference/src/index.ts`](../packages/context/file-reference/src/index.ts)）
 - `@nomix-ai/nomix-fs` — 抽象 `FileSystem`（[`packages/fs/fs/src/index.ts`](../packages/fs/fs/src/index.ts)）
 - `@nomix-ai/nomix-host-directory-picker` — 抽象 `DirectoryPicker`（[`packages/host/directory-picker/src/index.ts`](../packages/host/directory-picker/src/index.ts)）
 - `@nomix-ai/nomix-jobs` — 抽象 `JobRegistry`（[`packages/jobs/jobs/src/index.ts`](../packages/jobs/jobs/src/index.ts)）
@@ -3123,14 +3326,12 @@ export interface Config {
 - `@nomix-ai/nomix-atomic-write`（[`packages/util/atomic-write/src/index.ts`](../packages/util/atomic-write/src/index.ts)）
 - `@nomix-ai/nomix-base`（[`packages/bundle/base/src/index.ts`](../packages/bundle/base/src/index.ts)）
 - `@nomix-ai/nomix-brand`（[`packages/util/brand/src/index.ts`](../packages/util/brand/src/index.ts)）
-- `@nomix-ai/nomix-client-schema-form`（[`packages/client/schema-form/src/index.ts`](../packages/client/schema-form/src/index.ts)）
 - `@nomix-ai/nomix-client-test-runtime`（[`packages/test-support/client-runtime/src/index.ts`](../packages/test-support/client-runtime/src/index.ts)）
-- `@nomix-ai/nomix-client-ui-attachment`（[`packages/client/ui-attachment/src/index.ts`](../packages/client/ui-attachment/src/index.ts)）
 - `@nomix-ai/nomix-client-ui-primitives`（[`packages/client/ui-primitives/src/index.ts`](../packages/client/ui-primitives/src/index.ts)）
 - `@nomix-ai/nomix-client-ui-slots`（[`packages/client/ui-slots/src/index.ts`](../packages/client/ui-slots/src/index.ts)）
 - `@nomix-ai/nomix-client-web`（[`packages/client/web/src/index.ts`](../packages/client/web/src/index.ts)）
-- `@nomix-ai/nomix-client-web-react`（[`packages/client/web-react/src/index.ts`](../packages/client/web-react/src/index.ts)）
 - `@nomix-ai/nomix-cmdline`（[`packages/boot/cmdline/src/index.ts`](../packages/boot/cmdline/src/index.ts)）
+- `@nomix-ai/nomix-code-runtime-python`（[`packages/code-runtime/code-runtime-python/src/index.ts`](../packages/code-runtime/code-runtime-python/src/index.ts)）
 - `@nomix-ai/nomix-home-paths`（[`packages/util/home-paths/src/index.ts`](../packages/util/home-paths/src/index.ts)）
 - `@nomix-ai/nomix-hook-protocol`（[`packages/hooks/hook-protocol/src/index.ts`](../packages/hooks/hook-protocol/src/index.ts)）
 - `@nomix-ai/nomix-launch-environment`（[`packages/util/launch-environment/src/index.ts`](../packages/util/launch-environment/src/index.ts)）

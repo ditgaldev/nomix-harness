@@ -1,12 +1,11 @@
 {
   "name": "@nomix-ai/node-addon-landlock-run",
   "version": "0.1.1",
-  "private": true,
   "type": "module",
   "description": "Landlock self-restrict-then-exec launcher for sandboxing subprocesses on Linux: per-platform prebuilt static binaries plus the JS seam that resolves, probes, and speaks their CLI contract",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
+    "url": "git+https://github.com/nomix-harness/nomix-harness.git",
     "directory": "native/landlock-run/packages/entry"
   },
   "main": "lib/index.js",
@@ -32,6 +31,9 @@
     "node": ">=20"
   },
   "license": "BSD-3-Clause",
+  "publishConfig": {
+    "access": "public"
+  },
   "optionalDependencies": {
     "@nomix-ai/node-addon-landlock-run-linux-arm64": "workspace:*",
     "@nomix-ai/node-addon-landlock-run-linux-x64": "workspace:*"

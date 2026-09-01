@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-07-15-replay-token-meter-service.md
 2026-07-15-replay-token-meter-service.md: 1103e11890f8c234cedb4ccb33c0b74af1e73178
-2026-07-15-replay-token-meter-service.zh.md: 6d104852aca372be961d8719797aad2ce07bb0d1
+2026-07-15-replay-token-meter-service.zh.md: cb44f297b17fab4b8dfff9540f7a0a76c8163a4e

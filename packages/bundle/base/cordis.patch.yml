@@ -63,8 +63,8 @@
     - id: agent-default-model
       name: '@nomix-ai/nomix-agent-default-model'
       config:
-        provider: unconfigured
-        model: unconfigured
+        provider: deepseek-official
+        model: deepseek-v4-flash
 
     - id: jobs
       name: '@nomix-ai/nomix-jobs-local'
@@ -72,8 +72,9 @@
     - id: llm-retry
       name: '@nomix-ai/nomix-llm-retry'
 
-    # User-settings document (`$NOMIX_HOME/settings.yaml`, hot-reloaded):
-    # provider sections override explicitly registered adapters without a restart.
+    # User-settings document (`$NOMIX_HOME/settings.yaml`, hot-reloaded): a
+    # `llm-deepseek:` or `llm-pi-ai:` section there overrides the adapter entries
+    # below without a restart, and is what the web Models page writes.
     - id: settings
       name: '@nomix-ai/nomix-settings-file'
 
@@ -149,6 +150,10 @@
       config:
         mode: !!js process.env.NOMIX_TELEMETRY_MODE || 'DISABLED'
         shutdownTimeoutMillis: 3000
+        exporter:
+          url: !!js process.env.NOMIX_TELEMETRY_OTLP_URL ?? 'https://harness-telemetry.deepseeksvc.com/v1/logs'
+          compression: gzip
+          timeoutMillis: 1000
         processor:
           scheduledDelayMillis: 10000
           maxQueueSize: 2048
@@ -388,10 +393,23 @@
         thresholds: [3, 5, 8]
         argumentsPreviewChars: 500
 
-    # The base exposes the provider-neutral web tool without selecting a search
-    # provider. Deployments register and select a provider explicitly.
+    # Every mode enables the stable model-facing web_search tool. DeepSeek search
+    # resolves the same DEEPSEEK_API_KEY credential the Models page manages for
+    # chat, at each search; its Messages endpoint is separate from the
+    # chat-completions endpoint, so it takes its own base-URL override. Fetch stays
+    # disabled and no fetch provider is mounted: that provider defers SSRF
+    # protection and the model would choose the request target. Search is a full
+    # auxiliary model request with server-side retrieval, so this shipped DeepSeek
+    # route gets 60s while the provider-neutral tool default remains 30s.
     - id: web
       name: '@nomix-ai/nomix-web'
+      config:
+        searchProvider: deepseek-official
+
+    - id: web-search-deepseek
+      name: '@nomix-ai/nomix-web-search-deepseek'
+      config:
+        apiKeyEnv: DEEPSEEK_API_KEY
 
     - id: tool-web
       name: '@nomix-ai/nomix-tool-web'
@@ -424,3 +442,10 @@
     # overlay can pin another workspace.
     - id: fs-sandbox
       name: '@nomix-ai/nomix-fs-sandbox'
+
+    # The native DeepSeek adapter. No key or endpoint is inlined: both resolve per
+    # request from the `llm-deepseek:` settings section over this entry, with the
+    # key coming from the credential store below. Thinking defaults are a deployment
+    # choice.
+    - id: llm-deepseek
+      name: '@nomix-ai/nomix-llm-deepseek'

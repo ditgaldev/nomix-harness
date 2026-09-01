@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/process/2026-07-26-briefed-minimal-translation-updates.md
 2026-07-26-briefed-minimal-translation-updates.md: e0103463936df383d0dea22d9b9decf3a1d6f794
-2026-07-26-briefed-minimal-translation-updates.zh.md: 75fbc0622a2b5d49790b6ba3864d892c5e777e93
+2026-07-26-briefed-minimal-translation-updates.zh.md: c3a8564d193b65f28709ad9c0c8283c19c3e0402

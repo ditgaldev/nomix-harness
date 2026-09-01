@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/process/2026-08-08-automatic-translation-pairing-merges.md
 2026-08-08-automatic-translation-pairing-merges.md: 30e9d81b82ab24e56634a58a0392fae442c3f643
-2026-08-08-automatic-translation-pairing-merges.zh.md: cb395697b8749da24d987deada1243d1aa054fb6
+2026-08-08-automatic-translation-pairing-merges.zh.md: 02b10aea6d9f43b0940d069bce3042a111a1f358

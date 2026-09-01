@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/interaction/permission-presets/README.md
 README.md: 4cca03df02bee231fd67543df55e1ae303028ac1
-README.zh.md: 86a80f4df22fa32bb2d255450fca7691d471fc0c
+README.zh.md: 8ccbcf0ece63cc9578abff3baf8e4c7b44599731

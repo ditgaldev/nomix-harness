@@ -17,7 +17,7 @@
 
 ## Managed environment
 
-每次前台与后台模型 shell 调用都会收到一份新收集的受信任 `NOMIX_*` 环境。`NOMIX_HOME` 是由 [`@nomix-ai/nomix-home-paths`](../../util/home-paths/README.md) 解析的 Harness 主目录绝对路径（`nomixHome` 配置，然后环境变量 `$NOMIX_HOME`，然后 `~/.nomix`），`NOMIX_SHELL=1` 标识受管理的子进程。带 agent（智能体）的调用额外收到 `NOMIX_SESSION_ID=agent.session.header.id`；当活动的持久化 seam 定位到 JSONL 工件时，它们还会收到 `NOMIX_SESSION_JSONL=<绝对目标路径>`。JSONL 路径只是位置提示：首次 flush 之前它可能不存在，也不一定包含当前缓冲中的轮次，并且它不是授权凭据。
+每次前台与后台模型 shell 调用都会收到一份新收集的受信任 `NOMIX_*` 环境。`NOMIX_HOME` 是由 [`@nomix-ai/nomix-home-paths`](../../util/home-paths/README.zh.md) 解析的 Harness 主目录绝对路径（`nomixHome` 配置，然后环境变量 `$NOMIX_HOME`，然后 `~/.nomix`），`NOMIX_SHELL=1` 标识受管理的子进程。带 agent（智能体）的调用额外收到 `NOMIX_SESSION_ID=agent.session.header.id`；当活动的持久化 seam 定位到 JSONL 工件时，它们还会收到 `NOMIX_SESSION_JSONL=<绝对目标路径>`。JSONL 路径只是位置提示：首次 flush 之前它可能不存在，也不一定包含当前缓冲中的轮次，并且它不是授权凭据。
 
 `ctx.shellEnv` 负责收集。其他插件可以注册一个受 effect 作用域约束的 contributor，带有稳定名称、已声明的键/描述以及 `resolve(execution: ToolExecution)`；重复所有权与未声明的运行时键会响亮失败，而 `list()` 只枚举声明、不执行 provider。Harness 内置键保留 `NOMIX_HOME`、`NOMIX_SHELL` 与 `NOMIX_SESSION_ID`；本插件的持久化翻译器通过读取与后端无关的 `sessionPersistence.locate()` seam 拥有 `NOMIX_SESSION_JSONL`。
 

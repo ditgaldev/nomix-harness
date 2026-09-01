@@ -14,12 +14,13 @@ from .models import JsonObject, Notification
 class NomixHarnessConfig:
     """Configuration for launching the local Nomix Harness SDK runtime.
 
-    The runtime inherits the caller's environment by default. Use ``env`` to
-    intentionally override or inject provider variables for a subprocess.
+    The runtime inherits the caller's environment by default, so existing
+    DEEPSEEK_API_KEY and DEEPSEEK_BASE_URL settings keep working. Use ``env`` to
+    intentionally override or inject variables for a subprocess.
     """
 
-    provider: str = "unconfigured"
-    model: str = "unconfigured"
+    provider: str = "deepseek-official"
+    model: str = "deepseek-v4-flash"
     max_tokens: int | None = None
     cwd: str | None = None
     runtime_cwd: str | None = None
@@ -30,6 +31,8 @@ class NomixHarnessConfig:
     launch_args_override: tuple[str, ...] | None = None
     request_timeout_seconds: float | None = None
     shutdown_timeout_seconds: float | None = 1.0
+    base_url: str | None = None
+    api_key: str | None = None
 
 
 @dataclass(slots=True)
@@ -63,6 +66,10 @@ class NomixHarness:
         if self.config.cordis is not None:
             env["NOMIX_CORDIS_CONFIG"] = self.config.cordis
         env["NOMIX_CWD"] = cwd
+        if self.config.base_url is not None:
+            env["DEEPSEEK_BASE_URL"] = self.config.base_url
+        if self.config.api_key is not None:
+            env["DEEPSEEK_API_KEY"] = self.config.api_key
 
         self._client = HarnessClient(
             HarnessConfig(

@@ -22,17 +22,11 @@ Status: implemented
 
 同一系列不会公开两套词汇。
 
-### 在一个 npm 命名空间下发布 fork
-
-仓库在 `@nomix-ai` 下发布自有包。CLI 包名是 `@nomix-ai/nomix-harness`；原先带 `nomix-` 前缀的包改用 `nomix-` 并保留相同的职责后缀；vendored Cordis 包和原生启动器包则在 `@nomix-ai` 下保留原来的非 scope 后缀。包 manifest、workspace 依赖、模块说明符、TypeScript 路径、发布检查、打包安装探测、示例和当前文档统一使用这些名称。发布后的 manifest 指向 `ditgaldev/nomix-harness`。
-
-安装后的可执行命令是 `nomix`，源码启动命令是 `pnpm nomix`。`nomix` manifest 键、`NOMIX_*` 环境变量、`.nomix` 状态目录以及持久化或 wire 标识保持不变，因为它们标识的是配置和持久化运行时数据，而不是可执行命令。
-
 ### `SDK` 只表示一件事
 
 `SDK` 表示受支持的 Python 和 TypeScript SDK 所使用、基于 JSON-RPC 的客户端／服务器协议。仓库保留 `@nomix-ai/nomix-sdk-client`、`@nomix-ai/nomix-sdk-protocol` 和协议身份 `nomix-harness-sdk-runtime`；JSON-RPC 服务器属于同一系列。Nomix Harness 本身不是 SDK，已移除的项目生成器、启动器、辅助工具和启动器遥测包继续保持不存在。
 
-本决策部分取代三项现行决策。它替换[包重新分组决策](2026-07-29-package-regrouping.md)中保留的 `bash/`、`pty/` 和 `self-modification/` 组名，以及两项暂定包名。它只替换[移除 SDK 项目工具链](../simplification/2026-08-11-remove-sdk-project-toolchain.md)中将整个仓库称为 SDK 的说法；后者仍负责说明删除范围和保留的运行时 SDK。它只替换[工具调用超时策略](2026-07-07-tool-call-timeout-policy.md)中的包名理由；超时机制及其 `guard/timeout-policy/` 归属保持不变。
+本决策部分取代三项现行决策。它替换[包重新分组决策](2026-07-29-package-regrouping.zh.md)中保留的 `bash/`、`pty/` 和 `self-modification/` 组名，以及两项暂定包名。它只替换[移除 SDK 项目工具链](../simplification/2026-08-11-remove-sdk-project-toolchain.zh.md)中将整个仓库称为 SDK 的说法；后者仍负责说明删除范围和保留的运行时 SDK。它只替换[工具调用超时策略](2026-07-07-tool-call-timeout-policy.zh.md)中的包名理由；超时机制及其 `guard/timeout-policy/` 归属保持不变。
 
 如果其他已实现说明中的包、路径或类型被重命名，而其边界和理由保持不变，则本决策不会取代这些说明。这些说明使用已实现的事实名称。三项被部分取代的决策都链接回本决策。
 

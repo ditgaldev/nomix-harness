@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-08-12-composer-overlay-seat-width-compensation.md
 2026-08-12-composer-overlay-seat-width-compensation.md: 5e346518772ca72461fa4c6a6cd5c20555332775
-2026-08-12-composer-overlay-seat-width-compensation.zh.md: f67d4fb94995d752cd7eb9ca30b0346cdce7bfda
+2026-08-12-composer-overlay-seat-width-compensation.zh.md: 352434dc59a3e06c8c75f16ed2b770c25925e043

@@ -62,7 +62,7 @@
 }
 
 /* Keep hover detection on a stationary box while the mark moves within it. */
-.logoHitbox {
+.fishHitbox {
   grid-row: 1;
   grid-column: 1;
   display: inline-flex;
@@ -70,29 +70,29 @@
   justify-content: center;
 }
 
-/* The supplied mark is square and lifts subtly without changing layout. */
-.logo {
-  border-radius: 4px;
-  transform-origin: 50% 50%;
+/* Keep the hero mark in the same primary ink as its headline. */
+.fish {
+  color: var(--dsw-alias-label-primary);
+  transform-origin: 50% 60%;
 }
 
-@keyframes hero-logo-lift {
+@keyframes hero-fish-swim {
   0%, 100% {
     transform: translate(0, 0) rotate(0deg);
   }
 
   35% {
-    transform: translateY(-1px) scale(1.02);
+    transform: translate(-1px, -1px) rotate(-5deg);
   }
 
   70% {
-    transform: translateY(0) scale(1);
+    transform: translate(1px, 0) rotate(3deg);
   }
 }
 
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .logoHitbox:hover .logo {
-    animation: hero-logo-lift var(--ds-transition-duration-slow) var(--ds-ease-in-out);
+  .fishHitbox:hover .fish {
+    animation: hero-fish-swim var(--ds-transition-duration-slow) var(--ds-ease-in-out);
   }
 }
 

@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-07-29-persistent-bash-str-replace-editor.md
 2026-07-29-persistent-bash-str-replace-editor.md: b35cde9c89948b4d8f73bb6fc5f4b5fcf66655e2
-2026-07-29-persistent-bash-str-replace-editor.zh.md: bd4ca7c92d3d3c757f102e086b13d82f6837bdc7
+2026-07-29-persistent-bash-str-replace-editor.zh.md: 43af4da53ddc55bc72e08c897bdf9e43cd5bba87

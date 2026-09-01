@@ -2,7 +2,9 @@
   "name": "@nomix-ai/cordis-plugin-include",
   "description": "Include files in cordis configurations",
   "version": "1.0.6",
-  "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ditgaldev/nomix-harness.git",

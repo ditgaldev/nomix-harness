@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/simplification/2026-07-22-plan-specific-collaboration-state.md
 2026-07-22-plan-specific-collaboration-state.md: de44c4dffc329d1556c83ffe6acf2f11906db276
-2026-07-22-plan-specific-collaboration-state.zh.md: 324b5fb7ce40501fd014ba1d4dab8c7b7406baba
+2026-07-22-plan-specific-collaboration-state.zh.md: a4671e459a41f1a9340faaa969a44bfb642277f0

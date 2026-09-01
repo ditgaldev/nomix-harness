@@ -20,7 +20,7 @@ import type {
   ConversationSnapshot, RunningToolCall, SessionId, SessionListState,
   ToolCallBlock, ToolResultNode, WorkspaceListState,
 } from '@nomix-ai/nomix-client-runtime/client'
-import { createSlotRenderer } from '@nomix-ai/nomix-client-web-react'
+import { createSlotRenderer } from '@nomix-ai/nomix-client-test-runtime'
 import { LocaleRuntime } from '@nomix-ai/nomix-client-locale/client'
 import type { PropsRenderSlots } from '@nomix-ai/nomix-client-ui-slots'
 import { apply as applyConversation, inject as injectConversation } from '@nomix-ai/nomix-client-ui-conversation/client'
@@ -158,7 +158,11 @@ async function bench(snapshot: ConversationSnapshot) {
   }
   ctx.provide('workspaces', workspaces)
   ctx.provide('layout', layout)
-  ctx.provide('connection', { api: { settings: {} }, isLoopback: false } as never)
+  ctx.provide('connection', {
+    api: { settings: {} },
+    isLoopback: false,
+    hostDescription: { getSnapshot: () => undefined, subscribe: () => () => {} },
+  } as never)
   // ui-theme's Appearance row binds a durable scope through these two.
   ctx.provide('remote', { $on: () => () => {} } as never)
   ctx.provide('settingsScope', { bind: () => stubSettingsScope().scope } as never)

@@ -2,9 +2,9 @@
 
 [English](publish.md) | 中文
 
-前几篇教程通过 `--patch` overlay 加载本地插件。本教程把它打包成可安装的**组合包**（bundle），用 `nomix plugin add` 安装进一个 **profile**，并解释决定组合后配置的层顺序。本文假设 `nomix` CLI 已安装。请先完成[插件配置](./config.md)。
+前几篇教程通过 `--patch` overlay 加载本地插件。本教程把它打包成可安装的**组合包**（bundle），用 `nomix plugin add` 安装进一个 **profile**，并解释决定组合后配置的层顺序。本文假设 `nomix` CLI 已安装。请先完成[插件配置](./config.zh.md)。
 
-如果改用全新的源码 checkout，请先按照[从源码运行章节](../../../../README.md#run-from-source)完成准备，将本教程的 `hello-plugin` 目录放在仓库根目录，并从该目录把下文的 `nomix ...` 命令改为 `pnpm nomix ...`。构建与启动器行为见[源码执行](../../../../apps/cli/reference/README.md#source-execution)。
+如果改用全新的源码 checkout，请先按照[从源码运行章节](../../../../README.zh.md#run-from-source)完成准备，将本教程的 `hello-plugin` 目录放在仓库根目录，并从该目录把下文的 `nomix ...` 命令改为 `pnpm nomix ...`。构建与启动器行为见[源码执行](../../../../apps/cli/reference/README.zh.md#source-execution)。
 
 ## 两个概念，两种 manifest
 
@@ -14,44 +14,6 @@
 - **profile** 是位于 `$NOMIX_HOME/profiles/<name>` 下、描述一份可启动组合的目录。它的 manifest 声明 `nomix.profile`，回答的是"这套配置由哪些组合包按什么顺序组成？"。
 
 组合包是你编写并分发的东西；profile 是用户用 `nomix --profile <name>` 启动的东西。没有东西同时是两者。
-
-## 在业务应用中注册组合包
-
-业务组合包把 Nomix 公共 API 声明为 peer dependency，由宿主应用决定实际安装的 Harness 版本：
-
-```json
-{
-  "peerDependencies": {
-    "@nomix-ai/nomix-harness": "^0.2.0"
-  }
-}
-```
-
-宿主只导入它选择的内置插件工厂与业务组合包工厂。调用工厂只生成 Loader 条目，不会导入或初始化实现；`resolveProfile` 为宿主的 Cordis Loader 物化选中的 profile。
-
-```js
-import { defineConfig, resolveProfile } from '@nomix-ai/nomix-harness/config'
-import { builtins } from '@nomix-ai/nomix-harness/plugins'
-import sales from '@jinhaitun/sales-bundle'
-
-const config = defineConfig({
-  profiles: {
-    web: {
-      plugins: [
-        builtins.session.sqlite(),
-        builtins.agent.loop(),
-        builtins.web.server(),
-        sales.web(),
-      ],
-    },
-  },
-})
-
-export const webEntries = resolveProfile(config, 'web')
-export default config
-```
-
-未选择的内置插件不会出现在 `webEntries` 中，因此其模块不会产生加载或初始化副作用。Provider 插件遵循同一规则：只有明确选择 DeepSeek 的 profile 才注册 `builtins.llm.deepseek()`。
 
 ### 组合包 manifest
 
@@ -174,7 +136,7 @@ nomix --profile demo
   name: 'nomix-hello-plugin/startup'
 ```
 
-该插件导出 `inject = ['cmdlineArgs']`，使用自己的 commander program 调用 [`@nomix-ai/nomix-cmdline`](../../../../packages/boot/cmdline/README.md) 中的 `parseCmdline`，再在 program 自己的 action 中把应用自有服务提供出去。启动器把自身 flag 之后的同一份不可变参数交给每个插件，因此添加应用专属 flag 无需修改启动器，多个插件也可以解析该快照。Loader 行不需要启动器标记或特殊类型。
+该插件导出 `inject = ['cmdlineArgs']`，使用自己的 commander program 调用 [`@nomix-ai/nomix-cmdline`](../../../../packages/boot/cmdline/README.zh.md) 中的 `parseCmdline`，再在 program 自己的 action 中把应用自有服务提供出去。启动器把自身 flag 之后的同一份不可变参数交给每个插件，因此添加应用专属 flag 无需修改启动器，多个插件也可以解析该快照。Loader 行不需要启动器标记或特殊类型。
 
 受这些参数配置的行会注入提供方服务，并在自己的 `!!js` 选项中读取它，同时把部署取值写在旁边作为回退：
 
@@ -217,5 +179,5 @@ nomix plugin --profile demo add github:you/hello-plugin
 
 ## 下一步
 
-- [插件与生命周期](../framework/) — 插件的完整生命周期
-- [CLI（命令行界面）行为参考](../../../../apps/cli/reference/README.md) — 确切的层优先级、flag 与 profile 机制
+- [插件与生命周期](../framework/index.zh.md) — 插件的完整生命周期
+- [CLI（命令行界面）行为参考](../../../../apps/cli/reference/README.zh.md) — 确切的层优先级、flag 与 profile 机制

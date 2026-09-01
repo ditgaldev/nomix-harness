@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-08-10-slash-catalog-follows-preset-switch.md
 2026-08-10-slash-catalog-follows-preset-switch.md: 438fc08c97bff454ffc383260c2892cd68dc6ce7
-2026-08-10-slash-catalog-follows-preset-switch.zh.md: 4a1ca69d3f47522bd398a501e274fd4926d3261c
+2026-08-10-slash-catalog-follows-preset-switch.zh.md: 83459a5ce09be098bc707337cdbab9155d064c75

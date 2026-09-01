@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-06-11-microkernel-event-taxonomy.md
 2026-06-11-microkernel-event-taxonomy.md: 2dbe98f2472db227aab3995e2b854d01cb0c4642
-2026-06-11-microkernel-event-taxonomy.zh.md: 6d0d9fee613998386e993974ce8012371a3fdd87
+2026-06-11-microkernel-event-taxonomy.zh.md: df76fb738590f1dc2b14835f875cf64e4c83122b

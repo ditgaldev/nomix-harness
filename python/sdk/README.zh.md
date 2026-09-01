@@ -2,7 +2,7 @@
 
 [English](https://github.com/ditgaldev/nomix-harness/blob/master/python/sdk/README.md) | 中文
 
-通过 JSON-RPC stdio 驱动 Nomix Harness 的 Python 子进程 SDK。运行时会继承 `NOMIX_*` 进程配置，以及显式选用的插件组合所需的 Provider 专属环境变量。
+通过 JSON-RPC stdio 驱动 Nomix Harness 的 Python 子进程 SDK。运行时继承常规的 Nomix Harness 环境变量（如 `DEEPSEEK_BASE_URL` 与 `DEEPSEEK_API_KEY`），调用方可以直接使用真实模型端点，也可以把这些变量指向本地代理。
 
 请从 PyPI 安装 `nomix-harness-sdk` 分发包；导入模块仍为 `nomix_harness`：
 
@@ -15,17 +15,13 @@ python -m pip install nomix-harness-sdk
 ```py
 from nomix_harness import NomixHarness
 
-with NomixHarness(
-    provider="deepseek-official",
-    model="deepseek-v4-flash",
-    cordis="examples/jsonrpc-agent/cordis.yml",
-) as harness:
+with NomixHarness() as harness:
     result = harness.run("Say hi.")
 ```
 
 `NomixHarness` 会保留其按需启动的运行时子进程，以便在多次调用之间复用。请像上例一样将其用作上下文管理器，或在使用完毕后显式调用 `close()`。
 
-默认情况下，SDK 会启动 `nomix-harness-runtime-bin` 包内置的单文件可执行程序 `nomix-jsonrpc-agent`，并通过 `NOMIX_CORDIS_CONFIG` 注入 Provider 中立的默认配置，其中包括 stdio JSON-RPC 服务器、agent core（智能体核心）、采用显式组合语义检查点策略的 JSONL 会话持久化，以及本地 bash。默认配置不注册模型 Provider。自定义插件组合必须保留 `@nomix-ai/nomix-sdk-jsonrpc-server` 配置项、显式注册选用的 Provider，并传入 Cordis 配置文件路径。
+默认情况下，SDK 会启动 `nomix-harness-runtime-bin` 包内置的单文件可执行程序 `nomix-jsonrpc-agent`，并通过 `NOMIX_CORDIS_CONFIG` 注入该包的默认配置，其中包括 stdio JSON-RPC 服务器、agent core（智能体核心）、预载的 DeepSeek 适配器、采用显式组合语义检查点策略的 JSONL 会话持久化，以及本地 bash。要运行自己的插件组合，请在配置中保留 `@nomix-ai/nomix-sdk-jsonrpc-server` 配置项，并传入 Cordis 配置文件路径。
 
 ```py
 from nomix_harness import NomixHarness
@@ -39,7 +35,7 @@ with NomixHarness(
     result = harness.run("Make the requested code change.")
 ```
 
-`provider` 选择指定 Cordis 组合所注册的提供方路由；`model` 是该适配器解析出的模型 ID。`max_tokens` 是一个可选的正整数，用于限制根 agent 及其进程内后代在每次请求中输出的 token 数量；省略该参数时，由提供方的默认行为决定输出上限。压缩摘要继续使用压缩插件单独配置的上限。组合可以显式挂载内置 DeepSeek Provider 或 `llm-pi-ai`，配置 Provider 专属凭据与端点，并选择该 Provider 暴露的模型。JSON-RPC 初始化会拒绝未注册的 Provider。
+`provider` 选择指定 Cordis 组合所注册的提供方路由；`model` 是该适配器解析出的模型 ID。`max_tokens` 是一个可选的正整数，用于限制根 agent 及其进程内后代在每次请求中输出的 token 数量；省略该参数时，由提供方的默认行为决定输出上限。压缩摘要继续使用压缩插件单独配置的上限。内置默认组合注册 `deepseek-official`。自定义组合可以挂载 `llm-pi-ai`，在其中配置各提供方专属的凭据和端点，并选择 pi-ai 已安装 catalog 中存在的任意提供方/模型组合。
 
 [Python SDK 教程](https://github.com/ditgaldev/nomix-harness/blob/master/docs/user/guide/python-sdk.md)提供一套无需使用 Web UI、按步骤完成安装和首次运行的流程。该教程所用的完整独立 Cordis 配置文件位于 [`jsonrpc-agent` 示例](https://github.com/ditgaldev/nomix-harness/blob/master/examples/jsonrpc-agent/README.md)中。
 

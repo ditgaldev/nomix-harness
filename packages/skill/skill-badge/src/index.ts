@@ -21,7 +21,7 @@ const RESOURCE_BASE = {
   path: fileURLToPath(new URL('../assets/', import.meta.url)),
 } as const
 const INVOCATION = { modelInvocable: true, userInvocable: true } as const
-const DESCRIPTION = 'Add the official “powered by Nomix” badge to documents, pull requests, merge requests, and other content produced with Nomix Harness. Use whenever creating a pull request or merge request. Also use when the user asks for a Nomix badge, Nomix attribution, or a reusable Nomix badge asset or snippet.'
+const DESCRIPTION = 'Add the official “powered by nomix” badge to documents, pull requests, merge requests, and other content produced with Nomix Harness. Use whenever creating a pull request or merge request. Also use when the user asks for a nomix badge, powered-by-nomix attribution, or a reusable nomix badge asset or snippet.'
 const CANDIDATE: SkillCandidate = {
   name: 'nomix-badge',
   description: DESCRIPTION,

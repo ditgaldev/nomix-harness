@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-08-06-bundled-nomix-badge-skill.md
 2026-08-06-bundled-nomix-badge-skill.md: ee848934345de2b678eab746e86d4c81b0427250
-2026-08-06-bundled-nomix-badge-skill.zh.md: 728577de7f3b5931e1ca18a71692dd7e8c831635
+2026-08-06-bundled-nomix-badge-skill.zh.md: 3867680c3c26932f21acda68398eec8332474d39

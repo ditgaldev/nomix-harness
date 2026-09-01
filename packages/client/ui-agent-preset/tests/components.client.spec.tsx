@@ -9,7 +9,7 @@
 
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { bindSnapshotSelector } from '@nomix-ai/nomix-client-web-react'
+import { bindSnapshotSelector } from '@nomix-ai/nomix-client-test-runtime'
 import { createSnapshotStore } from '@nomix-ai/nomix-client-runtime/client'
 import { AgentPresetLabel } from '../src/client/AgentPresetLabel.tsx'
 import type { AgentPresetLabelProps } from '../src/client/AgentPresetLabel.tsx'

@@ -1,6 +1,6 @@
 /**
  * Web application entry: thin bootstrap over the shell library. Everything —
- * loader holding, module-table seeding, AppRoot gate, plugin assembly — lives
+ * module-table seeding, the boot page, and the UI-renderer handoff — lives
  * in @nomix-ai/nomix-client-web; this file only finds the mount point.
  */
 import { AppWebEntry } from '@nomix-ai/nomix-client-web'

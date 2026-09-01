@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/client/ui-directory-picker-browse/README.md
 README.md: 52ba85460d038ed51a9821d15201fbc253a2c6d1
-README.zh.md: a10620b28546f7da83e40dd5bc1587f0688f901d
+README.zh.md: 7b3e1e8bc1b4906dfb1d55e6dac90d9e82c9ca0a

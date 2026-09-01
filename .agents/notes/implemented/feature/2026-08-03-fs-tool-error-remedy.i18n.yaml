@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-08-03-fs-tool-error-remedy.md
 2026-08-03-fs-tool-error-remedy.md: ab0d4e9b2c644d16957578635ff6d0b61019e810
-2026-08-03-fs-tool-error-remedy.zh.md: 8ae97934042d15d1e68fd36a912694803df73943
+2026-08-03-fs-tool-error-remedy.zh.md: 2102606825434b0cc4725acf140ffdbbd7df2a0d

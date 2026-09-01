@@ -2,7 +2,9 @@
   "name": "@nomix-ai/cordis",
   "description": "Meta-Framework for Modern JavaScript Applications",
   "version": "4.0.1",
-  "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ditgaldev/nomix-harness.git",

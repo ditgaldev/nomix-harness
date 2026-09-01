@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-07-28-user-settings-seam.md
 2026-07-28-user-settings-seam.md: 2f99fb20ca037b8b7295997b48d37401e71fc9a7
-2026-07-28-user-settings-seam.zh.md: 382a14fcfc50cc03ce76b62b21051ff283691a30
+2026-07-28-user-settings-seam.zh.md: aeddaa85275000a6ec0514a9d537fed4c5a54de5

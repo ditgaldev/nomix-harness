@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-07-30-versioned-gui-welcome-onboarding.md
 2026-07-30-versioned-gui-welcome-onboarding.md: 6d0196db181e6b65b4ea9682d008e0eb4a4754d4
-2026-07-30-versioned-gui-welcome-onboarding.zh.md: 6a3f27f33f768648b0de97a5dc2e6eb7690be380
+2026-07-30-versioned-gui-welcome-onboarding.zh.md: acb54603bb20c4c0987caf143309a0f422da7295

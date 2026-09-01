@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/process/2026-08-02-native-github-stacks-and-optional-rebases.md
 2026-08-02-native-github-stacks-and-optional-rebases.md: 526eef68b9b824b106a64b8060d0a351abb36a2e
-2026-08-02-native-github-stacks-and-optional-rebases.zh.md: 78483d880bad1a49a931feddce97a779f5876dcd
+2026-08-02-native-github-stacks-and-optional-rebases.zh.md: 02b8172ff41af1aa7b99148ed72f340a6d63d2f0

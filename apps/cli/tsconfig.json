@@ -66,9 +66,6 @@
       "path": "../../packages/session-query/session-query-sqlite"
     },
     {
-      "path": "../../packages/sdk/client"
-    },
-    {
       "path": "../../packages/shell/shell-env"
     },
     {

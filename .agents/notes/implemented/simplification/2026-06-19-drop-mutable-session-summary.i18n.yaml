@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/simplification/2026-06-19-drop-mutable-session-summary.md
 2026-06-19-drop-mutable-session-summary.md: d91be6eb010d29e266c30dbe037641d2b70f48bc
-2026-06-19-drop-mutable-session-summary.zh.md: 3cb2705ddce8f6dd852d3cc108edb6bdfa63a0ca
+2026-06-19-drop-mutable-session-summary.zh.md: cfdb22ab84eee1b62622bf5516a6d7f49bc0bba7

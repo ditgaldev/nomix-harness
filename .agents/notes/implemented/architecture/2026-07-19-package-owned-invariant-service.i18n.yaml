@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-07-19-package-owned-invariant-service.md
 2026-07-19-package-owned-invariant-service.md: 89dba7eb22289f37b4fed2f1efcc822a1c33012c
-2026-07-19-package-owned-invariant-service.zh.md: ba40a2feaca559b5905dc503046782068490118e
+2026-07-19-package-owned-invariant-service.zh.md: b1354cb9ff599d21d24e535b3ffeeb2afd3016be

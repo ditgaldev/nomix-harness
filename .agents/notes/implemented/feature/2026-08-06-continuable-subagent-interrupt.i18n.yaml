@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-08-06-continuable-subagent-interrupt.md
 2026-08-06-continuable-subagent-interrupt.md: 83450fd7bd771ac1c881977342341d47343b62d0
-2026-08-06-continuable-subagent-interrupt.zh.md: ed3b5aecb8357c31e68d36587030f3fda1f58277
+2026-08-06-continuable-subagent-interrupt.zh.md: a56d2c64e4a435f3ff6f5f4bebc0e86a4d1110a2

@@ -7,7 +7,7 @@ import type {
 import { makeTranslate } from '@nomix-ai/nomix-client-test-runtime'
 import { zh as commonZh } from '@nomix-ai/nomix-client-locale/src/locales/zh.ts'
 import type { DirectoryFlowOwnerProps, WorkspacePickerProps } from '../src/client/contract/slots.ts'
-import { bindSnapshotSelector } from '@nomix-ai/nomix-client-web-react'
+import { bindSnapshotSelector } from '@nomix-ai/nomix-client-test-runtime'
 import { WorkspacePicker } from '../src/client/WorkspacePicker.tsx'
 import { zh } from '../src/client/locales.ts'
 

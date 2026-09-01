@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-07-30-search-render-card.md
 2026-07-30-search-render-card.md: 7f1353f40e6c670ffd864ad8f2b852a932e9a7cd
-2026-07-30-search-render-card.zh.md: bf53cb9ee06857a3aa02a8e232f5dfa992bb9770
+2026-07-30-search-render-card.zh.md: f903e88a03a6e86e80ec7ba22a13cd3dee238466

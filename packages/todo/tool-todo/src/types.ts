@@ -13,6 +13,9 @@ import type { TodoItem } from '@nomix-ai/nomix-session/types'
 export type { TodoItem } from '@nomix-ai/nomix-session/types'
 
 declare module '@nomix-ai/nomix-session-projection/types' {
+  interface SessionProjectionStateMap {
+    todos: TodoItem[] | null
+  }
   interface SessionProjectionMap {
     /**
      * The agent's current whole todo list (the latest `todo/write` snapshot),

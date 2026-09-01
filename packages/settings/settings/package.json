@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-settings",
   "description": "Abstract user-settings seam (ctx.settings) for the Nomix Harness",
-  "version": "0.2.5",
+  "version": "0.1.1-rc.2",
   "publishConfig": {
     "access": "public"
   },

@@ -1,42 +1,36 @@
-/** Pack a release family and validate the exact npm tarballs. */
+/**
+ * Pack one release family's whole publish set into a single directory, in
+ * publish order, and record that order for the publish step.
+ *
+ * The pack step is the release boundary: it runs without credentials, produces
+ * every tarball from one commit, and hands the publish step exactly those bytes
+ * ([rationale](../../.agents/notes/implemented/process/2026-08-10-npm-release-sequences.md)).
+ */
 
-import { existsSync, mkdirSync, mkdtempSync, rmSync, statSync, writeFileSync } from 'node:fs'
-import { tmpdir } from 'node:os'
+import { existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 import { parseArgs } from 'node:util'
-import { buildNpmHarnessDistribution } from '../npm-harness-distribution.ts'
 import { releaseFamily, tarballName, type ReleaseFamily, type ReleaseMember } from './families.ts'
 import { isEntry, run } from './process.ts'
-import { PUBLISH_ORDER_FILE, tarballFiles, validateNpmTarballListing, validateNpmTarballPaths } from './tarball.ts'
+import { PUBLISH_ORDER_FILE, tarballFiles } from './tarball.ts'
 
 /** Where pack output lands when `--out` is omitted. */
 const DEFAULT_OUTPUT = 'dist/npm'
 
-/** Pack one member and validate its payload. */
+/**
+ * Pack one member and check what its tarball carries.
+ * @param family - the release family being packed.
+ * @param member - the member to pack.
+ * @param destination - absolute output directory.
+ * @returns The tarball filename.
+ */
 function packMember(family: ReleaseFamily, member: ReleaseMember, destination: string): string {
-  const filename = tarballName(member)
-  if (family.packing === 'native-bundle') {
-    const temporary = mkdtempSync(join(tmpdir(), 'nomix-npm-package-'))
-    try {
-      buildNpmHarnessDistribution(temporary)
-      run('npm', ['pack', temporary, '--pack-destination', destination, '--ignore-scripts'])
-    } finally {
-      rmSync(temporary, { recursive: true, force: true })
-    }
-  } else {
-    run('pnpm', ['--dir', member.directory, 'pack', '--pack-destination', destination])
-  }
+  run('pnpm', ['--dir', member.directory, 'pack', '--pack-destination', destination])
 
+  const filename = tarballName(member)
   const tarball = join(destination, filename)
   if (!existsSync(tarball)) throw new Error(`${member.name} produced no tarball at ${tarball}`)
-  const files = tarballFiles(tarball)
-  validateNpmTarballPaths(files)
-  validateNpmTarballListing(tarball)
-  family.validatePayload(member, files)
-  console.log(
-    `release pack: ${member.name}@${member.version}, ${String(files.length)} file(s),`
-    + ` ${(statSync(tarball).size / (1024 * 1024)).toFixed(1)} MiB`,
-  )
+  family.validatePayload(member, tarballFiles(tarball))
   return filename
 }
 
@@ -51,14 +45,17 @@ function main(): void {
   const family = releaseFamily(values.family)
   const root = process.cwd()
   const destination = resolve(root, values.out ?? DEFAULT_OUTPUT)
-  const versionMembers = family.members(root)
-  family.verifyVersions(versionMembers)
-  const members = family.publishOrder(family.publicationMembers(versionMembers)).order
+  const members = family.publishOrder(family.members(root)).order
+  family.verifyBuildArtifacts(root)
+  family.verifyVersions(members)
 
   rmSync(destination, { recursive: true, force: true })
   mkdirSync(destination, { recursive: true })
-  const order = members.map(member => packMember(family, member, destination))
+
+  const order: string[] = []
+  for (const member of members) order.push(packMember(family, member, destination))
   writeFileSync(join(destination, PUBLISH_ORDER_FILE), `${order.join('\n')}\n`)
+
   console.log(`release pack: family ${family.id}, ${String(order.length)} tarball(s) in ${values.out ?? DEFAULT_OUTPUT}`)
 }
 

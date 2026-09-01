@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/postmortem/0004-landlock-partial-notice-misclassified-child-failures.md
 0004-landlock-partial-notice-misclassified-child-failures.md: 3142a97577387b15abc7228c0ff63921438231eb
-0004-landlock-partial-notice-misclassified-child-failures.zh.md: 3d2829e884abf8c070287aa33adf0d3e3df1c60e
+0004-landlock-partial-notice-misclassified-child-failures.zh.md: 8705dae778d0261238dc08b1f3b6c27ae597d99a

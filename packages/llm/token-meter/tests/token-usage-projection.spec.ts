@@ -8,6 +8,7 @@ import SessionProjectionRegistry from '@nomix-ai/nomix-session-projection'
 import TokenMeter from '@nomix-ai/nomix-token-meter'
 import type { ContextPressureProjection, TokenUsageProjection } from '@nomix-ai/nomix-token-meter/client'
 import { CompactionId } from '@nomix-ai/nomix-compaction'
+import type {} from '../src/usage-projection.ts'
 
 const ZERO: TokenUsageProjection = {
   uncachedInputTokens: 0,

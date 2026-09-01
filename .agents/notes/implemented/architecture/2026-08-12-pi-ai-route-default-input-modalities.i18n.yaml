@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-08-12-pi-ai-route-default-input-modalities.md
-2026-08-12-pi-ai-route-default-input-modalities.md: 29df21b2c1f915020c061f2590767711e43d7a46
-2026-08-12-pi-ai-route-default-input-modalities.zh.md: 3c82468a52199303e2e45a9f8443a5d2ffbf450a
+2026-08-12-pi-ai-route-default-input-modalities.md: 5aa0c8cc8bdbfe5bcda858fabb488a112a5078e5
+2026-08-12-pi-ai-route-default-input-modalities.zh.md: 3bdb0b1690297fbe05f6b36d398d458483533498

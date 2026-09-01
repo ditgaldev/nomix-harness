@@ -25,7 +25,7 @@ explicit configured path  >  $NOMIX_HOME  >  ~/.nomix
 
 `@nomix-ai/nomix-home` 被删除。它的三个引用方（`nomix-tool-bash`、`nomix-skill-filesystem`、`nomix-agent-spine-demo`）从 `nomix-home-paths` 导入 `resolveNomixHome`。
 
-`nomix-telemetry` 及其独立 home 策略已随 [SDK 项目工具链移除](../simplification/2026-08-11-remove-sdk-project-toolchain.md)一并消失，因此该解析器是唯一的 home 策略。
+`nomix-telemetry` 及其独立 home 策略已随 [SDK 项目工具链移除](../simplification/2026-08-11-remove-sdk-project-toolchain.zh.md)一并消失，因此该解析器是唯一的 home 策略。
 
 ## 备选方案
 

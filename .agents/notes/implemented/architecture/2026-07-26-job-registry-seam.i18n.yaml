@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-07-26-job-registry-seam.md
 2026-07-26-job-registry-seam.md: cfe6e3c4cf4b856e5aa65b20dc0a868eac3f701b
-2026-07-26-job-registry-seam.zh.md: eaa7eb22d4b19750d0b51c191371abd90b3d5729
+2026-07-26-job-registry-seam.zh.md: f9dca4c3db68e4b332ead13d358326d3d7b3ddbd

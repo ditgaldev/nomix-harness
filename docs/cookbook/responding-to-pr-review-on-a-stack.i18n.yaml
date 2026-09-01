@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/cookbook/responding-to-pr-review-on-a-stack.md
 responding-to-pr-review-on-a-stack.md: 487574ad8f6409479f1be6fdce03e313741a2a20
-responding-to-pr-review-on-a-stack.zh.md: c2446a98fdc6252783173abe4705078590bf7020
+responding-to-pr-review-on-a-stack.zh.md: d49e4b0e8aa3ba30a7953a4939e1d58ea4acb460

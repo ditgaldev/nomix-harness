@@ -62,13 +62,13 @@ function fakeSeatbeltExec(status: number): string {
 const SEATBELT_RO_PROFILE = '(version 1) (allow default) (deny file-write*) (allow file-write* (literal "/dev/null"))'
 
 describe('profile dialects', () => {
-  it('bwrap read-only: whole tree read-only with fresh /dev and /proc, no writable mounts', () => {
-    expect(bwrapProfileArgs(RO)).toEqual(['--ro-bind', '/', '/', '--dev', '/dev', '--proc', '/proc', '--die-with-parent'])
+  it('bwrap read-only: whole tree read-only with fresh /dev and private PID-scoped /proc, no writable mounts', () => {
+    expect(bwrapProfileArgs(RO)).toEqual(['--ro-bind', '/', '/', '--dev', '/dev', '--unshare-pid', '--proc', '/proc', '--die-with-parent'])
   })
 
   it('bwrap workspace-write: adds an ephemeral /tmp and rebinds the workspace root', () => {
     expect(bwrapProfileArgs(WW)).toEqual([
-      '--ro-bind', '/', '/', '--dev', '/dev', '--proc', '/proc', '--die-with-parent',
+      '--ro-bind', '/', '/', '--dev', '/dev', '--unshare-pid', '--proc', '/proc', '--die-with-parent',
       '--tmpfs', '/tmp', '--bind', '/ws', '/ws',
     ])
   })
@@ -405,8 +405,8 @@ describe('the windows-acl probe (runner invocation contract)', () => {
   })
 
   it('runs the REAL default probe against the resolved runner invocation when none is injected', async () => {
-    // No entry injected: this covers production resolution through the sibling
-    // package URL. Which arm of the existsSync check it takes depends
+    // No entry injected: this covers the production resolution through
+    // import.meta.resolve. Which arm of the existsSync check it takes depends
     // on whether the checkout has run build:lib:host (which emits
     // sandbox-windows-acl/lib/runner.js), so this asserts only what holds
     // either way — the runner cannot init off win32, so the probe reads

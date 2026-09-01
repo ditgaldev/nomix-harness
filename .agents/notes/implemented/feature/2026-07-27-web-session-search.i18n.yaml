@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-07-27-web-session-search.md
 2026-07-27-web-session-search.md: 6bb63c95acdc73b64d370bff399c1d0230db2a0c
-2026-07-27-web-session-search.zh.md: a2729595263b17e877b42377966232fb119b1cd1
+2026-07-27-web-session-search.zh.md: 694bc82821b8f42ad2a2bce700c93ba9b361dcd1

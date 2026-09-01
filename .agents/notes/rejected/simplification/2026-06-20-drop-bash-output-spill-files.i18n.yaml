@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/rejected/simplification/2026-06-20-drop-bash-output-spill-files.md
 2026-06-20-drop-bash-output-spill-files.md: 8650b9564ec340c0e873a662525cf419a1e09ad9
-2026-06-20-drop-bash-output-spill-files.zh.md: a03307da9d1e00ba79d44b16ffcdda9793944489
+2026-06-20-drop-bash-output-spill-files.zh.md: 44b555d4cdcd6696c904322ab5ab445a89d16957

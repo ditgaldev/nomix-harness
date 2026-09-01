@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/cookbook/maintaining-nomix-code-review.md
 maintaining-nomix-code-review.md: aae87a4692626e91105f50266a6735ff7f0abed7
-maintaining-nomix-code-review.zh.md: f30d6fe3364598052d06277521212733ff3224ad
+maintaining-nomix-code-review.zh.md: 3b962bc82df87578b9dff02a968239e7f72960c0

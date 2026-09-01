@@ -15,7 +15,7 @@ describe('nomix-skill-badge', () => {
 
     expect(await ctx.skills.list()).toEqual([{
       name: 'nomix-badge',
-      description: 'Add the official “powered by Nomix” badge to documents, pull requests, merge requests, and other content produced with Nomix Harness. Use whenever creating a pull request or merge request. Also use when the user asks for a Nomix badge, Nomix attribution, or a reusable Nomix badge asset or snippet.',
+      description: 'Add the official “powered by nomix” badge to documents, pull requests, merge requests, and other content produced with Nomix Harness. Use whenever creating a pull request or merge request. Also use when the user asks for a nomix badge, powered-by-nomix attribution, or a reusable nomix badge asset or snippet.',
       invocation: { modelInvocable: true, userInvocable: true },
       provider: 'nomix-badge',
       source: 'bundled',
@@ -29,12 +29,12 @@ describe('nomix-skill-badge', () => {
     expect(await ctx.skills.list()).toEqual([])
   })
 
-  it('ships the official 726×120 SVG unchanged', async () => {
-    const image = await readFile(new URL('../assets/nomix-badge.svg', import.meta.url))
-    expect(image.toString('utf8')).toContain('width="726" height="120"')
-    expect(image.toString('utf8')).toContain('powered by Nomix')
+  it('ships the official 726×120 PNG unchanged', async () => {
+    const image = await readFile(new URL('../assets/nomix-badge.png', import.meta.url))
+    expect(image.readUInt32BE(16)).toBe(726)
+    expect(image.readUInt32BE(20)).toBe(120)
     expect(createHash('sha256').update(image).digest('hex')).toBe(
-      '19a6df4b883b0f824d1f5ee9aad9fa28d23afe317f1399775871ef4514896ca0',
+      'f2c4f5ec9cbe847c0c763545c4d839efa8485bc74203733d0a0e8259f233c653',
     )
   })
 })

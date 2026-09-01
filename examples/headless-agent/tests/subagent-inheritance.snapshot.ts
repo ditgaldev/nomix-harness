@@ -7,7 +7,7 @@ import { readFile, readdir, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { Context } from '@nomix-ai/cordis'
-import { normalizeSessionLog, scrubRequestHeaders, type NormalizeContext } from '@nomix-ai/nomix-acp-snapshot'
+import { normalizeSessionSnapshot, type NormalizeContext } from '@nomix-ai/nomix-acp-snapshot'
 import { LOADER_SMOKE_TEST_TIMEOUT_MS, runLoaderSmoke } from '@nomix-ai/nomix-loader-smoke'
 import { createUserMessage } from '@nomix-ai/nomix-llm'
 import SessionStore, { SESSION_FORMAT_VERSION, SessionId, type SessionEvent, type SessionHeader } from '@nomix-ai/nomix-session'
@@ -119,8 +119,8 @@ describe('parent-only override inheritance snapshot', () => {
         }
 
         const context: NormalizeContext = { sessionIds: [sessionId, String(headerOf(child).id)], cwd }
-        const normalizedParent = scrubRequestHeaders(normalizeSessionLog(parent, context))
-        const normalizedChild = scrubRequestHeaders(normalizeSessionLog(child, context))
+        const normalizedParent = normalizeSessionSnapshot(parent, context)
+        const normalizedChild = normalizeSessionSnapshot(child, context)
         if (refreshing) {
           await writeFile(parentExpected, normalizedParent)
           await writeFile(childExpected, normalizedChild)

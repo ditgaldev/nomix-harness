@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-06-18-agent-lifecycle-and-ownership-contracts.md
 2026-06-18-agent-lifecycle-and-ownership-contracts.md: 079546618659fb027ba7643335aeaf11684d9a1e
-2026-06-18-agent-lifecycle-and-ownership-contracts.zh.md: d26141f2bd4a4fdc83716faff4b8602f07a5e27a
+2026-06-18-agent-lifecycle-and-ownership-contracts.zh.md: aaa572facd0f0a4a62f331ef116584799bed66b1

@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/process/2026-07-29-oxlint-linter.md
 2026-07-29-oxlint-linter.md: a8869b5c32318c697dc771fbe12fa725d9dcded3
-2026-07-29-oxlint-linter.zh.md: e2e62ffd5ec92791a819f89b4bc5b0de5a9c767d
+2026-07-29-oxlint-linter.zh.md: 208e6b3335d582e9e0705ee121a665cb3c5dd55d

@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-07-31-browser-derived-initial-locale.md
-2026-07-31-browser-derived-initial-locale.md: 9e1add31c995f58fd748336f265899c501176c83
-2026-07-31-browser-derived-initial-locale.zh.md: 4ea435d8d99d8facf0422a54f0fd1e3e634c7301
+2026-07-31-browser-derived-initial-locale.md: d1d770ba99779f21adfccebb9a1e26d3d0c0543c
+2026-07-31-browser-derived-initial-locale.zh.md: b31ff93c3233c40b29d98a3b896a947e1ddd717e

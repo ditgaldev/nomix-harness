@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/process/2026-07-30-cordis-config-source-plane-resolution-gate.md
 2026-07-30-cordis-config-source-plane-resolution-gate.md: 251499ffc2a858e16d7463008e95ba1c572a8afc
-2026-07-30-cordis-config-source-plane-resolution-gate.zh.md: d0ed26b918493c7ba19a17d921c5fec01aafcf27
+2026-07-30-cordis-config-source-plane-resolution-gate.zh.md: 91c8b7554709c29c1a2b1d07fa4dbc48b3c4ad24

@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-client-modules",
   "description": "Client module system, dual-face: node half composes the __NOMIX_BOOT__ entry graph (incremental nomix.client scan, bundle route, index tap, webPlugins service); browser half is the lazy-CJS module table the vendored cordis Loader consumes as its internal seam",
-  "version": "0.2.5",
+  "version": "0.1.1-rc.2",
   "publishConfig": {
     "access": "public"
   },
@@ -55,6 +55,8 @@
   ],
   "peerDependencies": {
     "@nomix-ai/nomix-invariants": "workspace:^",
-    "@nomix-ai/cordis": "workspace:^"
+    "@nomix-ai/cordis": "workspace:^",
+    "@nomix-ai/cordis-plugin-loader": "workspace:^",
+    "@nomix-ai/nomix-host-webserver": "workspace:^"
   }
 }

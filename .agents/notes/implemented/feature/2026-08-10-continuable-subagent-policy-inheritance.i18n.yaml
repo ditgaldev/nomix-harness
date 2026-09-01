@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-08-10-continuable-subagent-policy-inheritance.md
 2026-08-10-continuable-subagent-policy-inheritance.md: 03bc53d85ff3f058376380b25e100378385b2123
-2026-08-10-continuable-subagent-policy-inheritance.zh.md: 8b681cfd756ccdacbfdc0e5c6e591b9b000efe6d
+2026-08-10-continuable-subagent-policy-inheritance.zh.md: 13e98c10c472c96a9d791caaf9332261af5652b7

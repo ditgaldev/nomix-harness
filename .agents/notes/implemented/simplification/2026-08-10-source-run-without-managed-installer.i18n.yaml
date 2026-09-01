@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/simplification/2026-08-10-source-run-without-managed-installer.md
 2026-08-10-source-run-without-managed-installer.md: fd53bc985b4507e9a19504da5f89a5833385817e
-2026-08-10-source-run-without-managed-installer.zh.md: f3545a1fc7d0c379a5d189395901a285b81b7656
+2026-08-10-source-run-without-managed-installer.zh.md: db37c9d7dfb2c732ac815004bcf9206af93222bc

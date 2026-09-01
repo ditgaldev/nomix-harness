@@ -13,6 +13,7 @@ import { describe, expect, it } from 'vitest'
 import { SlotRegistry, type SessionId } from '@nomix-ai/nomix-client-runtime/client'
 import { LocaleRuntime } from '@nomix-ai/nomix-client-locale/client'
 import { TestRemote } from '@nomix-ai/nomix-client-test-runtime'
+import { apply as settingsApply, inject as settingsInject } from '@nomix-ai/nomix-client-ui-settings/client'
 import type { CommandDecoration } from '@nomix-ai/nomix-client-ui-commands/client'
 import type { PermissionSelect } from '@nomix-ai/nomix-permission-presets/client'
 import {
@@ -58,6 +59,7 @@ async function bench() {
       },
     },
   } as never)
+  await ctx.plugin({ inject: [...settingsInject], apply: settingsApply }).await()
   let decoration: CommandDecoration | undefined
   ctx.provide('commandUi', {
     decorate(c: CommandDecoration) {

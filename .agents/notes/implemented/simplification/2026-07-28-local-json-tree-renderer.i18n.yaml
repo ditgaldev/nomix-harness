@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/simplification/2026-07-28-local-json-tree-renderer.md
 2026-07-28-local-json-tree-renderer.md: e0f6d29580d2de211d40ba9bc082925dfef1ed35
-2026-07-28-local-json-tree-renderer.zh.md: 0cdd5af8322d5b9d7b9c23dc0c58b581f1163a14
+2026-07-28-local-json-tree-renderer.zh.md: 3731901cd2d0cf394d2b0db1f5d344b1906f05f5

@@ -13,6 +13,7 @@ import { carrierKeyOf, type Scoped } from '@nomix-ai/nomix-scope'
 import { SessionId } from '@nomix-ai/nomix-session'
 import type SubagentRuntime from '@nomix-ai/nomix-subagent'
 import type { SubagentRunEndInfo } from '@nomix-ai/nomix-subagent'
+import * as LlmDeepSeek from '@nomix-ai/nomix-llm-deepseek'
 import type {
   InitializeParams,
   InitializeResult,
@@ -51,9 +52,10 @@ function successStatus(reason: string, options: HarnessSdkJsonRpcServerOptions):
  */
 export class HarnessSdkJsonRpcServer {
   private cwd = process.cwd()
-  private provider = 'unconfigured'
-  private model = 'unconfigured'
+  private provider = 'deepseek-official'
+  private model = 'deepseek-official'
   private maxTokens: number | undefined
+  private llmFiber: { dispose(): Promise<void> } | undefined
   private readonly sessions = new Map<string, SessionRecord>()
   private readonly sessionCreations = new Map<string, Promise<SessionRecord>>()
   private readonly disposers: (() => void)[] = []
@@ -102,7 +104,7 @@ export class HarnessSdkJsonRpcServer {
   }
 
   /**
-   * Configure the SDK route after verifying that its provider was explicitly registered.
+   * Configure the SDK route, mounting the DeepSeek fallback only when unowned.
    * @param params - SDK handshake parameters.
    * @returns server identity for the handshake.
    */
@@ -115,7 +117,10 @@ export class HarnessSdkJsonRpcServer {
     this.provider = params.provider
     this.model = params.model
     this.maxTokens = params.maxTokens
-    if (!this.hasAdapterFor(this.provider)) throw new Error(`no adapter registered for provider "${this.provider}"`)
+    if (!this.hasAdapterFor(this.provider)) {
+      if (this.provider !== 'deepseek-official') throw new Error(`no adapter registered for provider "${this.provider}"`)
+      this.llmFiber = await this.ctx.plugin(LlmDeepSeek, {})
+    }
     return { serverInfo: { name: 'nomix-harness-sdk-runtime', version: '0.0.1' } }
   }
 
@@ -162,9 +167,11 @@ export class HarnessSdkJsonRpcServer {
         failures.push(error)
       }
     }
-    const teardownResults = await Promise.allSettled(
-      records.map(rec => Promise.resolve().then(() => rec.handle.dispose())),
-    )
+    const teardownResults = await Promise.allSettled([
+      ...records.map(rec => Promise.resolve().then(() => rec.handle.dispose())),
+      ...(this.llmFiber === undefined ? [] : [Promise.resolve().then(() => this.llmFiber?.dispose())]),
+    ])
+    this.llmFiber = undefined
     failures.push(...teardownResults
       .filter((result): result is PromiseRejectedResult => result.status === 'rejected')
       .map(result => result.reason as unknown))

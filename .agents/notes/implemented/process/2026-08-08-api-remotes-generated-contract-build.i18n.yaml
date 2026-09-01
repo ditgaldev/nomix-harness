@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/process/2026-08-08-api-remotes-generated-contract-build.md
 2026-08-08-api-remotes-generated-contract-build.md: 16b751b124cbf818c90bc70c381533ba97c22f4c
-2026-08-08-api-remotes-generated-contract-build.zh.md: 8bf4cdec7c20fdc67598925a50dd883723d328c7
+2026-08-08-api-remotes-generated-contract-build.zh.md: 8481cb025049dc45143549ea8461fd4fb2306f5a

@@ -150,6 +150,8 @@ flowchart LR
   cfg --> plugin_nomix_base_repeat_tool_reminder
   plugin_nomix_base_web["web<br/>@nomix-ai/nomix-web"]
   cfg --> plugin_nomix_base_web
+  plugin_nomix_base_web_search_deepseek["web-search-deepseek<br/>@nomix-ai/nomix-web-search-deepseek"]
+  cfg --> plugin_nomix_base_web_search_deepseek
   plugin_nomix_base_tool_web["tool-web<br/>@nomix-ai/nomix-tool-web"]
   cfg --> plugin_nomix_base_tool_web
   plugin_nomix_base_tools["tools<br/>@nomix-ai/nomix-tools"]
@@ -160,6 +162,8 @@ flowchart LR
   cfg --> plugin_nomix_base_agent_loop
   plugin_nomix_base_fs_sandbox["fs-sandbox<br/>@nomix-ai/nomix-fs-sandbox"]
   cfg --> plugin_nomix_base_fs_sandbox
+  plugin_nomix_base_llm_deepseek["llm-deepseek<br/>@nomix-ai/nomix-llm-deepseek"]
+  cfg --> plugin_nomix_base_llm_deepseek
 ```
 
 | Plugin id | Package / module |
@@ -235,11 +239,13 @@ flowchart LR
 | `tool-str-replace-editor` | `@nomix-ai/nomix-tool-str-replace-editor` |
 | `repeat-tool-reminder` | `@nomix-ai/nomix-repeat-tool-reminder` |
 | `web` | `@nomix-ai/nomix-web` |
+| `web-search-deepseek` | `@nomix-ai/nomix-web-search-deepseek` |
 | `tool-web` | `@nomix-ai/nomix-tool-web` |
 | `tools` | `@nomix-ai/nomix-tools` |
 | `system-prompt` | `@nomix-ai/nomix-system-prompt` |
 | `agent-loop` | `@nomix-ai/nomix-agent-loop` |
 | `fs-sandbox` | `@nomix-ai/nomix-fs-sandbox` |
+| `llm-deepseek` | `@nomix-ai/nomix-llm-deepseek` |
 
 Source config: [`packages/bundle/base/cordis.patch.yml`](../../packages/bundle/base/cordis.patch.yml).
 

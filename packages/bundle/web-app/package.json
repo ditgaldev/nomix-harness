@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-web-app",
   "description": "The nomix browser-surface bundle: the web patch layer over nomix-base plus the runtime glue plugin (frontend dist serving, web-surface prompt, bash runtime variables, URL line)",
-  "version": "0.2.5",
+  "version": "0.1.1-rc.2",
   "publishConfig": {
     "access": "public"
   },
@@ -51,8 +51,11 @@
     "@nomix-ai/nomix-client-hmr": "workspace:^",
     "@nomix-ai/nomix-client-locale": "workspace:^",
     "@nomix-ai/nomix-client-modules": "workspace:^",
+    "@nomix-ai/nomix-client-ui-renderer": "workspace:^",
     "@nomix-ai/nomix-client-runtime": "workspace:^",
     "@nomix-ai/nomix-client-ui-agent-preset": "workspace:^",
+    "@nomix-ai/nomix-client-ui-attachment": "workspace:^",
+    "@nomix-ai/nomix-client-ui-brand-official": "workspace:^",
     "@nomix-ai/nomix-client-ui-commands": "workspace:^",
     "@nomix-ai/nomix-client-ui-conversation": "workspace:^",
     "@nomix-ai/nomix-client-ui-cordis": "workspace:^",
@@ -74,6 +77,7 @@
     "@nomix-ai/nomix-client-ui-sidebar": "workspace:^",
     "@nomix-ai/nomix-client-ui-skill": "workspace:^",
     "@nomix-ai/nomix-client-ui-input-trigger": "workspace:^",
+    "@nomix-ai/nomix-client-ui-reference": "workspace:^",
     "@nomix-ai/nomix-client-ui-subagent": "workspace:^",
     "@nomix-ai/nomix-client-ui-jobs": "workspace:^",
     "@nomix-ai/nomix-client-ui-theme": "workspace:^",
@@ -93,16 +97,22 @@
     "@nomix-ai/nomix-host-directory-picker-native": "workspace:^",
     "@nomix-ai/nomix-host-plugin-inventory": "workspace:^",
     "@nomix-ai/nomix-host-webserver": "workspace:^",
+    "@nomix-ai/nomix-file-reference": "workspace:^",
+    "@nomix-ai/nomix-file-reference-local": "workspace:^",
+    "@nomix-ai/nomix-launch-environment": "workspace:^",
     "@nomix-ai/nomix-message-feedback": "workspace:^",
     "@nomix-ai/nomix-session-projection-cache": "workspace:^",
+    "@nomix-ai/nomix-session-reference": "workspace:^",
     "@nomix-ai/nomix-session-log-export": "workspace:^",
     "@nomix-ai/nomix-session-stats": "workspace:^",
     "@nomix-ai/nomix-storage": "workspace:^",
     "@nomix-ai/nomix-storage-domain": "workspace:^",
     "@nomix-ai/nomix-storage-json": "workspace:^",
+    "@nomix-ai/nomix-subprocess": "workspace:^",
     "@nomix-ai/nomix-workspace": "workspace:^",
     "@nomix-ai/schemastery": "workspace:^",
-    "commander": "^15.0.0"
+    "commander": "^15.0.0",
+    "open": "^11.0.0"
   },
   "peerDependencies": {
     "@nomix-ai/cordis-plugin-loader": "workspace:^",

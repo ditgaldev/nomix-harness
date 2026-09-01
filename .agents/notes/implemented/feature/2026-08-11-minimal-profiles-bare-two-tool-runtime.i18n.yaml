@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-08-11-minimal-profiles-bare-two-tool-runtime.md
 2026-08-11-minimal-profiles-bare-two-tool-runtime.md: 9895a3a1ff37367d73cb881bd89d716ddeca39db
-2026-08-11-minimal-profiles-bare-two-tool-runtime.zh.md: 6dfb32aeb78a0ca1f679212e70f9dee453ed14a4
+2026-08-11-minimal-profiles-bare-two-tool-runtime.zh.md: 0ba6fd05c5b926451506f8ab15d350693af8ab53

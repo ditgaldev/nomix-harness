@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/simplification/2026-07-30-private-agent-send.md
 2026-07-30-private-agent-send.md: b8223f1b10610c8e0e5a4eda2638acb0d13eb251
-2026-07-30-private-agent-send.zh.md: 1f75111314fe84b75d747d3644b2bbf6bc88952c
+2026-07-30-private-agent-send.zh.md: 38b87a9c38e5632c124f70b634b725984d48dec5

@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-07-08-tool-output-spill-files.md
 2026-07-08-tool-output-spill-files.md: 6b475682562553c6961b29c297c903b94ea921b1
-2026-07-08-tool-output-spill-files.zh.md: 0e5c75d5b62c84d119fca6d6f97a4be5c1caad82
+2026-07-08-tool-output-spill-files.zh.md: 8a8efafd4c9fb46330a40b74f4613fe50be46ba0

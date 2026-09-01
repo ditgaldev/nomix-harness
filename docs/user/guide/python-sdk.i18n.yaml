@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/user/guide/python-sdk.md
 python-sdk.md: 166745e9dab0a3c6b1370d7527bfba7f9968f3bc
-python-sdk.zh.md: 4f67c68c8c221ac9629dabef2c1136e0e4a4fd01
+python-sdk.zh.md: 3a3850bddecbcb8ac864620e1691fff2cefb60f6

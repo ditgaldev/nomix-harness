@@ -14,7 +14,6 @@ from typing import Callable, TypeAlias, TypeVar
 
 from pydantic import BaseModel
 
-from ._legacy import reject_legacy_environment
 from .errors import JsonRpcError, TransportClosedError
 from .models import IncomingRequest, InitializeResponse, JsonObject, JsonValue, Notification
 
@@ -39,7 +38,6 @@ class HarnessClient:
     """Synchronous JSON-RPC client for the Nomix Harness SDK runtime over stdio."""
 
     def __init__(self, config: HarnessConfig | None = None) -> None:
-        reject_legacy_environment(os.environ)
         self.config = config or HarnessConfig()
         self._proc: subprocess.Popen[str] | None = None
         self._lock = threading.Lock()

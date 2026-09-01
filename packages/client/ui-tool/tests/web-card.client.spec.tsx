@@ -17,7 +17,7 @@ import type {
   ConversationSnapshot, RunningToolCall, SessionId, SessionListState, ToolResultNode, WorkspaceListState,
 } from '@nomix-ai/nomix-client-runtime/client'
 import type { ToolResultView } from '@nomix-ai/nomix-api-remotes/client'
-import { bindSnapshotSelector } from '@nomix-ai/nomix-client-web-react'
+import { bindSnapshotSelector } from '@nomix-ai/nomix-client-test-runtime'
 import type { SelectionTarget } from '@nomix-ai/nomix-client-ui-conversation/client'
 import type { ToolCallOwnerProps } from '@nomix-ai/nomix-client-ui-tool/client'
 import { IconGlobeOutline14 } from '@nomix-ai/nomix-client-ui-primitives'

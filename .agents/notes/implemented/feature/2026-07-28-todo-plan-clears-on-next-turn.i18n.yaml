@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-07-28-todo-plan-clears-on-next-turn.md
 2026-07-28-todo-plan-clears-on-next-turn.md: b96fb7017592ed29e4be4510431d2d598af97354
-2026-07-28-todo-plan-clears-on-next-turn.zh.md: b7061a3d5267a5d6d266303884e7313508b058b2
+2026-07-28-todo-plan-clears-on-next-turn.zh.md: 43b918084bfb465c0e432c33de211293c71de451

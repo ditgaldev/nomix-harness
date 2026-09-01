@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-07-28-web-agent-runtime-context.md
 2026-07-28-web-agent-runtime-context.md: 5cafa9e7552c192ee43641594ca53e743094c161
-2026-07-28-web-agent-runtime-context.zh.md: ab899bda1232d1db07c9a129438b8e80de196ee6
+2026-07-28-web-agent-runtime-context.zh.md: 9900c0dd54baf856eaf3e221f050ad59a1ac581e

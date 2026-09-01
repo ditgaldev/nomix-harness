@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-08-05-context-form-vocabulary.md
 2026-08-05-context-form-vocabulary.md: 77973336eac63e7d52a410b6d461b61259aa23d7
-2026-08-05-context-form-vocabulary.zh.md: b1c36b5ecd629a227fc3d2dc0a43b6f8a7978f85
+2026-08-05-context-form-vocabulary.zh.md: 307b079dbe469951026fed1eec7539f6111958a6

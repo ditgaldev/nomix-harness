@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/simplification/2026-08-12-separate-source-launch-from-build.md
 2026-08-12-separate-source-launch-from-build.md: 19228d67e677366de0d4ab22b0819cacd0ddcc46
-2026-08-12-separate-source-launch-from-build.zh.md: c8b1ac6b9c93b723f5fd454dff4e21612eede6ab
+2026-08-12-separate-source-launch-from-build.zh.md: 29f5ac67c72eb74acb499acbfc8cc0d0a009e64f

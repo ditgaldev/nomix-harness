@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-08-03-per-session-agent-presets.md
 2026-08-03-per-session-agent-presets.md: e050bd775e9a274cb8a98268aa8209c329462793
-2026-08-03-per-session-agent-presets.zh.md: 1b46f7c8d4ef0902b42cc6cbceacf544150c002c
+2026-08-03-per-session-agent-presets.zh.md: de59fba85cc018c5093eb1f97c5a919868fab1f0

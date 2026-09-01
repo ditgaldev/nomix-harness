@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-06-11-event-sourced-sessions.md
 2026-06-11-event-sourced-sessions.md: b117b0472ae23d1dc97010a21bb859c7be391e93
-2026-06-11-event-sourced-sessions.zh.md: 15948b497a9dbe7cc64683d5018d8d1ec3b1334a
+2026-06-11-event-sourced-sessions.zh.md: 0a275fe76dffe91886ef4cab1932584c6a5eb1f8

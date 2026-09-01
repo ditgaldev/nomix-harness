@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-08-10-child-agents-join-their-parent-preset.md
 2026-08-10-child-agents-join-their-parent-preset.md: f7544da528c6f9ed18086b77b2322b1e22f9950d
-2026-08-10-child-agents-join-their-parent-preset.zh.md: 157e76439738d93bf1018cf2421b3a4e273aff7e
+2026-08-10-child-agents-join-their-parent-preset.zh.md: cb910e31e9ea046caa9db6f8ef321d659d6e7f2d

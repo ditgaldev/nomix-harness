@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-07-02-tool-render-intent-union.md
 2026-07-02-tool-render-intent-union.md: 673efcb70418f3b64f8093e3c7068aa892df63e1
-2026-07-02-tool-render-intent-union.zh.md: 48b08668e8a596210f887936d52e960ebee762bf
+2026-07-02-tool-render-intent-union.zh.md: 0e80a99545abccbdc6a049c7f77ecbcc4649d82e

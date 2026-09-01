@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-07-29-human-transcript-append-origin.md
 2026-07-29-human-transcript-append-origin.md: 0b9e7552f06042deef7c18e3812196fb625a215b
-2026-07-29-human-transcript-append-origin.zh.md: 4b1c79eaadf09bdc45f84060ee0a8a32afc7efa6
+2026-07-29-human-transcript-append-origin.zh.md: 903c8c983e6ca2f5015bc5447baee2519650b70b

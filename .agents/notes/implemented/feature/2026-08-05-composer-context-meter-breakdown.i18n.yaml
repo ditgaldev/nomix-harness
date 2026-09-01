@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-08-05-composer-context-meter-breakdown.md
 2026-08-05-composer-context-meter-breakdown.md: ff1fe3a69de599134fe24d787dceff72ee939013
-2026-08-05-composer-context-meter-breakdown.zh.md: 2e3d390fb33d8512e63da0c6a74c342d5ee32ba5
+2026-08-05-composer-context-meter-breakdown.zh.md: 8035656a6ef5c0216f586c84af812561057cd44f

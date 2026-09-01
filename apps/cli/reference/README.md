@@ -8,7 +8,7 @@ This reference defines the profile, web-alias, plugin-management, and config-dum
 
 `nomix --profile <name>` boots the profile at `$NOMIX_HOME/profiles/<name>`. The effective tree is composed over an empty root by applying, in order: each bundle patch named in the profile manifest's `nomix.profile.bundles` list, the profile's own `cordis.patch.yml`, the home-level `$NOMIX_HOME/cordis.patch.yml` (machine-local preferences shared by every profile, so it outranks the per-profile layer), and each `--patch <path>` overlay in argv order. Later layers win per row; a patch replaces the targeted row's complete `config` value rather than deep-merging keys, and may insert new rows. A parse, schema, resolution, or plugin boot failure is reported and exits nonzero. SIGINT and SIGTERM dispose the mounted root before exit.
 
-Bundle names resolve from the nomix installation first, then from the profile directory. In-box bundles (`@nomix-ai/nomix-base`, `@nomix-ai/nomix-web-app`, `@nomix-ai/nomix-headless`) therefore always come from the same installation as the running `nomix`; out-of-tree bundles come from the profile's pnpm-managed `node_modules`. A bare plugin `name` in any patch row resolves through the profile directory's Node parent-walk, which reaches the maintained installation fallback `$NOMIX_HOME/profiles/node_modules`. Every launch heals links for the installation dependency closure and for packages embedded under the aggregate distribution's `dist/kernel/manifest.json`.
+Bundle names resolve from the nomix installation first, then from the profile directory. In-box bundles (`@nomix-ai/nomix-base`, `@nomix-ai/nomix-web-app`, `@nomix-ai/nomix-headless`) therefore always come from the same installation as the running `nomix`; out-of-tree bundles come from the profile's pnpm-managed `node_modules`. A bare plugin `name` in any patch row resolves through the profile directory's Node parent-walk, which reaches the maintained installation fallback `$NOMIX_HOME/profiles/node_modules` (one symlink per package the installation's app and bundles depend on, healed on every launch).
 
 The `web` and `headless` profiles auto-initialize from shipped templates on first use (`web`: base + web-app; `headless`: base + headless). Any other missing profile fails loud with a hint to run `nomix plugin --profile <name> add <package>`.
 
@@ -24,7 +24,7 @@ The shipped apps own these command lines:
 
 | Profile | Arguments |
 |---|---|
-| `web` | `--host`, `--port`, repeatable `--trusted-host` |
+| `web` | `--host`, `--port`, repeatable `--trusted-host`, `--no-open` |
 | `headless` | the task text, as the positional argument |
 
 A one-shot task (`nomix --profile headless "run the tests"`) creates one fresh persisted Agent through the core registry, submits the task, waits for quiescence, and flushes the Session before deriving the last non-empty assistant text and final `turn/end` reason from its durable interval. It prints the text on stdout and exits 0 for `completed`, else 1. An invocation with no task is a usage error from that app. The shipped headless profile mounts no ApiProxy, Host, HTTP server, Web runtime, or browser client; a successful run writes nothing to stderr and opens no listening port.
@@ -42,6 +42,18 @@ nomix --profile web --patch ./extra.yml --dump-config
 
 `nomix plugin --profile <name> <args...>` initializes the profile when missing (shipped template, or `@nomix-ai/nomix-base` alone for other names), then forwards `<args...>` to `pnpm` with the profile directory as working directory — `add`, `remove`, `why`, `update`, and every other pnpm verb work unchanged; pnpm must be on PATH. Relative path specs (`.`, `../plugin`, and their `file:`/`link:` forms) are anchored to the invoking directory first, so `add .` from a plugin checkout installs that checkout, not the profile. After every successful run, `nomix.profile.bundles` is reconciled against the installed state: each dependency resolving to a package whose manifest declares `"nomix": { "bundle": { "patch": "./cordis.patch.yml" } }` joins the layer stack (so an `update` that gains the declaration activates it), a bundle-less dependency stays plain with a one-time warning, and a removed dependency leaves the stack.
 
+The Codex and Claude Code subagent providers are separate optional Bundles. Add either package, both in one command, or remove either package independently:
+
+```sh
+nomix plugin --profile <name> add @nomix-ai/nomix-subagent-codex
+nomix plugin --profile <name> add @nomix-ai/nomix-subagent-claude-code
+nomix plugin --profile <name> add @nomix-ai/nomix-subagent-codex @nomix-ai/nomix-subagent-claude-code
+nomix plugin --profile <name> remove @nomix-ai/nomix-subagent-codex
+nomix plugin --profile <name> remove @nomix-ai/nomix-subagent-claude-code
+```
+
+The successful pnpm operation changes the Profile manifest and Bundle list on disk; a running Profile keeps the Bundle set from its current start. Restart that Profile after adding, removing, or updating a Bundle. This startup boundary applies to Bundle membership, while ordinary edits to the Profile or home `cordis.patch.yml` take effect through hot reload. On the next start, each installed Bundle registers only its dormant Host provider; a copied Preset must separately enable the matching tool row for new Agents. The [Codex provider README](../../../packages/subagent/subagent-codex/README.md) and [Claude Code provider README](../../../packages/subagent/subagent-claude-code/README.md) own executable, authentication, payload, and failure details; the [base Bundle reference](../../../packages/bundle/base/README.md) owns the default dependency closure.
+
 ```sh
 nomix plugin --profile tui add github:nomix-harness/turtle-ui
 nomix plugin --profile tui remove turtle-ui
@@ -52,28 +64,29 @@ Git-hosted plugins that ship sources build during install through their `prepare
 
 ## Web alias
 
-`nomix web` is a hardcoded alias for `--profile web`; the flags after it belong to the web app, whose ordinary bundle provider parses them. `--host` and `--port` override the composed values of the rows that carry them, and repeatable `--trusted-host` contributes invocation authorities through `ctx.webRuntime.trustedHosts` (a deployment expression concatenates its own authorities). The client-plugin HMR receiver is always mounted and stays idle until a separate `pnpm run dev:web` watcher rebuilds client bundles.
+`nomix web` is a hardcoded alias for `--profile web`; the flags after it belong to the web app, whose ordinary bundle provider parses them. `--host` and `--port` override the composed values of the rows that carry them, repeatable `--trusted-host` contributes invocation authorities through `ctx.webRuntime.trustedHosts` (a deployment expression concatenates its own authorities), and `--no-open` disables the default-browser handoff for this invocation. The client-plugin HMR receiver is always mounted and stays idle until a separate `pnpm run dev:web` watcher rebuilds client bundles.
 
 ```sh
 nomix web
+nomix web --no-open
 nomix web --patch ./extra.cordis.yml
 nomix web --dump-config
 nomix web --help
 ```
 
-The production Web runner needs built package and frontend artifacts (`pnpm run build`). It serves `http://127.0.0.1:3080` by default. The CLI intentionally does not support `--host 0.0.0.0` yet and exits with a usage error; `--trusted-host` adds named authorities accepted by the `/api` browser-trust fence.
+The production Web runner needs built package and frontend artifacts (`pnpm run build`). It serves `http://127.0.0.1:3080` by default and, for a local launch, opens that canonical host URL only after the complete Loader tree settles. A non-empty inherited `SSH_CONNECTION` or `SSH_TTY` suppresses the browser handoff because the SSH client or editor owns the local forwarded address; the host URL is still printed. The CLI intentionally does not support `--host 0.0.0.0` yet and exits with a usage error. Immediately before a local handoff it prints `nomix web: opening the default browser; pass --no-open to disable`; if the operating-system handoff fails, a diagnostic on stderr states the reason, leaves the server running, and names the URL for manual use. `--trusted-host` adds named authorities accepted by the `/api` browser-trust fence.
 
 Process shutdown gives the plugin tree up to five seconds to dispose. The first `SIGINT`/`SIGTERM` starts that graceful drain — `SIGTERM` is a supervisor's ordinary stop request and exits 0 on every surface, `SIGINT` reports 130; a second signal forces immediate exit. If one-shot normal completion is already stuck in disposal, the first `Ctrl+C` is the escalation and exits immediately instead of being swallowed.
 
 All modes treat the invoking directory as the default workspace root, load applicable `AGENTS.md` or `CLAUDE.md` instructions with a 65,536-byte render budget, and use an in-memory SQLite session content index. Every profile boot watches valid edits of both `cordis.patch.yml` layers (profile and home) and reapplies them transactionally; a one-shot surface exits through its bounded shutdown, which disposes the watchers.
 
-New sessions default to the `workspace-write` permission preset. Bash and filesystem mutations are restricted to the session workspace and platform temporary roots; reads, network access, and process visibility are not confined. `NOMIX_PERMISSION_MODE` changes the process fallback. Stored General-settings permissions affect later Web sessions, not an already-open one.
+New sessions default to the `workspace-write` permission preset. Bash and filesystem mutations are restricted to the session workspace and platform temporary roots; reads and network access are not confined, while process visibility depends on the selected sandbox backend — bwrap runs commands in a private PID namespace that hides host processes, and Landlock and Seatbelt leave host process visibility unchanged. `NOMIX_PERMISSION_MODE` changes the process fallback. Stored General-settings permissions affect later Web sessions, not an already-open one.
 
 `NOMIX_TOOLS_MODE` selects `native`, `code`, or `both` for the process; another value fails at boot. The shipped `minimal` agent preset keeps that deployment presentation, fixes the complete system prompt to `You are a helpful software engineer assistant.`, and composes only persistent `bash` plus `str_replace_editor`. Select 极简模式 when creating a Web session; every other prompt section and model-facing plugin remains absent from that agent while the shared browser, workspace, persistence, sandbox, and permission host stays in place.
 
 ## Shared deployment behavior
 
-The base bundle mounts settings and credential providers, a provider-neutral Web tool, and disabled session telemetry. It registers no model or search provider. Provider credentials resolve from the inherited environment, `$NOMIX_HOME/.credentials.yaml`, the invoking directory's `.env`, then `$NOMIX_HOME/.env`; the managed document is never materialized into `process.env`, while both `.env` files are ordinary launch environment layers. A later bundle or patch must register and select a search provider before `web_search` activates; `web_fetch` likewise stays disabled until a patch inserts a provider and enables it.
+The base bundle mounts the native DeepSeek adapter, settings and credential providers, stable `web_search`, and disabled session telemetry. Provider credentials resolve from the inherited environment, `$NOMIX_HOME/.credentials.yaml`, the invoking directory's `.env`, then `$NOMIX_HOME/.env`; the managed document is never materialized into `process.env`, while both `.env` files are ordinary launch environment layers. Search uses `DEEPSEEK_API_KEY` and accepts `DEEPSEEK_SEARCH_BASE_URL`; `web_fetch` is disabled unless a patch layer inserts a provider and enables it.
 
 Session telemetry stays local by default. `NOMIX_TELEMETRY_MODE=FULL` streams every projected session event as OTLP/HTTP logs, while `NOMIX_TELEMETRY_MODE=FEEDBACK_ONLY` uploads a session-log suffix only when feedback is recorded. `NOMIX_TELEMETRY_OTLP_URL` selects another collector, and any non-empty `NOMIX_TELEMETRY_DISABLED` remains an authoritative hard opt-out. The shipped base has no telemetry redaction rule, so explicitly enabled exports can contain message text, tool arguments and results, and workspace paths; the [default-off Agent Note](../../../.agents/notes/implemented/feature/2026-08-10-telemetry-default-off.md) owns that deployment decision.
 

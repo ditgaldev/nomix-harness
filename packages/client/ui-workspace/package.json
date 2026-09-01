@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-client-ui-workspace",
   "description": "Workspace picker plugin: one WorkspacePicker registered into the sidebar and empty-state workspace slots",
-  "version": "0.2.5",
+  "version": "0.1.1-rc.2",
   "publishConfig": {
     "access": "public"
   },
@@ -32,6 +32,7 @@
   "nomix": {
     "client": {
       "inject": [
+        "@nomix-ai/nomix-client-connection",
         "@nomix-ai/nomix-client-locale",
         "@nomix-ai/nomix-client-runtime",
         "@nomix-ai/nomix-client-ui-conversation",
@@ -49,15 +50,16 @@
     "clsx": "^2.0.0"
   },
   "peerDependencies": {
+    "@nomix-ai/nomix-client-connection": "workspace:^",
     "@nomix-ai/nomix-client-locale": "workspace:^",
     "@nomix-ai/nomix-client-runtime": "workspace:^",
-    "@nomix-ai/nomix-client-ui-primitives": "workspace:^",
-    "@nomix-ai/nomix-client-ui-slots": "workspace:^",
     "@nomix-ai/nomix-invariants": "workspace:^",
     "@nomix-ai/cordis": "workspace:^",
-    "react": "^18.2.0"
+    "@nomix-ai/nomix-client-ui-conversation": "workspace:^",
+    "@nomix-ai/nomix-client-ui-sidebar": "workspace:^"
   },
   "devDependencies": {
+    "@nomix-ai/nomix-client-connection": "workspace:^",
     "@nomix-ai/nomix-client-locale": "workspace:^",
     "@nomix-ai/nomix-client-runtime": "workspace:^",
     "@nomix-ai/nomix-client-test-runtime": "workspace:^",

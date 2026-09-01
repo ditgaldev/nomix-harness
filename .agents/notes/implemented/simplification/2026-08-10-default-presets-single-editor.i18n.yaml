@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/simplification/2026-08-10-default-presets-single-editor.md
 2026-08-10-default-presets-single-editor.md: 57491c4005052d68d2e6060132b3aca5b7974cfb
-2026-08-10-default-presets-single-editor.zh.md: 662ce6025530587e5da182516812f16761a67fd8
+2026-08-10-default-presets-single-editor.zh.md: ca81d8e2ebb2082d66ce8a827d543a4dfc1c16df

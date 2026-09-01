@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-08-04-declaring-a-provider-from-the-models-page.md
 2026-08-04-declaring-a-provider-from-the-models-page.md: 57c12d69c84905a9085e56a3dcb7c0fb222c8e50
-2026-08-04-declaring-a-provider-from-the-models-page.zh.md: 4b7a9eb8c22fe35f1814761b64c5bb1907f1aa5c
+2026-08-04-declaring-a-provider-from-the-models-page.zh.md: 4c75a42ac844dd644a14ca7db54e09f4dc5200ef

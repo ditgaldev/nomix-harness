@@ -3,7 +3,7 @@
  * (`packages/` + `apps/`, `vendor/`, and `native/`) and the two this module
  * owns: `nomix` and `vendor`. Each family carries its own version baseline, tag
  * naming, and publish set, so releasing one never republishes another
- * ([rationale](../../.agents/notes/archived/process/2026-08-10-npm-release-sequences.md)).
+ * ([rationale](../../.agents/notes/implemented/process/2026-08-10-npm-release-sequences.md)).
  *
  * The family dimension lives here only. A new sequence adds a subclass and a
  * `releaseFamilies()` entry; nothing else in the release scripts branches on it.
@@ -11,6 +11,10 @@
 
 import { globSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
+import {
+  officialClientBuildEnvironment,
+  readClientBuildRecord,
+} from '../client-build-environment.ts'
 import { validateTarballPayload } from '../publication-payload.ts'
 
 /**
@@ -96,19 +100,11 @@ function requireString(manifest: Record<string, unknown>, field: string, context
 export interface InstalledEntry {
   /** Package that carries the executable. */
   readonly packageName: string
-  /** Command npm exec resolves from that package. */
-  readonly command: string
-  /** Arguments for a bounded command smoke. */
-  readonly smokeArgs?: readonly string[]
-  /** Text the smoke command must print. */
-  readonly smokeOutput?: string
-  /** Arguments for a persistent application that the verifier stops after readiness. */
-  readonly startupArgs?: readonly string[]
-  /** Readiness text required before the verifier stops the persistent application. */
-  readonly startupOutput?: string
+  /** Path to the executable inside that package. */
+  readonly binPath: string
 }
 
-/** A release sequence: its version members, publish set, tag naming, and publication refs. */
+/** A release sequence: its members, its version baseline, and its tag naming. */
 export abstract class ReleaseFamily {
   /** Workflow-facing identifier, also the `--family` argument. */
   abstract readonly id: string
@@ -116,11 +112,15 @@ export abstract class ReleaseFamily {
   /** Glob patterns, relative to the repository root, that select this family's manifests. */
   abstract readonly patterns: readonly string[]
 
-  /** How each member becomes a publishable tarball. */
-  abstract readonly packing: 'package' | 'native-bundle'
-
-  /** Git tag prefix used to record this family's versions. */
+  /** Git tag prefix this family publishes from. */
   abstract readonly tagPrefix: string
+
+  /**
+   * Assert that built artifacts match this release family's required profile.
+   * Families without environment-selected artifacts accept every build tree.
+   * @param _root - repository root containing generated artifacts.
+   */
+  verifyBuildArtifacts(_root: string): void {}
 
   /**
    * Discover this family's members.
@@ -153,15 +153,6 @@ export abstract class ReleaseFamily {
   }
 
   /**
-   * Select the members that become registry packages from the versioned family.
-   * @param members - every member on the family's version line.
-   * @returns Members published to npm.
-   */
-  publicationMembers(members: readonly ReleaseMember[]): ReleaseMember[] {
-    return [...members]
-  }
-
-  /**
    * Order members so every package publishes after the family members it
    * depends on, which is what makes a partial publication self-consistent: an
    * interrupted run leaves a prefix whose packages never point at something
@@ -171,7 +162,7 @@ export abstract class ReleaseFamily {
    * reports rather than works around. Peer edges order what they can and are
    * dropped where honouring one would deadlock: sibling packages declare each
    * other as peers, and npm treats an unmet peer as a warning rather than a
-   * resolution failure ([rationale](../../.agents/notes/archived/process/2026-08-10-npm-release-sequences.md)).
+   * resolution failure ([rationale](../../.agents/notes/implemented/process/2026-08-10-npm-release-sequences.md)).
    * Every dropped edge is reported, because dropping one is a decision about a
    * real release rather than an implementation detail.
    * @param members - this family's members.
@@ -303,21 +294,12 @@ export abstract class ReleaseFamily {
   abstract tagPrefixFor(member: ReleaseMember): string
 
   /**
-   * The version tag recorded for a member.
+   * The tag a member publishes from.
    * @param member - the member being published.
    * @returns The full tag name, without `refs/tags/`.
    */
   tagFor(member: ReleaseMember): string {
     return `${this.tagPrefixFor(member)}${member.version}`
-  }
-
-  /**
-   * Git refs permitted to publish this family.
-   * @param members - members selected for publication.
-   * @returns Full Git refs accepted by the release verifier.
-   */
-  publicationRefs(members: readonly ReleaseMember[]): readonly string[] {
-    return [...new Set(members.map(member => `refs/tags/${this.tagFor(member)}`))]
   }
 
   /**
@@ -334,30 +316,15 @@ export abstract class ReleaseFamily {
   abstract readonly installedEntry: InstalledEntry | undefined
 }
 
-/** Product packages share one version and publish as one native ESM package. */
+/** Release packages and apps: one shared version across the whole family. */
 class NomixFamily extends ReleaseFamily {
   readonly id = 'nomix'
-  readonly patterns = ['packages/*/*/package.json', 'apps/*/package.json'] as const
-  readonly packing = 'native-bundle' as const
+  readonly patterns = ['packages/!(experimental)/*/package.json', 'apps/*/package.json'] as const
   readonly tagPrefix = 'nomix-v'
 
-  /** Publish Nomix only from its dedicated npm release branch. */
-  override publicationRefs(): readonly string[] {
-    return ['refs/heads/npm-nomix-harness']
-  }
-
-  /**
-   * Publish only the aggregate Harness package; its dist tree contains the
-   * internal workspace runtime without publishing internal package names.
-   * @param members - every package sharing the product version.
-   * @returns The CLI member.
-   */
-  override publicationMembers(members: readonly ReleaseMember[]): ReleaseMember[] {
-    const published = members.filter(member => member.name === '@nomix-ai/nomix-harness')
-    if (published.length !== 1) {
-      throw new Error(`nomix release requires exactly one @nomix-ai/nomix-harness member, found ${String(published.length)}`)
-    }
-    return published
+  /** Require current artifacts from a complete official client build. */
+  override verifyBuildArtifacts(root: string): void {
+    readClientBuildRecord(root, officialClientBuildEnvironment(root))
   }
 
   /**
@@ -387,37 +354,15 @@ class NomixFamily extends ReleaseFamily {
    */
   validatePayload(member: ReleaseMember, files: readonly string[]): void {
     validateTarballPayload(files, member.name)
-    for (const required of [
-      'package/dist/plugins/manifest.json',
-      'package/dist/bundles/manifest.json',
-      'package/dist/kernel/manifest.json',
-      'package/dist/cli/bin.js',
-      'package/dist/plugin-api/index.js',
-      'package/dist/sdk/index.js',
-      'package/dist/native/landlock-run/linux-x64/landlock-run',
-      'package/dist/native/landlock-run/linux-arm64/landlock-run',
-      'package/dist/licenses/landlock-run.LICENSE',
-    ]) if (!files.includes(required)) throw new Error(`${member.name} carries no ${required.slice('package/'.length)}`)
-    if (files.some(file => file.includes('/node_modules/') || file.endsWith('.map') || file.includes('/src/'))) {
-      throw new Error(`${member.name} exposes forbidden source, source-map, or node_modules members`)
-    }
   }
 
-  readonly installedEntry = {
-    packageName: '@nomix-ai/nomix-harness',
-    command: 'nomix',
-    smokeArgs: ['web', '--help'],
-    smokeOutput: 'Usage: nomix --profile web',
-    startupArgs: ['web', '--host', '127.0.0.1', '--port', '0'],
-    startupOutput: 'nomix web: http://127.0.0.1:',
-  }
+  readonly installedEntry = { packageName: '@nomix-ai/nomix-harness', binPath: 'lib/bin.js' }
 }
 
 /** `vendor/*`: every package keeps its own version line, so every package has its own tag. */
 class VendorFamily extends ReleaseFamily {
   readonly id = 'vendor'
   readonly patterns = ['vendor/*/package.json'] as const
-  readonly packing = 'package' as const
   readonly tagPrefix = 'vendor-'
 
   /**

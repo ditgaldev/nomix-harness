@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/simplification/2026-06-26-fsspec-style-fs-seam.md
 2026-06-26-fsspec-style-fs-seam.md: 524ddc7f4f32e239347d09878c965aac87ba251c
-2026-06-26-fsspec-style-fs-seam.zh.md: 4bebfb9829eefb785cd6d6e2e8ae000fbcb4f012
+2026-06-26-fsspec-style-fs-seam.zh.md: 23faa5ba53a87499b3d8d4b0cf3165bffbf230c5

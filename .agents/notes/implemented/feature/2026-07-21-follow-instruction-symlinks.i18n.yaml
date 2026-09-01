@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-07-21-follow-instruction-symlinks.md
 2026-07-21-follow-instruction-symlinks.md: 6f3dcab1906238314cbd862e61c13621db42edc1
-2026-07-21-follow-instruction-symlinks.zh.md: d3221b264124de28d34cf2d6265d40f966ca0ca1
+2026-07-21-follow-instruction-symlinks.zh.md: 57c828316f32b60620b7a1a12c72fcc8b24f7044

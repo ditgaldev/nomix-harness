@@ -1,6 +1,0 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
-#   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-08-21-nomix-native-npm-distribution.md
-2026-08-21-nomix-native-npm-distribution.md: 539173024ee1c3371612ebb8748a347102685ba1
-2026-08-21-nomix-native-npm-distribution.zh.md: 253912f51f15bbede6fca5a3054313526cfaaf7d

@@ -37,7 +37,6 @@ const SHIPPED_PRESET_ROOT = fileURLToPath(new URL('../config/agent-presets/', im
 import { NOMIX_LAUNCH_ENVIRONMENT_KEY, type LaunchEnvironmentSnapshot } from '@nomix-ai/nomix-launch-environment'
 import { provideCmdline } from '@nomix-ai/nomix-cmdline'
 import { createProcessShutdown, type ProcessShutdown } from './process-shutdown.ts'
-import { registerNomixBuiltins } from './builtin-registry.ts'
 
 const NAME = 'nomix'
 
@@ -248,7 +247,6 @@ export async function runProfile(options: RunProfileOptions): Promise<{ ctx: Con
   // application must not mutate the objects later reloads recompose from.
   const ctx = await boot(NAME, rootConfig, structuredClone(allPatches(composed)), (hostCtx) => {
     app.current = hostCtx
-    registerNomixBuiltins(hostCtx)
     // Before any config-tree entry mounts, so plugins resolve all launch-time
     // environment values from the same immutable provenance snapshot.
     hostCtx.provide(NOMIX_LAUNCH_ENVIRONMENT_KEY, options.environment)

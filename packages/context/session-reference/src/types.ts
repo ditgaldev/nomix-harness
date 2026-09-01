@@ -1,7 +1,13 @@
-/** Public session-reference request, candidate, and preparation records. */
+/**
+ * Public session-reference request, candidate, and preparation records.
+ * Imports stay on type-only subpaths so generated Remote clients can consume
+ * this module without Host runtime code.
+ * @module @nomix-ai/nomix-session-reference/types
+ */
 
-import type { ContentBlock } from '@nomix-ai/nomix-llm'
-import type { SessionId, UserMessage } from '@nomix-ai/nomix-session'
+import type { UserMessage } from '@nomix-ai/nomix-llm/message'
+import type { ContentBlock } from '@nomix-ai/nomix-llm/types'
+import type { SessionId } from '@nomix-ai/nomix-session/types'
 
 /** Durable source session, cited event seqs, and snapshot facts for prepared cross-session context. */
 export interface SessionReferenceSource {
@@ -47,6 +53,12 @@ export interface SessionReferenceCandidate {
   cwd?: string
   /** Source session creation time in Unix epoch milliseconds. */
   createdAt: number
+}
+
+/** One discovery candidate carrying its canonical prompt mention. */
+export interface SessionReferenceMentionCandidate extends SessionReferenceCandidate {
+  /** Canonical `@[label](nomix-session:…)` mention serialized into the prompt draft. */
+  mention: string
 }
 
 /** Direct message content and optional referenced-session context. */

@@ -2,7 +2,9 @@
   "name": "@nomix-ai/cordis-plugin-loader",
   "description": "Plugin loader for cordis",
   "version": "1.0.2",
-  "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ditgaldev/nomix-harness.git",

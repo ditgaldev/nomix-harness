@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-base",
   "description": "The shared nomix core as a profile bundle: every profile's first patch layer, inserting the base plugin rows over the empty profile root",
-  "version": "0.2.5",
+  "version": "0.1.1-rc.2",
   "publishConfig": {
     "access": "public"
   },
@@ -61,6 +61,7 @@
     "@nomix-ai/nomix-goal-round-driver": "workspace:^",
     "@nomix-ai/nomix-api-gateway": "workspace:^",
     "@nomix-ai/nomix-llm": "workspace:^",
+    "@nomix-ai/nomix-llm-deepseek": "workspace:^",
     "@nomix-ai/nomix-llm-pi-ai": "workspace:^",
     "@nomix-ai/nomix-llm-retry": "workspace:^",
     "@nomix-ai/nomix-permission-presets": "workspace:^",
@@ -112,6 +113,7 @@
     "@nomix-ai/nomix-user-approval": "workspace:^",
     "@nomix-ai/nomix-user-questions": "workspace:^",
     "@nomix-ai/nomix-web": "workspace:^",
+    "@nomix-ai/nomix-web-search-deepseek": "workspace:^",
     "@nomix-ai/nomix-workflow-worker-thread": "workspace:^",
     "@nomix-ai/nomix-agent-instructions": "workspace:^"
   },

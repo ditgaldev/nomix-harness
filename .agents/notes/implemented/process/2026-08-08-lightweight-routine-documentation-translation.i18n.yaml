@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/process/2026-08-08-lightweight-routine-documentation-translation.md
 2026-08-08-lightweight-routine-documentation-translation.md: ec1461f88974f03bf4b86baf3924429a3a86fb74
-2026-08-08-lightweight-routine-documentation-translation.zh.md: cc189005b1942fec2cf2f5c4de78513249633b33
+2026-08-08-lightweight-routine-documentation-translation.zh.md: e9d48484966ad4696d49c1f452455aafea6667e9

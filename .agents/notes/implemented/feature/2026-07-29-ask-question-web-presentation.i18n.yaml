@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-07-29-ask-question-web-presentation.md
 2026-07-29-ask-question-web-presentation.md: d0d9cfaafe51e19dc797934f74571610e7a495fa
-2026-07-29-ask-question-web-presentation.zh.md: 5345a33b9ef3a96b80165cb3ad0d9becf47a5c2e
+2026-07-29-ask-question-web-presentation.zh.md: a84cbcae6674e94d11816dd907c39ab4dc905bba

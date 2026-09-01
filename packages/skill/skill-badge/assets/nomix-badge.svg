@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="726" height="120" viewBox="0 0 726 120" role="img" aria-label="powered by Nomix">
-  <rect width="450" height="120" fill="#555"/>
-  <rect x="450" width="276" height="120" fill="#4d6bfe"/>
-  <g fill="#fff" font-family="Arial, Helvetica, sans-serif" font-size="64" text-anchor="middle">
-    <text x="225" y="82">powered by</text>
-    <text x="588" y="82">Nomix</text>
-  </g>
-</svg>

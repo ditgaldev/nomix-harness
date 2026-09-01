@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-08-07-feedback-acknowledgement-sharing-disclosure.md
 2026-08-07-feedback-acknowledgement-sharing-disclosure.md: 873aa3f55063fe41f3a1c98550238efd9a9309c1
-2026-08-07-feedback-acknowledgement-sharing-disclosure.zh.md: 221c69877e4309ad2401451752256c07a731237d
+2026-08-07-feedback-acknowledgement-sharing-disclosure.zh.md: 6c048ae53235c16810192862e1c353ca0413f971

@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-08-11-repository-naming-contract-and-rename-ledger.md
-2026-08-11-repository-naming-contract-and-rename-ledger.md: 4721e941b1c468a7eb3fa4f66ce26c4db43198d3
-2026-08-11-repository-naming-contract-and-rename-ledger.zh.md: a509168410cb6283b3f2c4d16dc88f47a34e608b
+2026-08-11-repository-naming-contract-and-rename-ledger.md: ec2186ccffa57cec6905c77bf1d310939a263eed
+2026-08-11-repository-naming-contract-and-rename-ledger.zh.md: 210f20e49e9a3b6d04356338dfb9090b22b7e480

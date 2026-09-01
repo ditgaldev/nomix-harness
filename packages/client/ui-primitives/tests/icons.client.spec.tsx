@@ -55,13 +55,26 @@ describe('ic_ds_ icon set', () => {
 })
 
 describe('NomixLogo', () => {
-  it('renders the supplied square product mark', () => {
+  it('renders the Nomix product image at a square ratio', () => {
     const { container } = render(<primitives.NomixLogo />)
     const svg = container.querySelector('svg')!
-    const image = container.querySelector('image')!
     expect(svg.getAttribute('width')).toBe('24')
     expect(svg.getAttribute('height')).toBe('24')
     expect(svg.getAttribute('viewBox')).toBe('0 0 512 512')
-    expect(image.getAttribute('href')).toBe('/nomix-logo.jpg')
+    expect(container.querySelector('image')?.getAttribute('href')).toBe('/nomix-logo.jpg')
+  })
+})
+
+describe('BrandWordmark', () => {
+  it('can render the name artwork with or without its leading mark', () => {
+    const view = render(<primitives.BrandWordmark />)
+    const svg = view.container.querySelector('svg')!
+    expect(svg.getAttribute('width')).toBe('148')
+    expect(svg.getAttribute('viewBox')).toBe('0 0 148 24')
+
+    view.rerender(<primitives.BrandWordmark includeMark={false} />)
+    expect(svg.getAttribute('width')).toBe('117')
+    expect(svg.getAttribute('viewBox')).toBe('31 0 117 24')
+    expect(view.container.querySelector('image')).toBeNull()
   })
 })

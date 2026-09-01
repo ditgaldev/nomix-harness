@@ -426,7 +426,7 @@ describe.skipIf(!existsSync(nomixBin))('nomix BUILT bin (node lib/bin.js, no tsx
     })
     const home = mkdtempSync(join(tmpdir(), 'nomix-home-environment-'))
     const project = mkdtempSync(join(tmpdir(), 'nomix-home-project-'))
-    writeFileSync(join(home, '.credentials.yaml'), `DEEPSEEK_API_KEY: ${apiKey}\n`, { mode: 0o600 })
+    writeFileSync(join(home, '.credentials.yaml'), `version: 1\nrefs:\n  DEEPSEEK_API_KEY: ${apiKey}\n`, { mode: 0o600 })
     createEnvironmentProbeProfile(home, project)
     try {
       const result = await runBuiltBin(
@@ -650,6 +650,21 @@ describe.skipIf(!existsSync(nomixBin))('nomix BUILT bin (node lib/bin.js, no tsx
       }
       expect(Object.keys(manifest.dependencies)).toEqual(['anchored-bundle'])
       expect(manifest.nomix.profile.bundles).toContain('anchored-bundle')
+
+      const removed = await runBuiltBin(
+        ['plugin', '--profile', 'anchor', 'remove', 'anchored-bundle'],
+        { NOMIX_HOME: home },
+        checkout,
+      )
+      expect(removed.code).toBe(0)
+      const afterRemove = JSON.parse(
+        readFileSync(join(home, 'profiles', 'anchor', 'package.json'), 'utf8'),
+      ) as {
+        dependencies?: Record<string, string>
+        nomix: { profile: { bundles: string[] } }
+      }
+      expect(Object.keys(afterRemove.dependencies ?? {})).toEqual([])
+      expect(afterRemove.nomix.profile.bundles).not.toContain('anchored-bundle')
     } finally {
       rmSync(home, { recursive: true, force: true })
       rmSync(checkout, { recursive: true, force: true })

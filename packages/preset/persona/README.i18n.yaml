@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/preset/persona/README.md
 README.md: 5dd6186747a3ba3e60ba6d41346c011229cee1a0
-README.zh.md: d485efaff4597abafd54f47517c95cb015794460
+README.zh.md: 6d232dbfef5b63579eef57bdc403f721996740e3

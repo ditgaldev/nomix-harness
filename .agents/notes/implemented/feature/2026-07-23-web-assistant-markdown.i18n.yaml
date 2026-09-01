@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-07-23-web-assistant-markdown.md
 2026-07-23-web-assistant-markdown.md: 65f75dae935d177960293f119ea9dc58c4e638e8
-2026-07-23-web-assistant-markdown.zh.md: fb3fdf1e843dded2260ee43dda0a30f34fa31e0c
+2026-07-23-web-assistant-markdown.zh.md: 722dc65b19793e88ea39c2edef0c4e32b7e201a6

@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-06-21-mandatory-app-attribution-headers.md
 2026-06-21-mandatory-app-attribution-headers.md: a762e4f7e0532be428f05fe968e397cc585aefb8
-2026-06-21-mandatory-app-attribution-headers.zh.md: 2c129db403b45985739b0e76a884c4d08ec4f53a
+2026-06-21-mandatory-app-attribution-headers.zh.md: 51b25aee0eb436f57804da9344e473a5be0c4d4f

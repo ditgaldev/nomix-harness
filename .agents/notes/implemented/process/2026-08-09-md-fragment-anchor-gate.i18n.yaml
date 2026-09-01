@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/process/2026-08-09-md-fragment-anchor-gate.md
 2026-08-09-md-fragment-anchor-gate.md: 7564167196d6d1b5e7849df8416cb3f766bc3f08
-2026-08-09-md-fragment-anchor-gate.zh.md: 81c0bee443de3ab5eff8094009c9ea27a21b9271
+2026-08-09-md-fragment-anchor-gate.zh.md: c63736066ead9c7e15d462910a4f9e8f8362c09f

@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/cookbook/extension-cookbook.md
 extension-cookbook.md: 074f9a6ac82fb96611d25af6c613cec3942fbe02
-extension-cookbook.zh.md: de4527ff2974da65fa56ba725e8bf7fb97f8560c
+extension-cookbook.zh.md: 058473d6f4477a8c0f0a1a03a774480f0ec96220

@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-07-20-nomix-cli-personal-config.md
 2026-07-20-nomix-cli-personal-config.md: be6298c5743e7550866e91c4bcc27930ff7a7803
-2026-07-20-nomix-cli-personal-config.zh.md: 4b792c18ce7e9227ae83266afa9551911c13168b
+2026-07-20-nomix-cli-personal-config.zh.md: f80cf907869cb5b244995ae6319283ec8ed82d71

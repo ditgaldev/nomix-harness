@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-06-24-web-capability-seam.md
 2026-06-24-web-capability-seam.md: 288663af848e236b26688cf291b8d7199389cfe6
-2026-06-24-web-capability-seam.zh.md: 66519b56af1fffa9a7d6f6229baa24a28b93eb76
+2026-06-24-web-capability-seam.zh.md: b5165cb56024d24fabd44fc8913f48d36d07ad22

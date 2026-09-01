@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/proposed/architecture/2026-07-25-client-settings-locale-theme.md
 2026-07-25-client-settings-locale-theme.md: 852c9f6eb0c7517b78ebdef06ff5d58cd1d72c95
-2026-07-25-client-settings-locale-theme.zh.md: 0f1c101c55ccdc78352228fa866e571278f826d0
+2026-07-25-client-settings-locale-theme.zh.md: a654417ab403dcd8d8540f7c028e6d8d69c4ead0

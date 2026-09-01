@@ -12,10 +12,7 @@ import * as ReactDom from 'react-dom'
 import * as ReactDomClient from 'react-dom/client'
 import * as Cordis from '@nomix-ai/cordis'
 import * as UiSlots from '@nomix-ai/nomix-client-ui-slots'
-import * as WebReact from '@nomix-ai/nomix-client-web-react'
 import * as UiPrimitives from '@nomix-ai/nomix-client-ui-primitives'
-import * as UiAttachment from '@nomix-ai/nomix-client-ui-attachment'
-import * as SchemaForm from '@nomix-ai/nomix-client-schema-form'
 import type { PlatformModule } from './platform.ts'
 
 /**
@@ -33,9 +30,6 @@ export function getStaticModules(): Record<string, unknown> {
     'react-dom/client': ReactDomClient,
     '@nomix-ai/cordis': Cordis,
     '@nomix-ai/nomix-client-ui-slots': UiSlots,
-    '@nomix-ai/nomix-client-web-react': WebReact,
     '@nomix-ai/nomix-client-ui-primitives': UiPrimitives,
-    '@nomix-ai/nomix-client-ui-attachment': UiAttachment,
-    '@nomix-ai/nomix-client-schema-form': SchemaForm,
   } satisfies Record<PlatformModule, unknown>
 }

@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-08-11-web-attachment-display-alignment.md
-2026-08-11-web-attachment-display-alignment.md: 6323148cf940e76623f9e1589483758185c86c5a
-2026-08-11-web-attachment-display-alignment.zh.md: 61093302c798296b56c8d7794d75595bf8c284d4
+2026-08-11-web-attachment-display-alignment.md: b8a4afad2c0ee150d9d7cd5654d4144f8b91ed0e
+2026-08-11-web-attachment-display-alignment.zh.md: 50abbde04bafe6d46157043c6d01edf3320b87be

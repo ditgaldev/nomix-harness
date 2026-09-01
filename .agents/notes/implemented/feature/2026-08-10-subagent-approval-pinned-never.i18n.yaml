@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-08-10-subagent-approval-pinned-never.md
 2026-08-10-subagent-approval-pinned-never.md: 647d87d965e63584d0f1c0dacf31f1f27481ed48
-2026-08-10-subagent-approval-pinned-never.zh.md: 8461867061e410ac4b73d11e5676d61cdede4ac6
+2026-08-10-subagent-approval-pinned-never.zh.md: cba07b5a614ceaa732ff0c38e1d9a2ae42c7b630

@@ -15,44 +15,6 @@ Installation is built on two concepts. Both are described by a `package.json`, b
 
 A bundle is what you author and distribute; a profile is what a user boots with `nomix --profile <name>`. Nothing is both.
 
-## Register a bundle from a business application
-
-A business bundle depends on the public Nomix API as a peer, so the host application owns the installed Harness version:
-
-```json
-{
-  "peerDependencies": {
-    "@nomix-ai/nomix-harness": "^0.2.0"
-  }
-}
-```
-
-The host imports only the built-in factories and business bundle factories it selects. Factory calls produce Loader entries without importing or initializing their implementations; `resolveProfile` materializes the selected profile for the host's Cordis Loader.
-
-```js
-import { defineConfig, resolveProfile } from '@nomix-ai/nomix-harness/config'
-import { builtins } from '@nomix-ai/nomix-harness/plugins'
-import sales from '@jinhaitun/sales-bundle'
-
-const config = defineConfig({
-  profiles: {
-    web: {
-      plugins: [
-        builtins.session.sqlite(),
-        builtins.agent.loop(),
-        builtins.web.server(),
-        sales.web(),
-      ],
-    },
-  },
-})
-
-export const webEntries = resolveProfile(config, 'web')
-export default config
-```
-
-An unselected built-in is absent from `webEntries`, so its module has no load or initialization side effect. Provider plugins follow the same rule: register `builtins.llm.deepseek()` only in a profile that explicitly selects DeepSeek.
-
 ### The bundle manifest
 
 Create the package directory:
@@ -217,5 +179,5 @@ If you would rather not ask users for the allowance, distribute built artifacts 
 
 ## Next steps
 
-- [Plugins and lifecycle](../framework/) — the full plugin lifecycle
+- [Plugins and lifecycle](../framework/index.md) — the full plugin lifecycle
 - [CLI behavior reference](../../../../apps/cli/reference/README.md) — exact layer precedence, flags, and profile mechanics

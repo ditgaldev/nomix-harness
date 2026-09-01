@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-08-01-windows-pwsh-default.md
 2026-08-01-windows-pwsh-default.md: 89a9a3f1067171578ce7d9d856aa8041ff8080bf
-2026-08-01-windows-pwsh-default.zh.md: 5fa80f91b23a98dbe91fafba8683e21eb16de3fd
+2026-08-01-windows-pwsh-default.zh.md: f7ccc64a205d36abd21a5d06dab799e41becd27b

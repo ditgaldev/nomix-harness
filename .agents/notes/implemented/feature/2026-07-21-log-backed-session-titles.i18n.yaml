@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-07-21-log-backed-session-titles.md
 2026-07-21-log-backed-session-titles.md: f610e1af4d9500fc5c309df4ebfa05cb79ffb627
-2026-07-21-log-backed-session-titles.zh.md: 918b530969ed9feb8971864dc77a4ac8e9997887
+2026-07-21-log-backed-session-titles.zh.md: 822460faf95b850fd3b236e1e385088768bbbc88

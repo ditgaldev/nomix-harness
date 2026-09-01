@@ -7,6 +7,7 @@
 
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { join, relative, resolve } from 'node:path'
+import { pathToFileURL } from 'node:url'
 import { hasTypertRemoteNavigation, isForbiddenPublicationFile } from './publication-payload.ts'
 import { collectProjectReferenceFaceViolations } from './project-reference-faces.ts'
 
@@ -31,7 +32,7 @@ const vendoredPackages = new Set([
   '@nomix-ai/cordis-plugin-hmr',
   '@nomix-ai/cordis-plugin-logger-console',
 ])
-const embeddedLandlockPackages = new Set([
+const publicLandlockPackages = new Set([
   '@nomix-ai/node-addon-landlock-run',
   '@nomix-ai/node-addon-landlock-run-linux-arm64',
   '@nomix-ai/node-addon-landlock-run-linux-x64',
@@ -40,26 +41,30 @@ const embeddedLandlockPackages = new Set([
 const publicationSourceAllowlist: Readonly<Record<string, readonly string[]>> = {
   '@nomix-ai/node-addon-landlock-run': ['src/main.c'],
 }
-const repositoryUrl = 'git+https://github.com/ditgaldev/nomix-harness.git'
+const repositoryUrl = 'git+https://github.com/nomix-harness/nomix-harness.git'
 /**
  * Source home the published packages point consumers at. It differs from
  * {@link repositoryUrl}, which the Landlock packages keep because npm resolves
  * their trusted publishing against the repository that runs the workflow.
  */
 const publishedRepositoryUrl = 'git+https://github.com/ditgaldev/nomix-harness.git'
-/** Source directories that participate in the aggregate Nomix version line. */
-const releaseMemberDirectory = /^(?:packages\/[^/]+\/[^/]+|apps\/[^/]+)$/
+/** Private packages that participate in workspace checks but not releases. */
+const experimentalPackageDirectory = /^packages\/experimental\/[^/]+$/
+/** npm namespace reserved for private experimental packages. */
+const experimentalPackageNamePrefix = '@nomix-ai/nomix-experimental-'
+/** Directories whose packages this repository publishes: one release member each. */
+const releaseMemberDirectory = /^(?:packages\/(?!experimental\/)[^/]+\/[^/]+|apps\/[^/]+|vendor\/[^/]+)$/
 
 const localArtifactDirs = new Set(['node_modules'])
 const appPackageFiles: Readonly<Record<string, readonly string[]>> = {
-  '@nomix-ai/nomix-harness': ['dist'],
+  '@nomix-ai/nomix-harness': ['lib/*.js', 'config'],
   // The Web build emits sourcemaps for browser debugging; publishing them is
   // what the payload policy forbids, so the bundle ships without them.
   '@nomix-ai/nomix-web-frontend': ['dist', '!dist/**/*.map'],
 }
 
 /** The subset of package.json fields this constraint check cares about. */
-interface PackageManifest {
+export interface PackageManifest {
   name?: string
   version?: string
   private?: boolean
@@ -84,10 +89,15 @@ interface PackageManifest {
   devDependencies?: Record<string, string>
   dependencies?: Record<string, string>
   optionalDependencies?: Record<string, string>
+  nomix?: {
+    bundle?: {
+      patch?: string
+    }
+  }
 }
 
 /** One workspace manifest and its repo-relative path. */
-interface WorkspaceManifest {
+export interface WorkspaceManifest {
   dir: string
   manifest: PackageManifest
 }
@@ -131,19 +141,25 @@ function workspaceManifests(): WorkspaceManifest[] {
 }
 
 const packageFileExtras: Readonly<Record<string, readonly string[]>> = {
-  // Profile bundles publish their nomix.bundle.patch layer beside the lib.
-  '@nomix-ai/nomix-base': ['cordis.patch.yml'],
-  '@nomix-ai/nomix-web-app': ['cordis.patch.yml'],
-  '@nomix-ai/nomix-headless': ['cordis.patch.yml'],
+  // Statically linked client libraries keep their stylesheets next to the emitted
+  // JavaScript, which imports them by relative path: the compile shell runs
+  // them through its own CSS pipeline, so the sheets are published artifacts.
+  // The glob covers whichever sheets a package emits; sourcemaps stay
+  // unpublished, as everywhere else in the repository.
+  '@nomix-ai/nomix-client-ui-primitives': ['lib/**/*.css'],
+  '@nomix-ai/nomix-client-web': ['lib/**/*.css'],
   '@nomix-ai/nomix-client-ui-theme': ['lib/styles'],
+  // The CPython side ships as source .py files, published as-is rather than built.
+  '@nomix-ai/nomix-code-runtime-python': ['py/**/*.py'],
   // The Python runtime uses a distinct closed-resolution bin; the public CLI
   // keeps config-owned bare-package resolution through lib/bin.js.
   '@nomix-ai/nomix-sdk-jsonrpc-demo': ['lib/packaged-bin.js'],
   // The argv-prefix runner entry ships beside the lib as its own bundle;
-  // sandbox-local addresses that sibling artifact by relative URL so the same
-  // lookup survives the flattened npm kernel. tsdown also shares its generated
-  // FFI code through a hashed runtime chunk.
+  // sandbox-local resolves it through the package's ./runner export. tsdown
+  // also shares its generated FFI code through a hashed runtime chunk.
   '@nomix-ai/nomix-sandbox-windows-acl': ['lib/runner.js', 'lib/types-*.js'],
+  // SQLite loads every statement from immutable package resources at runtime.
+  '@nomix-ai/nomix-session-persistence-sqlite': ['resources/sql/**/*.sql'],
   '@nomix-ai/nomix-skill-badge': ['assets'],
   '@nomix-ai/nomix-subprocess-local': ['scripts/ensure-spawn-helper.mjs'],
 }
@@ -153,7 +169,12 @@ function sameStringList(actual: readonly string[] | undefined, expected: readonl
 }
 
 function expectedNomixPackageFiles(manifest: PackageManifest): readonly string[] {
-  const extras = manifest.name ? packageFileExtras[manifest.name] ?? [] : []
+  const declaredPatch = manifest.nomix?.bundle?.patch
+  const bundleFiles = declaredPatch === undefined ? [] : [declaredPatch.replace(/^\.\//, '')]
+  const extras = [
+    ...bundleFiles,
+    ...(manifest.name ? packageFileExtras[manifest.name] ?? [] : []),
+  ]
   return [
     'lib/index.js',
     // Every package publishes its invariant ownership companion as a separate
@@ -168,7 +189,7 @@ function expectedNomixPackageFiles(manifest: PackageManifest): readonly string[]
     ...exportDefault(manifest, './client') === './lib/client.js' ? ['lib/client.js'] : [],
     // runtime's shell-held loader subpath ships as its own bundle beside the client half.
     ...exportDefault(manifest, './loader') === './lib/loader.js' ? ['lib/loader.js'] : [],
-    // web-react's store subpath ships its own bundle (single-entry builds; no shared chunk).
+    // A store subpath ships its own bundle (single-entry builds; no shared chunk).
     ...exportDefault(manifest, './store') === './lib/store/index.js' ? ['lib/store/index.js'] : [],
     // A surface bundle's startup row is its own bundle: the Loader imports it
     // as a row module, so it cannot ride inside the package entry.
@@ -220,35 +241,51 @@ function usesEmittedTreeDefaults(manifest: PackageManifest): boolean {
     exportDefault(manifest, subpath)?.startsWith('./lib/types/') === true)
 }
 
-function checkWorkspace({ dir, manifest }: WorkspaceManifest): string[] {
+/** Experimental manifest requirements enforced independently from release metadata. */
+export function checkExperimentalManifest({ dir, manifest }: WorkspaceManifest): string[] {
+  if (!experimentalPackageDirectory.test(dir)) return []
+  const label = manifest.name ?? dir
   const errors: string[] = []
+  if (manifest.name?.startsWith(experimentalPackageNamePrefix) !== true) {
+    errors.push(`${label}: experimental package name must start with ${JSON.stringify(experimentalPackageNamePrefix)}`)
+  }
+  if (manifest.private !== true) errors.push(`${label}: experimental package must set "private": true`)
+  if (manifest.publishConfig !== undefined) errors.push(`${label}: experimental package must omit publishConfig`)
+  return errors
+}
+
+function checkWorkspace({ dir, manifest }: WorkspaceManifest): string[] {
+  const errors = checkExperimentalManifest({ dir, manifest })
   const label = manifest.name ?? dir
   const isLandlockPackageDir = dir.startsWith('native/landlock-run/packages/')
-  const isEmbeddedLandlockPackage = isLandlockPackageDir
+  const isPublicLandlockPackage = isLandlockPackageDir
     && manifest.name !== undefined
-    && embeddedLandlockPackages.has(manifest.name)
+    && publicLandlockPackages.has(manifest.name)
 
-  if (isEmbeddedLandlockPackage || dir.startsWith('vendor/')) {
-    if (manifest.private !== true) {
-      errors.push(`${label}: embedded workspace must set "private": true`)
+  if (isPublicLandlockPackage) {
+    if (manifest.private === true) {
+      errors.push(`${label}: published Landlock package must not set "private": true`)
     }
-    if (manifest.publishConfig !== undefined) {
-      errors.push(`${label}: embedded workspace must not set publishConfig`)
+    if (manifest.publishConfig?.access !== 'public') {
+      errors.push(`${label}: published Landlock package must set publishConfig.access to "public"`)
     }
     const expectedDirectory = dir
     if (manifest.repository?.type !== 'git'
       || manifest.repository.url !== repositoryUrl
       || manifest.repository.directory !== expectedDirectory) {
-      errors.push(`${label}: embedded workspace repository must use ${repositoryUrl} with directory ${expectedDirectory}`)
+      errors.push(`${label}: published Landlock package repository must use ${repositoryUrl} with directory ${expectedDirectory} for trusted publishing`)
     }
   } else if (releaseMemberDirectory.test(dir)) {
     // Release members state that they are publishable: npm refuses a private
     // package, and the repository field is how a consumer finds the source of
     // the package it installed.
     //
-    // These manifests provide the version and payload metadata consumed by the
-    // aggregate builder; only @nomix-ai/nomix-harness reaches npm
-    // ([rationale](../.agents/notes/implemented/process/2026-08-25-single-npm-harness-distribution.md)).
+    // Access is per release sequence, not per scope: the vendored framework and
+    // the Landlock packages publish publicly because outside consumers install
+    // them, while the nomix family stays restricted until its own sequence goes
+    // public. A mixed scope is why no publish path passes `--access` — one flag
+    // cannot serve both, so each packed manifest decides
+    // ([rationale](../.agents/notes/implemented/process/2026-08-13-public-vendor-and-native-sequences.md)).
     if (manifest.private === true) {
       errors.push(`${label}: release member must not set "private": true`)
     }
@@ -260,7 +297,7 @@ function checkWorkspace({ dir, manifest }: WorkspaceManifest): string[] {
       || manifest.repository.directory !== dir) {
       errors.push(`${label}: release member repository must use ${publishedRepositoryUrl} with directory ${dir}`)
     }
-  } else if (manifest.private !== true) {
+  } else if (!experimentalPackageDirectory.test(dir) && manifest.private !== true) {
     errors.push(`${label}: package.json must set "private": true`)
   }
 
@@ -287,8 +324,8 @@ function checkWorkspace({ dir, manifest }: WorkspaceManifest): string[] {
   }
 
   if (isLandlockPackageDir) {
-    if (!isEmbeddedLandlockPackage) {
-      errors.push(`${label}: unexpected package in the embedded Landlock workspace family`)
+    if (!isPublicLandlockPackage) {
+      errors.push(`${label}: unexpected package in the public Landlock package family`)
     }
     if (manifest.version !== landlockVersion) {
       errors.push(`${label}: package.json version must match Landlock workspace version ${landlockVersion ?? '(missing)'}`)
@@ -379,6 +416,31 @@ function checkRepositoryVersion(): string[] {
 
 /** Dependency sections whose ranges reach a published tarball or a local install. */
 const dependencySections = ['dependencies', 'devDependencies', 'peerDependencies', 'optionalDependencies'] as const
+/** Dependency sections present in an installed runtime. */
+const runtimeDependencySections = ['dependencies', 'optionalDependencies', 'peerDependencies'] as const
+
+/**
+ * Prevent an official runtime from requiring a package its release omits.
+ * @param manifests - release, private experimental, and deployment-root manifests.
+ * @returns One error for each forbidden runtime dependency.
+ */
+export function checkExperimentalDependencyIsolation(manifests: readonly WorkspaceManifest[]): string[] {
+  const experimentalNames = new Set(manifests
+    .filter(entry => experimentalPackageDirectory.test(entry.dir))
+    .map(entry => entry.manifest.name)
+    .filter(name => name !== undefined))
+  const errors: string[] = []
+  for (const { dir, manifest } of manifests) {
+    if (!releaseMemberDirectory.test(dir) && dir !== 'python/sdk-runtime') continue
+    for (const section of runtimeDependencySections) {
+      for (const name of Object.keys(manifest[section] ?? {})) {
+        if (!experimentalNames.has(name)) continue
+        errors.push(`${manifest.name ?? dir}: ${section}.${name} must not reference an experimental package`)
+      }
+    }
+  }
+  return errors
+}
 
 /**
  * Require the `workspace:` protocol for every reference to a workspace member.
@@ -404,15 +466,25 @@ function checkWorkspaceProtocol(manifests: readonly WorkspaceManifest[]): string
   return errors
 }
 
-const manifests = workspaceManifests()
-const errors = [
-  ...checkRepositoryVersion(),
-  ...manifests.flatMap(checkWorkspace),
-  ...checkWorkspaceProtocol(manifests),
-  ...checkHierarchyShape(),
-  ...collectProjectReferenceFaceViolations(root),
-]
-if (errors.length > 0) {
-  console.error(errors.join('\n'))
-  process.exitCode = 1
+/** Run the repository constraint gate. */
+export function main(): void {
+  const manifests = workspaceManifests()
+  const dependencyManifests = [
+    ...manifests,
+    { dir: 'python/sdk-runtime', manifest: readJson(join(root, 'python/sdk-runtime/package.json')) },
+  ]
+  const errors = [
+    ...checkRepositoryVersion(),
+    ...manifests.flatMap(checkWorkspace),
+    ...checkWorkspaceProtocol(manifests),
+    ...checkExperimentalDependencyIsolation(dependencyManifests),
+    ...checkHierarchyShape(),
+    ...collectProjectReferenceFaceViolations(root),
+  ]
+  if (errors.length > 0) {
+    console.error(errors.join('\n'))
+    process.exitCode = 1
+  }
 }
+
+if (process.argv[1] !== undefined && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) main()

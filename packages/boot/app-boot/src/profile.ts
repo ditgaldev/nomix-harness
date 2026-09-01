@@ -16,9 +16,9 @@
  * first from the nomix installation (the launcher's own package), then from the
  * profile directory. The Loader's `baseUrl` is the profile directory, whose
  * `node_modules` pnpm manages for out-of-tree plugins, while the maintained
- * flat fallback directory `$NOMIX_HOME/profiles/node_modules` links both the
- * installation's dependency closure and aggregate-package kernel entries,
- * making every in-box plugin Node-resolvable through the ordinary parent-walk.
+ * flat fallback directory `$NOMIX_HOME/profiles/node_modules` (one symlink per
+ * package the installation's app and bundles depend on) makes every in-box
+ * plugin Node-resolvable from any profile through the ordinary parent-walk.
  * @module @nomix-ai/nomix-app-boot/profile
  */
 
@@ -26,11 +26,10 @@ import { createRequire } from 'node:module'
 import {
   existsSync, lstatSync, mkdirSync, readFileSync, readlinkSync, symlinkSync, unlinkSync, writeFileSync,
 } from 'node:fs'
-import { basename, dirname, isAbsolute, join, relative, resolve, sep } from 'node:path'
+import { basename, dirname, join } from 'node:path'
 import type { EntryOptions } from '@nomix-ai/cordis-plugin-loader'
 import { applyEntryPatches, type PatchOptions } from '@nomix-ai/cordis-plugin-include'
 import { resolveNomixHome } from '@nomix-ai/nomix-home-paths'
-import { rejectLegacyManifestSection } from './legacy-branding.ts'
 import { loadOverlayPatches } from './index.ts'
 
 /** Directory under the Harness home holding every profile. */
@@ -203,15 +202,18 @@ function ensureSymlink(link: string, target: string): void {
 }
 
 /**
- * Maintain the flat module fallback `$NOMIX_HOME/profiles/node_modules`. It
- * links the nomix app's resolvable dependency closure and every package listed
- * by an aggregate distribution's `dist/kernel/manifest.json`. Node's
- * parent-directory walk from any profile therefore resolves in-box plugins
- * without pnpm managing them. The dependency closure is required for
- * out-of-tree plugin peers; the kernel manifest supplies package identities
- * that are embedded rather than installed as standalone npm dependencies.
- * Symlinked packages resolve their own dependencies from their real
- * directories, so each package needs only one flat link.
+ * Maintain the flat module fallback `$NOMIX_HOME/profiles/node_modules`: one
+ * symlink per package in the nomix app's resolvable dependency CLOSURE (BFS
+ * over `dependencies` from the app manifest), each resolved from its own
+ * real location. Node's parent-directory walk from any profile finds this
+ * directory after the profile's own `node_modules`, so every in-box plugin
+ * resolves without pnpm ever managing it — the exact "bundles come from the
+ * installation" contract. The closure (not just direct dependencies) is
+ * required for out-of-tree plugins: their peer dependencies name Service
+ * Definition packages (`nomix-compaction`, `nomix-invariants`, ...) that the app
+ * reaches only through its Service Provider packages. Symlinked packages
+ * resolve their own dependencies from their real directories (Node's default
+ * symlink-following), so each package needs only its one flat link.
  * Idempotent: correct links are kept and moved installations are
  * re-pointed; a stale link to a vanished package stays until its name is
  * reused (dangling links are invisible to resolution).
@@ -245,33 +247,6 @@ export function healProfilesModuleFallback(installAnchor: string, home: string =
       queue.push({ anchor: manifestPath, manifest: JSON.parse(readFileSync(manifestPath, 'utf8')) as ProfileManifest })
     }
   }
-  const kernelRoot = join(dirname(installAnchor), 'dist', 'kernel')
-  const kernelManifestPath = join(kernelRoot, 'manifest.json')
-  if (existsSync(kernelManifestPath)) {
-    const packaged: unknown = JSON.parse(readFileSync(kernelManifestPath, 'utf8'))
-    if (packaged === null || typeof packaged !== 'object' || Array.isArray(packaged)) {
-      throw new Error('nomix: packaged kernel manifest must hold a JSON object')
-    }
-    for (const [packageName, targetRelative] of Object.entries(packaged)) {
-      if (!packageName.startsWith('@nomix-ai/') || typeof targetRelative !== 'string') {
-        throw new Error(`nomix: invalid packaged kernel manifest entry ${JSON.stringify(packageName)}`)
-      }
-      const target = resolve(kernelRoot, targetRelative)
-      const fromKernel = relative(kernelRoot, target)
-      if (fromKernel === '' || isAbsolute(fromKernel) || fromKernel === '..' || fromKernel.startsWith(`..${sep}`)) {
-        throw new Error(`nomix: packaged kernel target escapes dist/kernel for ${packageName}`)
-      }
-      const targetManifestPath = join(target, 'package.json')
-      if (!existsSync(targetManifestPath)) {
-        throw new Error(`nomix: packaged kernel target for ${packageName} has no package.json`)
-      }
-      const targetManifest = JSON.parse(readFileSync(targetManifestPath, 'utf8')) as ProfileManifest
-      if (targetManifest.name !== packageName) {
-        throw new Error(`nomix: packaged kernel target for ${packageName} declares ${JSON.stringify(targetManifest.name)}`)
-      }
-      links.set(packageName, target)
-    }
-  }
   for (const [packageName, target] of links) {
     const link = join(modulesDir, packageName)
     mkdirSync(dirname(link), { recursive: true })
@@ -294,11 +269,10 @@ export function readProfileManifest(binName: string, dir: string): ProfileManife
     throw new Error(`${binName}: failed to read profile manifest ${path}: ${String(error)}`)
   }
   // The field checks below validate the file data before trusting the parse type.
-  const parsed = JSON.parse(raw) as (ProfileManifest & Record<string, unknown>) | null
+  const parsed = JSON.parse(raw) as ProfileManifest | null
   if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
     throw new Error(`${binName}: profile manifest ${path} must hold a JSON object`)
   }
-  rejectLegacyManifestSection(parsed, path)
   return parsed
 }
 
@@ -355,14 +329,6 @@ function packageDirFromAnchor(anchor: string, packageName: string): string | und
   return undefined
 }
 
-/** Resolve a bundle embedded in the aggregate npm package, if present. */
-function packagedBundleDir(installAnchor: string, packageName: string): string | undefined {
-  const prefix = '@nomix-ai/nomix-'
-  if (!packageName.startsWith(prefix)) return undefined
-  const candidate = join(dirname(installAnchor), 'dist', 'bundles', packageName.slice(prefix.length))
-  return existsSync(join(candidate, 'package.json')) ? candidate : undefined
-}
-
 /**
  * Resolve one bundle package's directory: installation anchor first, then the
  * profile directory. The installation-first order is the contract that
@@ -378,8 +344,6 @@ function packagedBundleDir(installAnchor: string, packageName: string): string |
 export function resolveBundleDir(
   binName: string, packageName: string, installAnchor: string, profileDir: string,
 ): string {
-  const packaged = packagedBundleDir(installAnchor, packageName)
-  if (packaged !== undefined) return packaged
   for (const anchor of [installAnchor, join(profileDir, 'package.json')]) {
     const dir = packageDirFromAnchor(anchor, packageName)
     if (dir !== undefined) return dir

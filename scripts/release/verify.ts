@@ -1,10 +1,10 @@
 /**
  * Verify a release family's version baseline, and — when publishing — that the
- * run comes from an approved publication ref and its members are publishable.
+ * run comes from the family's tag and its members are publishable.
  *
- * Publication happens only from GitHub Actions, so the ref and publishability
+ * Publication happens only from GitHub Actions, so the tag and publishability
  * checks are gates on the workflow, not advisory local warnings
- * ([rationale](../../.agents/notes/archived/process/2026-08-10-npm-release-sequences.md)).
+ * ([rationale](../../.agents/notes/implemented/process/2026-08-10-npm-release-sequences.md)).
  */
 
 import { parseArgs } from 'node:util'
@@ -49,17 +49,24 @@ function verifyPublishable(members: readonly ReleaseMember[]): void {
 }
 
 /**
- * Assert the workflow runs from a Git ref this family permits for publication.
+ * Assert the workflow runs from a tag this family publishes from, and that the
+ * tag names a version the family actually carries.
  * @param family - the release family.
  * @param members - the family's members.
  * @param ref - the `GITHUB_REF` value.
  */
-function verifyPublicationRef(family: ReleaseFamily, members: readonly ReleaseMember[], ref: string): void {
-  const expected = family.publicationRefs(members)
-  if (!expected.includes(ref)) {
-    throw new Error(
-      `publishing release family ${family.id} requires one of these Git refs:\n${expected.join('\n')}\ngot ${ref || '(no ref)'}`,
-    )
+function verifyTag(family: ReleaseFamily, members: readonly ReleaseMember[], ref: string): void {
+  const prefix = 'refs/tags/'
+  if (!ref.startsWith(prefix)) {
+    throw new Error(`publishing release family ${family.id} requires running from a ${family.tagPrefix}* tag, got ${ref || '(no ref)'}`)
+  }
+  const tag = ref.slice(prefix.length)
+  if (!tag.startsWith(family.tagPrefix)) {
+    throw new Error(`tag ${tag} does not belong to release family ${family.id} (expected ${family.tagPrefix}*)`)
+  }
+  const expected = members.map(member => family.tagFor(member))
+  if (!expected.includes(tag)) {
+    throw new Error(`tag ${tag} names no version this family carries; its members would tag as:\n${[...new Set(expected)].join('\n')}`)
   }
 }
 
@@ -72,9 +79,8 @@ function main(): void {
   if (values.family === undefined) throw new Error('usage: verify.ts --family <nomix|vendor>')
 
   const family = releaseFamily(values.family)
-  const versionMembers = family.members(process.cwd())
-  family.verifyVersions(versionMembers)
-  const members = family.publicationMembers(versionMembers)
+  const members = family.members(process.cwd())
+  family.verifyVersions(members)
   // Resolve the publish order here, before the build: an install-edge cycle
   // makes the order unrepresentable, and that has to surface at the first gate
   // rather than when pack is already writing tarballs.
@@ -89,14 +95,13 @@ function main(): void {
   const publishing = process.env.RELEASE_PUBLISH === 'true'
   if (publishing) {
     verifyPublishable(members)
-    verifyPublicationRef(family, members, process.env.GITHUB_REF ?? '')
+    verifyTag(family, members, process.env.GITHUB_REF ?? '')
   }
 
-  const versions = [...new Set(versionMembers.map(member => member.version))]
+  const versions = [...new Set(members.map(member => member.version))]
   const summary = versions.length === 1 ? versions[0] : `${String(versions.length)} versions`
   console.log(
-    `release verify: family ${family.id}, ${String(versionMembers.length)} version member(s),`
-    + ` ${String(members.length)} registry package(s), ${summary},`
+    `release verify: family ${family.id}, ${String(members.length)} member(s), ${summary},`
     + ` publish order resolved, ${String(plan.droppedPeerEdges.length)} peer declaration(s) unordered`
     + (publishing ? ', publish gates passed' : ''),
   )

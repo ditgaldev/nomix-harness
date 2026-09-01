@@ -3,4 +3,4 @@
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-08-15-persistent-bash-keeps-controlled-prompt.md
 2026-08-15-persistent-bash-keeps-controlled-prompt.md: d94956a936f82caff3b23c20e3be0397fb2af963
-2026-08-15-persistent-bash-keeps-controlled-prompt.zh.md: 92ff15d50c19389c6a204dd3cf3c58f69a043b58
+2026-08-15-persistent-bash-keeps-controlled-prompt.zh.md: 2c8e30dcea8eec07845a4b5b7d6285220fa778b0

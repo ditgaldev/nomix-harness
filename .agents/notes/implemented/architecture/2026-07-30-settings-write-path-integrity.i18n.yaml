@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-07-30-settings-write-path-integrity.md
-2026-07-30-settings-write-path-integrity.md: 2145c89df10e6927db7b2fc862a817b0f2035720
-2026-07-30-settings-write-path-integrity.zh.md: c045120eab138d4481be85da6b066c46e129dc54
+2026-07-30-settings-write-path-integrity.md: 6306efe349094c872b506b74100c1a546c2952e0
+2026-07-30-settings-write-path-integrity.zh.md: 53e6ff08f69a6714b346df98bd1a96259a4790aa
