@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-session-persistence",
   "description": "Abstract durable session persistence seam (ctx.sessionPersistence) for the Nomix Harness",
-  "version": "0.1.1-rc.2",
+  "version": "0.2.6",
   "publishConfig": {
     "access": "public"
   },

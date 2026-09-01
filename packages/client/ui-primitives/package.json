@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-client-ui-primitives",
   "description": "Pure React atoms for the nomix web UI: controls, icons, markdown, and JSON inspectors (zero cordis)",
-  "version": "0.1.1-rc.2",
+  "version": "0.2.6",
   "publishConfig": {
     "access": "public"
   },

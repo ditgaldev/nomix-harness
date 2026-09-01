@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-host-directory-picker",
   "description": "Abstract workspace-directory picking seam (ctx.directoryPicker) for the Nomix Harness web GUI host",
-  "version": "0.1.1-rc.2",
+  "version": "0.2.6",
   "publishConfig": {
     "access": "public"
   },
