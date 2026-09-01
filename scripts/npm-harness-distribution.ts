@@ -148,7 +148,7 @@ export function rewriteHarnessPackageAnchor(contents: string): string {
  * Rewrite only JavaScript/TypeScript module specifiers, leaving product data strings unchanged.
  * @param contents - compiled JavaScript or declaration text.
  * @param resolveSpecifier - maps one internal package name and optional subpath to its package-relative target.
- * @returns text with static imports, dynamic imports, and require calls rewritten.
+ * @returns text with static imports, dynamic imports, import.meta.resolve calls, and require calls rewritten.
  */
 export function rewriteInternalModuleSpecifiers(
   contents: string,
@@ -156,7 +156,7 @@ export function rewriteInternalModuleSpecifiers(
   preserveSpecifier: (name: string, subpath: string) => boolean = () => false,
 ): string {
   return contents.replace(
-    /(\bfrom\s+|\bimport\s*\(\s*|\brequire\s*\(\s*|\bimport\s+)(['"])(@nomix-ai\/[^/'"]+)(?:\/([^'"]+))?\2/gu,
+    /(\bfrom\s+|\bimport\s*\(\s*|\brequire\s*\(\s*|import\.meta\.resolve\s*\(\s*|\bimport\s+)(['"])(@nomix-ai\/[^/'"]+)(?:\/([^'"]+))?\2/gu,
     (match, prefix: string, quote: string, name: string, subpath: string = '') => {
       if (preserveSpecifier(name, subpath)) return match
       const replacement = resolveSpecifier(name, subpath)

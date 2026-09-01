@@ -58,12 +58,14 @@ describe('npm Harness artifact filtering', () => {
     const source = [
       'import value from \'@nomix-ai/nomix-example\'',
       'const lazy = import(\'@nomix-ai/nomix-example/subpath\')',
+      'const resolved = import.meta.resolve(\'@nomix-ai/nomix-example\')',
       'const profile = [\'@nomix-ai/nomix-example\']',
     ].join('\n')
     expect(rewriteInternalModuleSpecifiers(source, (name, subpath) => `../kernel/${name.slice(16)}/${subpath || 'index.js'}`))
       .toBe([
         'import value from \'../kernel/example/index.js\'',
         'const lazy = import(\'../kernel/example/subpath\')',
+        'const resolved = import.meta.resolve(\'../kernel/example/index.js\')',
         'const profile = [\'@nomix-ai/nomix-example\']',
       ].join('\n'))
   })
