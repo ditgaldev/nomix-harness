@@ -1,6 +1,6 @@
 /**
  * Verify a release family's version baseline, and — when publishing — that the
- * run comes from the family's tag and its members are publishable.
+ * run comes from an allowed family ref and its publication members are publishable.
  *
  * Publication happens only from GitHub Actions, so the tag and publishability
  * checks are gates on the workflow, not advisory local warnings
@@ -55,18 +55,10 @@ function verifyPublishable(members: readonly ReleaseMember[]): void {
  * @param members - the family's members.
  * @param ref - the `GITHUB_REF` value.
  */
-function verifyTag(family: ReleaseFamily, members: readonly ReleaseMember[], ref: string): void {
-  const prefix = 'refs/tags/'
-  if (!ref.startsWith(prefix)) {
-    throw new Error(`publishing release family ${family.id} requires running from a ${family.tagPrefix}* tag, got ${ref || '(no ref)'}`)
-  }
-  const tag = ref.slice(prefix.length)
-  if (!tag.startsWith(family.tagPrefix)) {
-    throw new Error(`tag ${tag} does not belong to release family ${family.id} (expected ${family.tagPrefix}*)`)
-  }
-  const expected = members.map(member => family.tagFor(member))
-  if (!expected.includes(tag)) {
-    throw new Error(`tag ${tag} names no version this family carries; its members would tag as:\n${[...new Set(expected)].join('\n')}`)
+function verifyRef(family: ReleaseFamily, members: readonly ReleaseMember[], ref: string): void {
+  const allowed = family.publicationRefs(members)
+  if (!allowed.includes(ref)) {
+    throw new Error(`publishing release family ${family.id} requires one of:\n${allowed.join('\n')}\ngot ${ref || '(no ref)'}`)
   }
 }
 
@@ -84,18 +76,19 @@ function main(): void {
   // Resolve the publish order here, before the build: an install-edge cycle
   // makes the order unrepresentable, and that has to surface at the first gate
   // rather than when pack is already writing tarballs.
-  const plan = family.publishOrder(members)
-  if (plan.order.length !== members.length) {
+  const publicationMembers = family.publicationMembers(members)
+  const plan = family.publishOrder(publicationMembers)
+  if (plan.order.length !== publicationMembers.length) {
     throw new Error(
-      `release family ${family.id}: publish order covers ${String(plan.order.length)} of ${String(members.length)} members`,
+      `release family ${family.id}: publish order covers ${String(plan.order.length)} of ${String(publicationMembers.length)} members`,
     )
   }
   reportPublishOrder(family, plan)
 
   const publishing = process.env.RELEASE_PUBLISH === 'true'
   if (publishing) {
-    verifyPublishable(members)
-    verifyTag(family, members, process.env.GITHUB_REF ?? '')
+    verifyPublishable(publicationMembers)
+    verifyRef(family, members, process.env.GITHUB_REF ?? '')
   }
 
   const versions = [...new Set(members.map(member => member.version))]

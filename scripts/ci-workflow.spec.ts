@@ -459,25 +459,28 @@ describe('Issue lifecycle workflow', () => {
 })
 
 describe('npm release workflows', () => {
-  it('keeps publication dispatch-only and pack in the PR workflow', () => {
-    // pack stays in the PR/master release workflows so a PR proves the set packs.
-    for (const file of ['release.yml', 'release-vendor.yml']) {
-      const workflow = loadWorkflow(`.github/workflows/${file}`)
-      if (!isRecord(workflow.jobs)) throw new TypeError(`${file} must define jobs`)
-      expect(Object.keys(workflow.jobs).sort()).toEqual(['pack'])
-    }
+  it('publishes the aggregate Nomix package only from its dedicated branch', () => {
+    const workflow = loadWorkflow('.github/workflows/release.yml')
+    if (!isRecord(workflow.on) || !isRecord(workflow.jobs)) throw new TypeError('release.yml must define on and jobs')
+    const push = workflowEvent(workflow, 'push')
+    expect(push.branches).toContain('npm-nomix-harness')
+    const publish = workflow.jobs.publish
+    if (!isRecord(publish)) throw new TypeError('release.yml must define a publish job')
+    expect(publish.if).toBe("github.ref == 'refs/heads/npm-nomix-harness'")
+    expect(publish.environment).toBe('npm-publish')
+    expect(publish.concurrency).toMatchObject({ group: 'Release-publish' })
+  })
 
-    // publication is workflow_dispatch-only (never a PR check) and keeps the
-    // npm-publish environment plus the shared dist-tag group.
-    for (const file of ['release-publish.yml', 'release-vendor-publish.yml']) {
-      const workflow = loadWorkflow(`.github/workflows/${file}`)
-      if (!isRecord(workflow.on) || !isRecord(workflow.jobs)) throw new TypeError(`${file} must define on and jobs`)
-      expect(Object.keys(workflow.on)).toEqual(['workflow_dispatch'])
-      const publish = workflow.jobs.publish
-      if (!isRecord(publish)) throw new TypeError(`${file} must define a publish job`)
-      expect(publish.environment).toBe('npm-publish')
-      expect(publish.concurrency).toMatchObject({ group: 'Release-publish' })
+  it('keeps the separate vendor publication dispatch-only', () => {
+    const workflow = loadWorkflow('.github/workflows/release-vendor-publish.yml')
+    if (!isRecord(workflow.on) || !isRecord(workflow.jobs)) {
+      throw new TypeError('release-vendor-publish.yml must define on and jobs')
     }
+    expect(Object.keys(workflow.on)).toEqual(['workflow_dispatch'])
+    const publish = workflow.jobs.publish
+    if (!isRecord(publish)) throw new TypeError('release-vendor-publish.yml must define a publish job')
+    expect(publish.environment).toBe('npm-publish')
+    expect(publish.concurrency).toMatchObject({ group: 'Release-publish' })
   })
 })
 

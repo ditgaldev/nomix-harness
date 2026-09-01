@@ -80,6 +80,19 @@ describe('release families', () => {
     expect(vendor.tagFor({ ...cordis, version: '4.0.0-rc.7' })).toBe('vendor-cordis-v4.0.0-rc.7')
   })
 
+  it('publishes Nomix as one aggregate package from its dedicated branch', () => {
+    const nomix = releaseFamily('nomix')
+    const harness = member('apps/cli', '@nomix-ai/nomix-harness')
+    const internal = member('packages/core/agent', '@nomix-ai/nomix-agent')
+
+    expect(nomix.publicationMembers([internal, harness])).toEqual([harness])
+    expect(nomix.publicationRefs([internal, harness])).toEqual([
+      'refs/heads/npm-nomix-harness',
+      'refs/tags/nomix-v0.0.1',
+    ])
+    expect(nomix.packing).toBe('native-bundle')
+  })
+
   it('rejects a family whose members disagree on the shared version', () => {
     const nomix = releaseFamily('nomix')
     const members = [member('apps/cli', '@nomix-ai/nomix-harness'), { ...member('apps/web', '@nomix-ai/nomix-web-frontend'), version: '0.0.2' }]
@@ -240,7 +253,14 @@ describe('release families', () => {
   })
 
   it('drives the installed entry only for the family that publishes one', () => {
-    expect(releaseFamily('nomix').installedEntry).toEqual({ packageName: '@nomix-ai/nomix-harness', binPath: 'lib/bin.js' })
+    expect(releaseFamily('nomix').installedEntry).toEqual({
+      packageName: '@nomix-ai/nomix-harness',
+      command: 'nomix',
+      smokeArgs: ['web', '--help'],
+      smokeOutput: 'Usage: nomix --profile web',
+      startupArgs: ['web', '--host', '127.0.0.1', '--port', '0'],
+      startupOutput: 'nomix web: http://127.0.0.1:',
+    })
     expect(releaseFamily('vendor').installedEntry).toBeUndefined()
   })
 

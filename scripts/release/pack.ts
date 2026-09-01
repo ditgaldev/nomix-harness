@@ -7,9 +7,11 @@
  * ([rationale](../../.agents/notes/implemented/process/2026-08-10-npm-release-sequences.md)).
  */
 
-import { existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { parseArgs } from 'node:util'
+import { buildNpmHarnessDistribution } from '../npm-harness-distribution.ts'
 import { releaseFamily, tarballName, type ReleaseFamily, type ReleaseMember } from './families.ts'
 import { isEntry, run } from './process.ts'
 import { PUBLISH_ORDER_FILE, tarballFiles } from './tarball.ts'
@@ -25,7 +27,17 @@ const DEFAULT_OUTPUT = 'dist/npm'
  * @returns The tarball filename.
  */
 function packMember(family: ReleaseFamily, member: ReleaseMember, destination: string): string {
-  run('pnpm', ['--dir', member.directory, 'pack', '--pack-destination', destination])
+  if (family.packing === 'native-bundle') {
+    const temporary = mkdtempSync(join(tmpdir(), 'nomix-npm-package-'))
+    try {
+      buildNpmHarnessDistribution(temporary)
+      run('npm', ['pack', temporary, '--pack-destination', destination, '--ignore-scripts'])
+    } finally {
+      rmSync(temporary, { recursive: true, force: true })
+    }
+  } else {
+    run('pnpm', ['--dir', member.directory, 'pack', '--pack-destination', destination])
+  }
 
   const filename = tarballName(member)
   const tarball = join(destination, filename)
@@ -45,9 +57,10 @@ function main(): void {
   const family = releaseFamily(values.family)
   const root = process.cwd()
   const destination = resolve(root, values.out ?? DEFAULT_OUTPUT)
-  const members = family.publishOrder(family.members(root)).order
+  const versionMembers = family.members(root)
+  const members = family.publishOrder(family.publicationMembers(versionMembers)).order
   family.verifyBuildArtifacts(root)
-  family.verifyVersions(members)
+  family.verifyVersions(versionMembers)
 
   rmSync(destination, { recursive: true, force: true })
   mkdirSync(destination, { recursive: true })

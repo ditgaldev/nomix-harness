@@ -100,8 +100,16 @@ function requireString(manifest: Record<string, unknown>, field: string, context
 export interface InstalledEntry {
   /** Package that carries the executable. */
   readonly packageName: string
-  /** Path to the executable inside that package. */
-  readonly binPath: string
+  /** Command npm exec resolves from that package. */
+  readonly command: string
+  /** Arguments for a bounded command smoke. */
+  readonly smokeArgs?: readonly string[]
+  /** Text the smoke command must print. */
+  readonly smokeOutput?: string
+  /** Arguments for a persistent application that the verifier stops after readiness. */
+  readonly startupArgs?: readonly string[]
+  /** Readiness text required before the verifier stops the persistent application. */
+  readonly startupOutput?: string
 }
 
 /** A release sequence: its members, its version baseline, and its tag naming. */
@@ -114,6 +122,9 @@ export abstract class ReleaseFamily {
 
   /** Git tag prefix this family publishes from. */
   abstract readonly tagPrefix: string
+
+  /** How this family's selected publication members become tarballs. */
+  readonly packing: 'package' | 'native-bundle' = 'package'
 
   /**
    * Assert that built artifacts match this release family's required profile.
@@ -150,6 +161,16 @@ export abstract class ReleaseFamily {
       })
     }
     return members
+  }
+
+  /** Select the members that are uploaded to npm from this version line. */
+  publicationMembers(members: readonly ReleaseMember[]): ReleaseMember[] {
+    return [...members]
+  }
+
+  /** Full Git refs permitted to publish this family. */
+  publicationRefs(members: readonly ReleaseMember[]): readonly string[] {
+    return [...new Set(members.map(member => `refs/tags/${this.tagFor(member)}`))]
   }
 
   /**
@@ -321,6 +342,24 @@ class NomixFamily extends ReleaseFamily {
   readonly id = 'nomix'
   readonly patterns = ['packages/!(experimental)/*/package.json', 'apps/*/package.json'] as const
   readonly tagPrefix = 'nomix-v'
+  override readonly packing = 'native-bundle' as const
+
+  /** The release branch publishes npm; version tags validate other release artifacts. */
+  override publicationRefs(members: readonly ReleaseMember[]): readonly string[] {
+    return [
+      'refs/heads/npm-nomix-harness',
+      ...new Set(members.map(member => `refs/tags/${this.tagFor(member)}`)),
+    ]
+  }
+
+  /** Publish one aggregate package containing the internal runtime. */
+  override publicationMembers(members: readonly ReleaseMember[]): ReleaseMember[] {
+    const selected = members.filter(member => member.name === '@nomix-ai/nomix-harness')
+    if (selected.length !== 1) {
+      throw new Error(`nomix release requires one @nomix-ai/nomix-harness member, found ${String(selected.length)}`)
+    }
+    return selected
+  }
 
   /** Require current artifacts from a complete official client build. */
   override verifyBuildArtifacts(root: string): void {
@@ -354,9 +393,30 @@ class NomixFamily extends ReleaseFamily {
    */
   validatePayload(member: ReleaseMember, files: readonly string[]): void {
     validateTarballPayload(files, member.name)
+    for (const required of [
+      'package/dist/plugins/manifest.json',
+      'package/dist/bundles/manifest.json',
+      'package/dist/kernel/manifest.json',
+      'package/dist/cli/bin.js',
+      'package/dist/plugin-api/index.js',
+      'package/dist/sdk/index.js',
+      'package/dist/native/landlock-run/linux-x64/landlock-run',
+      'package/dist/native/landlock-run/linux-arm64/landlock-run',
+      'package/dist/licenses/landlock-run.LICENSE',
+    ]) if (!files.includes(required)) throw new Error(`${member.name} carries no ${required.slice('package/'.length)}`)
+    if (files.some(file => file.includes('/node_modules/') || file.endsWith('.map') || file.includes('/src/'))) {
+      throw new Error(`${member.name} exposes forbidden source, source-map, or node_modules members`)
+    }
   }
 
-  readonly installedEntry = { packageName: '@nomix-ai/nomix-harness', binPath: 'lib/bin.js' }
+  readonly installedEntry = {
+    packageName: '@nomix-ai/nomix-harness',
+    command: 'nomix',
+    smokeArgs: ['web', '--help'],
+    smokeOutput: 'Usage: nomix --profile web',
+    startupArgs: ['web', '--host', '127.0.0.1', '--port', '0'],
+    startupOutput: 'nomix web: http://127.0.0.1:',
+  }
 }
 
 /** `vendor/*`: every package keeps its own version line, so every package has its own tag. */

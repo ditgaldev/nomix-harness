@@ -5,7 +5,11 @@
 
 import { spawnSync } from 'node:child_process'
 import { realpathSync } from 'node:fs'
+import { basename, dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+
+/** Maximum captured output; portable tarball listings can exceed Node's 1 MiB default. */
+const MAX_CAPTURE_BYTES = 64 * 1024 * 1024
 
 /** Where and with what environment a release step runs a command. */
 export interface RunOptions {
@@ -25,6 +29,54 @@ export interface CommandResult {
   readonly stderr: string
 }
 
+/** Executable and arguments after resolving a platform-specific launcher. */
+export interface CommandInvocation {
+  /** Executable passed to Node's process API. */
+  readonly command: string
+  /** Arguments passed to the executable. */
+  readonly args: readonly string[]
+}
+
+/**
+ * Resolve package-manager shims that Node cannot execute directly on Windows.
+ * @param command - requested executable name.
+ * @param args - requested command arguments.
+ * @param env - environment that supplied the package-manager launcher.
+ * @param platform - host platform.
+ * @returns An executable and argument list suitable for `spawnSync`.
+ */
+export function commandInvocation(
+  command: string,
+  args: readonly string[],
+  env: NodeJS.ProcessEnv = process.env,
+  platform: NodeJS.Platform = process.platform,
+): CommandInvocation {
+  const npmExecPath = env.npm_execpath
+  const nodeExecutable = env.npm_node_execpath ?? process.execPath
+  if (command === 'pnpm' && platform === 'win32' && npmExecPath !== undefined && /^pnpm\.(?:c?js|mjs)$/i.test(basename(npmExecPath))) {
+    return { command: nodeExecutable, args: [npmExecPath, ...args] }
+  }
+  if (command === 'npm' && platform === 'win32') {
+    const npmCli = npmExecPath !== undefined && basename(npmExecPath).toLowerCase() === 'npm-cli.js'
+      ? npmExecPath
+      : join(dirname(nodeExecutable), 'node_modules', 'npm', 'bin', 'npm-cli.js')
+    return { command: nodeExecutable, args: [npmCli, ...args] }
+  }
+  return { command, args }
+}
+
+/** Spawn a resolved command synchronously. */
+function spawnCommand(command: string, args: readonly string[], options: RunOptions, stdio?: 'inherit' | ['inherit', 'pipe', 'pipe']) {
+  const invocation = commandInvocation(command, args, options.env ?? process.env)
+  return spawnSync(invocation.command, [...invocation.args], {
+    cwd: options.cwd,
+    env: options.env,
+    encoding: 'utf8',
+    maxBuffer: MAX_CAPTURE_BYTES,
+    ...(stdio === undefined ? {} : { stdio }),
+  })
+}
+
 /**
  * Run a command and capture its output without judging the exit status.
  * @param command - executable name.
@@ -33,7 +85,7 @@ export interface CommandResult {
  * @returns The exit status and captured streams.
  */
 export function attempt(command: string, args: readonly string[], options: RunOptions = {}): CommandResult {
-  const result = spawnSync(command, [...args], { cwd: options.cwd, env: options.env, encoding: 'utf8' })
+  const result = spawnCommand(command, args, options)
   if (result.error !== undefined) throw result.error
   return { status: result.status, stdout: result.stdout, stderr: result.stderr }
 }
@@ -58,14 +110,9 @@ export function attempt(command: string, args: readonly string[], options: RunOp
  * @returns The exit status and captured streams.
  */
 export function attemptEchoed(command: string, args: readonly string[], options: RunOptions = {}): CommandResult {
-  const result = spawnSync(command, [...args], {
-    cwd: options.cwd,
-    env: options.env,
-    encoding: 'utf8',
-    // 'inherit' would leave nothing to capture, so the streams are piped and
-    // echoed instead.
-    stdio: ['inherit', 'pipe', 'pipe'],
-  })
+  // 'inherit' would leave nothing to capture, so the streams are piped and
+  // echoed instead.
+  const result = spawnCommand(command, args, options, ['inherit', 'pipe', 'pipe'])
   if (result.error !== undefined) throw result.error
   if (result.stdout !== '') process.stdout.write(result.stdout)
   if (result.stderr !== '') process.stderr.write(result.stderr)
@@ -95,7 +142,7 @@ export function capture(command: string, args: readonly string[], options: RunOp
  * @param options - working directory and environment.
  */
 export function run(command: string, args: readonly string[], options: RunOptions = {}): void {
-  const result = spawnSync(command, [...args], { cwd: options.cwd, env: options.env, stdio: 'inherit' })
+  const result = spawnCommand(command, args, options, 'inherit')
   if (result.error !== undefined) throw result.error
   if (result.status !== 0) throw new Error(`${command} ${args.join(' ')} exited with ${String(result.status)}`)
 }
