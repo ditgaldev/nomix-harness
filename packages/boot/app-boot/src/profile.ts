@@ -26,7 +26,7 @@ import { createRequire } from 'node:module'
 import {
   existsSync, lstatSync, mkdirSync, readFileSync, readlinkSync, symlinkSync, unlinkSync, writeFileSync,
 } from 'node:fs'
-import { basename, dirname, isAbsolute, join, relative, resolve, sep } from 'node:path'
+import { basename, dirname, join } from 'node:path'
 import type { EntryOptions } from '@nomix-ai/cordis-plugin-loader'
 import { applyEntryPatches, type PatchOptions } from '@nomix-ai/cordis-plugin-include'
 import { resolveNomixHome } from '@nomix-ai/nomix-home-paths'
@@ -245,33 +245,6 @@ export function healProfilesModuleFallback(installAnchor: string, home: string =
       links.set(dep, dir)
       const manifestPath = join(dir, 'package.json')
       queue.push({ anchor: manifestPath, manifest: JSON.parse(readFileSync(manifestPath, 'utf8')) as ProfileManifest })
-    }
-  }
-  const kernelRoot = join(dirname(installAnchor), 'dist', 'kernel')
-  const kernelManifestPath = join(kernelRoot, 'manifest.json')
-  if (existsSync(kernelManifestPath)) {
-    const packaged: unknown = JSON.parse(readFileSync(kernelManifestPath, 'utf8'))
-    if (packaged === null || typeof packaged !== 'object' || Array.isArray(packaged)) {
-      throw new Error('nomix: packaged kernel manifest must hold a JSON object')
-    }
-    for (const [packageName, targetRelative] of Object.entries(packaged)) {
-      if (!packageName.startsWith('@nomix-ai/') || typeof targetRelative !== 'string') {
-        throw new Error(`nomix: invalid packaged kernel manifest entry ${JSON.stringify(packageName)}`)
-      }
-      const target = resolve(kernelRoot, targetRelative)
-      const fromKernel = relative(kernelRoot, target)
-      if (fromKernel === '' || isAbsolute(fromKernel) || fromKernel === '..' || fromKernel.startsWith(`..${sep}`)) {
-        throw new Error(`nomix: packaged kernel target escapes dist/kernel for ${packageName}`)
-      }
-      const targetManifestPath = join(target, 'package.json')
-      if (!existsSync(targetManifestPath)) {
-        throw new Error(`nomix: packaged kernel target for ${packageName} has no package.json`)
-      }
-      const targetManifest = JSON.parse(readFileSync(targetManifestPath, 'utf8')) as ProfileManifest
-      if (targetManifest.name !== packageName) {
-        throw new Error(`nomix: packaged kernel target for ${packageName} declares ${JSON.stringify(targetManifest.name)}`)
-      }
-      links.set(packageName, target)
     }
   }
   for (const [packageName, target] of links) {

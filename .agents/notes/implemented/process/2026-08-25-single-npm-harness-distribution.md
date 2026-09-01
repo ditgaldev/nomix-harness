@@ -12,15 +12,15 @@ Publishing Cordis, its plugins, and Landlock as independent npm packages makes o
 
 `@nomix-ai/nomix-harness` is the only publishable `@nomix-ai` package produced by this repository. Vendor and native manifests are private implementation units. The Nomix release workflow is the only npm write path, and pushes to `npm-nomix-harness` publish one verified Harness tarball.
 
-The aggregate builder copies every runtime workspace, including vendored Cordis and the Landlock JavaScript entry, into `dist/kernel` and rewrites their `@nomix-ai/*` imports to package-internal relative imports. The generated kernel manifest retains canonical package identities so Cordis configuration and out-of-tree plugin peer resolution continue to work without standalone installations.
+The aggregate builder copies every runtime workspace, including vendored Cordis and the Landlock packages, into the Harness tarball as npm `bundledDependencies`. Each bundled manifest replaces workspace selectors with the concrete shared version. Node, Cordis configuration, and out-of-tree plugin peers continue to resolve canonical package names, while npm publishes only the outer Harness package.
 
-Landlock's x64 and ARM64 binaries are built on matching GitHub runners, verified against the checked-in platform matrix, and copied into `dist/native/landlock-run/<platform>`. `launcherPath()` selects that package-internal binary before its source-workspace fallback. The aggregate tarball carries the BSD-3-Clause notice and fails validation unless both supported binaries are present and executable.
+Landlock's x64 and ARM64 packages are built on matching GitHub runners, verified against the checked-in platform matrix, and bundled as optional dependencies. The unchanged launcher resolves the matching platform package through its ordinary package lookup. The aggregate tarball fails validation unless both supported prebuilt packages are present.
 
-The tarball manifest contains no dependency on a repository-owned `@nomix-ai` package. Third-party dependencies remain ordinary npm dependencies, including their own platform-specific packages where applicable.
+The tarball manifest lists repository-owned packages only as bundled dependencies, so installers consume their bytes from the Harness tarball rather than the registry. Third-party dependencies remain ordinary npm dependencies. Packaging does not add public APIs or change application, plugin, profile, or native-launcher source code.
 
 ## Alternatives considered
 
-**Keep three release families.** This preserves npm's ordinary per-package resolution and lets installers download only one Landlock architecture, but recreates the publication ordering and partial-registry failures that the aggregate Harness distribution exists to remove.
+**Keep three release families.** This lets installers download only one Landlock architecture, but recreates the publication ordering and partial-registry failures that the aggregate Harness distribution exists to remove.
 
 **Compile Landlock during installation.** This keeps the tarball smaller but requires a musl toolchain on consumer machines and makes confinement availability depend on install-time compilation. The launcher remains prebuilt and fail-closed.
 
@@ -28,7 +28,7 @@ The tarball manifest contains no dependency on a repository-owned `@nomix-ai` pa
 
 ## Consequences
 
-Consumers install and execute one package, and a Harness version names the complete JavaScript, vendor, Web, and native runtime. A publication cannot expose a Harness version that points at missing repository-owned packages.
+Consumers install and execute one registry package, and a Harness version names the complete JavaScript, vendor, Web, and native runtime. A publication cannot expose a Harness version that points at missing repository-owned packages.
 
 Every consumer downloads both Linux launchers, including Windows, macOS, and the unused Linux architecture. Existing standalone versions already present on npm remain historical registry entries, but the Harness manifest does not reference them and this repository does not publish new ones.
 

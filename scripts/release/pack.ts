@@ -27,7 +27,7 @@ const DEFAULT_OUTPUT = 'dist/npm'
  * @returns The tarball filename.
  */
 function packMember(family: ReleaseFamily, member: ReleaseMember, destination: string): string {
-  if (family.packing === 'native-bundle') {
+  if (family.packing === 'bundled-workspaces') {
     const temporary = mkdtempSync(join(tmpdir(), 'nomix-npm-package-'))
     try {
       buildNpmHarnessDistribution(temporary)

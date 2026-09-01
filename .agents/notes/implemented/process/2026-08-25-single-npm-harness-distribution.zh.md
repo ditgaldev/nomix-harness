@@ -12,15 +12,15 @@ Status: implemented
 
 `@nomix-ai/nomix-harness` 是本仓库产出的唯一可发布 `@nomix-ai` 包。vendor 和 native manifest 是私有实现单元。Nomix release workflow 是唯一 npm 写入路径，向 `npm-nomix-harness` push 时发布一个经过验证的 Harness tarball。
 
-聚合构建器把包括 vendored Cordis 和 Landlock JavaScript 入口在内的所有运行时 workspace 复制到 `dist/kernel`，并把其中的 `@nomix-ai/*` import 改写为包内相对 import。生成的 kernel manifest 保留规范包标识，因此 Cordis 配置和仓库外插件的 peer 解析无需独立安装包也能继续工作。
+聚合构建器把包括 vendored Cordis 和 Landlock 包在内的所有运行时 workspace 作为 npm `bundledDependencies` 复制进 Harness tarball。每份内嵌 manifest 都把 workspace selector 替换为具体的共享版本。Node、Cordis 配置和仓库外插件 peer 继续解析规范包名，而 npm 只发布外层 Harness 包。
 
-Landlock 的 x64 和 ARM64 二进制在匹配的 GitHub runner 上构建，按签入仓库的平台矩阵验证，并复制到 `dist/native/landlock-run/<platform>`。`launcherPath()` 优先选择这个包内二进制，再使用源码 workspace fallback。聚合 tarball 携带 BSD-3-Clause 许可声明；缺少任一受支持二进制或文件不可执行时，验证会失败。
+Landlock 的 x64 和 ARM64 包在匹配的 GitHub runner 上构建，按签入仓库的平台矩阵验证，并作为 optional dependency 内嵌。未经修改的 launcher 通过普通包查找解析匹配的平台包。聚合 tarball 缺少任一受支持的预构建包时，验证会失败。
 
-tarball manifest 不包含本仓库拥有的 `@nomix-ai` 包依赖。第三方依赖仍是普通 npm 依赖，包括它们自己的平台专用包。
+tarball manifest 只把仓库自有包列为 bundled dependency，因此安装程序从 Harness tarball 而不是 registry 消费这些字节。第三方依赖仍是普通 npm 依赖。打包过程不增加公共 API，也不修改应用、插件、profile 或 native launcher 源码。
 
 ## Alternatives considered
 
-**保留三条 release family。** 这能保留 npm 的普通逐包解析，并让安装程序只下载一个 Landlock 架构，但会重新引入聚合 Harness 分发本来要消除的发布顺序和 registry 部分发布问题。
+**保留三条 release family。** 这能让安装程序只下载一个 Landlock 架构，但会重新引入聚合 Harness 分发本来要消除的发布顺序和 registry 部分发布问题。
 
 **安装时编译 Landlock。** 这能减小 tarball，却要求消费机器安装 musl 工具链，并让 confinement 可用性取决于安装期编译。启动器继续采用预构建和 fail-closed 策略。
 
@@ -28,7 +28,7 @@ tarball manifest 不包含本仓库拥有的 `@nomix-ai` 包依赖。第三方�
 
 ## Consequences
 
-消费方只安装并执行一个包，一个 Harness 版本同时命名完整的 JavaScript、vendor、Web 和 native runtime。发布过程无法产生指向缺失仓库自有包的 Harness 版本。
+消费方只从 registry 安装并执行一个包，一个 Harness 版本同时命名完整的 JavaScript、vendor、Web 和 native runtime。发布过程无法产生指向缺失仓库自有包的 Harness 版本。
 
 所有消费方都会下载两个 Linux 启动器，包括 Windows、macOS 和不会使用其中一个启动器的 Linux 架构。npm 上已经存在的独立版本继续作为历史 registry 条目保留，但 Harness manifest 不引用它们，本仓库也不再发布新版本。
 

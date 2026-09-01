@@ -12,23 +12,11 @@
   },
   "type": "module",
   "bin": {
-    "nomix": "dist/cli/bin.js"
-  },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
-    "./config": { "types": "./dist/config.d.ts", "default": "./dist/config.js" },
-    "./plugin": { "types": "./dist/plugin-api/index.d.ts", "default": "./dist/plugin-api/index.js" },
-    "./plugins": { "types": "./dist/plugins/index.d.ts", "default": "./dist/plugins/index.js" },
-    "./bundles": { "types": "./dist/bundles/index.d.ts", "default": "./dist/bundles/index.js" },
-    "./runtime": { "types": "./dist/runtime/index.d.ts", "default": "./dist/runtime/index.js" },
-    "./sdk": { "types": "./dist/sdk/index.d.ts", "default": "./dist/sdk/index.js" },
-    "./testing": { "types": "./dist/testing/index.d.ts", "default": "./dist/testing/index.js" },
-    "./package.json": "./package.json"
+    "nomix": "lib/bin.js"
   },
   "files": [
-    "dist"
+    "lib/*.js",
+    "config"
   ],
   "license": "MIT",
   "dependencies": {
@@ -79,7 +67,6 @@
     "@nomix-ai/nomix-tool-pwsh": "workspace:^",
     "@nomix-ai/nomix-tool-ralph": "workspace:^",
     "@nomix-ai/nomix-schedule": "workspace:^",
-    "@nomix-ai/nomix-sdk-client": "workspace:^",
     "@nomix-ai/nomix-tool-skill": "workspace:^",
     "@nomix-ai/nomix-tool-str-replace-editor": "workspace:^",
     "@nomix-ai/nomix-tool-subagent": "workspace:^",
@@ -110,7 +97,6 @@
     "@nomix-ai/nomix-system-prompt": "workspace:^",
     "@nomix-ai/nomix-tools": "workspace:^",
     "@types/js-yaml": "^4.0.9",
-    "execa": "^10.0.0",
-    "tar": "^7.5.22"
+    "execa": "^10.0.0"
   }
 }

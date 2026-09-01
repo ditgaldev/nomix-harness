@@ -4,7 +4,7 @@
  *
  * Every registry package the installed tree owns comes from `--from`. For the
  * nomix family that is one native ESM tarball whose dist tree already contains
- * the internal product runtime; verification therefore does not depend on
+ * bundled workspace dependencies; verification therefore does not depend on
  * install scripts or internal package names existing in the registry
  * ([rationale](../../.agents/notes/archived/process/2026-08-10-npm-release-sequences.md)).
  *
@@ -120,15 +120,18 @@ function installedBinInvocation(
   return { command: process.execPath, args: [resolve(dirname(manifestPath), declared), ...args] }
 }
 
-/** Exercise the installed sandbox's private Windows runner lookup against the flattened kernel. */
+/** Exercise the installed sandbox's private Windows runner lookup through bundled package resolution. */
 function verifyNomixKernel(packageName: string, cwd: string, environment: NodeJS.ProcessEnv): void {
-  const moduleUrl = pathToFileURL(join(
+  const harnessRoot = join(
     cwd,
     'node_modules',
     packageName,
-    'dist',
-    'kernel',
-    'sandbox-local',
+  )
+  const moduleUrl = pathToFileURL(join(
+    harnessRoot,
+    'node_modules',
+    '@nomix-ai',
+    'nomix-sandbox-local',
     'lib',
     'index.js',
   )).href
@@ -139,7 +142,7 @@ function verifyNomixKernel(packageName: string, cwd: string, environment: NodeJS
     'const sandbox = Object.create(loaded.LocalSandboxProvider.prototype)',
     'sandbox.internals = {}',
     'const invocation = sandbox.windowsAclRunnerInvocation()',
-    'const expected = fileURLToPath(new URL("../../sandbox-windows-acl/lib/runner.js", process.argv[1]))',
+    'const expected = fileURLToPath(new URL("../../nomix-sandbox-windows-acl/lib/runner.js", process.argv[1]))',
     'if (invocation[0] !== process.execPath) throw new Error(`unexpected runner executable: ${JSON.stringify(invocation)}`)',
     'if (realpathSync(invocation[1]) !== realpathSync(expected)) throw new Error(`unexpected runner entry: ${JSON.stringify(invocation)}, expected ${expected}`)',
   ].join(';')

@@ -38,20 +38,10 @@ const resolvedViaSeam = launcherPath((specifier) => {
 });
 assert.equal(resolvedViaSeam, path.join('/fake-install', platformPackage, 'bin', LAUNCHER_BIN));
 
-// --- launcherPath: aggregate distributions prefer their embedded binary ---
-const bundled = launcherPath(() => {
-  throw new Error('platform package must not resolve when an embedded binary exists');
-}, () => true);
-assert.ok(
-  bundled.endsWith(path.join('dist', 'native', 'landlock-run', `${process.platform}-${process.arch}`, LAUNCHER_BIN))
-    || bundled.endsWith(path.join('native', 'landlock-run', `${process.platform}-${process.arch}`, LAUNCHER_BIN)),
-  bundled,
-);
-
 // --- launcherPath: unresolvable package falls back to an absolute, package-boundary path ---
 const fallback = launcherPath(() => {
   throw new Error('not installed');
-}, () => false);
+});
 assert.ok(path.isAbsolute(fallback), 'fallback path must be absolute');
 assert.ok(
   fallback.includes(path.join('node_modules', ...platformPackage.split('/'), 'bin', LAUNCHER_BIN)),

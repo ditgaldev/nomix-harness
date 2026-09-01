@@ -124,7 +124,7 @@ export abstract class ReleaseFamily {
   abstract readonly tagPrefix: string
 
   /** How this family's selected publication members become tarballs. */
-  readonly packing: 'package' | 'native-bundle' = 'package'
+  readonly packing: 'package' | 'bundled-workspaces' = 'package'
 
   /**
    * Assert that built artifacts match this release family's required profile.
@@ -342,7 +342,7 @@ class NomixFamily extends ReleaseFamily {
   readonly id = 'nomix'
   readonly patterns = ['packages/!(experimental)/*/package.json', 'apps/*/package.json'] as const
   readonly tagPrefix = 'nomix-v'
-  override readonly packing = 'native-bundle' as const
+  override readonly packing = 'bundled-workspaces' as const
 
   /** The release branch publishes npm; version tags validate other release artifacts. */
   override publicationRefs(members: readonly ReleaseMember[]): readonly string[] {
@@ -394,18 +394,17 @@ class NomixFamily extends ReleaseFamily {
   validatePayload(member: ReleaseMember, files: readonly string[]): void {
     validateTarballPayload(files, member.name)
     for (const required of [
-      'package/dist/plugins/manifest.json',
-      'package/dist/bundles/manifest.json',
-      'package/dist/kernel/manifest.json',
       'package/dist/cli/bin.js',
-      'package/dist/plugin-api/index.js',
-      'package/dist/sdk/index.js',
-      'package/dist/native/landlock-run/linux-x64/landlock-run',
-      'package/dist/native/landlock-run/linux-arm64/landlock-run',
-      'package/dist/licenses/landlock-run.LICENSE',
+      'package/node_modules/@nomix-ai/cordis/lib/index.js',
+      'package/node_modules/@nomix-ai/nomix-agent/lib/index.js',
+      'package/node_modules/@nomix-ai/nomix-web-app/cordis.patch.yml',
+      'package/node_modules/@nomix-ai/nomix-web-frontend/dist/index.html',
+      'package/node_modules/@nomix-ai/node-addon-landlock-run/lib/index.js',
+      'package/node_modules/@nomix-ai/node-addon-landlock-run-linux-x64/bin/landlock-run',
+      'package/node_modules/@nomix-ai/node-addon-landlock-run-linux-arm64/bin/landlock-run',
     ]) if (!files.includes(required)) throw new Error(`${member.name} carries no ${required.slice('package/'.length)}`)
-    if (files.some(file => file.includes('/node_modules/') || file.endsWith('.map') || file.includes('/src/'))) {
-      throw new Error(`${member.name} exposes forbidden source, source-map, or node_modules members`)
+    if (files.some(file => file.endsWith('.map') || file.includes('/src/'))) {
+      throw new Error(`${member.name} exposes forbidden source or source-map members`)
     }
   }
 

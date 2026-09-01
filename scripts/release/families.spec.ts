@@ -90,7 +90,7 @@ describe('release families', () => {
       'refs/heads/npm-nomix-harness',
       'refs/tags/nomix-v0.0.1',
     ])
-    expect(nomix.packing).toBe('native-bundle')
+    expect(nomix.packing).toBe('bundled-workspaces')
   })
 
   it('rejects a family whose members disagree on the shared version', () => {

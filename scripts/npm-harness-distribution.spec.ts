@@ -1,16 +1,16 @@
+import { sep } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import {
+  bundledManifest,
+  bundledPackagePath,
   classifyWorkspace,
-  isBrowserClientBundle,
   mergeDependencyRanges,
   publishableArtifactPath,
   rewriteHarnessPackageAnchor,
-  rewriteInternalModuleSpecifiers,
-  verifyBrowserClientRequires,
 } from './npm-harness-distribution.ts'
 
 describe('npm Harness workspace classification', () => {
-  it('classifies every public distribution role explicitly', () => {
+  it('classifies every distribution role explicitly', () => {
     expect(classifyWorkspace('packages/core/agent')).toBe('plugin')
     expect(classifyWorkspace('packages/bundle/base')).toBe('bundle')
     expect(classifyWorkspace('packages/boot/app-boot')).toBe('runtime')
@@ -23,6 +23,39 @@ describe('npm Harness workspace classification', () => {
 
   it('rejects an unclassified workspace', () => {
     expect(() => classifyWorkspace('unknown/package')).toThrow('unclassified workspace')
+  })
+})
+
+describe('npm Harness bundled packages', () => {
+  it('places scoped packages under the aggregate node_modules', () => {
+    expect(bundledPackagePath('aggregate', '@nomix-ai/nomix-agent'))
+      .toBe(['aggregate', 'node_modules', '@nomix-ai', 'nomix-agent'].join(sep))
+  })
+
+  it('materializes workspace dependency selectors without changing external ranges', () => {
+    const manifest = bundledManifest({
+      name: '@nomix-ai/nomix-consumer',
+      dependencies: {
+        '@nomix-ai/nomix-agent': 'workspace:^',
+        commander: '^15.0.0',
+      },
+      peerDependencies: { '@nomix-ai/cordis': 'workspace:*' },
+    }, new Map([
+      ['@nomix-ai/nomix-agent', '0.2.7'],
+      ['@nomix-ai/cordis', '0.2.7'],
+    ]))
+    expect(manifest).toMatchObject({
+      dependencies: {
+        '@nomix-ai/nomix-agent': '0.2.7',
+        commander: '^15.0.0',
+      },
+      peerDependencies: { '@nomix-ai/cordis': '0.2.7' },
+    })
+  })
+
+  it('rejects a workspace dependency omitted from the aggregate', () => {
+    expect(() => bundledManifest({ dependencies: { '@nomix-ai/missing': 'workspace:^' } }, new Map()))
+      .toThrow('cannot resolve workspace dependency @nomix-ai/missing')
   })
 })
 
@@ -52,48 +85,5 @@ describe('npm Harness artifact filtering', () => {
       .toBe("new URL('../../package.json', import.meta.url)")
     expect(rewriteHarnessPackageAnchor('new URL("../package.json", import.meta.url)'))
       .toBe('new URL("../../package.json", import.meta.url)')
-  })
-
-  it('rewrites module specifiers without changing package-name data', () => {
-    const source = [
-      'import value from \'@nomix-ai/nomix-example\'',
-      'const lazy = import(\'@nomix-ai/nomix-example/subpath\')',
-      'const resolved = import.meta.resolve(\'@nomix-ai/nomix-example\')',
-      'const required = require.resolve(\'@nomix-ai/nomix-example/subpath\')',
-      'const profile = [\'@nomix-ai/nomix-example\']',
-    ].join('\n')
-    expect(rewriteInternalModuleSpecifiers(source, (name, subpath) => `../kernel/${name.slice(16)}/${subpath || 'index.js'}`))
-      .toBe([
-        'import value from \'../kernel/example/index.js\'',
-        'const lazy = import(\'../kernel/example/subpath\')',
-        'const resolved = import.meta.resolve(\'../kernel/example/index.js\')',
-        'const required = require.resolve(\'../kernel/example/subpath\')',
-        'const profile = [\'@nomix-ai/nomix-example\']',
-      ].join('\n'))
-  })
-
-  it('keeps browser client factory requires on canonical module-table keys', () => {
-    const manifest = {
-      exports: {
-        './client': { default: './lib/client.js' },
-      },
-      nomix: { client: { platform: 'web' } },
-    }
-    expect(isBrowserClientBundle(manifest, 'lib/client.js')).toBe(true)
-    expect(isBrowserClientBundle(manifest, 'lib/index.js')).toBe(false)
-
-    const source = 'const slots = require("@nomix-ai/nomix-client-ui-slots")'
-    expect(rewriteInternalModuleSpecifiers(
-      source,
-      () => '../../client-ui-slots/lib/index.js',
-      () => true,
-    )).toBe(source)
-    expect(() => { verifyBrowserClientRequires(source, '@nomix-ai/nomix-client-runtime') }).not.toThrow()
-    expect(() => {
-      verifyBrowserClientRequires(
-        'const slots = require("../../client-ui-slots/lib/index.js")',
-        '@nomix-ai/nomix-client-runtime',
-      )
-    }).toThrow('filesystem-relative module-table requires: ../../client-ui-slots/lib/index.js')
   })
 })
