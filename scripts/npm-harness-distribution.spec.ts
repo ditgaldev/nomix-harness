@@ -59,6 +59,7 @@ describe('npm Harness artifact filtering', () => {
       'import value from \'@nomix-ai/nomix-example\'',
       'const lazy = import(\'@nomix-ai/nomix-example/subpath\')',
       'const resolved = import.meta.resolve(\'@nomix-ai/nomix-example\')',
+      'const required = require.resolve(\'@nomix-ai/nomix-example/subpath\')',
       'const profile = [\'@nomix-ai/nomix-example\']',
     ].join('\n')
     expect(rewriteInternalModuleSpecifiers(source, (name, subpath) => `../kernel/${name.slice(16)}/${subpath || 'index.js'}`))
@@ -66,6 +67,7 @@ describe('npm Harness artifact filtering', () => {
         'import value from \'../kernel/example/index.js\'',
         'const lazy = import(\'../kernel/example/subpath\')',
         'const resolved = import.meta.resolve(\'../kernel/example/index.js\')',
+        'const required = require.resolve(\'../kernel/example/subpath\')',
         'const profile = [\'@nomix-ai/nomix-example\']',
       ].join('\n'))
   })

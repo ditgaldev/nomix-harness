@@ -34,6 +34,11 @@ interface WorkspacePackage {
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)))
 const INTERNAL_PREFIX = '@nomix-ai/nomix-'
 const TEXT_EXTENSIONS = new Set(['.js', '.mjs', '.cjs', '.d.ts', '.json', '.yml', '.yaml', '.css', '.html'])
+const INTERNAL_MODULE_SPECIFIER = new RegExp(
+  String.raw`(\bfrom\s+|\b(?:import|require(?:\.resolve)?)\s*\(\s*|import\.meta\.resolve\s*\(\s*|\bimport\s+)`
+  + String.raw`(['"])(@nomix-ai\/[^/'"]+)(?:\/([^'"]+))?\2`,
+  'gu',
+)
 
 /** Classify a workspace by ownership and runtime role. */
 export function classifyWorkspace(directory: string): WorkspaceDistribution {
@@ -148,7 +153,7 @@ export function rewriteHarnessPackageAnchor(contents: string): string {
  * Rewrite only JavaScript/TypeScript module specifiers, leaving product data strings unchanged.
  * @param contents - compiled JavaScript or declaration text.
  * @param resolveSpecifier - maps one internal package name and optional subpath to its package-relative target.
- * @returns text with static imports, dynamic imports, import.meta.resolve calls, and require calls rewritten.
+ * @returns text with imports and runtime module-resolution calls rewritten.
  */
 export function rewriteInternalModuleSpecifiers(
   contents: string,
@@ -156,7 +161,7 @@ export function rewriteInternalModuleSpecifiers(
   preserveSpecifier: (name: string, subpath: string) => boolean = () => false,
 ): string {
   return contents.replace(
-    /(\bfrom\s+|\bimport\s*\(\s*|\brequire\s*\(\s*|import\.meta\.resolve\s*\(\s*|\bimport\s+)(['"])(@nomix-ai\/[^/'"]+)(?:\/([^'"]+))?\2/gu,
+    INTERNAL_MODULE_SPECIFIER,
     (match, prefix: string, quote: string, name: string, subpath: string = '') => {
       if (preserveSpecifier(name, subpath)) return match
       const replacement = resolveSpecifier(name, subpath)
