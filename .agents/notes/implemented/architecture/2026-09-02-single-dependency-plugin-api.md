@@ -14,7 +14,7 @@ The aggregate npm package contains the complete Harness runtime but exposes only
 
 An out-of-tree plugin declares `@nomix-ai/nomix-harness` as its only Nomix dependency. Its source imports the base authoring API and capability APIs through Harness subpaths; its manifest does not declare Cordis or repository-internal Nomix packages. Generated runtime and declaration proxies resolve to the canonical packages bundled inside the same Harness installation, retaining their module augmentation and runtime exports without copying their implementations.
 
-Release verification installs only the packed Harness into a throwaway consumer, type-checks a business plugin against the base and tools entries, and executes those entries. This verifies both declaration and Node ESM resolution from the installed tarball.
+Release verification installs only the packed Harness into a throwaway consumer. The pack job, which provides the repository's pinned TypeScript compiler, type-checks a business plugin against the base and tools entries. Every package-manager and platform consumer executes those entries without repository dependencies, verifying Node ESM resolution from the installed tarball.
 
 ## Alternatives considered
 

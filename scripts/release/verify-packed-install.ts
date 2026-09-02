@@ -150,9 +150,17 @@ function verifyNomixKernel(packageName: string, cwd: string, environment: NodeJS
   run(process.execPath, ['--input-type=module', '--eval', probe, moduleUrl], { cwd, env: environment })
 }
 
-/** Compile and execute an out-of-tree plugin that depends only on the public Harness package. */
-function verifyNomixPluginApi(cwd: string, environment: NodeJS.ProcessEnv): void {
-  writeFileSync(join(cwd, 'business-plugin.ts'), `
+/** Compile when the release checkout provides TypeScript, then execute an out-of-tree plugin. */
+function verifyNomixPluginApi(cwd: string, environment: NodeJS.ProcessEnv): boolean {
+  const require = createRequire(import.meta.url)
+  let compiler: string | undefined
+  try {
+    compiler = require.resolve('typescript/bin/tsc')
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== 'MODULE_NOT_FOUND') throw error
+  }
+  if (compiler !== undefined) {
+    writeFileSync(join(cwd, 'business-plugin.ts'), `
 import { Schema, type Context, type Plugin } from '@nomix-ai/nomix-harness/plugin'
 import { defineTool } from '@nomix-ai/nomix-harness/plugin/tools'
 
@@ -166,22 +174,22 @@ export const plugin: Plugin.Function<Config> = (ctx: Context, config) => {
   ctx.effect(() => () => { void config.message })
 }
 `)
-  writeFileSync(join(cwd, 'tsconfig.json'), `${JSON.stringify({
-    compilerOptions: {
-      module: 'NodeNext',
-      moduleResolution: 'NodeNext',
-      target: 'ES2024',
-      strict: true,
-      noEmit: true,
-      skipLibCheck: true,
-    },
-    files: ['business-plugin.ts'],
-  }, null, 2)}\n`)
-  const require = createRequire(import.meta.url)
-  run(process.execPath, [require.resolve('typescript/bin/tsc'), '--project', join(cwd, 'tsconfig.json')], {
-    cwd,
-    env: environment,
-  })
+    writeFileSync(join(cwd, 'tsconfig.json'), `${JSON.stringify({
+      compilerOptions: {
+        module: 'NodeNext',
+        moduleResolution: 'NodeNext',
+        target: 'ES2024',
+        strict: true,
+        noEmit: true,
+        skipLibCheck: true,
+      },
+      files: ['business-plugin.ts'],
+    }, null, 2)}\n`)
+    run(process.execPath, [compiler, '--project', join(cwd, 'tsconfig.json')], {
+      cwd,
+      env: environment,
+    })
+  }
 
   writeFileSync(join(cwd, 'business-plugin.mjs'), `
 import { Context, Schema } from '@nomix-ai/nomix-harness/plugin'
@@ -194,6 +202,7 @@ await ctx.plugin({ apply(pluginCtx) { pluginCtx.effect(() => () => {}) } })
 await ctx.fiber.dispose()
 `)
   run(process.execPath, [join(cwd, 'business-plugin.mjs')], { cwd, env: environment })
+  return compiler !== undefined
 }
 
 /** Start an installed persistent application, require readiness, then stop it through its signal handler. */
@@ -327,8 +336,11 @@ async function main(): Promise<void> {
     if (family.id === 'nomix') {
       verifyNomixKernel(entry.packageName, consumerRoot, environment)
       console.log(`release verify-packed-install: installed ${entry.packageName} kernel runner resolution passed`)
-      verifyNomixPluginApi(consumerRoot, environment)
-      console.log(`release verify-packed-install: installed ${entry.packageName} external plugin API passed`)
+      const declarationsChecked = verifyNomixPluginApi(consumerRoot, environment)
+      console.log(
+        `release verify-packed-install: installed ${entry.packageName} external plugin API passed`
+        + (declarationsChecked ? ' with declarations' : ' at runtime; declarations checked during pack'),
+      )
     }
     if (entry.smokeArgs !== undefined) {
       const output = execute(manager, entry.command, entry.smokeArgs, consumerRoot, environment)

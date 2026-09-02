@@ -14,7 +14,7 @@ Status: implemented
 
 树外插件只把 `@nomix-ai/nomix-harness` 声明为 Nomix 依赖。它的源码通过 Harness 子路径 import 基础开发 API 和能力 API；它的 manifest 不声明 Cordis 或仓库内部 Nomix 包。生成的运行时和声明代理解析到同一 Harness 安装中内嵌的规范包，保留它们的模块增广和运行时 export，且不复制实现。
 
-发布验证只在一个临时消费方中安装打包后的 Harness，用基础入口和 tools 入口对一个业务插件进行类型检查，并执行这两个入口。这会验证已安装 tarball 中的声明解析和 Node ESM 解析。
+发布验证只在一个临时消费方中安装打包后的 Harness。提供仓库固定 TypeScript 编译器的打包作业通过基础入口和 tools 入口对业务插件进行类型检查；每个包管理器和平台消费方都在没有仓库依赖的情况下执行这两个入口，从而验证已安装 tarball 的 Node ESM 解析。
 
 ## Alternatives considered
 
