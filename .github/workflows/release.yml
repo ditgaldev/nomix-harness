@@ -229,14 +229,17 @@ jobs:
             published=$(npm view @nomix-ai/nomix-harness version --registry https://registry.npmjs.org 2>/dev/null || true)
             latest=$(npm view @nomix-ai/nomix-harness dist-tags.latest --registry https://registry.npmjs.org 2>/dev/null || true)
             integrity=$(npm view "@nomix-ai/nomix-harness@$version" dist.integrity --registry https://registry.npmjs.org 2>/dev/null || true)
+            signature=$(npm view "@nomix-ai/nomix-harness@$version" dist.signatures.0.sig --registry https://registry.npmjs.org 2>/dev/null || true)
+            signature_key=$(npm view "@nomix-ai/nomix-harness@$version" dist.signatures.0.keyid --registry https://registry.npmjs.org 2>/dev/null || true)
             attestation=$(npm view "@nomix-ai/nomix-harness@$version" dist.attestations.url --registry https://registry.npmjs.org 2>/dev/null || true)
-            if [[ "$published" == "$version" && "$latest" == "$version" && -n "$integrity" && -n "$attestation" ]]; then
+            predicate=$(npm view "@nomix-ai/nomix-harness@$version" dist.attestations.provenance.predicateType --registry https://registry.npmjs.org 2>/dev/null || true)
+            if [[ "$published" == "$version" && "$latest" == "$version" && -n "$integrity" && -n "$signature" && -n "$signature_key" && -n "$attestation" && -n "$predicate" ]]; then
               break
             fi
             sleep 10
           done
-          if [[ "$published" != "$version" || "$latest" != "$version" || -z "$integrity" || -z "$attestation" ]]; then
-            printf 'registry verification failed: version=%s latest=%s integrity=%s attestation=%s\n' "$published" "$latest" "$integrity" "$attestation" >&2
+          if [[ "$published" != "$version" || "$latest" != "$version" || -z "$integrity" || -z "$signature" || -z "$signature_key" || -z "$attestation" || -z "$predicate" ]]; then
+            printf 'registry verification failed: version=%s latest=%s integrity=%s signature=%s key=%s attestation=%s predicate=%s\n' "$published" "$latest" "$integrity" "$signature" "$signature_key" "$attestation" "$predicate" >&2
             exit 1
           fi
 
@@ -244,5 +247,9 @@ jobs:
           cd "$audit_dir"
           npm init --yes >/dev/null
           npm install --ignore-scripts --save-exact "@nomix-ai/nomix-harness@$version"
-          npm audit signatures
-          printf 'verified %s latest=%s integrity=%s attestation=%s\n' "$published" "$latest" "$integrity" "$attestation"
+          installed=$(npm exec --offline -- nomix --version)
+          if [[ "$installed" != "$version" ]]; then
+            printf 'installed package reported version=%s, expected=%s\n' "$installed" "$version" >&2
+            exit 1
+          fi
+          printf 'verified %s latest=%s integrity=%s signature-key=%s attestation=%s predicate=%s\n' "$published" "$latest" "$integrity" "$signature_key" "$attestation" "$predicate"

@@ -480,6 +480,21 @@ describe('npm release workflows', () => {
     expect(verifyConsumer.strategy.matrix.manager).toEqual(['npm', 'pnpm'])
   })
 
+  it('verifies the published outer package without resolving private bundles', () => {
+    const workflow = loadWorkflow('.github/workflows/release.yml')
+    const publish = workflowJob(workflow, 'publish')
+    if (!Array.isArray(publish.steps)) throw new TypeError('release.yml publish must define steps')
+    const verify = publish.steps.filter(isRecord)
+      .find(step => step.name === 'Verify version, latest, integrity, and provenance')
+    if (!isRecord(verify) || typeof verify.run !== 'string') {
+      throw new TypeError('release.yml publish must define registry verification')
+    }
+    expect(verify.run).toContain('dist.signatures.0.sig')
+    expect(verify.run).toContain('dist.attestations.provenance.predicateType')
+    expect(verify.run).toContain('npm exec --offline -- nomix --version')
+    expect(verify.run).not.toContain('npm audit signatures')
+  })
+
   it('keeps the separate vendor publication dispatch-only', () => {
     const workflow = loadWorkflow('.github/workflows/release-vendor-publish.yml')
     if (!isRecord(workflow.on) || !isRecord(workflow.jobs)) {
