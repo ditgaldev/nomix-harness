@@ -24,6 +24,8 @@ Release validation installs the aggregate tarball with npm and pnpm, the install
 
 Post-publication verification checks the outer package's registry signature, provenance predicate, integrity, latest tag, and installed CLI version. It does not run `npm audit signatures`: that command re-resolves bundled workspace names through the registry and therefore rejects the deliberate single-package topology even after a correct install.
 
+A publication rerun first asks the registry whether this exact version already exists. An absent version follows the strict packed-byte publication path; an existing immutable version skips every npm write and runs the outer-package verification against the registry copy. This permits verification-only workflow fixes after a successful upload without weakening the publisher's rejection of a different tarball under the same version.
+
 **Keep three release families.** This lets installers download only one Landlock architecture, but recreates the publication ordering and partial-registry failures that the aggregate Harness distribution exists to remove.
 
 **Compile Landlock during installation.** This keeps the tarball smaller but requires a musl toolchain on consumer machines and makes confinement availability depend on install-time compilation. The launcher remains prebuilt and fail-closed.

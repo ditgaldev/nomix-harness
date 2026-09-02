@@ -216,7 +216,20 @@ jobs:
           name: nomix-npm-tarballs
           path: dist/npm
 
+      - name: Check whether the version is already published
+        id: registry
+        shell: bash
+        run: |
+          version=$(node -p "require('./apps/cli/package.json').version")
+          integrity=$(npm view "@nomix-ai/nomix-harness@$version" dist.integrity --registry https://registry.npmjs.org 2>/dev/null || true)
+          if [[ -n "$integrity" ]]; then
+            printf 'published=true\n' >> "$GITHUB_OUTPUT"
+          else
+            printf 'published=false\n' >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Publish exact packed bytes
+        if: steps.registry.outputs.published != 'true'
         run: pnpm run release:publish --family nomix --from dist/npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

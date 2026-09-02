@@ -24,6 +24,8 @@ tarball manifest 只把仓库自有包列为 bundled dependency，因此安装�
 
 发布后验证检查外层包的 registry 签名、provenance predicate、完整性、latest 标签和已安装 CLI 版本。它不运行 `npm audit signatures`：该命令会通过 registry 重新解析内嵌 workspace 的包名，因此即使安装正确，也会拒绝这里刻意采用的单包拓扑。
 
+发布重跑会先询问 registry 该精确版本是否已经存在。版本不存在时走严格的打包字节发布路径；已有不可变版本时跳过所有 npm 写入，并针对 registry 中的副本执行外层包验证。这样，在上传成功后可以修复仅验证相关的 workflow，同时不会削弱发布器对同版本不同 tarball 的拒绝。
+
 **保留三条 release family。** 这能让安装程序只下载一个 Landlock 架构，但会重新引入聚合 Harness 分发本来要消除的发布顺序和 registry 部分发布问题。
 
 **安装时编译 Landlock。** 这能减小 tarball，却要求消费机器安装 musl 工具链，并让 confinement 可用性取决于安装期编译。启动器继续采用预构建和 fail-closed 策略。

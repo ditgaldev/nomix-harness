@@ -495,6 +495,18 @@ describe('npm release workflows', () => {
     expect(verify.run).not.toContain('npm audit signatures')
   })
 
+  it('keeps a published version immutable during verification reruns', () => {
+    const workflow = loadWorkflow('.github/workflows/release.yml')
+    const publish = workflowJob(workflow, 'publish')
+    if (!Array.isArray(publish.steps)) throw new TypeError('release.yml publish must define steps')
+    const steps = publish.steps.filter(isRecord)
+    const registry = steps.find(step => step.name === 'Check whether the version is already published')
+    const write = steps.find(step => step.name === 'Publish exact packed bytes')
+    expect(registry).toMatchObject({ id: 'registry' })
+    expect(registry?.run).toContain('dist.integrity')
+    expect(write?.if).toBe("steps.registry.outputs.published != 'true'")
+  })
+
   it('keeps the separate vendor publication dispatch-only', () => {
     const workflow = loadWorkflow('.github/workflows/release-vendor-publish.yml')
     if (!isRecord(workflow.on) || !isRecord(workflow.jobs)) {
