@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-goal",
   "description": "Event-sourced same-session goal state and lifecycle service for the Nomix Harness",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "publishConfig": {
     "access": "public"
   },

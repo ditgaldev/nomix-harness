@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-fs-local",
   "description": "Local-filesystem implementation of the Nomix Harness filesystem seam (ctx.fs)",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "publishConfig": {
     "access": "public"
   },

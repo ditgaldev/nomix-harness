@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-jobs",
   "description": "Background job registry (ctx.jobs) for the Nomix Harness — shared ids, owner isolation, polling, cancellation, and completion listeners for long-running tool work",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "publishConfig": {
     "access": "public"
   },
