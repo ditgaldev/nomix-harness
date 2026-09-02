@@ -11,11 +11,25 @@
     "directory": "apps/cli"
   },
   "type": "module",
+  "main": "lib/plugin-api.js",
+  "types": "lib/types/plugin-api.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/plugin-api.d.ts",
+      "default": "./lib/plugin-api.js"
+    },
+    "./plugin": {
+      "types": "./lib/types/plugin-api.d.ts",
+      "default": "./lib/plugin-api.js"
+    },
+    "./package.json": "./package.json"
+  },
   "bin": {
     "nomix": "lib/bin.js"
   },
   "files": [
     "lib/*.js",
+    "lib/types/plugin-api.d.ts",
     "config"
   ],
   "license": "MIT",
@@ -24,6 +38,7 @@
     "@nomix-ai/cordis-plugin-include": "workspace:^",
     "@nomix-ai/cordis-plugin-loader": "workspace:^",
     "@nomix-ai/cordis-plugin-timer": "workspace:^",
+    "@nomix-ai/schemastery": "workspace:^",
     "@nomix-ai/nomix-agent-tool-presentation": "workspace:^",
     "@nomix-ai/nomix-app-boot": "workspace:^",
     "@nomix-ai/nomix-base": "workspace:^",

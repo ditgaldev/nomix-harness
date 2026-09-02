@@ -15,6 +15,10 @@ The `nomix` command is the product launcher for profiles: ordered stacks of plug
 
 The invoking directory is the default workspace root. The `web` and `headless` profiles auto-initialize on first use from shipped templates; any other profile must be created through `nomix plugin`.
 
+## Plugin authoring API
+
+An out-of-tree plugin declares only `@nomix-ai/nomix-harness` as its Nomix dependency. `@nomix-ai/nomix-harness/plugin` exports Cordis plugin primitives and `Schema`; capability APIs use stable Harness subpaths such as `@nomix-ai/nomix-harness/plugin/tools`. The aggregate package resolves those subpaths to its bundled runtime packages, so plugin manifests do not name repository-internal packages. The [packaging tutorial](../../docs/user/develop/basic/publish.md) contains a complete bundle.
+
 ## App arguments
 
 The launcher parses only its own flags and hands everything after them to the booted profile, where any injected app plugin may parse the shared immutable snapshot ([`nomix-cmdline`](../../packages/boot/cmdline/README.md)). Launcher flags therefore come first, and the first token the launcher does not recognize starts the app's arguments:

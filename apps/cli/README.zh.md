@@ -15,6 +15,10 @@
 
 运行命令时所在的目录将作为默认 workspace 根目录。`web` 和 `headless` profile 在首次使用时会从随附模板自动初始化；其他任何 profile 都必须通过 `nomix plugin` 创建。
 
+## 插件开发 API
+
+树外插件只把 `@nomix-ai/nomix-harness` 声明为 Nomix 依赖。`@nomix-ai/nomix-harness/plugin` 导出 Cordis 插件基础类型和 `Schema`，能力 API 使用 `@nomix-ai/nomix-harness/plugin/tools` 之类的稳定 Harness 子路径。聚合包会把这些子路径解析到其内嵌运行时包，因此插件 manifest 无须写出仓库内部包名。[打包教程](../../docs/user/develop/basic/publish.zh.md)提供了完整组合包示例。
+
 ## 应用参数
 
 启动器只解析自身的 flag，并将其后的所有内容交给已启动的 profile；注入该 profile 的任意应用插件都可以解析这份共享的不可变快照（[`nomix-cmdline`](../../packages/boot/cmdline/README.zh.md)）。因此，启动器的 flag 必须写在最前面；启动器无法识别的第一个 token 标志着应用参数的开始：

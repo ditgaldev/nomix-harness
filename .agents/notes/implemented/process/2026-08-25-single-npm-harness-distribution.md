@@ -16,7 +16,7 @@ The aggregate builder copies every runtime workspace, including vendored Cordis 
 
 Landlock's x64 and ARM64 packages are built on matching GitHub runners, verified against the checked-in platform matrix, and bundled as optional dependencies. The unchanged launcher resolves the matching platform package through its ordinary package lookup. The aggregate tarball fails validation unless both supported prebuilt packages are present.
 
-The tarball manifest lists repository-owned packages only as bundled dependencies, so installers consume their bytes from the Harness tarball rather than the registry. Third-party dependencies remain ordinary npm dependencies. Packaging does not add public APIs or change application, plugin, profile, or native-launcher source code.
+The tarball manifest lists repository-owned packages only as bundled dependencies, so installers consume their bytes from the Harness tarball rather than the registry. Third-party dependencies remain ordinary npm dependencies. The outer package exposes the plugin-authoring facade defined by the [single-dependency plugin API](../architecture/2026-09-02-single-dependency-plugin-api.md); application, profile, and native-launcher behavior remains unchanged.
 
 ## Alternatives considered
 

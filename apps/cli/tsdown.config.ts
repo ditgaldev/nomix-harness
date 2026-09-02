@@ -1,13 +1,13 @@
 import { defineConfig } from 'tsdown'
 
 /**
- * The nomix CLI ships one entry: the `bin` referenced by package.json `bin`.
- * The root tsdown builds only `lib/types/index.js`, so this override points at
- * `lib/types/bin.js` instead; its reachable mode modules bundle with it.
+ * The nomix package ships the `bin` referenced by package.json and the public
+ * plugin-authoring API. The root tsdown builds only `lib/types/index.js`, so
+ * this override names both emitted declaration inputs explicitly.
  * Declarations come from `tsc -b` (dts: false), matching every package.
  */
 export default defineConfig({
-  entry: ['lib/types/bin.js'],
+  entry: ['lib/types/bin.js', 'lib/types/plugin-api.js'],
   outDir: 'lib',
   format: ['esm'],
   platform: 'node',

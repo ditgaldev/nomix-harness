@@ -27,7 +27,7 @@ mkdir -p hello-plugin
 hello-plugin/
 ├── package.json       # declares nomix.bundle
 ├── cordis.patch.yml   # the layer applied when a profile lists this bundle
-└── index.js           # plugin modules the patch rows reference
+└── index.js           # imports only the public Harness plugin API
 ```
 
 Create `hello-plugin/package.json`:
@@ -39,6 +39,7 @@ Create `hello-plugin/package.json`:
   "type": "module",
   "main": "index.js",
   "files": ["index.js", "cordis.patch.yml"],
+  "dependencies": { "@nomix-ai/nomix-harness": "^0.2.7" },
   "nomix": { "bundle": { "patch": "./cordis.patch.yml" } }
 }
 ```
@@ -46,12 +47,20 @@ Create `hello-plugin/package.json`:
 Create `hello-plugin/index.js` with the plugin entry point:
 
 ```js
-export const name = 'hello-plugin'
+import { Schema } from '@nomix-ai/nomix-harness/plugin'
 
-export function apply() {
-  console.log('[hello-plugin] plugin loaded!')
+export const name = 'hello-plugin'
+export const Config = Schema.object({ message: Schema.string().default('plugin loaded!') })
+
+export function apply(ctx, config) {
+  ctx.effect(() => {
+    console.log(`[hello-plugin] ${config.message}`)
+    return () => {}
+  })
 }
 ```
+
+This dependency is the complete Nomix development and runtime contract. Do not add `@nomix-ai/cordis` or an internal `@nomix-ai/nomix-*` package to the plugin manifest. Import a capability through its Harness subpath instead; for example, a tool plugin imports `defineTool` from `@nomix-ai/nomix-harness/plugin/tools`. TypeScript plugins import `Context`, `Plugin`, and `Schema` from `@nomix-ai/nomix-harness/plugin`.
 
 Create `hello-plugin/cordis.patch.yml`. The patch is a YAML array like the `--patch` overlays you have been writing, except plugin rows reference the package by name instead of a relative source path so Node resolution finds the installed code:
 

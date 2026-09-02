@@ -5,6 +5,8 @@ import {
   bundledPackagePath,
   classifyWorkspace,
   mergeDependencyRanges,
+  pluginFacadeExport,
+  pluginFacadeId,
   publishableArtifactPath,
   rewriteHarnessPackageAnchor,
 } from './npm-harness-distribution.ts'
@@ -30,6 +32,18 @@ describe('npm Harness bundled packages', () => {
   it('places scoped packages under the aggregate node_modules', () => {
     expect(bundledPackagePath('aggregate', '@nomix-ai/nomix-agent'))
       .toBe(['aggregate', 'node_modules', '@nomix-ai', 'nomix-agent'].join(sep))
+  })
+
+  it('maps official package names to stable Harness plugin API subpaths', () => {
+    expect(pluginFacadeId('@nomix-ai/nomix-tools')).toBe('tools')
+    expect(pluginFacadeExport('@nomix-ai/nomix-tools')).toEqual({
+      subpath: './plugin/tools',
+      target: {
+        types: './dist/plugin/tools.d.ts',
+        default: './dist/plugin/tools.js',
+      },
+    })
+    expect(() => pluginFacadeId('@nomix-ai/cordis')).toThrow('cannot expose non-Nomix package')
   })
 
   it('materializes workspace dependency selectors without changing external ranges', () => {

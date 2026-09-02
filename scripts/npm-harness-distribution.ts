@@ -109,6 +109,36 @@ export function bundledPackagePath(destinationRoot: string, packageName: string)
   return join(destinationRoot, 'node_modules', ...packageName.split('/'))
 }
 
+/**
+ * Convert an official package name to its stable Harness plugin API subpath.
+ * @param packageName - canonical `@nomix-ai/nomix-*` package name.
+ * @returns the part after `@nomix-ai/nomix-`.
+ */
+export function pluginFacadeId(packageName: string): string {
+  const prefix = '@nomix-ai/nomix-'
+  if (!packageName.startsWith(prefix)) throw new Error(`cannot expose non-Nomix package ${packageName}`)
+  return packageName.slice(prefix.length)
+}
+
+/**
+ * Describe one generated capability export in the aggregate manifest.
+ * @param packageName - canonical bundled Nomix package name.
+ * @returns the public subpath and its runtime and declaration targets.
+ */
+export function pluginFacadeExport(packageName: string): {
+  subpath: string
+  target: { types: string; default: string }
+} {
+  const id = pluginFacadeId(packageName)
+  return {
+    subpath: `./plugin/${id}`,
+    target: {
+      types: `./dist/plugin/${id}.d.ts`,
+      default: `./dist/plugin/${id}.js`,
+    },
+  }
+}
+
 function packageVersion(pkg: WorkspacePackage): string {
   const version = pkg.manifest.version
   if (typeof version !== 'string') throw new Error(`${pkg.directory}/package.json has no version`)
@@ -259,6 +289,29 @@ function copyCli(destinationRoot: string): void {
     const target = join(destination, file)
     writeFileSync(target, rewriteHarnessPackageAnchor(readFileSync(source, 'utf8')))
   }
+  cpSync(
+    join(sourceRoot, 'types', 'plugin-api.d.ts'),
+    join(destination, 'plugin-api.d.ts'),
+  )
+}
+
+/** Generate stable Harness subpaths that forward to bundled capability packages. */
+function writePluginFacades(
+  destinationRoot: string,
+  packages: readonly WorkspacePackage[],
+): Record<string, { types: string; default: string }> {
+  const destination = join(destinationRoot, 'dist', 'plugin')
+  mkdirSync(destination, { recursive: true })
+  const exports: Record<string, { types: string; default: string }> = {}
+  for (const pkg of packages.filter(pkg => pkg.name.startsWith('@nomix-ai/nomix-')).sort((a, b) => a.name.localeCompare(b.name))) {
+    const id = pluginFacadeId(pkg.name)
+    const facade = pluginFacadeExport(pkg.name)
+    const statement = `export * from ${JSON.stringify(pkg.name)};\n`
+    writeFileSync(join(destination, `${id}.js`), statement)
+    writeFileSync(join(destination, `${id}.d.ts`), statement)
+    exports[facade.subpath] = facade.target
+  }
+  return exports
 }
 
 function platformPackages(packages: readonly WorkspacePackage[]): WorkspacePackage[] {
@@ -280,6 +333,7 @@ export function buildNpmHarnessDistribution(destinationRoot: string): void {
 
   rmSync(destinationRoot, { recursive: true, force: true })
   copyCli(destinationRoot)
+  const pluginExports = writePluginFacades(destinationRoot, runtime)
   cpSync(join(ROOT, 'apps', 'cli', 'config'), join(destinationRoot, 'dist', 'config'), { recursive: true })
   for (const pkg of bundled) copyRuntimeFiles(pkg, bundledPackagePath(destinationRoot, pkg.name), versions)
 
@@ -298,6 +352,14 @@ export function buildNpmHarnessDistribution(destinationRoot: string): void {
     publishConfig: { access: 'public', provenance: true },
     repository: harness.manifest.repository,
     bin: { nomix: './dist/cli/bin.js' },
+    main: './dist/cli/plugin-api.js',
+    types: './dist/cli/plugin-api.d.ts',
+    exports: {
+      '.': { types: './dist/cli/plugin-api.d.ts', default: './dist/cli/plugin-api.js' },
+      './plugin': { types: './dist/cli/plugin-api.d.ts', default: './dist/cli/plugin-api.js' },
+      ...pluginExports,
+      './package.json': './package.json',
+    },
     files: ['dist'],
     dependencies,
     optionalDependencies,

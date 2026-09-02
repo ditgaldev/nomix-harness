@@ -16,7 +16,7 @@ Status: implemented
 
 Landlock 的 x64 和 ARM64 包在匹配的 GitHub runner 上构建，按签入仓库的平台矩阵验证，并作为 optional dependency 内嵌。未经修改的 launcher 通过普通包查找解析匹配的平台包。聚合 tarball 缺少任一受支持的预构建包时，验证会失败。
 
-tarball manifest 只把仓库自有包列为 bundled dependency，因此安装程序从 Harness tarball 而不是 registry 消费这些字节。第三方依赖仍是普通 npm 依赖。打包过程不增加公共 API，也不修改应用、插件、profile 或 native launcher 源码。
+tarball manifest 只把仓库自有包列为 bundled dependency，因此安装程序从 Harness tarball 而不是 registry 消费这些字节。第三方依赖仍是普通 npm 依赖。外层包公开[单依赖插件 API](../architecture/2026-09-02-single-dependency-plugin-api.zh.md)定义的插件开发入口；应用、profile 和 native launcher 行为保持不变。
 
 ## Alternatives considered
 

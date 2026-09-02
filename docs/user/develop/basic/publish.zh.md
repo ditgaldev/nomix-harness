@@ -27,7 +27,7 @@ mkdir -p hello-plugin
 hello-plugin/
 ├── package.json       # declares nomix.bundle
 ├── cordis.patch.yml   # the layer applied when a profile lists this bundle
-└── index.js           # plugin modules the patch rows reference
+└── index.js           # imports only the public Harness plugin API
 ```
 
 创建 `hello-plugin/package.json`：
@@ -39,6 +39,7 @@ hello-plugin/
   "type": "module",
   "main": "index.js",
   "files": ["index.js", "cordis.patch.yml"],
+  "dependencies": { "@nomix-ai/nomix-harness": "^0.2.7" },
   "nomix": { "bundle": { "patch": "./cordis.patch.yml" } }
 }
 ```
@@ -46,12 +47,20 @@ hello-plugin/
 创建 `hello-plugin/index.js`，写入插件入口：
 
 ```js
-export const name = 'hello-plugin'
+import { Schema } from '@nomix-ai/nomix-harness/plugin'
 
-export function apply() {
-  console.log('[hello-plugin] plugin loaded!')
+export const name = 'hello-plugin'
+export const Config = Schema.object({ message: Schema.string().default('plugin loaded!') })
+
+export function apply(ctx, config) {
+  ctx.effect(() => {
+    console.log(`[hello-plugin] ${config.message}`)
+    return () => {}
+  })
 }
 ```
+
+这一个依赖就是完整的 Nomix 开发和运行时约定。不要在插件 manifest 中添加 `@nomix-ai/cordis` 或内部 `@nomix-ai/nomix-*` 包；改为通过 Harness 子路径 import 所需能力。例如，工具插件从 `@nomix-ai/nomix-harness/plugin/tools` import `defineTool`。TypeScript 插件从 `@nomix-ai/nomix-harness/plugin` import `Context`、`Plugin` 和 `Schema`。
 
 创建 `hello-plugin/cordis.patch.yml`。这个 patch 与一直在写的 `--patch` overlay 一样，是一个 patch 条目的 YAML 数组；区别是插件行按包名而不是相对源码路径引用这个包，这样 Node 的模块解析才能找到已安装的代码：
 

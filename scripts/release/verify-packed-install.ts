@@ -17,6 +17,7 @@ import { spawn } from 'node:child_process'
 import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
+import { createRequire } from 'node:module'
 import { pathToFileURL } from 'node:url'
 import { parseArgs } from 'node:util'
 import { releaseFamily } from './families.ts'
@@ -147,6 +148,52 @@ function verifyNomixKernel(packageName: string, cwd: string, environment: NodeJS
     'if (realpathSync(invocation[1]) !== realpathSync(expected)) throw new Error(`unexpected runner entry: ${JSON.stringify(invocation)}, expected ${expected}`)',
   ].join(';')
   run(process.execPath, ['--input-type=module', '--eval', probe, moduleUrl], { cwd, env: environment })
+}
+
+/** Compile and execute an out-of-tree plugin that depends only on the public Harness package. */
+function verifyNomixPluginApi(cwd: string, environment: NodeJS.ProcessEnv): void {
+  writeFileSync(join(cwd, 'business-plugin.ts'), `
+import { Schema, type Context, type Plugin } from '@nomix-ai/nomix-harness/plugin'
+import { defineTool } from '@nomix-ai/nomix-harness/plugin/tools'
+
+interface Config { message: string }
+const configSchema = Schema.object({ message: Schema.string().required() })
+const helper: typeof defineTool = defineTool
+
+export const plugin: Plugin.Function<Config> = (ctx: Context, config) => {
+  void configSchema
+  void helper
+  ctx.effect(() => () => { void config.message })
+}
+`)
+  writeFileSync(join(cwd, 'tsconfig.json'), `${JSON.stringify({
+    compilerOptions: {
+      module: 'NodeNext',
+      moduleResolution: 'NodeNext',
+      target: 'ES2024',
+      strict: true,
+      noEmit: true,
+      skipLibCheck: true,
+    },
+    files: ['business-plugin.ts'],
+  }, null, 2)}\n`)
+  const require = createRequire(import.meta.url)
+  run(process.execPath, [require.resolve('typescript/bin/tsc'), '--project', join(cwd, 'tsconfig.json')], {
+    cwd,
+    env: environment,
+  })
+
+  writeFileSync(join(cwd, 'business-plugin.mjs'), `
+import { Context, Schema } from '@nomix-ai/nomix-harness/plugin'
+import { defineTool } from '@nomix-ai/nomix-harness/plugin/tools'
+if (typeof Context !== 'function' || typeof Schema.object !== 'function' || typeof defineTool !== 'function') {
+  throw new Error('Harness plugin API did not expose its runtime authoring dependencies')
+}
+const ctx = new Context()
+await ctx.plugin({ apply(pluginCtx) { pluginCtx.effect(() => () => {}) } })
+await ctx.fiber.dispose()
+`)
+  run(process.execPath, [join(cwd, 'business-plugin.mjs')], { cwd, env: environment })
 }
 
 /** Start an installed persistent application, require readiness, then stop it through its signal handler. */
@@ -280,6 +327,8 @@ async function main(): Promise<void> {
     if (family.id === 'nomix') {
       verifyNomixKernel(entry.packageName, consumerRoot, environment)
       console.log(`release verify-packed-install: installed ${entry.packageName} kernel runner resolution passed`)
+      verifyNomixPluginApi(consumerRoot, environment)
+      console.log(`release verify-packed-install: installed ${entry.packageName} external plugin API passed`)
     }
     if (entry.smokeArgs !== undefined) {
       const output = execute(manager, entry.command, entry.smokeArgs, consumerRoot, environment)
