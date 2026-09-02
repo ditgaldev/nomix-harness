@@ -157,7 +157,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        manager: [npm, pnpm, yarn]
+        manager: [npm, pnpm]
     steps:
       - uses: actions/checkout@v6
         with:

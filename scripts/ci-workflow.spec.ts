@@ -471,6 +471,15 @@ describe('npm release workflows', () => {
     expect(publish.concurrency).toMatchObject({ group: 'Release-publish' })
   })
 
+  it('verifies bundled dependencies with npm-compatible installers', () => {
+    const workflow = loadWorkflow('.github/workflows/release.yml')
+    const verifyConsumer = workflowJob(workflow, 'verify-consumer')
+    if (!isRecord(verifyConsumer.strategy) || !isRecord(verifyConsumer.strategy.matrix)) {
+      throw new TypeError('release.yml verify-consumer must define a strategy matrix')
+    }
+    expect(verifyConsumer.strategy.matrix.manager).toEqual(['npm', 'pnpm'])
+  })
+
   it('keeps the separate vendor publication dispatch-only', () => {
     const workflow = loadWorkflow('.github/workflows/release-vendor-publish.yml')
     if (!isRecord(workflow.on) || !isRecord(workflow.jobs)) {

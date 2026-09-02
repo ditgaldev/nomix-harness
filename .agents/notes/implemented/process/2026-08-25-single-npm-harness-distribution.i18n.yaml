@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/process/2026-08-25-single-npm-harness-distribution.md
-2026-08-25-single-npm-harness-distribution.md: cb9e31ac05eb2103ea1dd6f4e9707a930b7051ac
-2026-08-25-single-npm-harness-distribution.zh.md: 6af2d659783b8a65f26ce65c5c0d131089585aee
+2026-08-25-single-npm-harness-distribution.md: 6ed127623ed96b7b565a1bd3669421119598e8fb
+2026-08-25-single-npm-harness-distribution.zh.md: 6c39d2b8539c0e1c7e8561bba43a41890a94e28a

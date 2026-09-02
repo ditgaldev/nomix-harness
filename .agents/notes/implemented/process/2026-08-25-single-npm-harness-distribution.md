@@ -20,6 +20,8 @@ The tarball manifest lists repository-owned packages only as bundled dependencie
 
 ## Alternatives considered
 
+Release validation installs the aggregate tarball with npm and pnpm, the installers that preserve npm bundled dependencies without resolving their names from the registry. Yarn 4 resolves those names from the registry even when their bytes are present in the tarball, so it is not a supported installer for this distribution. Supporting it would require changing the flattened runtime layout rather than validating the npm package format produced here.
+
 **Keep three release families.** This lets installers download only one Landlock architecture, but recreates the publication ordering and partial-registry failures that the aggregate Harness distribution exists to remove.
 
 **Compile Landlock during installation.** This keeps the tarball smaller but requires a musl toolchain on consumer machines and makes confinement availability depend on install-time compilation. The launcher remains prebuilt and fail-closed.

@@ -20,6 +20,8 @@ tarball manifest 只把仓库自有包列为 bundled dependency，因此安装�
 
 ## Alternatives considered
 
+发布验证使用 npm 和 pnpm 安装聚合 tarball；这两种安装程序会保留 npm bundled dependency，而不会去 registry 解析其包名。即使 tarball 已包含对应字节，Yarn 4 仍会去 registry 解析这些包名，因此本分发不支持用 Yarn 4 安装。若要支持它，需要改变扁平化运行时布局，而不是验证这里产出的 npm 包格式。
+
 **保留三条 release family。** 这能让安装程序只下载一个 Landlock 架构，但会重新引入聚合 Harness 分发本来要消除的发布顺序和 registry 部分发布问题。
 
 **安装时编译 Landlock。** 这能减小 tarball，却要求消费机器安装 musl 工具链，并让 confinement 可用性取决于安装期编译。启动器继续采用预构建和 fail-closed 策略。
