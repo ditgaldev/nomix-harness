@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-headless",
   "description": "The nomix one-shot bundle: a direct core Agent/Session runner over nomix-base with no Host, HTTP, or browser layer",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "publishConfig": {
     "access": "public"
   },
