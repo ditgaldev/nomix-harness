@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-sdk-app",
   "description": "The nomix SDK profile bundle: stdio JSON-RPC serving and process lifecycle over nomix-base",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "publishConfig": {
     "access": "public"
   },

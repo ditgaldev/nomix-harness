@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-workflow-ptc",
   "description": "Workflow orchestration in the shared sandboxed Node PTC runtime",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "publishConfig": {
     "access": "public"
   },

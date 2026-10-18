@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-experimental-ptc-runtime-python",
   "description": "CPython subprocess implementation of the Nomix Harness PTC execution seam",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ditgaldev/nomix-harness.git",

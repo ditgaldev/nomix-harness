@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-api-account-controller",
   "description": "Expose safe account operations over authenticated Remote",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "publishConfig": {
     "access": "public"
   },
