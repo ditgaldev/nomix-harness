@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-util-values",
   "description": "Duplicate-install-safe value primitives for the Nomix Harness",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "publishConfig": {
     "access": "public"
   },

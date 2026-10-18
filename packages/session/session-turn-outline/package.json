@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-session-turn-outline",
   "description": "Whole-log turn outline projection (turnOutline) for the Nomix Harness",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "publishConfig": {
     "access": "public"
   },
