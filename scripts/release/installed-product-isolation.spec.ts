@@ -1,5 +1,6 @@
 /** Installed-product isolation uses resolved package identities and runtime edges. */
 
+import { spawnSync } from 'node:child_process'
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
@@ -25,6 +26,38 @@ function writePackage(root: string, key: string, manifest: Record<string, unknow
 
 afterEach(() => {
   for (const root of roots.splice(0)) rmSync(root, { recursive: true, force: true })
+})
+
+it('traverses installed npm dependencies that share a Node built-in name', () => {
+  const root = fixture()
+  const entry = writePackage(root, '@nomix-ai/nomix-harness', { dependencies: { 'readable-stream': '1.0.0' } })
+  writePackage(root, 'readable-stream', { dependencies: { buffer: '1.0.0' } })
+  writePackage(root, 'buffer', {})
+
+  expect(verifyInstalledProductIsolation(entry)).toBe(3)
+
+  writePackage(root, 'buffer', { dependencies: { [experimental]: '1.0.0' } })
+  expect(() => verifyInstalledProductIsolation(entry)).toThrow(
+    `@nomix-ai/nomix-harness -> readable-stream -> buffer -> ${experimental}`,
+  )
+})
+
+it('rejects missing npm dependencies even when Node provides a built-in with that name', () => {
+  const root = fixture()
+  const entry = writePackage(root, '@nomix-ai/nomix-harness', { dependencies: { 'readable-stream': '1.0.0' } })
+  writePackage(root, 'readable-stream', { dependencies: { buffer: '1.0.0' } })
+
+  // Vitest adds its own installed buffer to NODE_PATH; the consumer must resolve only its installed dependencies.
+  const result = spawnSync(process.execPath, ['--import', 'tsx/esm', '--input-type=module', '--eval', `
+    import { verifyInstalledProductIsolation } from ${JSON.stringify(new URL('./installed-product-isolation.ts', import.meta.url).href)}
+    verifyInstalledProductIsolation(${JSON.stringify(entry)})
+  `], { encoding: 'utf8', env: { ...process.env, NODE_PATH: '' } })
+  expect(result.error).toBeUndefined()
+  expect(result.signal).toBeNull()
+  expect(result.status).toBe(1)
+  expect(result.stderr).toContain(
+    'default product dependency is missing: @nomix-ai/nomix-harness -> readable-stream -> buffer',
+  )
 })
 
 describe.each([experimental, ...Object.values(EXPERIMENTAL_PACKAGE_NAME_EXCEPTIONS)])('installed default-product isolation: %s', (experimental) => {
