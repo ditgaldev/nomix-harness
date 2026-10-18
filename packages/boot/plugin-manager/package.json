@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-plugin-manager",
   "description": "Current-profile plugin and bundle management shared by nomix CLI, Web and agent tools",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "publishConfig": {
     "access": "public"
   },

@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-experimental-terminal-bundle",
   "description": "Keep shell processes alive across tool calls.",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "icon": "./icon.svg",
   "publishConfig": {
     "access": "public"

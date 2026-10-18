@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/nomix-acp-app",
   "description": "The nomix ACP profile bundle: automation-only JSON-RPC stdio and process lifecycle over nomix-base",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "publishConfig": {
     "access": "public"
   },
