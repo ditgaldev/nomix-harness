@@ -4728,7 +4728,7 @@
                   "type": "tool-call",
                   "id": "fx-call-70",
                   "name": "web_search",
-                  "arguments": "{\"queries\":[\"deepseek harness architecture\"]}"
+                  "arguments": "{\"queries\":[\"Nomix Harness architecture\"]}"
                 }
               ],
               "source": {
@@ -4764,7 +4764,7 @@
                     "type": "tool-call",
                     "id": "fx-call-70",
                     "name": "web_search",
-                    "arguments": "{\"queries\":[\"deepseek harness architecture\"]}"
+                    "arguments": "{\"queries\":[\"Nomix Harness architecture\"]}"
                   }
                 }
               },
@@ -4806,7 +4806,7 @@
             "step": 0,
             "callId": "fx-call-70",
             "name": "web_search",
-            "arguments": "{\"queries\":[\"deepseek harness architecture\"]}"
+            "arguments": "{\"queries\":[\"Nomix Harness architecture\"]}"
           }
         }
       },
@@ -4831,7 +4831,7 @@
               "content": [
                 {
                   "type": "text",
-                  "text": "Search results for deepseek harness architecture."
+                  "text": "Search results for Nomix Harness architecture."
                 }
               ],
               "isError": false

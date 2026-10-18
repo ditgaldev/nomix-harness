@@ -3,8 +3,8 @@
 # After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write python/sdk-runtime/README.md
 /nomix-harness-runtime-bin:
-  en: 035b64c1a22cf08e
-  zh: 601bba5eade3289a
+  en: a2388cc00393ed9c
+  zh: 376310377707a296
 /nomix-harness-runtime-bin/installed-commands-and-artifacts:
   en: f9f1de2d33ea6619
   zh: 75f50986db223f25

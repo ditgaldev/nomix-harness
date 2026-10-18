@@ -10,6 +10,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
 authors = [{ name = "DeepSeek" }]
+maintainers = [{ name = "Nomix" }]
 
 [project.urls]
 Homepage = "https://github.com/ditgaldev/nomix-harness"

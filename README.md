@@ -2,7 +2,7 @@
 
 English | [中文](README.zh.md)
 
-Nomix Harness (`nomix`) is an open-source agent harness developed by [DeepSeek AI](https://deepseek.com).
+Nomix Harness (`nomix`) is a Nomix-maintained fork of the open-source [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness).
 
 It is built on an **everything-is-a-plugin** architecture and powered by [Cordis](https://github.com/cordiverse/cordis), whose design is described in [_A Programming Paradigm for Spatiotemporal Composability_](https://arxiv.org/abs/2608.25512).
 
@@ -44,7 +44,6 @@ pnpm nomix web
 
 - Submit feedback or bug reports through [GitHub Discussions](https://github.com/ditgaldev/nomix-harness/discussions).
 - Add the [`nomix-plugin`](https://github.com/topics/nomix-plugin) topic to your plugin repository for discoverability.
-- Join <a href="https://discord.gg/4MrtZUhpxg">Nomix Harness Discord community</a>.
 
 ## Contributing
 
@@ -58,15 +57,15 @@ Start with the [development guide](docs/development.md) and [architecture docume
 
 For agents, follow [AGENTS.md](AGENTS.md).
 
-## Citation
+## Upstream citation
 
 ```bibtex
-@misc{nomix-harness2026,
-  title={Nomix Harness: Everything is a Plugin},
+@misc{deepseek-harness2026,
+  title={DeepSeek Harness: Everything is a Plugin},
   author={DeepSeek-AI},
   year={2026},
   publisher={GitHub},
-  howpublished={\url{https://github.com/ditgaldev/nomix-harness}},
+  howpublished={\url{https://github.com/deepseek-ai/deepseek-harness}},
 }
 ```
 

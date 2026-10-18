@@ -249,12 +249,12 @@ describe('document validation', () => {
     // the first request instead of at load. (The recognized all-string flat
     // layout upgrades in place instead — migration.spec owns that path.)
     ['the flat layout with a non-string value', 'NOMIX_CRED_TEST: [nope]\n', /nest the existing 1 entry under/],
-    ['the flat layout with several entries and a non-string value', 'NOMIX_CRED_TEST: a\nDSH_CRED_OTHER: [b]\n',
+    ['the flat layout with several entries and a non-string value', 'NOMIX_CRED_TEST: a\nNOMIX_CRED_OTHER: [b]\n',
       /nest the existing 2 entries under/],
     ['the flat layout with an empty value', 'NOMIX_CRED_TEST: ""\n', /pre-release flat layout/],
     ['the flat layout with an unaddressable key', 'not-a-ref: value\n', /pre-release flat layout/],
     ['the flat layout with a non-string key', '1: a\n', /pre-release flat layout/],
-    ['the flat layout under document directives', '%YAML 1.2\n---\nDSH_CRED_TEST: a\n',
+    ['the flat layout under document directives', '%YAML 1.2\n---\nNOMIX_CRED_TEST: a\n',
       /pre-release flat layout/],
     ['a future version', 'version: 2\nrefs: {}\n', /this build reads version 1/],
     ['a non-mapping refs section', 'version: 1\nrefs: nope\n', /"refs" .* must be a mapping/],

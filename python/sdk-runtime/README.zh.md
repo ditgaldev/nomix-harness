@@ -4,6 +4,8 @@
 
 Nomix Harness Python SDK 的平台运行时 wheel 包。它把普通 `nomix` CLI（命令行界面）及其封闭的 Node 依赖树打包成原生可执行程序，因此使用 SDK 不需要系统 Node.js。本包只发布 wheel 包。
 
+本发行包由 Nomix 维护，包元数据保留原始 DeepSeek 作者署名。
+
 ## 安装命令与产物
 
 wheel 包会安装 `nomix` 控制台命令和 `nomix_harness_runtime` Python 模块。`nomix` 将参数转发给内置可执行程序，并要求非空 `NOMIX_HOME`；它不会回退到 `~/.nomix`。

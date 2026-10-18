@@ -92,7 +92,7 @@ final class AxlessFixture: NSObject, NSApplicationDelegate, NSWindowDelegate {
 }
 let app = NSApplication.shared
 app.setActivationPolicy(.regular)
-let statePath = CommandLine.arguments.dropFirst().first ?? Bundle.main.object(forInfoDictionaryKey: "DSHFixtureStatePath") as? String
+let statePath = CommandLine.arguments.dropFirst().first ?? Bundle.main.object(forInfoDictionaryKey: "NomixFixtureStatePath") as? String
 guard let statePath else { fatalError("Fixture requires a state path") }
 let fixture = AxlessFixture(statePath: statePath)
 app.delegate = fixture

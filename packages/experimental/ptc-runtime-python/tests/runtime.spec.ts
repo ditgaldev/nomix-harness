@@ -400,7 +400,7 @@ describe('PythonPtcRuntime — seam descriptors and misuse', () => {
   it('resolves pythonBin once so a later PATH change cannot switch interpreters', async () => {
     const firstDir = await mkdtemp(join(tmpdir(), 'nomix-python-first-'))
     const secondDir = await mkdtemp(join(tmpdir(), 'nomix-python-second-'))
-    const wrapper = (marker: string): string => `#!/bin/sh\nDSH_TEST_PYTHON=${marker}\nexport NOMIX_TEST_PYTHON\nexec "${PYABS}" "$@"\n`
+    const wrapper = (marker: string): string => `#!/bin/sh\nNOMIX_TEST_PYTHON=${marker}\nexport NOMIX_TEST_PYTHON\nexec "${PYABS}" "$@"\n`
     await writeFile(join(firstDir, 'python3'), wrapper('first'), { mode: 0o755 })
     await writeFile(join(secondDir, 'python3'), wrapper('second'), { mode: 0o755 })
     vi.stubEnv('PATH', firstDir)

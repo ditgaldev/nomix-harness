@@ -3,8 +3,8 @@
 # After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write README.md
 /nomix-harness:
-  en: df615af668460d43
-  zh: c14dc4ed4d01cb49
+  en: d711a9e9b153de73
+  zh: 2d27df6887777c8d
 /nomix-harness/developer-preview:
   en: 98172391e4b5a3f8
   zh: 68928d447d31a89c
@@ -18,17 +18,17 @@
   en: 93cf98b85bb012a3
   zh: 5d87f2019b399522
 /nomix-harness/community-and-support:
-  en: e1bc35afa0c4588e
-  zh: d20efe4b92dae550
+  en: c3161d382b24bd0f
+  zh: 97824742aabc1a3d
 /nomix-harness/contributing:
   en: 98eebb1deb706ca1
   zh: 72b8cc667d6531f6
 /nomix-harness/development:
   en: e40cfd8562f74698
   zh: 9a4c35984db7d5a2
-/nomix-harness/citation:
-  en: 6704e9e5a8d49a91
-  zh: 85c9cdd8d56f8e9d
+/nomix-harness/upstream-citation:
+  en: 0352892c73883ed3
+  zh: 314ae99d7d91df60
 /nomix-harness/license:
   en: 926995344fc1c72b
   zh: c92fab5abf85932f

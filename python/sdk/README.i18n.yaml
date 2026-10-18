@@ -3,8 +3,8 @@
 # After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write python/sdk/README.md
 /nomix-harness-python-sdk:
-  en: 4c25c1553f7470fe
-  zh: 313e04680a2f3e50
+  en: efcd4cd9ae737c27
+  zh: 3259197c627ecfd1
 /nomix-harness-python-sdk/optional-office-operations:
   en: e8c1322691dd034e
   zh: 4926aa8cd5d376c7

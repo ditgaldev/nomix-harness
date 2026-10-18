@@ -2,7 +2,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "DSHCUANative",
+    name: "NomixCUANative",
     platforms: [.macOS(.v14)],
     products: [.executable(name: "nomix-cua-native", targets: ["CuaNative"])],
     targets: [

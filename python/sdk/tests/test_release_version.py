@@ -22,6 +22,14 @@ def test_repository_version_matches_root_package_json() -> None:
     assert build_python_release.repository_version() == expected
 
 
+@pytest.mark.parametrize("package", ["sdk", "sdk-runtime"])
+def test_python_packages_identify_nomix_maintenance_and_preserve_upstream_authorship(package: str) -> None:
+    metadata = (ROOT / "python" / package / "pyproject.toml").read_text()
+
+    assert 'maintainers = [{ name = "Nomix" }]' in metadata
+    assert 'authors = [{ name = "DeepSeek" }]' in metadata
+
+
 def test_release_tag_is_optional_for_non_release_builds() -> None:
     build_python_release.validate_release_tag(None, "1.2.3")
 

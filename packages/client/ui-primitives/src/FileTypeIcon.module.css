@@ -6,7 +6,7 @@
 }
 
 .code {
-  --nomix-file-type-default-color: var(--dsw-static-deepseek-500);
+  --nomix-file-type-default-color: var(--dsw-static-nomix-500);
 }
 
 .excel {
@@ -18,7 +18,7 @@
 }
 
 .html {
-  --nomix-file-type-default-color: var(--dsw-static-deepseek-500);
+  --nomix-file-type-default-color: var(--dsw-static-nomix-500);
 }
 
 .image {
@@ -26,7 +26,7 @@
 }
 
 .markdown {
-  --nomix-file-type-default-color: var(--dsw-static-deepseek-500);
+  --nomix-file-type-default-color: var(--dsw-static-nomix-500);
 }
 
 .other {
@@ -46,5 +46,5 @@
 }
 
 .word {
-  --nomix-file-type-default-color: var(--dsw-static-deepseek-450);
+  --nomix-file-type-default-color: var(--dsw-static-nomix-450);
 }

@@ -10,7 +10,7 @@ async function withPreset(run: (root: string) => Promise<void>) {
   try {
     await mkdir(join(root, 'presets'))
     await mkdir(join(root, 'secrets'))
-    await writeFile(join(root, 'presets/test.env'), 'NOMIX_DESKTOP_AUTO_UPDATE_ENV=test\nDSH_DESKTOP_APP_ID=com.example.desktop\n')
+    await writeFile(join(root, 'presets/test.env'), 'NOMIX_DESKTOP_AUTO_UPDATE_ENV=test\nNOMIX_DESKTOP_APP_ID=com.example.desktop\n')
     await run(root)
   } finally {
     await rm(root, { recursive: true, force: true })
@@ -38,7 +38,7 @@ it('resolves signing file paths relative to the secret file and rejects public o
   await withPreset(async (root) => {
     const env = { NOMIX_PACKAGING_CONFIG_DIR: root, NOMIX_PACKAGING_PRESET: 'test' }
     const file = join(root, 'secrets/windows-signing.env')
-    await writeFile(file, 'NOMIX_DESKTOP_WINDOWS_CER_FILE=../certificates/ev.cer\nDSH_DESKTOP_WINDOWS_TOKEN_PIN="private-value"\n')
+    await writeFile(file, 'NOMIX_DESKTOP_WINDOWS_CER_FILE=../certificates/ev.cer\nNOMIX_DESKTOP_WINDOWS_TOKEN_PIN="private-value"\n')
     const result = loadDesktopPackageEnvironment('win32', env)
     expect(result.NOMIX_DESKTOP_WINDOWS_CER_FILE).toBe(join(root, 'certificates/ev.cer'))
     expect(result.NOMIX_DESKTOP_WINDOWS_TOKEN_PIN).toBe('private-value')
@@ -77,7 +77,7 @@ it('rejects missing presets, traversal, deployment mismatches and secrets in pub
 it('cache maintenance reaches cache path validation without a signing file', async () => {
   await withPreset(async (root) => {
     await writeFile(join(root, 'presets/test.env'),
-      'NOMIX_DESKTOP_AUTO_UPDATE_ENV=test\nDSH_DESKTOP_WINDOWS_SIGNATURE_CACHE_DIR=relative-cache\n')
+      'NOMIX_DESKTOP_AUTO_UPDATE_ENV=test\nNOMIX_DESKTOP_WINDOWS_SIGNATURE_CACHE_DIR=relative-cache\n')
     const result = spawnSync(process.execPath,
       [join(import.meta.dirname, '../scripts/manage-windows-signature-cache.mjs'), '--usage'], {
         env: { ...process.env, NOMIX_PACKAGING_CONFIG_DIR: root, NOMIX_PACKAGING_PRESET: 'test' },

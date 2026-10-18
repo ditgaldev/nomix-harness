@@ -4,6 +4,8 @@ English | [中文](README.zh.md)
 
 Python subprocess SDK for driving Nomix Harness over newline-delimited JSON-RPC on stdio. Install `nomix-harness-sdk`; it installs the exact same-version `nomix-harness-runtime-bin` wheel for the current platform.
 
+Nomix maintains this distribution. Package metadata retains the original DeepSeek authorship.
+
 ```sh
 python -m pip install nomix-harness-sdk
 ```

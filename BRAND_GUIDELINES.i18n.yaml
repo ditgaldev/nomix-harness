@@ -3,5 +3,5 @@
 # After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write BRAND_GUIDELINES.md
 /nomix-harness-brand-asset-usage-guidelines:
-  en: 4f37c5133995fc0b
-  zh: d5fd7ff22f857262
+  en: 9157a11648832d2e
+  zh: 3262491d95007bcd

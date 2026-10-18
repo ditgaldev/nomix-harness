@@ -63,6 +63,15 @@ describe('Client UI i18n source check', () => {
     )).toEqual([])
   })
 
+  it('accepts only the fixed artwork text in the decorative brand wordmark', () => {
+    const source = '<svg><text>Nomix</text><text>HARNESS</text><text>Start now</text></svg>'
+    expect(findUiI18nViolations('packages/client/ui-primitives/src/BrandWordmark.tsx', source)
+      .map(row => row.text)).toEqual(['Start now'])
+    expect(messages(source)).toEqual(['Nomix', 'HARNESS', 'Start now'])
+    expect(findUiI18nViolations('packages/client/ui-primitives/src/BrandWordmark.tsx',
+      '<svg aria-label="Nomix"><text>Nomix</text></svg>').map(row => row.text)).toEqual(['Nomix'])
+  })
+
   it('rejects Electron dialog, title, prompt, and DOM copy outside locale owners', () => {
     const source = `
       dialog.showMessageBox({ title: 'Update available', message: 'Install it now?' })

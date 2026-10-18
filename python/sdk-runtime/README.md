@@ -4,6 +4,8 @@ English | [中文](README.zh.md)
 
 Platform runtime wheel for the Nomix Harness Python SDK. It packages the normal `nomix` CLI and its closed Node dependency tree into a native executable, so SDK use requires no system Node.js. This package publishes wheels only.
 
+Nomix maintains this distribution. Package metadata retains the original DeepSeek authorship.
+
 ## Installed commands and artifacts
 
 The wheel installs a `nomix` console command and the `nomix_harness_runtime` Python module. `nomix` forwards its arguments to the bundled executable and requires a non-empty `NOMIX_HOME`; it never falls back to `~/.nomix`.

@@ -147,7 +147,7 @@ describe('experimental Inspector Host DevTools routes', () => {
       'sec-websocket-protocol': ['nomix-fixture', 'nomix-other'],
       'sec-websocket-extensions': undefined,
       'user-agent': 'fixture',
-    }), selected.server, clientTextFrame(JSON.stringify({ id: 1, method: 'DSHInspector.getSources' })))
+    }), selected.server, clientTextFrame(JSON.stringify({ id: 1, method: 'NomixInspector.getSources' })))
     const answered = await reply
     expect(answered.status).toMatch(/^HTTP\/1\.1 101 /u)
     expect(answered.headers.toLowerCase()).toContain('sec-websocket-protocol: nomix-fixture')
@@ -158,7 +158,7 @@ describe('experimental Inspector Host DevTools routes', () => {
     const later = readUpgrade(unselected.client)
     await upgrade.handler(upgradeRequest(undefined, {}), unselected.server, Buffer.alloc(0))
     await vi.waitFor(() => { expect(unselected.received().toString('latin1')).toMatch(/^HTTP\/1\.1 101 /u) })
-    unselected.client.write(clientTextFrame(JSON.stringify({ id: 1, method: 'DSHInspector.getSources' })))
+    unselected.client.write(clientTextFrame(JSON.stringify({ id: 1, method: 'NomixInspector.getSources' })))
     expect((await later).message).toMatchObject({ id: 1 })
 
     const reset = await socketPair()

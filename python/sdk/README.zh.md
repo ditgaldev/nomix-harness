@@ -4,6 +4,8 @@
 
 用于通过 stdio 上按行分隔的 JSON-RPC 驱动 Nomix Harness 的 Python 子进程 SDK。安装 `nomix-harness-sdk` 时，会同时安装当前平台上版本完全相同的 `nomix-harness-runtime-bin` wheel 包。
 
+本发行包由 Nomix 维护，包元数据保留原始 DeepSeek 作者署名。
+
 ```sh
 python -m pip install nomix-harness-sdk
 ```

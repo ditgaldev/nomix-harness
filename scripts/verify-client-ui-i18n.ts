@@ -236,7 +236,12 @@ export function findUiI18nViolations(file: string, sourceText: string): UiI18nVi
   }
 
   const visit = (node: ts.Node): void => {
-    if (ts.isJsxText(node)) report(node, node.text, 'JSX text')
+    if (ts.isJsxText(node)) {
+      // The decorative wordmark retains its exact brand spelling in every locale.
+      const wordmark = file === 'packages/client/ui-primitives/src/BrandWordmark.tsx'
+        && (node.text.trim() === 'Nomix' || node.text.trim() === 'HARNESS')
+      if (!wordmark) report(node, node.text, 'JSX text')
+    }
 
     if (ts.isJsxAttribute(node)) {
       const name = node.name.getText(source)

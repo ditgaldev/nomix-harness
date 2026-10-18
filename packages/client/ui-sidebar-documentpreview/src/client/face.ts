@@ -187,7 +187,7 @@ export function textFace(
         if (lifetime.aborted) return
         actions.failed(tabId, Object.assign(
           new Error(error instanceof Error ? error.message : String(error), { cause: error }),
-          { name: 'RemoteError', isDSHRemoteError: true as const, code: 'gateway/internal' as const, details: {} },
+          { name: 'RemoteError', isNomixRemoteError: true as const, code: 'gateway/internal' as const, details: {} },
         ))
       })
     }

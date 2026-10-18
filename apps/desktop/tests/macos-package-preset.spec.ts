@@ -13,7 +13,7 @@ it('loads machine signing credentials independently of the checkout and rejects 
     await mkdir(join(root, 'secrets'))
     const preset = join(root, 'presets/test.env')
     const secrets = join(root, 'secrets/macos-signing.env')
-    await writeFile(preset, 'NOMIX_DESKTOP_AUTO_UPDATE_ENV=test\nDSH_DESKTOP_MACOS_PACK_CONCURRENCY=2\nDSH_DESKTOP_MACOS_SIGNATURE_CACHE_DIR=/machine/cache\n')
+    await writeFile(preset, 'NOMIX_DESKTOP_AUTO_UPDATE_ENV=test\nNOMIX_DESKTOP_MACOS_PACK_CONCURRENCY=2\nNOMIX_DESKTOP_MACOS_SIGNATURE_CACHE_DIR=/machine/cache\n')
     await writeFile(secrets, 'CSC_LINK=../certificates/app.p12\nCSC_KEY_PASSWORD=machine-secret\nAPPLE_API_KEY=../certificates/key.p8\n')
     const env = { NOMIX_PACKAGING_PRESET: 'test', NOMIX_PACKAGING_CONFIG_DIR: root, CSC_KEY_PASSWORD: 'ambient-secret' }
     for (const options of [{}, { prepareOnly: true }]) {
