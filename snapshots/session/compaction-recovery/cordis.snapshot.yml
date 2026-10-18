@@ -1,0 +1,29 @@
+# Keyless context-overflow replay composition.
+
+- id: llm-deepseek
+  name: '@nomix-ai/nomix-llm-deepseek-api-key'
+  disabled: true
+
+- id: session-persistence-jsonl
+  name: '@nomix-ai/nomix-session-persistence-jsonl'
+  config:
+    root: !!js nomixHomePath('sessions')
+    compression: none
+
+- id: compaction-basic
+  name: '@nomix-ai/nomix-compaction-basic'
+  config:
+    thresholdRatio: 0.99
+    retainTokens: 20
+    maxTokens: 32
+
+- insert:
+    - id: llm-replay
+      name: '@nomix-ai/nomix-llm-replay'
+      config:
+        providers:
+          - id: deepseek-official
+            name: DeepSeek
+            models:
+              - id: deepseek-v4-flash
+                contextWindow: 128000

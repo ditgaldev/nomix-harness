@@ -1,6 +1,37 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/client/ui-settings-plugins/README.md
-README.md: 3a7b1b7e48c645c62ad8b301d8b46ac734e77cc5
-README.zh.md: 4b37c63e95035bd0d63ea35894530af985d6d930
+/:
+  en: c09f2413fe413c8c
+  zh: d307bb0640aba72a
+/nomix-ai-nomix-client-ui-settings-plugins:
+  en: e0c829ffb22e8c06
+  zh: dcaed0511c4288de
+/nomix-ai-nomix-client-ui-settings-plugins/summary:
+  en: d9b27f1dd9713b4f
+  zh: 3ec674429179ae7d
+/nomix-ai-nomix-client-ui-settings-plugins/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-client-ui-settings-plugins/use-this-package:
+  en: b30911a5637d80fc
+  zh: 4147060d211fff05
+/nomix-ai-nomix-client-ui-settings-plugins/understand-the-implementation:
+  en: c5cfef002b32c7c1
+  zh: 0249b45a28c16b61
+/nomix-ai-nomix-client-ui-settings-plugins/further-exploration:
+  en: 4ae3b0c42c798cf0
+  zh: 500e40b9ce9eae5e
+/nomix-ai-nomix-client-ui-settings-plugins/model-experience:
+  en: 6b7c6f82ab6c8435
+  zh: 4517689c899abcbe
+/nomix-ai-nomix-client-ui-settings-plugins/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: 6e1c9a8fdde89577
+/nomix-ai-nomix-client-ui-settings-plugins/known-limitations-and-deferred-work:
+  en: 4950e959be39bc0c
+  zh: 8f0703f3304d9336
+/nomix-ai-nomix-client-ui-settings-plugins/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

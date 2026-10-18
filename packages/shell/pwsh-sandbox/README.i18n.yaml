@@ -1,6 +1,73 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/shell/pwsh-sandbox/README.md
-README.md: f3d1fa8806bc9018d5a65e08f52c3e0babce3192
-README.zh.md: 109fcee7725fd90dfc49b108c3715d892af1b166
+/:
+  en: d42333572a114759
+  zh: 7de2bc8a30baf573
+/nomix-ai-nomix-pwsh-sandbox:
+  en: 2a50c2e1d4600dd9
+  zh: 093c36b8e5680a38
+/nomix-ai-nomix-pwsh-sandbox/summary:
+  en: 15e46daf510d399e
+  zh: aba0c75e86073598
+/nomix-ai-nomix-pwsh-sandbox/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-pwsh-sandbox/use-this-package:
+  en: 1d4fca7caae7ffd6
+  zh: c21d2819a6b63d76
+/nomix-ai-nomix-pwsh-sandbox/use-this-package/when-to-choose-it:
+  en: 8a43fa466bcf6fc7
+  zh: 28d2381299d1e592
+/nomix-ai-nomix-pwsh-sandbox/use-this-package/modes-and-file-effects:
+  en: a097100674539423
+  zh: 6c25043f90650113
+/nomix-ai-nomix-pwsh-sandbox/use-this-package/minimal-configuration:
+  en: b78b5a30100edfa0
+  zh: b75361f7d511a13b
+/nomix-ai-nomix-pwsh-sandbox/use-this-package/denials-and-escalation:
+  en: b3deb62991a7388a
+  zh: 2b500e1912f95f28
+/nomix-ai-nomix-pwsh-sandbox/use-this-package/failures-and-recovery:
+  en: 0d5b6818c3dad919
+  zh: e1d21581d66efb78
+/nomix-ai-nomix-pwsh-sandbox/understand-the-implementation:
+  en: 05e2abe4a25886fd
+  zh: 3f7f1326dc3c1d3f
+/nomix-ai-nomix-pwsh-sandbox/understand-the-implementation/design-concept:
+  en: c105c15c54688c41
+  zh: 71b40855c92e8d2e
+/nomix-ai-nomix-pwsh-sandbox/understand-the-implementation/source-map:
+  en: e7af8c5552806441
+  zh: 2ad6a90d828bbd73
+/nomix-ai-nomix-pwsh-sandbox/understand-the-implementation/main-flow:
+  en: 93f0842800cb0e52
+  zh: cfde2946230560ee
+/nomix-ai-nomix-pwsh-sandbox/understand-the-implementation/invariants:
+  en: 56b6b8d45b5fc463
+  zh: fe1a53e4ad514bc6
+/nomix-ai-nomix-pwsh-sandbox/further-exploration:
+  en: 3a00bc7af56e0c8e
+  zh: c15490d1e570aa96
+/nomix-ai-nomix-pwsh-sandbox/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-pwsh-sandbox/model-experience/confinement-works-denial-surfaces-as-command-failure:
+  en: 2348d676f74cc6fc
+  zh: 845691fedce1e35c
+/nomix-ai-nomix-pwsh-sandbox/model-experience/confinement-works-denial-surfaces-as-command-failure/what-the-model-sees:
+  en: 0faadadd5c52f3d2
+  zh: 28eec841864921d2
+/nomix-ai-nomix-pwsh-sandbox/model-experience/confinement-works-denial-surfaces-as-command-failure/token-effect:
+  en: 7a9e4f861d7ede15
+  zh: da79315a26df214b
+/nomix-ai-nomix-pwsh-sandbox/model-experience/confinement-works-denial-surfaces-as-command-failure/kv-cache-effect:
+  en: 796af37d6f6add68
+  zh: 7975ff2a21c1b4f3
+/nomix-ai-nomix-pwsh-sandbox/known-limitations-and-deferred-work:
+  en: d6ca5195be0f41c8
+  zh: d4dd441e0412a816
+/nomix-ai-nomix-pwsh-sandbox/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

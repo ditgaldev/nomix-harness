@@ -1,6 +1,61 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/host/directory-picker-browse/README.md
-README.md: 8ce884262a1270891ba1f3a0f2bf90eca4711879
-README.zh.md: 2326ee2eafda963cbec76fe09673c531f9dae2a6
+/:
+  en: bea16365bc3196b2
+  zh: ba6b3c899a0f20b2
+/nomix-ai-nomix-host-directory-picker-browse:
+  en: 9403b8e8fbacc578
+  zh: 79a77a2e4ad688ed
+/nomix-ai-nomix-host-directory-picker-browse/summary:
+  en: 9f0c38fc086418b6
+  zh: 60eaedf0c43a8927
+/nomix-ai-nomix-host-directory-picker-browse/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-host-directory-picker-browse/use-this-package:
+  en: 943e692ce514daf6
+  zh: 917f508c4c612eae
+/nomix-ai-nomix-host-directory-picker-browse/use-this-package/listing-a-directory:
+  en: fc4fc8e16e37df02
+  zh: d609eeb57557e5cb
+/nomix-ai-nomix-host-directory-picker-browse/use-this-package/creating-a-directory:
+  en: 71acb6e2f9b6176d
+  zh: 64e0bd932507dfe9
+/nomix-ai-nomix-host-directory-picker-browse/use-this-package/observable-failures:
+  en: 3f136f768deaab29
+  zh: 39eef7ad16271cdb
+/nomix-ai-nomix-host-directory-picker-browse/use-this-package/configuration:
+  en: 5faba892053f6177
+  zh: b01578af3dcb40fe
+/nomix-ai-nomix-host-directory-picker-browse/understand-the-implementation:
+  en: 42b15ac6321706aa
+  zh: 4ed0861911abaf5d
+/nomix-ai-nomix-host-directory-picker-browse/understand-the-implementation/design-concept:
+  en: cec8eab00b0484b9
+  zh: 213a5cf9f61bd0e0
+/nomix-ai-nomix-host-directory-picker-browse/understand-the-implementation/the-fully-qualified-fence:
+  en: b547791a9cd9d9f0
+  zh: fd62beb4b2cac303
+/nomix-ai-nomix-host-directory-picker-browse/understand-the-implementation/abort-and-probing:
+  en: adffb1740e726f22
+  zh: edfe4a1f3141a1b5
+/nomix-ai-nomix-host-directory-picker-browse/understand-the-implementation/source-map:
+  en: 014babc8e5a26317
+  zh: b1a1039dd3dd48a9
+/nomix-ai-nomix-host-directory-picker-browse/further-exploration:
+  en: 7192e49412e58fcd
+  zh: 7439e4cdd0262574
+/nomix-ai-nomix-host-directory-picker-browse/model-experience:
+  en: cdbb9c75fbb91bb5
+  zh: 35047dda1956f0ac
+/nomix-ai-nomix-host-directory-picker-browse/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: de54f3467ef3b9be
+/nomix-ai-nomix-host-directory-picker-browse/known-limitations-and-deferred-work:
+  en: 45c0c8ff249e6119
+  zh: d7e4ff77f5978fba
+/nomix-ai-nomix-host-directory-picker-browse/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

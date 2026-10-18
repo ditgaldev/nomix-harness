@@ -1,6 +1,67 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/compaction/compaction-tool-result-pruner/README.md
-README.md: 78e8029cbd5165c424d3ec434f120fff05cca399
-README.zh.md: 37528213867d0d008829612411d6abc2c92e7c6b
+/:
+  en: 9ed7a84c51988fdb
+  zh: 4df60a349c2be7dc
+/nomix-ai-nomix-compaction-tool-result-pruner:
+  en: 1911d0031cf0505d
+  zh: 9a5d5c42670034a6
+/nomix-ai-nomix-compaction-tool-result-pruner/summary:
+  en: 53734b45b1304ed4
+  zh: 1b50559f62260630
+/nomix-ai-nomix-compaction-tool-result-pruner/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-compaction-tool-result-pruner/use-this-package:
+  en: d234d91f415953ef
+  zh: f220fbf3039986c3
+/nomix-ai-nomix-compaction-tool-result-pruner/use-this-package/smallest-working-composition:
+  en: 55eadf840a54d2f8
+  zh: cc6bf82f58058c7b
+/nomix-ai-nomix-compaction-tool-result-pruner/use-this-package/what-gets-trimmed:
+  en: a5cb5c94edcd91e3
+  zh: ed95adc91d11bbda
+/nomix-ai-nomix-compaction-tool-result-pruner/use-this-package/setting-the-size-limits:
+  en: 562a5af17fb059f0
+  zh: 9ac996982fc2ba69
+/nomix-ai-nomix-compaction-tool-result-pruner/use-this-package/when-trimming-runs:
+  en: dd623ee6d08306de
+  zh: a6e2499eb8b8f829
+/nomix-ai-nomix-compaction-tool-result-pruner/understand-the-implementation:
+  en: 57aaa53880042873
+  zh: 667f54624411c37d
+/nomix-ai-nomix-compaction-tool-result-pruner/understand-the-implementation/design-philosophy:
+  en: 5adff8207c6294e0
+  zh: ccba42d804989abb
+/nomix-ai-nomix-compaction-tool-result-pruner/understand-the-implementation/pruning-mechanics:
+  en: 9813749e4f016897
+  zh: f2b2b5d6e5e8977a
+/nomix-ai-nomix-compaction-tool-result-pruner/understand-the-implementation/source-map:
+  en: 4544e91902960a0e
+  zh: 0b07cb7e3d96267b
+/nomix-ai-nomix-compaction-tool-result-pruner/further-exploration:
+  en: 13ba4fa995549b5c
+  zh: 35e45d4d1bfcd2a6
+/nomix-ai-nomix-compaction-tool-result-pruner/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-compaction-tool-result-pruner/model-experience/pruned-tool-result:
+  en: 0b0dfb7ec1bf906f
+  zh: 68f70bde796751cd
+/nomix-ai-nomix-compaction-tool-result-pruner/model-experience/pruned-tool-result/what-the-model-sees:
+  en: 8514b5a6586bd65d
+  zh: 2a0648bea6cb81b6
+/nomix-ai-nomix-compaction-tool-result-pruner/model-experience/pruned-tool-result/token-effect:
+  en: 1b11d405468e8d5d
+  zh: 06dc9aef281c776d
+/nomix-ai-nomix-compaction-tool-result-pruner/model-experience/pruned-tool-result/kv-cache-effect:
+  en: aac7de507412ba39
+  zh: bdd8f391ad9c9a81
+/nomix-ai-nomix-compaction-tool-result-pruner/known-limitations-and-deferred-work:
+  en: 2a7be98dc032e9bc
+  zh: d6710b1130722d12
+/nomix-ai-nomix-compaction-tool-result-pruner/known-limitations-and-deferred-work/dev-note:
+  en: 19120c19286532da
+  zh: 49187f1e83b31007

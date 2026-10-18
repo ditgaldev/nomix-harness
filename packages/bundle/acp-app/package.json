@@ -1,0 +1,48 @@
+{
+  "name": "@nomix-ai/nomix-acp-app",
+  "description": "The nomix ACP profile bundle: automation-only JSON-RPC stdio and process lifecycle over nomix-base",
+  "version": "0.2.9",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
+    "directory": "packages/bundle/acp-app"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "cordis.patch.yml",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "nomix": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "dependencies": {
+    "@nomix-ai/nomix-acp": "workspace:*",
+    "@nomix-ai/nomix-cmdline": "workspace:*",
+    "commander": "^15.0.0"
+  },
+  "peerDependencies": {
+    "@nomix-ai/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@nomix-ai/cordis-plugin-include": "workspace:~",
+    "@nomix-ai/cordis": "workspace:~"
+  }
+}

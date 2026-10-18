@@ -1,6 +1,52 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/client/ui-renderer/README.md
-README.md: e0881d54acd8a960e28b264064b180157d446c19
-README.zh.md: eae0c515f6af81dc587a4b58cca1fa1ed229bf68
+/:
+  en: ed497ab62cbb0665
+  zh: fb02e42c15815a0c
+/nomix-ai-nomix-client-ui-renderer:
+  en: 4a8f6aa3d4b96a75
+  zh: b951cbab4e642156
+/nomix-ai-nomix-client-ui-renderer/summary:
+  en: ca63166c1f7d4f48
+  zh: d3f5c00b779f4cde
+/nomix-ai-nomix-client-ui-renderer/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-client-ui-renderer/use-this-package:
+  en: fb65444b339a7a9b
+  zh: eb78d84cd5281f87
+/nomix-ai-nomix-client-ui-renderer/use-this-package/what-mounting-does:
+  en: 1d5350799ce072d0
+  zh: 942e543fdab51818
+/nomix-ai-nomix-client-ui-renderer/use-this-package/for-business-plugins:
+  en: 15a2bfee2c0bd051
+  zh: 0c5b336fc5afbbc6
+/nomix-ai-nomix-client-ui-renderer/understand-the-implementation:
+  en: 0de0a8ad857b93f6
+  zh: 98a0fae2d6606a7d
+/nomix-ai-nomix-client-ui-renderer/understand-the-implementation/activation-and-mount:
+  en: 2a7ed456e18873e7
+  zh: 49341c478f517755
+/nomix-ai-nomix-client-ui-renderer/understand-the-implementation/slot-bindings:
+  en: 6ab26cf5744a23d4
+  zh: 84a531322a724a84
+/nomix-ai-nomix-client-ui-renderer/understand-the-implementation/identity:
+  en: 2a349d500ead79cb
+  zh: ac49c8b1d73dcd6c
+/nomix-ai-nomix-client-ui-renderer/further-exploration:
+  en: aa2af9b206d50695
+  zh: 7947a58330e2007c
+/nomix-ai-nomix-client-ui-renderer/model-experience:
+  en: ca4e29db08d34e6d
+  zh: de6ec680414b1d54
+/nomix-ai-nomix-client-ui-renderer/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: de54f3467ef3b9be
+/nomix-ai-nomix-client-ui-renderer/known-limitations-and-deferred-work:
+  en: 5ebaf02736035a44
+  zh: 3c04f28da7ec6c40
+/nomix-ai-nomix-client-ui-renderer/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

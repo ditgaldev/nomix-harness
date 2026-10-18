@@ -1,0 +1,40 @@
+# Bilingual-pair consistency record for 2026-08-22-single-nomix-application-launcher.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-08-22-single-nomix-application-launcher.md
+/agent-note-one-nomix-launcher-for-application-profiles:
+  en: 7d098ce305c91085
+  zh: 843297f832253df1
+/agent-note-one-nomix-launcher-for-application-profiles/problem:
+  en: 9c5f108487d66207
+  zh: d237e09ba448325c
+/agent-note-one-nomix-launcher-for-application-profiles/decision:
+  en: a15c7c13f167e5ac
+  zh: a15c7c13f167e5ac
+/agent-note-one-nomix-launcher-for-application-profiles/decision/launch-scope:
+  en: cf66d9ca203f66ae
+  zh: dc54c738ea5e5166
+/agent-note-one-nomix-launcher-for-application-profiles/decision/profile-applications:
+  en: 80c5ab01754b5c5c
+  zh: 636544a76b4e1a01
+/agent-note-one-nomix-launcher-for-application-profiles/decision/typescript-sdk-customization:
+  en: 4f5542eec11123f1
+  zh: f062ce1d45d850d6
+/agent-note-one-nomix-launcher-for-application-profiles/decision/python-runtime:
+  en: e8b5b0f8cd1c23f5
+  zh: a9d56b7d9e266323
+/agent-note-one-nomix-launcher-for-application-profiles/decision/enforcement:
+  en: acaed6dc04b4670a
+  zh: d18d5d15c86577b1
+/agent-note-one-nomix-launcher-for-application-profiles/existing-decisions-and-supersession:
+  en: c7fd91fb42b28cb3
+  zh: b165b01dd0ace022
+/agent-note-one-nomix-launcher-for-application-profiles/alternatives-considered:
+  en: 4518fdda352caae8
+  zh: f64993ec54144cbe
+/agent-note-one-nomix-launcher-for-application-profiles/verification:
+  en: 41db341b43e2b703
+  zh: 24e2323c8f7a3b58
+/agent-note-one-nomix-launcher-for-application-profiles/consequences:
+  en: 13b857b45c40d8e2
+  zh: 0850c365171603bf

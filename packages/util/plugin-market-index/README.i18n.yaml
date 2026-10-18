@@ -1,0 +1,34 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/util/plugin-market-index/README.md
+/:
+  en: f083c297c6361417
+  zh: a0e71cf493c0898a
+/nomix-plugin-market-index:
+  en: 1c9133f96840de94
+  zh: cecd606a8e0ed148
+/nomix-plugin-market-index/summary:
+  en: 3f23baeff45bea01
+  zh: 0cc9edf03e8039ef
+/nomix-plugin-market-index/table-of-contents:
+  en: cd2a60a905c978d6
+  zh: cc71d387d0cbd442
+/nomix-plugin-market-index/use-this-package:
+  en: 8eac2625e2e366a8
+  zh: 652131f240e929e0
+/nomix-plugin-market-index/api:
+  en: e0e4444616427bf2
+  zh: 3960a7602bb17705
+/nomix-plugin-market-index/model-experience:
+  en: aed71b2a1eef8676
+  zh: 140395c13b4d8276
+/nomix-plugin-market-index/model-experience/kv-cache-effect:
+  en: a7a5484352ac021c
+  zh: fe00da8797e85e06
+/nomix-plugin-market-index/known-limitations-and-deferred-work:
+  en: e88e122205ce6e85
+  zh: 1d93c3774a1960b8
+/nomix-plugin-market-index/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

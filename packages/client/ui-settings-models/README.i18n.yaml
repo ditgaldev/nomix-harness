@@ -1,6 +1,61 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/client/ui-settings-models/README.md
-README.md: e99924aa9e9880f6ba36bfe9a28820c4ed55625b
-README.zh.md: 61d56c24125a01fc4d5ad753b2be24fa2d621d85
+/:
+  en: 71556afd4bdd2411
+  zh: 5e112df9267b430d
+/nomix-ai-nomix-client-ui-settings-models:
+  en: f74e85fd3913b6fa
+  zh: 47b6080c76d08109
+/nomix-ai-nomix-client-ui-settings-models/summary:
+  en: 308768492d22ac60
+  zh: a05b7e5ea5730344
+/nomix-ai-nomix-client-ui-settings-models/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-client-ui-settings-models/use-this-package:
+  en: 1fe44c7023aa105f
+  zh: 992e866210773228
+/nomix-ai-nomix-client-ui-settings-models/use-this-package/api-keys:
+  en: d4db939cac100393
+  zh: 7ff996905c505269
+/nomix-ai-nomix-client-ui-settings-models/use-this-package/editing-a-provider:
+  en: 3af73644655c8b7b
+  zh: d689eba772100c63
+/nomix-ai-nomix-client-ui-settings-models/use-this-package/adding-and-deleting-providers:
+  en: 9d533c65c82cd4a4
+  zh: 0a5da334e127c035
+/nomix-ai-nomix-client-ui-settings-models/use-this-package/first-run-dialogs:
+  en: 589397a35f82244e
+  zh: 342fbceee2c173a2
+/nomix-ai-nomix-client-ui-settings-models/use-this-package/extension-slots:
+  en: ebf8873f0165896b
+  zh: 2183b7b31c703085
+/nomix-ai-nomix-client-ui-settings-models/understand-the-implementation:
+  en: a87afbec5e339b36
+  zh: 6348c81af7e650e1
+/nomix-ai-nomix-client-ui-settings-models/understand-the-implementation/validation:
+  en: 0445138b811b9296
+  zh: c02ac6a3a4d6f069
+/nomix-ai-nomix-client-ui-settings-models/understand-the-implementation/concurrency-and-credentials:
+  en: 6e04c00818f014cd
+  zh: 2d57f8d8944e67ed
+/nomix-ai-nomix-client-ui-settings-models/understand-the-implementation/onboarding-coordinator:
+  en: dc515a31212e477a
+  zh: 770ba77cd9a69f73
+/nomix-ai-nomix-client-ui-settings-models/further-exploration:
+  en: bd6b00f1937c576a
+  zh: 550f6089d4ab793e
+/nomix-ai-nomix-client-ui-settings-models/model-experience:
+  en: 3120df665299c634
+  zh: 1d9f365d091d0d2a
+/nomix-ai-nomix-client-ui-settings-models/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: 9779c98fff4c949a
+/nomix-ai-nomix-client-ui-settings-models/known-limitations-and-deferred-work:
+  en: cc69c9934bf22302
+  zh: 4ea896f4b54aa203
+/nomix-ai-nomix-client-ui-settings-models/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

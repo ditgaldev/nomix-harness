@@ -1,4 +1,4 @@
-/** Tests for client package modes, dependency sections, and module requests. */
+/** Tests for client package modes and module requests. */
 
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
@@ -6,7 +6,10 @@ import { dirname, join } from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
 import {
   collectClientPackageViolations,
+  collectLocalSourceSpecifiers,
+  collectRuntimeLocalSourceSpecifiers,
   collectRuntimeSourcePackageUses,
+  collectRuntimeSourceSpecifiers,
   collectSourcePackageUses,
   fixClientPackageManifests,
   readClientDeclarations,
@@ -32,6 +35,8 @@ function declaration(
     dynamic: true,
     external: [],
     inject: [],
+    runtimeSourceUses: {},
+    runtimeSourceSpecifiers: {},
     ...fields,
   }
 }
@@ -71,11 +76,29 @@ function facts(
 }
 
 describe('source package uses', () => {
+  it('includes root-relative runtime requests only when explicitly requested', () => {
+    const source = [
+      "import './local.ts'",
+      "import '/src/value.ts'",
+      "export * from '/src/export.ts'",
+      "const load = () => import('/src/lazy.ts')",
+      "const legacy = require('/src/legacy.ts')",
+      "import type { A } from '/src/import-type.ts'",
+      "import { type B } from '/src/import-type-only.ts'",
+      "export type { A } from '/src/export-type.ts'",
+      "export { type B } from '/src/export-type-only.ts'",
+    ].join('\n')
+    expect([...collectRuntimeLocalSourceSpecifiers('feature.ts', source)]).toEqual(['./local.ts'])
+    expect([...collectRuntimeLocalSourceSpecifiers('feature.ts', source, true)]).toEqual([
+      './local.ts', '/src/value.ts', '/src/export.ts', '/src/lazy.ts', '/src/legacy.ts',
+    ])
+  })
+
   it('counts type imports, module augmentations, dynamic imports, and JSX', () => {
     const uses = collectSourcePackageUses('feature.tsx', [
       "import type { A } from '@nomix-ai/nomix-a/subpath'",
       "declare module '@nomix-ai/nomix-client-ui-slots' {}",
-      "const load = () => import('@nomix-ai/nomix-b')",
+      "const load = () => import('@nomix-ai/nomix-b/remote')",
       'export const view = <div />',
       "export type { Local } from './local.ts'",
     ].join('\n'))
@@ -95,12 +118,33 @@ describe('source package uses', () => {
       '@nomix-ai/nomix-b',
       'react',
     ])
+    expect([...collectRuntimeSourceSpecifiers('feature.tsx', [
+      "import type { A } from '@nomix-ai/nomix-a/subpath'",
+      "const load = () => import('@nomix-ai/nomix-b/remote')",
+      'export const view = <div />',
+    ].join('\n'))].sort()).toEqual([
+      '@nomix-ai/nomix-b/remote',
+      'react',
+    ])
+    expect([...collectLocalSourceSpecifiers('feature.ts', [
+      "import type { A } from './types.ts'",
+      "export { value } from './value.ts'",
+      "const load = () => import('./lazy.ts')",
+      "const legacy = require('./legacy.ts')",
+      "declare module './augmentation.ts' {}",
+      "import '@nomix-ai/nomix-a'",
+    ].join('\n'))].sort()).toEqual([
+      './lazy.ts',
+      './legacy.ts',
+      './types.ts',
+      './value.ts',
+    ])
   })
 })
 
 describe('package modes', () => {
   it('accepts one dynamic package and one statically linked package', () => {
-    const dynamic = pkg('runtime')
+    const dynamic = pkg('feature')
     const shell = pkg('ui-slots', { dynamic: false, staticLinked: true })
     expect(collectClientPackageViolations(facts([dynamic, shell]))).toEqual([])
   })
@@ -116,11 +160,11 @@ describe('package modes', () => {
 
   it('requires seeded workspace packages to use staticLinked and preloads to name dynamic rows', () => {
     const slots = declaration('ui-slots', { dynamic: false })
-    const runtime = declaration('runtime', { dynamic: false })
+    const bootstrap = declaration('bootstrap', { dynamic: false })
     const found = collectClientPackageViolations(facts([], {
-      declarations: [slots, runtime],
+      declarations: [slots, bootstrap],
       platformModules: [slots.name],
-      preloadedExternals: [runtime.name + '/client'],
+      preloadedExternals: [bootstrap.name + '/client'],
     }))
     expect(found).toHaveLength(2)
     expect(found.join('\n')).toContain('does not use the staticLinked preset')
@@ -128,127 +172,75 @@ describe('package modes', () => {
   })
 
   it('requires every preloaded external to have a parser preload row', () => {
-    const runtime = declaration('runtime')
+    const bootstrap = declaration('bootstrap')
     expect(collectClientPackageViolations(facts([], {
-      declarations: [runtime],
-      preloadedExternals: [runtime.name + '/client'],
+      declarations: [bootstrap],
+      preloadedExternals: [bootstrap.name + '/client'],
       parserPreloadIds: [],
     }))).toEqual([
       'packages/client/web/src/platform.ts: parser-preloaded external '
-      + '"@nomix-ai/nomix-client-runtime/client" has no matching PARSER_PRELOAD_IDS row in '
+      + '"@nomix-ai/nomix-client-bootstrap/client" has no matching PARSER_PRELOAD_IDS row in '
       + 'packages/client/modules/src/index.ts',
     ])
   })
 })
 
-describe('dependency sections', () => {
-  it('accepts dynamic peer plus dev relationships, static dev inputs, and private dependencies', () => {
-    const slots = pkg('ui-slots', { dynamic: false, staticLinked: true })
-    const runtime = pkg('runtime', {
-      inject: ['@nomix-ai/nomix-client-feature'],
-      sourceUses: {
-        '@nomix-ai/nomix-agent': ['packages/client/runtime/src/index.ts'],
-        '@nomix-ai/nomix-client-ui-slots': ['packages/client/runtime/src/client/slots.ts'],
-        react: ['packages/client/runtime/src/client/view.tsx'],
-      },
-      dependencies: { immer: '^10.1.1' },
-      peerDependencies: {
-        [CORDIS]: 'workspace:^',
-        '@nomix-ai/nomix-agent': 'workspace:^',
-        '@nomix-ai/nomix-client-feature': 'workspace:^',
-      },
-      devDependencies: {
-        [CORDIS]: 'workspace:^',
-        '@nomix-ai/nomix-agent': 'workspace:^',
-        '@nomix-ai/nomix-client-feature': 'workspace:^',
-        '@nomix-ai/nomix-client-ui-slots': 'workspace:^',
-        react: '^18.2.0',
+describe('module requests', () => {
+  it('rejects runtime requests from one client feature package to another dynamic row', () => {
+    const ui = declaration('ui', {
+      external: ['@nomix-ai/nomix-client-slots/client'],
+      runtimeSourceUses: {
+        '@nomix-ai/nomix-client-slots': ['packages/client/ui/src/client/index.ts'],
       },
     })
-    expect(collectClientPackageViolations(facts([slots, runtime], {
-      platformModules: ['react', slots.name],
-    }))).toEqual([])
-  })
-
-  it('rejects internal dependencies, static peers, and mismatched peer development ranges', () => {
-    const slots = pkg('ui-slots', { dynamic: false, staticLinked: true })
-    const subject = pkg('feature', {
-      sourceUses: {
-        '@nomix-ai/nomix-agent': ['packages/client/feature/src/index.ts'],
-        [slots.name]: ['packages/client/feature/src/view.tsx'],
-      },
-      dependencies: { '@nomix-ai/nomix-agent': 'workspace:^' },
-      peerDependencies: { [CORDIS]: 'workspace:^', [slots.name]: 'workspace:^' },
-      devDependencies: { [CORDIS]: 'workspace:^', [slots.name]: 'workspace:*' },
-    })
-    const found = collectClientPackageViolations(facts([slots, subject]))
-    expect(found).toHaveLength(2)
-    expect(found.join('\n')).toContain('peer-installed NOMIX relationship')
-    expect(found.join('\n')).toContain('static client input')
-  })
-
-  it('requires every peer to have the same development range', () => {
-    const subject = pkg('feature', {
-      peerDependencies: { [CORDIS]: 'workspace:^', '@nomix-ai/cordis-plugin-loader': 'workspace:^' },
-    })
-    expect(collectClientPackageViolations(facts([subject]))).toEqual([
-      'packages/client/feature/package.json: peerDependencies.@nomix-ai/cordis-plugin-loader'
-      + ' is workspace:^, so devDependencies.@nomix-ai/cordis-plugin-loader must use the same range;'
-      + ' found no declaration',
+    const slots = declaration('slots')
+    expect(collectClientPackageViolations(facts([], { declarations: [ui, slots] }))).toEqual([
+      ui.manifest + ': client feature package requests runtime external '
+      + '"@nomix-ai/nomix-client-slots/client"; import shared types only or call an injected Cordis service',
     ])
   })
 
-  it('requires statically linked third-party runtime imports in dependencies', () => {
-    const primitives = pkg('ui-primitives', {
-      dynamic: false,
-      staticLinked: true,
-      runtimeSourceUses: { shiki: ['packages/client/ui-primitives/src/highlight.ts'] },
-      devDependencies: { [CORDIS]: 'workspace:^', shiki: '^4.3.1' },
-    })
-    const found = collectClientPackageViolations(facts([primitives]))
-    expect(found).toHaveLength(1)
-    expect(found[0]).toContain('runtime import retained by a statically linked artifact')
-    expect(found[0]).toContain('declare it only in dependencies')
-
-    const valid = { ...primitives, dependencies: { shiki: '^4.3.1' }, devDependencies: { [CORDIS]: 'workspace:^' } }
-    expect(collectClientPackageViolations(facts([valid]))).toEqual([])
-  })
-
-  it('keeps the web shell runtime inputs development-only', () => {
-    const web = pkg('web', {
-      dynamic: false,
-      staticLinked: true,
+  it('rejects stale externals and accepts a runtime import outside client feature packages', () => {
+    const gateway = {
+      ...declaration('@nomix-ai/nomix-api-gateway'), manifest: 'packages/api/gateway/package.json',
+    }
+    const stale = { ...declaration('@nomix-ai/nomix-api-stale', {
+      external: ['@nomix-ai/nomix-api-gateway/client'],
+    }), manifest: 'packages/api/stale/package.json' }
+    const live = { ...declaration('@nomix-ai/nomix-api-live', {
+      external: ['@nomix-ai/nomix-api-gateway/client'],
       runtimeSourceUses: {
-        '@nomix-ai/cordis-plugin-loader': ['packages/client/web/src/boot.ts'],
-        react: ['packages/client/web/src/seed.ts'],
+        '@nomix-ai/nomix-api-gateway': ['packages/api/live/src/client/index.ts'],
       },
-      devDependencies: {
-        [CORDIS]: 'workspace:^',
-        '@nomix-ai/cordis-plugin-loader': 'workspace:^',
-        react: '^18.2.0',
+      runtimeSourceSpecifiers: {
+        '@nomix-ai/nomix-api-gateway/client': ['packages/api/live/src/client/index.ts'],
       },
-    })
-    expect(collectClientPackageViolations(facts([web]))).toEqual([])
+    }), manifest: 'packages/api/live/package.json' }
+    expect(collectClientPackageViolations(facts([], {
+      declarations: [gateway, stale, live],
+    }))).toEqual([
+      stale.manifest + ': nomix.client.external "@nomix-ai/nomix-api-gateway/client"'
+      + ' has no runtime import or re-export in production source; remove the stale declaration',
+    ])
   })
 
-  it('allows npm dependency cycles', () => {
-    const a = pkg('a', {
-      peerDependencies: { [CORDIS]: 'workspace:^', '@nomix-ai/nomix-client-b': 'workspace:^' },
-      devDependencies: { [CORDIS]: 'workspace:^', '@nomix-ai/nomix-client-b': 'workspace:^' },
-    })
-    const b = pkg('b', {
-      peerDependencies: { [CORDIS]: 'workspace:^', '@nomix-ai/nomix-client-a': 'workspace:^' },
-      devDependencies: { [CORDIS]: 'workspace:^', '@nomix-ai/nomix-client-a': 'workspace:^' },
-    })
-    expect(collectClientPackageViolations(facts([a, b]))).toEqual([])
-  })
-})
-
-describe('module requests', () => {
-  it('accepts a dynamic row supplier and its client subpath', () => {
-    const ui = declaration('ui', { external: ['@nomix-ai/nomix-client-slots/client'] })
-    const slots = declaration('slots')
-    expect(collectClientPackageViolations(facts([], { declarations: [ui, slots] }))).toEqual([])
+  it('requires the exact external subpath to be imported at runtime', () => {
+    const gateway = {
+      ...declaration('@nomix-ai/nomix-api-gateway'), manifest: 'packages/api/gateway/package.json',
+    }
+    const subject = { ...declaration('@nomix-ai/nomix-api-session-controller', {
+      external: ['@nomix-ai/nomix-api-gateway/client'],
+      runtimeSourceUses: {
+        '@nomix-ai/nomix-api-gateway': ['packages/api/session-controller/src/client/index.ts'],
+      },
+      runtimeSourceSpecifiers: {
+        '@nomix-ai/nomix-api-gateway/remote': ['packages/api/session-controller/src/client/index.ts'],
+      },
+    }), manifest: 'packages/api/session-controller/package.json' }
+    expect(collectClientPackageViolations(facts([], { declarations: [gateway, subject] }))).toEqual([
+      subject.manifest + ': nomix.client.external "@nomix-ai/nomix-api-gateway/client"'
+      + ' has no runtime import or re-export in production source; remove the stale declaration',
+    ])
   })
 
   it('rejects an explicit baseline request', () => {
@@ -275,14 +267,18 @@ describe('module requests', () => {
   })
 
   it('rejects synchronous module-request cycles but ignores inject cycles', () => {
-    const a = declaration('a', {
-      external: ['@nomix-ai/nomix-client-b'],
-      inject: ['@nomix-ai/nomix-client-b'],
-    })
-    const b = declaration('b', {
-      external: ['@nomix-ai/nomix-client-a'],
-      inject: ['@nomix-ai/nomix-client-a'],
-    })
+    const a = { ...declaration('@nomix-ai/nomix-api-a', {
+      external: ['@nomix-ai/nomix-api-b'],
+      inject: ['@nomix-ai/nomix-api-b'],
+      runtimeSourceUses: { '@nomix-ai/nomix-api-b': ['packages/api/a/src/client.ts'] },
+      runtimeSourceSpecifiers: { '@nomix-ai/nomix-api-b': ['packages/api/a/src/client.ts'] },
+    }), manifest: 'packages/api/a/package.json' }
+    const b = { ...declaration('@nomix-ai/nomix-api-b', {
+      external: ['@nomix-ai/nomix-api-a'],
+      inject: ['@nomix-ai/nomix-api-a'],
+      runtimeSourceUses: { '@nomix-ai/nomix-api-a': ['packages/client/b/src/client.ts'] },
+      runtimeSourceSpecifiers: { '@nomix-ai/nomix-api-a': ['packages/client/b/src/client.ts'] },
+    }), manifest: 'packages/api/b/package.json' }
     const found = collectClientPackageViolations(facts([], { declarations: [a, b] }))
     expect(found).toHaveLength(1)
     expect(found[0]).toContain('synchronous nomix.client.external cycle')
@@ -312,7 +308,7 @@ describe('manifest declarations', () => {
     ])
   })
 
-  it('fixes unambiguous dependency sections and declaration entries', () => {
+  it('fixes malformed declaration entries without changing dependency sections', () => {
     const root = mkdtempSync(join(tmpdir(), 'client-packages-fix-'))
     roots.push(root)
     const subject = pkg('feature', {
@@ -360,43 +356,8 @@ describe('manifest declarations', () => {
       external: ['@nomix-ai/nomix-missing'],
       inject: ['@nomix-ai/nomix-agent'],
     })
-    expect(fixed.dependencies).toBeUndefined()
-    expect(fixed.peerDependencies).toEqual({
-      '@nomix-ai/cordis-plugin-loader': 'workspace:^',
-      [CORDIS]: 'workspace:^',
-      '@nomix-ai/nomix-agent': 'workspace:*',
-    })
-    expect(fixed.devDependencies).toEqual({
-      '@nomix-ai/nomix-client-ui-slots': 'workspace:^',
-      [CORDIS]: 'workspace:^',
-      '@nomix-ai/nomix-agent': 'workspace:*',
-      '@nomix-ai/cordis-plugin-loader': 'workspace:^',
-    })
-  })
-
-  it('fixes a statically linked runtime import into dependencies', () => {
-    const root = mkdtempSync(join(tmpdir(), 'client-packages-static-fix-'))
-    roots.push(root)
-    const subject = pkg('ui-primitives', {
-      dynamic: false,
-      staticLinked: true,
-      runtimeSourceUses: { shiki: ['packages/client/ui-primitives/src/highlight.ts'] },
-      devDependencies: { [CORDIS]: 'workspace:^', shiki: '^4.3.1' },
-    })
-    mkdirSync(dirname(join(root, subject.manifest)), { recursive: true })
-    writeFileSync(join(root, subject.manifest), JSON.stringify({
-      name: subject.name,
-      peerDependencies: subject.peerDependencies,
-      devDependencies: subject.devDependencies,
-    }))
-    writeFileSync(join(root, 'package.json'), JSON.stringify({ private: true }))
-
-    expect(fixClientPackageManifests(root, facts([subject]))).toEqual([subject.manifest])
-    const fixed = JSON.parse(readFileSync(join(root, subject.manifest), 'utf8')) as {
-      dependencies: Record<string, string>
-      devDependencies: Record<string, string>
-    }
-    expect(fixed.dependencies).toEqual({ shiki: '^4.3.1' })
-    expect(fixed.devDependencies).toEqual({ [CORDIS]: 'workspace:^' })
+    expect(fixed.dependencies).toEqual(subject.dependencies)
+    expect(fixed.peerDependencies).toEqual(subject.peerDependencies)
+    expect(fixed.devDependencies).toEqual(subject.devDependencies)
   })
 })

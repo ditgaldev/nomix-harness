@@ -1,6 +1,64 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/sandbox/sandbox-local/README.md
-README.md: cec2ed98550f1ef100f4a1f9a5f1843fcf839013
-README.zh.md: 1d936f898eec9f68ad39a120f86cbd3f1e69b250
+/:
+  en: f172767891b86bf4
+  zh: e66e1cc8c96cc259
+/nomix-ai-nomix-sandbox-local:
+  en: 44a590b5a91437a8
+  zh: d671a10485b01fde
+/nomix-ai-nomix-sandbox-local/summary:
+  en: 5514926acd08528f
+  zh: 481f4e5027719d6e
+/nomix-ai-nomix-sandbox-local/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-sandbox-local/use-this-package:
+  en: 3759ad594d0a27fb
+  zh: 722010d952b9f87f
+/nomix-ai-nomix-sandbox-local/use-this-package/when-to-choose-it:
+  en: 722ad601000b13c7
+  zh: d2723f3743fe160b
+/nomix-ai-nomix-sandbox-local/use-this-package/minimal-configuration:
+  en: 913dfde526872917
+  zh: ac2979c5f2fc47aa
+/nomix-ai-nomix-sandbox-local/use-this-package/confined-execution-and-enforcement:
+  en: 7282c9ec77fd6f01
+  zh: 10e385a9489105e3
+/nomix-ai-nomix-sandbox-local/use-this-package/failures-and-recovery:
+  en: 3808edb37dde5761
+  zh: a8fef8a4fd33e364
+/nomix-ai-nomix-sandbox-local/understand-the-implementation:
+  en: 15db6ec303151ccc
+  zh: 91f62c1f64192f92
+/nomix-ai-nomix-sandbox-local/understand-the-implementation/runner-selection:
+  en: f0c44248c2ca6acc
+  zh: 554e9f706671d222
+/nomix-ai-nomix-sandbox-local/understand-the-implementation/platform-profiles:
+  en: 01b201460fb78a06
+  zh: 4766facdc4afa73e
+/nomix-ai-nomix-sandbox-local/understand-the-implementation/denial-and-runner-failure-dialects:
+  en: 62adfc9229c656cc
+  zh: 11b1534b6d61e5de
+/nomix-ai-nomix-sandbox-local/understand-the-implementation/source-map:
+  en: 215bb6bac514b8b4
+  zh: 41e7777eea10a480
+/nomix-ai-nomix-sandbox-local/further-exploration:
+  en: 172988dc735bad65
+  zh: c1fd8ab57c18cba8
+/nomix-ai-nomix-sandbox-local/model-experience:
+  en: f53e70e294ebf601
+  zh: 080059e397a51814
+/nomix-ai-nomix-sandbox-local/model-experience/kv-cache-effect:
+  en: e290ccc9b3c92c08
+  zh: 469589ac12cdadab
+/nomix-ai-nomix-sandbox-local/known-limitations-and-deferred-work:
+  en: b2a6a72e340bc620
+  zh: 9d9b2894850a131d
+/nomix-ai-nomix-sandbox-local/known-limitations-and-deferred-work/dev-note:
+  en: cc273320f6a1beaf
+  zh: 5c57a312ddc50651
+/nomix-ai-nomix-sandbox-local/known-limitations-and-deferred-work/dev-note/future-environment-coherent-groups:
+  en: 30806aba33067e06
+  zh: 5c417e89d32a8eac

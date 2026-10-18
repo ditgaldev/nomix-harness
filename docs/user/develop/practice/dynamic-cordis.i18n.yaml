@@ -1,0 +1,10 @@
+# Bilingual-pair consistency record for dynamic-cordis.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/user/develop/practice/dynamic-cordis.md
+/configure-persistent-plugins-from-a-prompt:
+  en: 51911a6001bdc893
+  zh: 23ce5ac94b27cba8
+/configure-persistent-plugins-from-a-prompt/connect-an-mcp-server:
+  en: a8ff87f7b951fa91
+  zh: 794f7ab215b94d0f

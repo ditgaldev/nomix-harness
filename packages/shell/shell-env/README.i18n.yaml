@@ -1,6 +1,58 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/shell/shell-env/README.md
-README.md: bd6001c15a6e5328aff4e06e310cfd7ca7bebb36
-README.zh.md: 198b49441c5afd135ac5f3fe8f8268c03cc95f22
+/:
+  en: 6008a56bf6ed54f3
+  zh: 7fd4f9b9054dfaa7
+/nomix-ai-nomix-shell-env:
+  en: 8d1bd0db433473f4
+  zh: 102f3083c10ce548
+/nomix-ai-nomix-shell-env/summary:
+  en: 7e3fae863f3ecc60
+  zh: 468c72eec9b27882
+/nomix-ai-nomix-shell-env/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-shell-env/use-this-package:
+  en: 3621da15768bad52
+  zh: 126aa319d26ebc3c
+/nomix-ai-nomix-shell-env/use-this-package/what-every-shell-call-receives:
+  en: f10b998b8b68de8f
+  zh: 7de2bc0ea0748e34
+/nomix-ai-nomix-shell-env/use-this-package/adding-your-own-environment-facts:
+  en: 3d79dda3da81c910
+  zh: 250766529d38ea31
+/nomix-ai-nomix-shell-env/use-this-package/choosing-the-harness-home:
+  en: ec24175abd5cceb9
+  zh: 5d6f3870ab9cb02b
+/nomix-ai-nomix-shell-env/use-this-package/what-can-go-wrong:
+  en: d378c32e234b1510
+  zh: efd67ea6b99df991
+/nomix-ai-nomix-shell-env/understand-the-implementation:
+  en: f782557ca8da3138
+  zh: e8f0082b9692cacc
+/nomix-ai-nomix-shell-env/understand-the-implementation/design-philosophy:
+  en: a1e742cf8da55c57
+  zh: 19ed7167f78ce3d7
+/nomix-ai-nomix-shell-env/understand-the-implementation/source-map:
+  en: 72eba3bfadcfa581
+  zh: dcd83e02a1910f27
+/nomix-ai-nomix-shell-env/understand-the-implementation/collection:
+  en: 4a7485d372d6cd2a
+  zh: fb905bee2878f35f
+/nomix-ai-nomix-shell-env/further-exploration:
+  en: efffee855e370dfb
+  zh: fbcf91feb74972b8
+/nomix-ai-nomix-shell-env/model-experience:
+  en: ced33ae064285bc4
+  zh: 9f7ed792c0babcea
+/nomix-ai-nomix-shell-env/model-experience/kv-cache-effect:
+  en: e95e649f0410fa75
+  zh: b3d64877420b4c0d
+/nomix-ai-nomix-shell-env/known-limitations-and-deferred-work:
+  en: 42f18b935847a72b
+  zh: e2ddd9cce50f0591
+/nomix-ai-nomix-shell-env/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

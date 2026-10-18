@@ -1,6 +1,14 @@
 import { clientBundle } from '../tsdown.client.ts'
 
 export default clientBundle(
-  '@nomix-ai/nomix-client-ui-theme',
-  ['lib/types/index.js', 'lib/types/invariant.js'],
+  import.meta.dirname,
+  ['lib/types/index.js'],
+  {
+    lib: {
+      copy: [{
+        from: 'src/styles/{brand-font.css,montserrat-*.woff2,Montserrat-OFL.txt}',
+        to: 'lib/styles',
+      }],
+    },
+  },
 )

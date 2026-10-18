@@ -1,0 +1,67 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/skill/tool-workspace-dependencies/README.md
+/:
+  en: e562521af5095c9b
+  zh: f879f7db6ee3c2b9
+/nomix-ai-nomix-tool-workspace-dependencies:
+  en: 26236a4a402df9e8
+  zh: f6dd2298b7f4e7b7
+/nomix-ai-nomix-tool-workspace-dependencies/summary:
+  en: 564382de2022c781
+  zh: 22657ad5d2c8efd2
+/nomix-ai-nomix-tool-workspace-dependencies/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 43ad67236ccda19a
+/nomix-ai-nomix-tool-workspace-dependencies/use-this-package:
+  en: 2e516accb4a07c53
+  zh: cc65c040f15bab66
+/nomix-ai-nomix-tool-workspace-dependencies/use-this-package/minimal-configuration:
+  en: 97b1f99b4e9c2569
+  zh: bf6c6ce74073413f
+/nomix-ai-nomix-tool-workspace-dependencies/use-this-package/payload-layout:
+  en: 90353f171c67c1b6
+  zh: 8e48826e78e16c99
+/nomix-ai-nomix-tool-workspace-dependencies/use-this-package/build-a-carrier-payload:
+  en: 6608ac6276f33134
+  zh: f07eb8bd93e4a855
+/nomix-ai-nomix-tool-workspace-dependencies/understand-the-implementation:
+  en: 0121e57a754cb26f
+  zh: 2933fc0415da013d
+/nomix-ai-nomix-tool-workspace-dependencies/further-exploration:
+  en: cf07edd844f8265f
+  zh: f623b5164f2c9da0
+/nomix-ai-nomix-tool-workspace-dependencies/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-tool-workspace-dependencies/model-experience/tool-schema:
+  en: e4c7376d4f29dbd5
+  zh: 6b7a9eaf69c9ea53
+/nomix-ai-nomix-tool-workspace-dependencies/model-experience/tool-schema/what-the-model-sees:
+  en: ad2b45143f3f4261
+  zh: 967bf792907b3494
+/nomix-ai-nomix-tool-workspace-dependencies/model-experience/tool-schema/token-effect:
+  en: 615cce9c7fcb746d
+  zh: 6b9f58e263a38d61
+/nomix-ai-nomix-tool-workspace-dependencies/model-experience/tool-schema/kv-cache-effect:
+  en: 4ee92571a5f8a71a
+  zh: 6fa2a5b21b9f0150
+/nomix-ai-nomix-tool-workspace-dependencies/model-experience/tool-result:
+  en: f8ffc2b983f05ffc
+  zh: 8573891441963be4
+/nomix-ai-nomix-tool-workspace-dependencies/model-experience/tool-result/what-the-model-sees:
+  en: c25c9db51e7d06da
+  zh: a4cdcd37bd501503
+/nomix-ai-nomix-tool-workspace-dependencies/model-experience/tool-result/token-effect:
+  en: 0efada793d1e65b1
+  zh: 3eed908f43174b88
+/nomix-ai-nomix-tool-workspace-dependencies/model-experience/tool-result/kv-cache-effect:
+  en: 42325f307b6c259d
+  zh: d53a45f1c00ba16f
+/nomix-ai-nomix-tool-workspace-dependencies/known-limitations-and-deferred-work:
+  en: 8aeacc5404854231
+  zh: 43d970fa23ac2473
+/nomix-ai-nomix-tool-workspace-dependencies/known-limitations-and-deferred-work/dev-note:
+  en: f57d5fcd5b2e8a44
+  zh: b210a0dce56f2e8a

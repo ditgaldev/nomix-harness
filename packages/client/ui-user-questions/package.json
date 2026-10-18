@@ -1,6 +1,6 @@
 {
   "name": "@nomix-ai/nomix-client-ui-user-questions",
-  "description": "Web ask_user_question feature: host tool mount plus composer-takeover question UI",
+  "description": "Web ask_user_question composer takeover and plan-review presentation UI",
   "version": "0.2.9",
   "publishConfig": {
     "access": "public"
@@ -18,22 +18,24 @@
       "types": "./lib/types/index.d.ts",
       "default": "./lib/index.js"
     },
-    "./invariant": {
-      "types": "./lib/types/invariant.d.ts",
-      "default": "./lib/invariant.js"
-    },
     "./client": {
       "types": "./lib/types/client/index.d.ts",
       "default": "./lib/client.js"
     },
     "./src/*": "./src/*",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
   },
   "nomix": {
     "client": {
       "inject": [
+        "@nomix-ai/nomix-api-remotes",
+        "@nomix-ai/nomix-api-session-controller",
         "@nomix-ai/nomix-client-locale",
-        "@nomix-ai/nomix-client-ui-conversation"
+        "@nomix-ai/nomix-client-ui-conversation",
+        "@nomix-ai/nomix-client-ui-renderer",
+        "@nomix-ai/nomix-client-ui-session",
+        "@nomix-ai/nomix-client-ui-chat"
       ],
       "platform": "web"
     }
@@ -43,37 +45,37 @@
     "watch": "tsdown --watch"
   },
   "license": "MIT",
-  "dependencies": {
-    "clsx": "^2.0.0"
-  },
   "peerDependencies": {
-    "@nomix-ai/cordis": "workspace:^",
-    "@nomix-ai/nomix-api-remotes": "workspace:^",
-    "@nomix-ai/nomix-client-locale": "workspace:^",
-    "@nomix-ai/nomix-invariants": "workspace:^",
-    "@nomix-ai/nomix-client-runtime": "workspace:^",
-    "@nomix-ai/nomix-client-ui-conversation": "workspace:^"
+    "@nomix-ai/cordis": "workspace:~"
   },
   "devDependencies": {
-    "@nomix-ai/cordis": "workspace:^",
-    "@nomix-ai/nomix-agent": "workspace:^",
-    "@nomix-ai/nomix-api-remotes": "workspace:^",
-    "@nomix-ai/nomix-client-locale": "workspace:^",
-    "@nomix-ai/nomix-invariants": "workspace:^",
-    "@nomix-ai/nomix-system-prompt": "workspace:^",
-    "@nomix-ai/nomix-tools": "workspace:^",
-    "@nomix-ai/nomix-user-questions": "workspace:^",
-    "@types/react": "~18.3.1",
-    "@nomix-ai/nomix-client-ui-primitives": "workspace:^",
-    "@nomix-ai/nomix-client-ui-slots": "workspace:^",
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-agent": "workspace:*",
+    "@nomix-ai/nomix-api-remotes": "workspace:*",
+    "@nomix-ai/nomix-api-session-controller": "workspace:*",
+    "@nomix-ai/nomix-brand": "workspace:*",
+    "@nomix-ai/nomix-client-locale": "workspace:*",
+    "@nomix-ai/nomix-client-store": "workspace:*",
+    "@nomix-ai/nomix-system-prompt": "workspace:*",
+    "@nomix-ai/nomix-tools": "workspace:*",
+    "@nomix-ai/nomix-user-questions": "workspace:*",
+    "@nomix-ai/nomix-client-ui-primitives": "workspace:*",
+    "@nomix-ai/nomix-client-ui-slots": "workspace:*",
+    "@nomix-ai/nomix-client-ui-renderer": "workspace:*",
+    "@nomix-ai/nomix-client-ui-session": "workspace:*",
+    "@nomix-ai/nomix-typert-protocol": "workspace:*",
     "react": "^18.2.0",
-    "@nomix-ai/nomix-client-runtime": "workspace:^",
-    "@nomix-ai/nomix-client-ui-conversation": "workspace:^",
-    "@nomix-ai/nomix-client-connection": "workspace:^"
+    "@nomix-ai/nomix-client-ui-conversation": "workspace:*",
+    "@nomix-ai/nomix-client-connection": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "clsx": "^2.0.0",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-client-ui-chat": "workspace:*",
+    "@nomix-ai/nomix-client-ui-tool": "workspace:*"
   },
   "files": [
+    "locale/*.json",
     "lib/index.js",
-    "lib/invariant.js",
     "lib/client.js",
     "lib/types/**/*.d.ts"
   ]

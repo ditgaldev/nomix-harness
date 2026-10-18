@@ -1,0 +1,49 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/web/web-deepseek-api/README.md
+/:
+  en: eb52169ad8cf3b38
+  zh: 3ad61fa2317079cf
+/nomix-ai-nomix-web-deepseek-api:
+  en: 22d7a51debc2d74f
+  zh: 4d4977028f25805a
+/nomix-ai-nomix-web-deepseek-api/summary:
+  en: f793e7480265187f
+  zh: d2b3b2cbacf80f83
+/nomix-ai-nomix-web-deepseek-api/table-of-contents:
+  en: 76368b6b1da79c80
+  zh: 1e8f931a56b7d34d
+/nomix-ai-nomix-web-deepseek-api/use-this-package:
+  en: ea388be291bc234e
+  zh: 00918b75e2e390b9
+/nomix-ai-nomix-web-deepseek-api/use-this-package/authentication:
+  en: 491f4c93c0d02152
+  zh: 4888cd52667bdc39
+/nomix-ai-nomix-web-deepseek-api/use-this-package/results-and-failures:
+  en: b8bfad1c79b2f05a
+  zh: b8d89fabbc028ac1
+/nomix-ai-nomix-web-deepseek-api/understand-the-implementation:
+  en: 215c133ad0a87f34
+  zh: c550904caf51f327
+/nomix-ai-nomix-web-deepseek-api/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-web-deepseek-api/model-experience/conversation-tool-results:
+  en: dfd3b61aff4a8aa8
+  zh: 06e2b6cc71f461e2
+/nomix-ai-nomix-web-deepseek-api/model-experience/conversation-tool-results/what-the-model-sees:
+  en: a9fbb78ffe886f0b
+  zh: 813dc7ee283018d2
+/nomix-ai-nomix-web-deepseek-api/model-experience/conversation-tool-results/token-effect:
+  en: d82cd03f38fb4b38
+  zh: 7049a13d2373a7b9
+/nomix-ai-nomix-web-deepseek-api/model-experience/conversation-tool-results/kv-cache-effect:
+  en: 54ed534b58469807
+  zh: c3f8f178abb86ccb
+/nomix-ai-nomix-web-deepseek-api/known-limitations-and-deferred-work:
+  en: d4877c8f4e158a5d
+  zh: 45177b6d6c3ecc40
+/nomix-ai-nomix-web-deepseek-api/known-limitations-and-deferred-work/dev-note:
+  en: 0a1253c6f7b5e8b9
+  zh: 9f56528562c7c914

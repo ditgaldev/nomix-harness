@@ -1,6 +1,22 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for cordis-primer.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/cordis-primer.md
-cordis-primer.md: be4f65db83ce4fedaddac42b13ac2d4fefbb0ccd
-cordis-primer.zh.md: 69a9cf8f789b7cde602b5cb59010928a45f3e021
+/cordis-primer:
+  en: 33c01aed2008ec7d
+  zh: 1f2bd63c8f86d0a9
+/cordis-primer/cordis-in-five-ideas:
+  en: c11cc0f2927f7bad
+  zh: 4fc01f41da6b1c3e
+/cordis-primer/dispatch-modes:
+  en: 7adc1e4cc7a7a471
+  zh: 879bf8afcd8f7c9f
+/cordis-primer/cordis-waterfall-semantics:
+  en: 34055815ef4034ee
+  zh: a7e0c9c8cf12959a
+/cordis-primer/loader-configuration:
+  en: 5380122dca553fc6
+  zh: 5cd3462fb76dd5b5
+/cordis-primer/practical-rules:
+  en: 94846dacd018f8a1
+  zh: 2bae19522ab2e33f

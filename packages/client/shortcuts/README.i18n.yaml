@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/shortcuts/README.md
+/:
+  en: 7cd394124c35afae
+  zh: 087929192244cb41
+/nomix-ai-nomix-client-shortcuts:
+  en: 86cc55348f8f8548
+  zh: 5f25fda2a842b73d
+/nomix-ai-nomix-client-shortcuts/summary:
+  en: 24e6f7d87be069fd
+  zh: ab228fd8c4f8c43e
+/nomix-ai-nomix-client-shortcuts/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 0cd57b7b8d8c9b59
+/nomix-ai-nomix-client-shortcuts/use-this-package:
+  en: 4bf1c713bc16c548
+  zh: 6bc8c7be4ae93a12
+/nomix-ai-nomix-client-shortcuts/understand-the-implementation:
+  en: adfd258f490cacb1
+  zh: 44c080babc54c6a9
+/nomix-ai-nomix-client-shortcuts/further-exploration:
+  en: 214d2cbf3c16c7f9
+  zh: cc124b958015dbff
+/nomix-ai-nomix-client-shortcuts/model-experience:
+  en: 3120df665299c634
+  zh: e2dc75ed76d271bc
+/nomix-ai-nomix-client-shortcuts/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: a0e9f8d52b4b62ee
+/nomix-ai-nomix-client-shortcuts/known-limitations-and-deferred-work:
+  en: 323e99bf933b4c6c
+  zh: 0a7ecdb2dcdb1288
+/nomix-ai-nomix-client-shortcuts/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

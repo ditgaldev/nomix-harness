@@ -1,0 +1,40 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-settings-account/README.md
+/:
+  en: 13d891a226092817
+  zh: 90bf6ff56dd3c096
+/nomix-ai-nomix-client-ui-settings-account:
+  en: d3914c0a45f019fb
+  zh: 929a5074d6063845
+/nomix-ai-nomix-client-ui-settings-account/summary:
+  en: 54da65ea807d7af1
+  zh: 359f85d16724d71d
+/nomix-ai-nomix-client-ui-settings-account/table-of-contents:
+  en: c26f81e8adf0128b
+  zh: e11ab371f51f66bc
+/nomix-ai-nomix-client-ui-settings-account/use-this-package:
+  en: 4aaf84b3b086c0e7
+  zh: d74746289b0ad72d
+/nomix-ai-nomix-client-ui-settings-account/use-this-package/desktop-onboarding:
+  en: c1c4db71fd09ca13
+  zh: a40c0a01e9951945
+/nomix-ai-nomix-client-ui-settings-account/understand-the-implementation:
+  en: acb33996c1b48a3f
+  zh: a515d5ef2a33f6dd
+/nomix-ai-nomix-client-ui-settings-account/further-exploration:
+  en: 32d3be9b10dfba11
+  zh: 5a19c088341eb846
+/nomix-ai-nomix-client-ui-settings-account/model-experience:
+  en: ee1df7ca3467ee3f
+  zh: 84904a5148da3862
+/nomix-ai-nomix-client-ui-settings-account/model-experience/kv-cache-effect:
+  en: ca3015e252db0114
+  zh: ebca9253cf15e8e9
+/nomix-ai-nomix-client-ui-settings-account/known-limitations-and-deferred-work:
+  en: 88c2b013c0e17c74
+  zh: b6b0da4424df49e9
+/nomix-ai-nomix-client-ui-settings-account/known-limitations-and-deferred-work/dev-note:
+  en: f42fb8791f5f48e0
+  zh: 9b1e590995351212

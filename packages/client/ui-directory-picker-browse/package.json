@@ -18,21 +18,19 @@
       "types": "./lib/types/index.d.ts",
       "default": "./lib/index.js"
     },
-    "./invariant": {
-      "types": "./lib/types/invariant.d.ts",
-      "default": "./lib/invariant.js"
-    },
     "./client": {
       "types": "./lib/types/client/index.d.ts",
       "default": "./lib/client.js"
     },
     "./src/*": "./src/*",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
   },
   "nomix": {
     "client": {
       "inject": [
-        "@nomix-ai/nomix-client-runtime",
+        "@nomix-ai/nomix-api-remotes",
+        "@nomix-ai/nomix-client-ui-renderer",
         "@nomix-ai/nomix-client-ui-workspace",
         "@nomix-ai/nomix-client-locale"
       ],
@@ -44,33 +42,26 @@
     "watch": "tsdown --watch"
   },
   "license": "MIT",
-  "dependencies": {
-    "clsx": "^2.0.0"
-  },
   "peerDependencies": {
-    "@nomix-ai/nomix-client-locale": "workspace:^",
-    "@nomix-ai/nomix-client-runtime": "workspace:^",
-    "@nomix-ai/nomix-client-ui-workspace": "workspace:^",
-    "@nomix-ai/nomix-invariants": "workspace:^",
-    "@nomix-ai/cordis": "workspace:^"
+    "@nomix-ai/cordis": "workspace:~"
   },
   "devDependencies": {
-    "@nomix-ai/nomix-client-locale": "workspace:^",
-    "@nomix-ai/nomix-client-runtime": "workspace:^",
-    "@nomix-ai/nomix-client-test-runtime": "workspace:^",
-    "@nomix-ai/nomix-client-ui-primitives": "workspace:^",
-    "@nomix-ai/nomix-client-ui-slots": "workspace:^",
-    "@nomix-ai/nomix-client-ui-workspace": "workspace:^",
-    "@nomix-ai/nomix-invariants": "workspace:^",
-    "@testing-library/react": "^16.1.0",
-    "@types/react": "~18.3.1",
-    "@nomix-ai/cordis": "workspace:^",
+    "@nomix-ai/nomix-api-remotes": "workspace:*",
+    "@nomix-ai/nomix-client-locale": "workspace:*",
+    "@nomix-ai/nomix-client-test-runtime": "workspace:*",
+    "@nomix-ai/nomix-client-ui-primitives": "workspace:*",
+    "@nomix-ai/nomix-client-ui-renderer": "workspace:*",
+    "@nomix-ai/nomix-client-ui-slots": "workspace:*",
+    "@nomix-ai/nomix-client-ui-workspace": "workspace:*",
+    "@testing-library/react": "^16.3.3",
+    "@nomix-ai/cordis": "workspace:~",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "clsx": "^2.0.0"
   },
   "files": [
+    "locale/*.json",
     "lib/index.js",
-    "lib/invariant.js",
     "lib/client.js",
     "lib/types/**/*.d.ts"
   ]

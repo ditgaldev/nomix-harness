@@ -7,13 +7,15 @@
 /** The module specifiers the shell shares into the frozen module table. */
 export const PLATFORM_MODULES = [
   'react', 'react/jsx-runtime', 'react-dom', 'react-dom/client', '@nomix-ai/cordis',
+  'zod', '@tanstack/react-virtual',
+  '@nomix-ai/nomix-client-store',
   '@nomix-ai/nomix-client-ui-slots',
   '@nomix-ai/nomix-client-ui-primitives',
+  '@nomix-ai/nomix-client-ui-dockkit',
 ] as const
 
 /** Client-bundle specifiers whose factories the parser preloads before the shell starts. */
 export const PRELOADED_CLIENT_EXTERNALS = [
-  '@nomix-ai/nomix-client-runtime/client',
 ] as const
 
 /** One platform module specifier (a seed-table key). */

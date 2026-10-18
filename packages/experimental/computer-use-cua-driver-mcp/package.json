@@ -1,0 +1,53 @@
+{
+  "name": "@nomix-ai/nomix-experimental-computer-use-cua-driver-mcp",
+  "description": "Experimental computer use through an installed Cua Driver MCP executable",
+  "version": "0.2.9",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
+    "directory": "packages/experimental/computer-use-cua-driver-mcp"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@nomix-ai/schemastery": "workspace:~",
+    "@nomix-ai/nomix-mcp-client": "workspace:*"
+  },
+  "peerDependencies": {
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-computer-use": "workspace:*"
+  },
+  "devDependencies": {
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/cordis-plugin-loader": "workspace:~",
+    "@nomix-ai/cordis-plugin-include": "workspace:~",
+    "@nomix-ai/nomix-computer-use": "workspace:*",
+    "@nomix-ai/nomix-system-prompt": "workspace:*",
+    "@nomix-ai/nomix-tools": "workspace:*",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-agent": "workspace:*",
+    "@nomix-ai/nomix-agent-loop": "workspace:*",
+    "@nomix-ai/nomix-attachment-local": "workspace:*",
+    "@nomix-ai/nomix-session-projection": "workspace:*"
+  }
+}

@@ -1,0 +1,21 @@
+- button "返回 实验性插件": 实验性插件
+- switch "启用 NOMIX 徽章技能"
+- heading "NOMIX 徽章技能" [level=3]
+- text: v{{version}} 实验性
+- paragraph:
+  - code: "@nomix-ai/nomix-experimental-badge-skill-bundle"
+- paragraph: 让 Agent 为文档、PR 等产出添加「powered by nomix」徽章。
+- img "NOMIX 徽章技能功能预览"
+- heading "包含的组件" [level=4]
+- text: 共 1 个 · 1 已停用
+- list:
+  - listitem:
+    - text: NOMIX 提供官方 powered-by-NOMIX 徽章技能。
+    - code: skill-badge
+    - code: "@nomix-ai/nomix-skill-badge"
+    - text: 已关闭
+- heading "来源信息" [level=4]
+- term: 代码来源
+- definition: 内置
+- term: 当前版本
+- definition: {{version}}

@@ -1,0 +1,19 @@
+- name: '@nomix-ai/nomix-session'
+- name: '@nomix-ai/nomix-system-prompt'
+- name: '@nomix-ai/nomix-tools'
+- name: '@nomix-ai/nomix-fs-local'
+- name: '@nomix-ai/nomix-session-projection'
+- name: '@nomix-ai/nomix-working-directory'
+- name: '@nomix-ai/nomix-tool-fs'
+- name: '@nomix-ai/nomix-session-query-sqlite'
+  config:
+    path: ':memory:'
+    openAt: never
+- name: '@nomix-ai/nomix-session-reference'
+  config:
+    maxReferenceBytes: 360
+- name: './source-session.ts'
+- name: '@nomix-ai/nomix-spill-local'
+  config:
+    root: '{{spillRoot}}'
+    cleanupPeriodDays: 0

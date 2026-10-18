@@ -1,6 +1,10 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for graph-atlas.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/graph-atlas.md
-graph-atlas.md: 9c8a6540ef23989e9b012323a8a47d418fe26589
-graph-atlas.zh.md: fb1d5534f60e436e258799e25094a984fd16d6e9
+/:
+  en: 41d772192075e133
+  zh: e29afb84a07b179e
+/documentation-graph-index:
+  en: 01ce4778972c7650
+  zh: b5735110a5a45ffd

@@ -1,6 +1,19 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for 2026-07-31-goal-owned-durable-events.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-07-31-goal-owned-durable-events.md
-2026-07-31-goal-owned-durable-events.md: f042fc27288e1c68aa5638f15f5d715043129a20
-2026-07-31-goal-owned-durable-events.zh.md: f963241acfd1796cb8982623b6d803c9c55b1956
+/agent-note-goal-owned-durable-events:
+  en: d017cbdd1d2b4f40
+  zh: d2d818b4d7de6e75
+/agent-note-goal-owned-durable-events/problem:
+  en: 882023626c792880
+  zh: 1966501718e96f92
+/agent-note-goal-owned-durable-events/decision:
+  en: 68983f4bdd3d3eb7
+  zh: 070904094c8758f2
+/agent-note-goal-owned-durable-events/alternatives-considered:
+  en: 7d79dfa834d9168f
+  zh: 0b3e82a7d0ef71b9
+/agent-note-goal-owned-durable-events/consequences:
+  en: b2a2f902f126f318
+  zh: 8a38fe8acb0a2241

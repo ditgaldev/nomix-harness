@@ -18,42 +18,50 @@
       "types": "./lib/types/index.d.ts",
       "default": "./lib/index.js"
     },
-    "./invariant": {
-      "types": "./lib/types/invariant.d.ts",
-      "default": "./lib/invariant.js"
-    },
     "./src/*": "./src/*",
     "./package.json": "./package.json"
   },
   "files": [
     "lib/index.js",
-    "lib/invariant.js",
     "lib/types/**/*.d.ts"
   ],
   "license": "MIT",
   "dependencies": {
-    "@agentclientprotocol/sdk": "0.25.1",
-    "@nomix-ai/schemastery": "workspace:^"
+    "@agentclientprotocol/sdk": "1.4.0",
+    "@nomix-ai/nomix-brand": "workspace:*",
+    "@nomix-ai/schemastery": "workspace:~"
   },
   "peerDependencies": {
-    "@nomix-ai/nomix-attachment": "workspace:^",
-    "@nomix-ai/nomix-agent": "workspace:^",
-    "@nomix-ai/nomix-invariants": "workspace:^",
-    "@nomix-ai/nomix-llm": "workspace:^",
-    "@nomix-ai/nomix-session": "workspace:^",
-    "@nomix-ai/nomix-user-approval": "workspace:^",
-    "@nomix-ai/cordis": "workspace:^"
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-agent": "workspace:*",
+    "@nomix-ai/nomix-attachment": "workspace:*",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-mcp-client": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-session-persistence": "workspace:*",
+    "@nomix-ai/nomix-token-meter": "workspace:*",
+    "@nomix-ai/nomix-user-approval": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@nomix-ai/nomix-token-meter": {
+      "optional": true
+    }
   },
   "devDependencies": {
-    "@nomix-ai/nomix-attachment": "workspace:^",
-    "@nomix-ai/nomix-agent": "workspace:^",
-    "@nomix-ai/nomix-agent-loop": "workspace:^",
-    "@nomix-ai/nomix-agent-loop-testkit": "workspace:^",
-    "@nomix-ai/nomix-invariants": "workspace:^",
-    "@nomix-ai/nomix-llm": "workspace:^",
-    "@nomix-ai/nomix-session": "workspace:^",
-    "@nomix-ai/nomix-tools": "workspace:^",
-    "@nomix-ai/nomix-user-approval": "workspace:^",
-    "@nomix-ai/cordis": "workspace:^"
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-agent": "workspace:*",
+    "@nomix-ai/nomix-agent-loop": "workspace:*",
+    "@nomix-ai/nomix-agent-loop-testkit": "workspace:*",
+    "@nomix-ai/nomix-attachment": "workspace:*",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-mcp-client": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-session-persistence": "workspace:*",
+    "@nomix-ai/nomix-session-persistence-jsonl": "workspace:*",
+    "@nomix-ai/nomix-session-projection": "workspace:*",
+    "@nomix-ai/nomix-subagent": "workspace:*",
+    "@nomix-ai/nomix-token-meter": "workspace:*",
+    "@nomix-ai/nomix-tools": "workspace:*",
+    "@nomix-ai/nomix-user-approval": "workspace:*"
   }
 }

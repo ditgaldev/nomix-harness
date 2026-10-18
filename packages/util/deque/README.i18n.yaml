@@ -1,0 +1,46 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/util/deque/README.md
+/:
+  en: d0d9e1665b0ea874
+  zh: 6a8366be71b5d6d9
+/nomix-ai-nomix-deque:
+  en: 33007df7be0297b0
+  zh: 71df612fb557230f
+/nomix-ai-nomix-deque/summary:
+  en: 169927686fc47c26
+  zh: 13e9fee44a21bd5f
+/nomix-ai-nomix-deque/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-deque/use-this-package:
+  en: bbff250eba0f1b89
+  zh: 0a618f05cc88ee2b
+/nomix-ai-nomix-deque/use-this-package/when-to-use-it:
+  en: e9c6c998f8d0542a
+  zh: edc2133eaf273054
+/nomix-ai-nomix-deque/use-this-package/entry-point:
+  en: 3e3fca15c9656d45
+  zh: 43e70c7381fc21f9
+/nomix-ai-nomix-deque/understand-the-implementation:
+  en: 1439df275cf4305f
+  zh: 09fb7ae6048c065c
+/nomix-ai-nomix-deque/understand-the-implementation/source-map:
+  en: 6444d79a894f4251
+  zh: e13d851b2f691f6c
+/nomix-ai-nomix-deque/further-exploration:
+  en: 1e09574e49e6c7d3
+  zh: 25d7bc23c7fa88e9
+/nomix-ai-nomix-deque/model-experience:
+  en: 8347ed3429dab61e
+  zh: c634a286fa463342
+/nomix-ai-nomix-deque/model-experience/kv-cache-effect:
+  en: e7ba08477bf22c4e
+  zh: f365439c69beb722
+/nomix-ai-nomix-deque/known-limitations-and-deferred-work:
+  en: ade2165d7c740ba7
+  zh: 05296ebd057e9beb
+/nomix-ai-nomix-deque/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

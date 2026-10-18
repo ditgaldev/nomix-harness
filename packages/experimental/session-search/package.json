@@ -1,0 +1,50 @@
+{
+  "name": "@nomix-ai/nomix-experimental-session-search",
+  "description": "Give Agents tools to search and read earlier sessions from the current workspace.",
+  "version": "0.2.9",
+  "icon": "./icon.svg",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
+    "directory": "packages/experimental/session-search"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./locale/*.json": "./locale/*.json",
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "icon.svg",
+    "locale/*.json",
+    "lib/index.js",
+    "cordis.patch.yml",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "nomix": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "dependencies": {
+    "@nomix-ai/nomix-session-query-sqlite": "workspace:*",
+    "@nomix-ai/nomix-tool-session-query": "workspace:*"
+  },
+  "peerDependencies": {
+    "@nomix-ai/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@nomix-ai/cordis": "workspace:~"
+  }
+}

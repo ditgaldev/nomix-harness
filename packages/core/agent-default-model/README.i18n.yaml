@@ -1,6 +1,52 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/core/agent-default-model/README.md
-README.md: 424762b5eff769a462235a6def575ec25291624f
-README.zh.md: 0d70528eb311ce043de8d29b8e3ac8246ffe5a2d
+/:
+  en: eaf7d3ea3e52ddfd
+  zh: 34028b95d994f15d
+/nomix-ai-nomix-agent-default-model:
+  en: c5c66afc54a38ef9
+  zh: d94028e403de5128
+/nomix-ai-nomix-agent-default-model/summary:
+  en: bf59a0974610ef81
+  zh: 451b967a5d2be7f1
+/nomix-ai-nomix-agent-default-model/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-agent-default-model/use-this-package:
+  en: 426a019d26019bc7
+  zh: 89e57948e3ed9cf8
+/nomix-ai-nomix-agent-default-model/use-this-package/configure-the-default:
+  en: 6622d5bb1c7f0a39
+  zh: c64901ba44262ca5
+/nomix-ai-nomix-agent-default-model/use-this-package/read-and-change-the-default:
+  en: ac8d6b1bb815aa3b
+  zh: 00f9b11356e1e63a
+/nomix-ai-nomix-agent-default-model/understand-the-implementation:
+  en: 592af7e68423bd1c
+  zh: a509b637f2a14687
+/nomix-ai-nomix-agent-default-model/understand-the-implementation/design-concept:
+  en: 9ff35825ebe9200d
+  zh: 613ebd35df840aea
+/nomix-ai-nomix-agent-default-model/understand-the-implementation/source-map:
+  en: 77dbcd572cb3de7b
+  zh: 20650cab1af57220
+/nomix-ai-nomix-agent-default-model/understand-the-implementation/behavior-notes:
+  en: 82a433fa05760420
+  zh: d4459d6a631143cf
+/nomix-ai-nomix-agent-default-model/further-exploration:
+  en: 991c9209a0f1e9bf
+  zh: ceb3a8ec4fdaff11
+/nomix-ai-nomix-agent-default-model/model-experience:
+  en: 1550007294eab687
+  zh: 39e797cb0ca691d7
+/nomix-ai-nomix-agent-default-model/model-experience/kv-cache-effect:
+  en: 814ad1a657587419
+  zh: 5c1968a55beb1af4
+/nomix-ai-nomix-agent-default-model/known-limitations-and-deferred-work:
+  en: 3d41fadae2c3e40b
+  zh: 52dcf7e4ea6a5e45
+/nomix-ai-nomix-agent-default-model/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

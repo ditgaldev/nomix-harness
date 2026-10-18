@@ -12,11 +12,12 @@
 
 import type { Context } from '@nomix-ai/cordis'
 import type {
-  ApprovalRequestId, CordisDynamicPluginId, DynamicCordisInvokeResult, JsonValue,
+  ApprovalRequestId, CordisDynamicPluginId, DynamicCordisInvokeResult,
   DynamicCordisInventoryRow,
 } from '@nomix-ai/nomix-api-remotes/client'
 import type { ClientModuleSystem } from '@nomix-ai/nomix-client-modules/client'
-import type { SlotRegistry } from '@nomix-ai/nomix-client-runtime/client'
+import type { SlotRegistry } from '@nomix-ai/nomix-client-ui-renderer/client'
+import type { JsonValue } from '@nomix-ai/nomix-util-values'
 // The Client Remote assembly is the one place the two planes meet: it mounts the
 // `dynamicCordisRunner` namespace and re-exports its payload vocabulary, so this
 // package names what it sends without importing a Host package.

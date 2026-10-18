@@ -1,13 +1,19 @@
 /** Web subagent catalog, navigation, and addressed-session composer owner. */
-import type {
-  ClientContext, SessionId, SubagentAddress,
-} from '@nomix-ai/nomix-client-runtime/client'
+import type { Context as ClientContext } from '@nomix-ai/cordis'
+import type { SubagentAddress } from '@nomix-ai/nomix-subagent/client'
+import type { SessionId } from '@nomix-ai/nomix-session/types'
 import type { ComposerChainProps } from '@nomix-ai/nomix-client-ui-conversation/client'
-import { SubagentHeaderLineage, type SubagentCatalogInjected } from './SubagentHeaderLineage.tsx'
+import { SubagentCatalogAction, SubagentHeaderLineage, type SubagentCatalogInjected } from './SubagentHeaderLineage.tsx'
 import {
   SubagentReadOnlyComposer, type SubagentReadOnlyMatch,
 } from './SubagentReadOnlyComposer.tsx'
+import { registerSidebarChat, subagentChatAddress } from './sidebar-chat/index.tsx'
 import type {} from '@nomix-ai/nomix-client-locale/client'
+import type {} from '@nomix-ai/nomix-client-ui-chat/client'
+import type {} from '@nomix-ai/nomix-client-ui-renderer/client'
+import type {} from '@nomix-ai/nomix-client-ui-session/client'
+import type {} from '@nomix-ai/nomix-client-ui-sidebar-right/client'
+import type {} from '@nomix-ai/nomix-client-ui-workspace/client'
 import { en, NS, zh, type SubagentKey } from './locales.ts'
 
 declare module '@nomix-ai/nomix-client-ui-slots' {
@@ -18,21 +24,24 @@ declare module '@nomix-ai/nomix-client-ui-slots' {
 }
 
 export type {
-  SubagentCatalogInjected, SubagentHeaderLineageProps,
+  SubagentCatalogActionProps, SubagentCatalogInjected, SubagentHeaderLineageProps,
 } from './SubagentHeaderLineage.tsx'
 export type {
   SubagentReadOnlyComposerProps, SubagentReadOnlyMatch,
 } from './SubagentReadOnlyComposer.tsx'
 
-/** Required services for conversation slots and session navigation. */
-export const inject = ['sessions', 'slots', 'locale']
+/** Required services for subagent presentation and navigation. */
+export const inject = ['sessions', 'uiWorkspace', 'slots', 'locale', 'sidebarRight']
 
 /** Claim the composer for one-shot history or an unavailable continuation owner. */
 function selectReadOnlySubagent(owner: ComposerChainProps): SubagentReadOnlyMatch | null {
   const subagent = owner.session?.subagent
   if (subagent === undefined || subagent === null) return null
+  if (subagent.address.mode === 'unknown') return { reason: 'unknown' }
   if (subagent.address.mode === 'one-shot') return { reason: 'one-shot' }
-  if (subagent.parentAvailable) return null
+  // Until a Host summary establishes parent availability, keep the normal
+  // disabled composer instead of claiming that the parent is offline.
+  if (subagent.parentAvailable !== false) return null
   // A RUNNING parent-offline continuable child keeps the default composer:
   // its input is disabled there, but the same primary Stop stays available so
   // the child can be interrupted. Once it stops, this takeover returns.
@@ -45,16 +54,21 @@ function selectReadOnlySubagent(owner: ComposerChainProps): SubagentReadOnlyMatc
  */
 export function apply(ctx: ClientContext): void {
   ctx.effect(() => ctx.locale.register(NS, { zh, en }), 'ui-subagent: dictionaries')
-  const sessions = ctx.sessions
+  ctx.inject(['resources', 'sidebarRightTabs'], (scope) => {
+    registerSidebarChat(scope, ctx.locale.bind(NS))
+  })
   const catalogActions = (_parentSessionId: SessionId): SubagentCatalogInjected => ({
     openChild(address: SubagentAddress) {
-      sessions.openSubagent(address)
+      ctx.uiWorkspace.openSession(address)
     },
-    refresh(parentSessionId: SessionId) {
-      void sessions.refreshSubagents(parentSessionId)
+    openChildAside(address: SubagentAddress) {
+      ctx.sidebarRight.openResource(subagentChatAddress(address), {
+        kind: 'subagentchat',
+        preferNewPane: true,
+      })
     },
-    setCatalogOpen(parentSessionId: SessionId, open: boolean) {
-      sessions.setSubagentCatalogOpen(parentSessionId, open)
+    refreshProjection(parentSessionId: SessionId) {
+      void ctx.sessions.refreshProjections(parentSessionId)
     },
   })
   ctx.slots.inject(
@@ -64,6 +78,18 @@ export function apply(ctx: ClientContext): void {
       locale: NS,
       inject: catalogActions,
     }, SubagentHeaderLineage),
+  )
+  ctx.slots.inject(
+    'conversation.session.header.actions',
+    () => ctx.slots.register({
+      name: 'conversation.session.header.actions',
+      id: 'subagent-catalog',
+      // Between the preset label (-10) and background tasks (20), after Team
+      // navigation (-20).
+      order: 10,
+      locale: NS,
+      inject: catalogActions,
+    }, SubagentCatalogAction),
   )
   ctx.slots.inject(
     'conversation.composer',

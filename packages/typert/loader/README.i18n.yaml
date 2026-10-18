@@ -1,6 +1,58 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/typert/loader/README.md
-README.md: 47c95d64bbd3124fe8bf0fda4a2c1e23f2756646
-README.zh.md: e6e5c9f0d12d8990e42db7a87f27ddddfb4906f6
+/:
+  en: 3fa30a143acc79d7
+  zh: 0c6fe79fba20f26f
+/nomix-ai-nomix-typert-loader:
+  en: e92e78832c504b8d
+  zh: 299295216e1912d2
+/nomix-ai-nomix-typert-loader/summary:
+  en: e70c067f0b02c206
+  zh: 7294e77ee780d3f3
+/nomix-ai-nomix-typert-loader/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-typert-loader/use-this-package:
+  en: b584a486b54e932c
+  zh: 372f74bae9241ee5
+/nomix-ai-nomix-typert-loader/use-this-package/minimal-configuration:
+  en: afa486d229f1375b
+  zh: 4aa540441fa0d9e9
+/nomix-ai-nomix-typert-loader/use-this-package/what-gets-registered:
+  en: 73660724a51afcea
+  zh: 448a32bb29614c7a
+/nomix-ai-nomix-typert-loader/use-this-package/observable-behavior-and-failures:
+  en: 01494e9fbd469ec8
+  zh: 3025d870c0f36e2b
+/nomix-ai-nomix-typert-loader/understand-the-implementation:
+  en: 519c0242ef4d9e21
+  zh: a72967feb0ea1b41
+/nomix-ai-nomix-typert-loader/understand-the-implementation/design-concept:
+  en: 03fc077e58271e18
+  zh: 20f8fc02008cee5e
+/nomix-ai-nomix-typert-loader/understand-the-implementation/manifest-validation:
+  en: c7d93c72a224e8fb
+  zh: 51f0e4b8a043c238
+/nomix-ai-nomix-typert-loader/understand-the-implementation/caching-and-ownership:
+  en: 38e781e052fdf44e
+  zh: d8f6b4d119bf9856
+/nomix-ai-nomix-typert-loader/understand-the-implementation/source-map:
+  en: 92aa195f1408a900
+  zh: 1841e39a53de7873
+/nomix-ai-nomix-typert-loader/further-exploration:
+  en: 18ec8f666039403e
+  zh: 29456ce7a0dc4dc2
+/nomix-ai-nomix-typert-loader/model-experience:
+  en: d3555a846d0b19a6
+  zh: eb4815fbd81a3561
+/nomix-ai-nomix-typert-loader/model-experience/kv-cache-effect:
+  en: f8a0ad3d0fc0eb32
+  zh: 7649a694b279f5f3
+/nomix-ai-nomix-typert-loader/known-limitations-and-deferred-work:
+  en: 9bc795b850f7ab8a
+  zh: f3aea571a70bf327
+/nomix-ai-nomix-typert-loader/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

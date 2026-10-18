@@ -1,6 +1,37 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for architecture.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/architecture.md
-architecture.md: 56a8a27c24b168decde9ec77a1941bd24e39d38b
-architecture.zh.md: f62baf23047e4fd94af69ae1c536465fdde05d09
+/nomix-harness-architecture:
+  en: efc979c0533ff4bd
+  zh: 9a3a5f114c1d3a6f
+/nomix-harness-architecture/cordis:
+  en: 14edd554f316719c
+  zh: 8fe1c121535bbdcd
+/nomix-harness-architecture/profiles-and-bundles:
+  en: 53ce8f3fff7a74e4
+  zh: 51dfae0ff2b6d9dd
+/nomix-harness-architecture/application-launch:
+  en: 12011f43962b07b7
+  zh: df5a4c64386c6278
+/nomix-harness-architecture/desktop-application:
+  en: 9a6d3cf84363320d
+  zh: 12b2eb8ad21e3eaf
+/nomix-harness-architecture/core-packages:
+  en: 22b8c7a04c8d40bc
+  zh: fc31d953f28641c8
+/nomix-harness-architecture/events:
+  en: 642783f15a32b4a2
+  zh: c3c0db36157ffb4d
+/nomix-harness-architecture/turn-flow:
+  en: 8be6f7bddfff05bd
+  zh: bbd87d0826474df2
+/nomix-harness-architecture/session-log:
+  en: 213b4a75bd3262c5
+  zh: ddab7f4a084367da
+/nomix-harness-architecture/capability-seams:
+  en: 0bf041d7dd78a117
+  zh: 1c3c4c534911128a
+/nomix-harness-architecture/where-new-behavior-goes:
+  en: 34267cb35378b1e5
+  zh: 4c50773752db8db9

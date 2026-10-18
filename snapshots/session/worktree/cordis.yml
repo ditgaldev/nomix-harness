@@ -1,0 +1,5 @@
+- insert:
+    - id: worktree
+      name: '@nomix-ai/nomix-experimental-worktree'
+    - id: tool-worktree
+      name: '@nomix-ai/nomix-experimental-tool-worktree'

@@ -7,6 +7,7 @@ process.stdin.on('end', () => {
   console.log(JSON.stringify({
     configPath: process.argv[2],
     args: process.argv.slice(2),
+    execArgv: process.execArgv,
     cwd: process.cwd(),
     nomixHome: process.env.NOMIX_HOME,
     agentsHome: process.env.NOMIX_AGENTS_HOME,

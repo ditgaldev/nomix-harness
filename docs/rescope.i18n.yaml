@@ -1,6 +1,19 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for rescope.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/rescope.md
-rescope.md: 6bfdacfefac7626e5e75420072ce2766a8e373ce
-rescope.zh.md: ce0a7d6d5911f8f64c34f8e99156e329850ad694
+/vendored-package-rescope:
+  en: 2eeaaaf14c05d4c5
+  zh: c4b7f6493879694c
+/vendored-package-rescope/name-mapping:
+  en: 6e04f49b3c7b0a40
+  zh: a7645711d0ce6481
+/vendored-package-rescope/what-the-rename-does-not-touch:
+  en: fd4b7294b5136767
+  zh: 234e37a6a2be2c99
+/vendored-package-rescope/what-your-code-has-to-change:
+  en: 931ef78abb6b27b3
+  zh: bd1ab1750fc57c07
+/vendored-package-rescope/applying-verifying-and-reverting:
+  en: 2a7f21e03e6cb4f7
+  zh: dcf4172adf916fda

@@ -1,0 +1,55 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/util/http-proxy/README.md
+/:
+  en: 117b4d191f773a9c
+  zh: 0b9e150f6cd23b04
+/nomix-ai-nomix-http-proxy:
+  en: 3b8991278b094148
+  zh: 8c42ae25e26b872f
+/nomix-ai-nomix-http-proxy/summary:
+  en: c3b1b32ab36f5f97
+  zh: 143b744ab361f0d4
+/nomix-ai-nomix-http-proxy/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-http-proxy/use-this-package:
+  en: 6a0b5749b47265cc
+  zh: b081650a1a48cc63
+/nomix-ai-nomix-http-proxy/use-this-package/writing-a-new-outbound-call:
+  en: 782b24f91ee8ce71
+  zh: af4b75a0d5a98fdc
+/nomix-ai-nomix-http-proxy/use-this-package/what-the-policy-reads:
+  en: 0ddb28c1dcd99ddc
+  zh: 038bc80984a5d9c0
+/nomix-ai-nomix-http-proxy/use-this-package/failures:
+  en: 4248bc9a662680ed
+  zh: 4150ade9f1aa9287
+/nomix-ai-nomix-http-proxy/understand-the-implementation:
+  en: ee4615a04fa6503d
+  zh: ee2c5fb2204a43cf
+/nomix-ai-nomix-http-proxy/understand-the-implementation/design-philosophy:
+  en: a2281fe998e148fe
+  zh: 1b7db8dcc90e9721
+/nomix-ai-nomix-http-proxy/understand-the-implementation/source-map:
+  en: a099f88dd0c7d394
+  zh: 7325b7ea973bce13
+/nomix-ai-nomix-http-proxy/understand-the-implementation/bypass-matching:
+  en: e9ad6c2e8ee2fc21
+  zh: c10de6995cf594bc
+/nomix-ai-nomix-http-proxy/further-exploration:
+  en: 81aee6b6efe73f92
+  zh: a6f879df6d8bdd8c
+/nomix-ai-nomix-http-proxy/model-experience:
+  en: e0af6a1073934d5a
+  zh: d8bf9c77b54ed5ae
+/nomix-ai-nomix-http-proxy/model-experience/kv-cache-effect:
+  en: 7f12ca92e7722f98
+  zh: 97fa75de6a3f6a3f
+/nomix-ai-nomix-http-proxy/known-limitations-and-deferred-work:
+  en: e8388cd8ba6b8527
+  zh: f51a377a27936244
+/nomix-ai-nomix-http-proxy/known-limitations-and-deferred-work/dev-note:
+  en: 8f915ac6f4fc1525
+  zh: 29b06e0aae5a30ec

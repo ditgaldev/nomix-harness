@@ -1,0 +1,38 @@
+# Native Cordis inspection alongside the base spawn and workflow capabilities.
+- id: agent-default-model
+  name: '@nomix-ai/nomix-agent-default-model'
+  config:
+    provider: deepseek-official
+    model: deepseek-v4-pro
+
+- id: session-persistence-jsonl
+  name: '@nomix-ai/nomix-session-persistence-jsonl'
+  config:
+    root: !!js nomixHomePath('sessions')
+    compression: !!js 'process.env.NOMIX_SNAPSHOT === undefined ? ''zstd'' : ''none'''
+
+- id: agent-instructions
+  name: '@nomix-ai/nomix-agent-instructions'
+  config:
+    maxBytes: 65536
+
+- id: tools
+  name: '@nomix-ai/nomix-tools'
+  config:
+    mode: native
+
+- id: system-prompt
+  name: '@nomix-ai/nomix-system-prompt'
+  config:
+    personaPrefix: |
+      You are a coding assistant powered by the {{model}} model.
+
+      Verify your work by running the code or tests. Keep answers brief and factual.
+
+- insert:
+    - id: cordis-host-runner
+      name: '@nomix-ai/nomix-cordis-host-runner'
+    - id: cordis-inspect-providers
+      name: '@nomix-ai/nomix-tool-cordis/host'
+    - id: tool-cordis
+      name: '@nomix-ai/nomix-tool-cordis'

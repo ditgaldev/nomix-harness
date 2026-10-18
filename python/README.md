@@ -9,11 +9,11 @@ Python packages for driving Nomix Harness as a subprocess. The client SDK commun
 | Directory | Dist / module | Role |
 |---|---|---|
 | [sdk](sdk/README.md) | `nomix-harness-sdk` / `nomix_harness` | High-level turns API and lower-level JSON-RPC client |
-| [sdk-runtime](sdk-runtime/README.md) | `nomix-harness-runtime-bin` / `nomix_harness_runtime` | Bundled runtime binaries and default agent configuration |
+| [sdk-runtime](sdk-runtime/README.md) | `nomix-harness-runtime-bin` / `nomix_harness_runtime` | Bundled `nomix` CLI executable and native sidecars |
 
 ## Behavior
 
-The SDK starts the matching bundled runtime unless the caller selects an explicit channel. The client selects the channel and supplies default configuration; the runtime itself always requires an explicit configuration. The [SDK reference](sdk/README.md) and [runtime carrier reference](sdk-runtime/README.md) own the complete runtime-selection and configuration contracts.
+The SDK starts the matching bundled `nomix --profile sdk` runtime unless the caller selects another `nomix` executable or profile. The runnable minimal example selects the shipped standalone `sdk-minimal` profile; the same runtime also packages `nomix web` and its frontend assets for separate CLI use. Every launch requires an explicitly selected Harness home; Python never silently reads `~/.nomix`. The [SDK reference](sdk/README.md) and [runtime carrier reference](sdk-runtime/README.md) own runtime selection, profiles, patches, and external plugin management.
 
 ## Contributor workflows
 

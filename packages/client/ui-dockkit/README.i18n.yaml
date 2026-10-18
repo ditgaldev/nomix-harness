@@ -1,0 +1,40 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-dockkit/README.md
+/:
+  en: 8357d1a9aed8e665
+  zh: a697d1c627030854
+/nomix-ai-nomix-client-ui-dockkit:
+  en: 53cc81f0d791f18a
+  zh: 47e48072cc0bbd3e
+/nomix-ai-nomix-client-ui-dockkit/summary:
+  en: 3ee4584a73215ef4
+  zh: 051170a6d0993fa5
+/nomix-ai-nomix-client-ui-dockkit/table-of-contents:
+  en: 42038fdc402b9c2a
+  zh: 99890f8f908624ce
+/nomix-ai-nomix-client-ui-dockkit/the-two-layers:
+  en: ea872ff2c2089037
+  zh: b3ec3a218eacd5c8
+/nomix-ai-nomix-client-ui-dockkit/embedding-it:
+  en: 47b9852393643b6a
+  zh: ce5f2ab60eec9564
+/nomix-ai-nomix-client-ui-dockkit/interaction-rules-worth-keeping:
+  en: 7e5c1e9a9f9f244f
+  zh: 7e3a8fcef86bc7dd
+/nomix-ai-nomix-client-ui-dockkit/build-shape:
+  en: 21216ba5798d7f5f
+  zh: ac505fdcd5c114d4
+/nomix-ai-nomix-client-ui-dockkit/model-experience:
+  en: cdebb91645623401
+  zh: fe262db316714fa8
+/nomix-ai-nomix-client-ui-dockkit/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: f57cc48a1b5cbfa9
+/nomix-ai-nomix-client-ui-dockkit/known-limitations-and-deferred-work:
+  en: 4323810ca5a87e6c
+  zh: 3a24af2ea4467ab7
+/nomix-ai-nomix-client-ui-dockkit/known-limitations-and-deferred-work/dev-note:
+  en: f2620b7a288f8d07
+  zh: 5119f46bbc820afd

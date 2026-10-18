@@ -1,6 +1,55 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/host/plugin-inventory/README.md
-README.md: e31023bb01cefcdd9fda9fab94d552db7a107a69
-README.zh.md: 8416e8bb11b13fd5d19ebdf8a25edbecbcbd1d1d
+/:
+  en: 94ee43dddb605a56
+  zh: 1928b76cbc58ca5a
+/nomix-ai-nomix-host-plugin-inventory:
+  en: 97fd717322964267
+  zh: 5059ad80e15748fb
+/nomix-ai-nomix-host-plugin-inventory/summary:
+  en: 103ae63994bb9291
+  zh: 3b2658a7a6064e4b
+/nomix-ai-nomix-host-plugin-inventory/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-host-plugin-inventory/use-this-package:
+  en: 10bbb42c37ba25d2
+  zh: d628b1c9db7847e4
+/nomix-ai-nomix-host-plugin-inventory/use-this-package/what-a-snapshot-contains:
+  en: c8afdb1aec1c97bd
+  zh: 0a8a765e02caab91
+/nomix-ai-nomix-host-plugin-inventory/use-this-package/per-preset-compositions:
+  en: dfc89b14d4c0d21e
+  zh: 062b233951ed157b
+/nomix-ai-nomix-host-plugin-inventory/use-this-package/what-you-can-and-cannot-do-with-it:
+  en: 387f87777eef7ec5
+  zh: badcd90c8840f870
+/nomix-ai-nomix-host-plugin-inventory/understand-the-implementation:
+  en: 42b15ac6321706aa
+  zh: 4ed0861911abaf5d
+/nomix-ai-nomix-host-plugin-inventory/understand-the-implementation/design-concept:
+  en: 48a7d7ce9170c859
+  zh: 21a44bf23d9c5c89
+/nomix-ai-nomix-host-plugin-inventory/understand-the-implementation/the-phase-mapping:
+  en: 67fd54c8c49f6dbc
+  zh: f6743f8f5c34b886
+/nomix-ai-nomix-host-plugin-inventory/understand-the-implementation/source-map:
+  en: 0182cb9dbcff5eae
+  zh: fce809d7b06d2ed8
+/nomix-ai-nomix-host-plugin-inventory/further-exploration:
+  en: ffc4d582a7382531
+  zh: 16d0bee5388529b3
+/nomix-ai-nomix-host-plugin-inventory/model-experience:
+  en: c3e5d5439c1a56fe
+  zh: 32804643402d54ea
+/nomix-ai-nomix-host-plugin-inventory/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: de54f3467ef3b9be
+/nomix-ai-nomix-host-plugin-inventory/known-limitations-and-deferred-work:
+  en: 176f2cafbca4c52c
+  zh: 4e408abaa66aa2d0
+/nomix-ai-nomix-host-plugin-inventory/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

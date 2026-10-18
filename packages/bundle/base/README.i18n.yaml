@@ -1,6 +1,58 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/bundle/base/README.md
-README.md: 44ab2e0164d3188c32a353a74493f6c4bdcf5688
-README.zh.md: 9128a799649976202bb08672f16c4d17eea4a6b8
+/:
+  en: 7140ea1a25fff16d
+  zh: 31d3db9a7d04ee99
+/nomix-ai-nomix-base:
+  en: 8e5aae905bb09b93
+  zh: e921f47bee26c2ec
+/nomix-ai-nomix-base/summary:
+  en: 6fdd94f69d18afae
+  zh: fff25ba6eb2b45f8
+/nomix-ai-nomix-base/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-base/use-this-package:
+  en: 50c3204c2a7a5536
+  zh: 7f0cec045752cf3c
+/nomix-ai-nomix-base/use-this-package/a-minimal-custom-profile:
+  en: 34c84ffe49ed0be3
+  zh: dec2a7294a9c2eea
+/nomix-ai-nomix-base/use-this-package/what-you-get:
+  en: 5382aaf180fcc4f3
+  zh: dc4771fcae986658
+/nomix-ai-nomix-base/use-this-package/shell-tools-per-platform:
+  en: 2dce12f82d6ee955
+  zh: d4599eb899a3cd88
+/nomix-ai-nomix-base/use-this-package/changing-the-defaults:
+  en: 96a55abd5f7007dd
+  zh: d94f020708c38a17
+/nomix-ai-nomix-base/understand-the-implementation:
+  en: 094cfca8e26a0042
+  zh: de435e3e38420c01
+/nomix-ai-nomix-base/understand-the-implementation/composition-mechanics:
+  en: fd37bc66e39ac5e7
+  zh: 1a039afb8bf2d517
+/nomix-ai-nomix-base/understand-the-implementation/platform-gating:
+  en: 18d49b964d27beb3
+  zh: 94455857c062efbe
+/nomix-ai-nomix-base/understand-the-implementation/source-map:
+  en: a8efda71d444155e
+  zh: c8221593709fbb99
+/nomix-ai-nomix-base/further-exploration:
+  en: 676dc472a1ae7ba7
+  zh: 51494c7f21582326
+/nomix-ai-nomix-base/model-experience:
+  en: f6c4d2609b5f4bb6
+  zh: 869a9565a133fb01
+/nomix-ai-nomix-base/model-experience/kv-cache-effect:
+  en: e6e907c99df7cd0a
+  zh: f19f2f84a5f95177
+/nomix-ai-nomix-base/known-limitations-and-deferred-work:
+  en: ac198d6ed8a6b136
+  zh: 81226f82bba93f7c
+/nomix-ai-nomix-base/known-limitations-and-deferred-work/dev-note:
+  en: ca037cb236aa841a
+  zh: e06f3899be43b572

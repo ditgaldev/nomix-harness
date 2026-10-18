@@ -1,0 +1,85 @@
+{
+  "name": "@nomix-ai/nomix-experimental-auto-review",
+  "description": "Per-tool LLM authorization review for the Nomix Harness Auto permission preset",
+  "version": "0.2.9",
+  "icon": "./icon.svg",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
+    "directory": "packages/experimental/auto-review"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./locale/*.json": "./locale/*.json",
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./cordis.patch.yml": "./cordis.patch.yml"
+  },
+  "files": [
+    "icon.svg",
+    "locale/*.json",
+    "lib/index.js",
+    "cordis.patch.yml",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@nomix-ai/nomix-agent": "workspace:*",
+    "@nomix-ai/nomix-agent-instructions": "workspace:*",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-permission-presets": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-tools": "workspace:*",
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-working-directory": "workspace:*"
+  },
+  "dependencies": {
+    "@nomix-ai/nomix-util-values": "workspace:*"
+  },
+  "devDependencies": {
+    "@nomix-ai/nomix-agent": "workspace:*",
+    "@nomix-ai/nomix-agent-instructions": "workspace:*",
+    "@nomix-ai/nomix-agent-loop": "workspace:*",
+    "@nomix-ai/nomix-agent-loop-testkit": "workspace:*",
+    "@nomix-ai/nomix-bash-sandbox": "workspace:*",
+    "@nomix-ai/nomix-compaction": "workspace:*",
+    "@nomix-ai/nomix-fs-local": "workspace:*",
+    "@nomix-ai/nomix-fs-observation-policy": "workspace:*",
+    "@nomix-ai/nomix-fs-sandbox": "workspace:*",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-llm-deepseek": "workspace:*",
+    "@nomix-ai/nomix-llm-deepseek-api-key": "workspace:*",
+    "@nomix-ai/nomix-permission-presets": "workspace:*",
+    "@nomix-ai/nomix-ptc-runtime-node": "workspace:*",
+    "@nomix-ai/nomix-sandbox": "workspace:*",
+    "@nomix-ai/nomix-sandbox-policy": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-session-projection": "workspace:*",
+    "@nomix-ai/nomix-shell": "workspace:*",
+    "@nomix-ai/nomix-shell-env": "workspace:*",
+    "@nomix-ai/nomix-subagent": "workspace:*",
+    "@nomix-ai/nomix-subprocess-local": "workspace:*",
+    "@nomix-ai/nomix-system-prompt": "workspace:*",
+    "@nomix-ai/nomix-tool-bash": "workspace:*",
+    "@nomix-ai/nomix-tool-fs": "workspace:*",
+    "@nomix-ai/nomix-tool-subagent": "workspace:*",
+    "@nomix-ai/nomix-tools": "workspace:*",
+    "@nomix-ai/nomix-user-approval": "workspace:*",
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-working-directory": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "nomix": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

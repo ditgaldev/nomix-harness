@@ -1,0 +1,49 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/preset/agent-preset-registry/README.md
+/:
+  en: e984a1ae0ffb6b97
+  zh: f1246772a5b47191
+/nomix-ai-nomix-agent-preset-registry:
+  en: 62dd376419f9fbb9
+  zh: 09191c5fbca5beff
+/nomix-ai-nomix-agent-preset-registry/summary:
+  en: a451ec1d5b54b334
+  zh: 777d5043e9c2e9eb
+/nomix-ai-nomix-agent-preset-registry/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: b3ad7867f23dad1c
+/nomix-ai-nomix-agent-preset-registry/use-this-package:
+  en: bbff250eba0f1b89
+  zh: b20a47f82d8ab6e0
+/nomix-ai-nomix-agent-preset-registry/use-this-package/minimal-configuration:
+  en: 45377a3841ddbb0a
+  zh: 155e38c78941d715
+/nomix-ai-nomix-agent-preset-registry/understand-the-implementation:
+  en: 7df811c1347b9a94
+  zh: 141a7feb5ca597fe
+/nomix-ai-nomix-agent-preset-registry/further-exploration:
+  en: fe97106018d4ee7e
+  zh: a14dc930e24b8f43
+/nomix-ai-nomix-agent-preset-registry/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-agent-preset-registry/model-experience/preset-selection:
+  en: 9c05062c86e3d148
+  zh: 2e894dd9d93b65ba
+/nomix-ai-nomix-agent-preset-registry/model-experience/preset-selection/what-the-model-sees:
+  en: 9266e780cd183409
+  zh: b07bfe9fdb8b6f45
+/nomix-ai-nomix-agent-preset-registry/model-experience/preset-selection/token-effect:
+  en: 5bc14d87cbb67afd
+  zh: 99f62bdfcb31ab90
+/nomix-ai-nomix-agent-preset-registry/model-experience/preset-selection/kv-cache-effect:
+  en: 5e043b0b4ee03719
+  zh: a929e47776e209e0
+/nomix-ai-nomix-agent-preset-registry/known-limitations-and-deferred-work:
+  en: 8a32adf5c133fca3
+  zh: a066085a05e9b103
+/nomix-ai-nomix-agent-preset-registry/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 8ec3e73528ddb1a6

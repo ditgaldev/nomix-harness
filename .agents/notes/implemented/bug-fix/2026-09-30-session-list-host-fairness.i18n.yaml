@@ -1,0 +1,22 @@
+# Bilingual-pair consistency record for 2026-09-30-session-list-host-fairness.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-09-30-session-list-host-fairness.md
+/agent-note-time-sliced-session-list-work:
+  en: 4a872de6c04ecd14
+  zh: e1198a2efdf8b3d9
+/agent-note-time-sliced-session-list-work/problem:
+  en: 5ee132d1d44f463b
+  zh: 45589b49771d49e1
+/agent-note-time-sliced-session-list-work/decision:
+  en: a2dd9ebb3a624a1c
+  zh: 2cef108746c66c7a
+/agent-note-time-sliced-session-list-work/measurement-and-calibration:
+  en: 3975a1f590a8363c
+  zh: 02f6e3c01a8d45eb
+/agent-note-time-sliced-session-list-work/alternatives-considered:
+  en: a2f441a550c0ed7e
+  zh: 05e8bfd584217103
+/agent-note-time-sliced-session-list-work/consequences:
+  en: 5fd10d559a120ae6
+  zh: a56f45b77ce1f4e6

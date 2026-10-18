@@ -1,0 +1,55 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/boot/plugin-manager/README.md
+/:
+  en: 65283627208ef4c9
+  zh: aa3f833ec24bb65a
+/nomix-ai-nomix-plugin-manager:
+  en: 567bbb70e86287e1
+  zh: 96c837bedd99c781
+/nomix-ai-nomix-plugin-manager/summary:
+  en: d6afcaa1594efcdb
+  zh: 459cb6ac0dcb2d46
+/nomix-ai-nomix-plugin-manager/table-of-contents:
+  en: 87679c51aa3693f5
+  zh: 11684a48a5806afb
+/nomix-ai-nomix-plugin-manager/use-this-package:
+  en: 3228faa340e6c904
+  zh: be850c6b3bf9e051
+/nomix-ai-nomix-plugin-manager/use-this-package/version-compatibility-and-exemptions:
+  en: ff1769973dab9579
+  zh: 27892727fe9abf2c
+/nomix-ai-nomix-plugin-manager/use-this-package/configuration:
+  en: d2f92adb4bddf065
+  zh: 27791296f3cdb4f9
+/nomix-ai-nomix-plugin-manager/understand-the-implementation:
+  en: dd46dbfdeda20d87
+  zh: 55ef77624c4e317e
+/nomix-ai-nomix-plugin-manager/further-exploration:
+  en: 816298a07b8d3361
+  zh: 2a3a5715acae8efb
+/nomix-ai-nomix-plugin-manager/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-plugin-manager/model-experience/management-tool:
+  en: 1815ec6ce56c80d4
+  zh: 2d7ac75d3b25eb6b
+/nomix-ai-nomix-plugin-manager/model-experience/management-tool/what-the-model-sees:
+  en: daa749f886d81ee9
+  zh: 865c3f0bab09d164
+/nomix-ai-nomix-plugin-manager/model-experience/management-tool/token-effect:
+  en: bc70208bd361dbcd
+  zh: bb651d6066066c6c
+/nomix-ai-nomix-plugin-manager/model-experience/management-tool/kv-cache-effect:
+  en: c29f60be7f3edc1a
+  zh: d9b9388b96ef95cc
+/nomix-ai-nomix-plugin-manager/known-limitations-and-deferred-work:
+  en: cf47fb8601916884
+  zh: fca9ee2a7625a492
+/nomix-ai-nomix-plugin-manager/known-limitations-and-deferred-work/failure-behavior:
+  en: f7fd4125bc1518ab
+  zh: 69806ea629f05585
+/nomix-ai-nomix-plugin-manager/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

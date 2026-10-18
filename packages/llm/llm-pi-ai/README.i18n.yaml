@@ -1,6 +1,97 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/llm/llm-pi-ai/README.md
-README.md: ef61b140ed712d8a4597b95b2e14bd8b508728b3
-README.zh.md: d3b09356071d18dbae0f4928967f1975e65328cc
+/:
+  en: 8a6ec0a589e6fd18
+  zh: e85fc352c9cba373
+/nomix-ai-nomix-llm-pi-ai:
+  en: be07ba301eaf1c81
+  zh: 2146a78ac40490e6
+/nomix-ai-nomix-llm-pi-ai/summary:
+  en: cdb6fd31de0ad36d
+  zh: d2206f7ecb9bad40
+/nomix-ai-nomix-llm-pi-ai/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-llm-pi-ai/use-this-package:
+  en: 9bc9b4c7643dc437
+  zh: fdb60ca43293ca6e
+/nomix-ai-nomix-llm-pi-ai/use-this-package/when-to-choose-it:
+  en: f1f47428a5d73ec0
+  zh: 5b0007536f8d753d
+/nomix-ai-nomix-llm-pi-ai/use-this-package/configure-provider-routes:
+  en: 3c7489c7cc672724
+  zh: ba677b6cb645013c
+/nomix-ai-nomix-llm-pi-ai/use-this-package/sign-in-to-a-provider:
+  en: c36f66438638ae08
+  zh: 066a2fc4cb97c86f
+/nomix-ai-nomix-llm-pi-ai/use-this-package/resolve-the-model-catalog:
+  en: 376f83206858b601
+  zh: 38bb6993609c96a6
+/nomix-ai-nomix-llm-pi-ai/use-this-package/run-with-reasoning-and-wire-compatibility:
+  en: b58b917e7f250aee
+  zh: aff599081bac08c3
+/nomix-ai-nomix-llm-pi-ai/use-this-package/change-configuration-at-runtime:
+  en: 92f554e1718614ca
+  zh: f17ed3ad3e5d28e2
+/nomix-ai-nomix-llm-pi-ai/use-this-package/discover-models-from-endpoints:
+  en: 6619e8cfe7555c73
+  zh: b2f80c25acb81cf8
+/nomix-ai-nomix-llm-pi-ai/use-this-package/failures-and-recovery:
+  en: 3c1edbc63de24a1a
+  zh: 01592718c3a2c79f
+/nomix-ai-nomix-llm-pi-ai/understand-the-implementation:
+  en: 1598ac8a8bb9b6bf
+  zh: fdd089c5ae7722cd
+/nomix-ai-nomix-llm-pi-ai/understand-the-implementation/design-philosophy:
+  en: 8aba1113937b368a
+  zh: 804a4ca672a776df
+/nomix-ai-nomix-llm-pi-ai/understand-the-implementation/source-map:
+  en: 64912b8a3a336419
+  zh: 33a245969b4194f6
+/nomix-ai-nomix-llm-pi-ai/understand-the-implementation/registration-and-directory:
+  en: 0c6df3e8b6a75372
+  zh: 476666a6f209542c
+/nomix-ai-nomix-llm-pi-ai/understand-the-implementation/generated-provider-metadata:
+  en: 477d277e9ac35c8f
+  zh: 96870ca333fb6510
+/nomix-ai-nomix-llm-pi-ai/understand-the-implementation/replay-and-vocabulary:
+  en: 73242ca9b8a98c76
+  zh: 4ab98526ae70bd23
+/nomix-ai-nomix-llm-pi-ai/further-exploration:
+  en: 4c632446db131012
+  zh: b2f826709a4905d0
+/nomix-ai-nomix-llm-pi-ai/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-llm-pi-ai/model-experience/provider-request-through-pi-ai:
+  en: e7348db3f7115960
+  zh: 5fd5fb09d7d09982
+/nomix-ai-nomix-llm-pi-ai/model-experience/provider-request-through-pi-ai/what-the-model-sees:
+  en: e2bba12a25beb98c
+  zh: 34527321884e08d5
+/nomix-ai-nomix-llm-pi-ai/model-experience/provider-request-through-pi-ai/token-effect:
+  en: 820221e8ae37aa61
+  zh: 7e6ff4db10067fc0
+/nomix-ai-nomix-llm-pi-ai/model-experience/provider-request-through-pi-ai/kv-cache-effect:
+  en: 8c1f842a95ab46fb
+  zh: d6dd124c82f1d96b
+/nomix-ai-nomix-llm-pi-ai/model-experience/provider-response:
+  en: 802d7ff60a1d03ff
+  zh: c41c56e28f3e8680
+/nomix-ai-nomix-llm-pi-ai/model-experience/provider-response/what-the-model-sees:
+  en: 9b7d6b95ec2c4351
+  zh: 356ac01aef9e8bed
+/nomix-ai-nomix-llm-pi-ai/model-experience/provider-response/token-effect:
+  en: f002b21d0f4c3df0
+  zh: 388c8ed4676ed1af
+/nomix-ai-nomix-llm-pi-ai/model-experience/provider-response/kv-cache-effect:
+  en: b6bd570c0159ba08
+  zh: 7d2d91eea6a8d830
+/nomix-ai-nomix-llm-pi-ai/known-limitations-and-deferred-work:
+  en: ee870ac2ac87decc
+  zh: 9e66c5e7400c4bc6
+/nomix-ai-nomix-llm-pi-ai/known-limitations-and-deferred-work/dev-note:
+  en: 3678dd0f6642c2a5
+  zh: 75cbdd064cc64282

@@ -1,21 +1,56 @@
 /**
- * Shared mounting for the services required before tests load the concrete
- * agent loop. The caller retains ownership of the context, loop, adapters,
- * optional plugins, and teardown.
+ * Shared service mounting, real AgentLoop drivers, and structural Inbox stubs
+ * for agent-loop tests. Callers retain ownership of their contexts, adapters,
+ * optional plugins, agents, and teardown.
  * @module @nomix-ai/nomix-agent-loop-testkit
  */
 
 import type { Context } from '@nomix-ai/cordis'
 import AgentRegistry from '@nomix-ai/nomix-agent'
+import type { Agent, AgentOptions, Inbox, InboxTarget } from '@nomix-ai/nomix-agent'
+import AgentLoop from '@nomix-ai/nomix-agent-loop'
 import LlmRuntime from '@nomix-ai/nomix-llm'
 import SessionStore from '@nomix-ai/nomix-session'
+import type { SessionHeader, SessionId, UserMessage } from '@nomix-ai/nomix-session'
+import SessionProjectionRegistry from '@nomix-ai/nomix-session-projection'
 import SystemPrompt from '@nomix-ai/nomix-system-prompt'
 import type { Config as SystemPromptConfig } from '@nomix-ai/nomix-system-prompt'
 import ToolRuntime from '@nomix-ai/nomix-tools'
 import type { Config as ToolRuntimeConfig } from '@nomix-ai/nomix-tools'
+import FsLocal from '@nomix-ai/nomix-fs-local'
+import WorkingDirectory from '@nomix-ai/nomix-working-directory'
+
+export { createInboxStub, unsupportedInbox } from './inbox.ts'
+export { provideWorkingDirectoryFixture } from './working-directory-fixture.ts'
+
+interface DriverInbox extends Inbox {
+  claim(target: InboxTarget, turn: number): UserMessage[]
+}
+
+/** Test driver for production Agents created by a mounted AgentLoop. */
+export interface AgentLoopTestHarness {
+  /**
+   * Create a production Agent and fresh Session owned by the harness context.
+   * @param id - shared Agent and Session identity.
+   * @param options - concrete loop options.
+   * @param meta - optional fresh-session workspace metadata.
+   * @returns the published production Agent after creation completes.
+   */
+  create(id: SessionId, options?: AgentOptions, meta?: Pick<SessionHeader, 'cwd'>): Promise<Agent>
+  /**
+   * Admit pending messages through the production loop driver's claim operation.
+   * @param agent - Agent returned by this harness's `create` method.
+   * @param target - boundary whose pending input is admitted.
+   * @param turn - turn that owns the admitted messages.
+   * @returns next-step messages followed by one next-turn message when requested.
+   */
+  claim(agent: Agent, target: InboxTarget, turn: number): UserMessage[]
+}
 
 /** Configuration forwarded to the prerequisite service plugins. */
 export interface AgentLoopTestDependenciesOptions {
+  /** Mount the real directory owner and a local filesystem for directory-aware tests. */
+  readonly workingDirectory?: boolean
   /** Configuration for the system-prompt registry. */
   readonly systemPrompt?: SystemPromptConfig
   /** Configuration for the tool registry. */
@@ -40,7 +75,28 @@ export async function mountAgentLoopTestDependencies(
 ): Promise<void> {
   await ctx.plugin(LlmRuntime)
   await ctx.plugin(SessionStore)
+  await ctx.plugin(SessionProjectionRegistry)
   await ctx.plugin(SystemPrompt, options.systemPrompt ?? {})
+  if (options.workingDirectory) {
+    if (ctx.get('fs') === undefined) await ctx.plugin(FsLocal)
+    await ctx.plugin(WorkingDirectory)
+  }
   await ctx.plugin(ToolRuntime, options.tools ?? {})
   await ctx.plugin(AgentRegistry)
+}
+
+/**
+ * Mount the production AgentLoop and expose its narrow test-driver operations.
+ * Mount {@link mountAgentLoopTestDependencies} and any load-order-sensitive
+ * consumers before calling this helper. The context owns the loop and every
+ * Agent returned by the harness.
+ * @param ctx - test context with the AgentLoop prerequisite services active.
+ * @returns a driver that creates production Agents and claims their real Inbox.
+ */
+export async function mountAgentLoopTestHarness(ctx: Context): Promise<AgentLoopTestHarness> {
+  await ctx.plugin(AgentLoop, { agents: [] })
+  return {
+    create: async (id, options = {}, meta = {}) => ctx.agentLoop.create(id, options, meta),
+    claim: (agent, target, turn) => (agent.inbox as DriverInbox).claim(target, turn),
+  }
 }

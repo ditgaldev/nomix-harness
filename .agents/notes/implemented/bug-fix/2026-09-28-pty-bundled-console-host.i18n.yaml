@@ -1,0 +1,22 @@
+# Bilingual-pair consistency record for 2026-09-28-pty-bundled-console-host.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/bug-fix/2026-09-28-pty-bundled-console-host.md
+/agent-note-windows-persistent-ptys-use-the-console-host-node-pty-ships:
+  en: 2adac6870b855beb
+  zh: c73d7e0174265c5e
+/agent-note-windows-persistent-ptys-use-the-console-host-node-pty-ships/problem:
+  en: 6cd692a90464c273
+  zh: 3800a57b42c94cbf
+/agent-note-windows-persistent-ptys-use-the-console-host-node-pty-ships/decision:
+  en: a521bddbc4c0d5e0
+  zh: cf2788f6e85ebbf1
+/agent-note-windows-persistent-ptys-use-the-console-host-node-pty-ships/alternatives-considered:
+  en: 14059fd23b3c41bb
+  zh: 174d746520bf2e3f
+/agent-note-windows-persistent-ptys-use-the-console-host-node-pty-ships/consequences:
+  en: 5af486852c78125e
+  zh: 68215646a34b4412
+/agent-note-windows-persistent-ptys-use-the-console-host-node-pty-ships/testing:
+  en: eebdb2d7c7e61d9e
+  zh: da8dd1df06180dee

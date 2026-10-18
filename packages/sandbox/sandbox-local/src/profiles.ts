@@ -4,7 +4,7 @@
  * @module @nomix-ai/nomix-sandbox-local/profiles
  */
 
-import { grantArgs as landlockGrantArgs } from '@nomix-ai/node-addon-landlock-run'
+import { grantArgs as landlockGrantArgs } from '@nomix-ai/node-addon-system/landlock-run'
 import { writableRoots } from '@nomix-ai/nomix-sandbox'
 import type { SandboxPolicy } from '@nomix-ai/nomix-sandbox'
 

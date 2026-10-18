@@ -1,6 +1,22 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for 2026-07-29-projected-token-usage-and-request-context.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-07-29-projected-token-usage-and-request-context.md
-2026-07-29-projected-token-usage-and-request-context.md: 4540d1f2e1defb3394ca0d098095bfbd25e56242
-2026-07-29-projected-token-usage-and-request-context.zh.md: ee90025005794b8d1ae7f734be0d2a682cf3ab3c
+/agent-note-projected-token-usage-and-context-occupancy:
+  en: 0da609b61ec6018b
+  zh: 711fa61ce969395d
+/agent-note-projected-token-usage-and-context-occupancy/problem:
+  en: 081098cb08ca80aa
+  zh: f829b6630a68fc3c
+/agent-note-projected-token-usage-and-context-occupancy/decision:
+  en: adab8e3ba29a8d5a
+  zh: f229db82170f5b6f
+/agent-note-projected-token-usage-and-context-occupancy/context-occupancy-is-approximate-and-that-is-the-decision:
+  en: 9df83c0a48f462d2
+  zh: 94c2ad19af4b13fc
+/agent-note-projected-token-usage-and-context-occupancy/alternatives-considered:
+  en: 50272313b4f061cc
+  zh: 1cfd7374e4bdfed9
+/agent-note-projected-token-usage-and-context-occupancy/consequences:
+  en: c7a407dc3964fb9d
+  zh: b1ac7c53abb5cb09

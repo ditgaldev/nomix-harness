@@ -1,0 +1,31 @@
+# Bilingual-pair consistency record for ui-radius.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/ui-radius.md
+/nomix-unified-corner-radius-standard:
+  en: 3f2e628f7e7ec36e
+  zh: bb454a4df54a00a3
+/nomix-unified-corner-radius-standard/summary:
+  en: 6ff41fb2f5e50d6f
+  zh: 46a371a60abae63f
+/nomix-unified-corner-radius-standard/table-of-contents:
+  en: aad65e4a8399adbb
+  zh: e76b80d421b17992
+/nomix-unified-corner-radius-standard/scope-and-authority:
+  en: cf3ea739349ef77e
+  zh: 7f20e04b71f74322
+/nomix-unified-corner-radius-standard/select-the-radius:
+  en: e736416ec85d6e16
+  zh: 0edf60fccc867295
+/nomix-unified-corner-radius-standard/reuse-tokens-and-preserve-deliberate-shapes:
+  en: 5ae8c3581374c83a
+  zh: 1513893f1eb41aa6
+/nomix-unified-corner-radius-standard/nested-geometry-and-hover:
+  en: 7fe4eb7707e6a9f3
+  zh: be7530a05c205e27
+/nomix-unified-corner-radius-standard/settings-card-materials:
+  en: 85e7e63183df06d1
+  zh: 1da2b44083d7ebe2
+/nomix-unified-corner-radius-standard/apply-and-verify:
+  en: 2f6f10e45b27c19b
+  zh: 9eb5fd964c643be6

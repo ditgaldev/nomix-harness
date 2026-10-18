@@ -1,0 +1,38 @@
+- id: agent-default-model
+  name: '@nomix-ai/nomix-agent-default-model'
+  config:
+    provider: deepseek-official
+    model: deepseek-v4-flash-vision-exp
+
+- id: session-persistence-jsonl
+  name: '@nomix-ai/nomix-session-persistence-jsonl'
+  config:
+    root: !!js nomixHomePath('sessions')
+    compression: none
+
+- id: agent-instructions
+  name: '@nomix-ai/nomix-agent-instructions'
+  config:
+    maxBytes: 65536
+
+- id: system-prompt
+  name: '@nomix-ai/nomix-system-prompt'
+  config:
+    personaPrefix: |
+      You are a coding assistant powered by the {{model}} model. Your bash tool runs under a file sandbox — a `[sandbox: file access denied …]` result is policy, not a command bug.
+
+      Verify your work by running the code or tests. Keep answers brief and factual.
+
+- id: attachment-local
+  name: '@nomix-ai/nomix-attachment-local'
+
+- insert:
+    - id: computer-use
+      name: '@nomix-ai/nomix-computer-use'
+    - id: computer-use-cua-driver-mcp
+      name: '@nomix-ai/nomix-experimental-computer-use-cua-driver-mcp'
+      config:
+        command: !!js process.execPath
+        args: [driver.mjs, .nomix/computer-use-fixture]
+        reconnect:
+          enabled: false

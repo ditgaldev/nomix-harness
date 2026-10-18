@@ -1,6 +1,67 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/bundle/headless/README.md
-README.md: 6b23864dff4565690bf62ab23cdb52be9e5f8160
-README.zh.md: fbca1b820185718b2fb789340bfff9b99e84384f
+/:
+  en: 37c9d69d5f120947
+  zh: a794ddc80afc06d9
+/nomix-ai-nomix-headless:
+  en: 06b1f96e9a787605
+  zh: 76c51ff7c4b4829d
+/nomix-ai-nomix-headless/summary:
+  en: 7db981372c52a2db
+  zh: f2619b02471c7687
+/nomix-ai-nomix-headless/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-headless/use-this-package:
+  en: 4447012f4c84100d
+  zh: faf579ae9f04c096
+/nomix-ai-nomix-headless/use-this-package/running-a-one-shot-task:
+  en: 6aaa14c6d6939e45
+  zh: 424519ef953251b1
+/nomix-ai-nomix-headless/use-this-package/credentials:
+  en: d034dd9aebfcc7ef
+  zh: 910f8120f10b8bdf
+/nomix-ai-nomix-headless/use-this-package/choosing-the-session-identity:
+  en: dbaa2fac63910a4c
+  zh: 4fd5c17815ca444b
+/nomix-ai-nomix-headless/use-this-package/machine-readable-output:
+  en: dcc6c9d997a0b7b0
+  zh: 2fb6da2a582d1716
+/nomix-ai-nomix-headless/use-this-package/when-to-use-it:
+  en: d1111d8e8832786b
+  zh: 6e375e1dbf3c2da1
+/nomix-ai-nomix-headless/use-this-package/help-and-task-errors:
+  en: 56b557efb4337f11
+  zh: 70916d4ed3beaca5
+/nomix-ai-nomix-headless/understand-the-implementation:
+  en: be1b73a6d0ee3902
+  zh: bdba099685d68b27
+/nomix-ai-nomix-headless/understand-the-implementation/run-flow:
+  en: 3a22d276066d5f01
+  zh: 4be6b6d6c8ba2dff
+/nomix-ai-nomix-headless/understand-the-implementation/patch-surface-over-base:
+  en: 8e264f9e9a5f2977
+  zh: ab07bf27636512d4
+/nomix-ai-nomix-headless/understand-the-implementation/exit-mapping:
+  en: 8dd58c6da863f950
+  zh: 994396be1f955e35
+/nomix-ai-nomix-headless/understand-the-implementation/source-map:
+  en: d3d9554bb80dd56c
+  zh: 7b03624bfe31642f
+/nomix-ai-nomix-headless/further-exploration:
+  en: 1b68b10a753f28f4
+  zh: 2e0bb223b271e566
+/nomix-ai-nomix-headless/model-experience:
+  en: c5a0991833f64dd7
+  zh: 46f9feb255778f11
+/nomix-ai-nomix-headless/model-experience/kv-cache-effect:
+  en: 0b0f74b412c7c6d8
+  zh: 6e8f918d0c4bf342
+/nomix-ai-nomix-headless/known-limitations-and-deferred-work:
+  en: bdb9a249c6485487
+  zh: f7a7667698ed8a0a
+/nomix-ai-nomix-headless/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

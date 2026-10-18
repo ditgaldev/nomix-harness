@@ -1,6 +1,28 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for jobs.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/subsystems/jobs.md
-jobs.md: 9613e1bc2ba46984cfe1c31018a2fd2a8f802dc5
-jobs.zh.md: f8ab3a6b290df6d974283dbbd0909a1ada0ce947
+/background-job-runtime:
+  en: abd4cdf3986cc5be
+  zh: 34989059922c6ccd
+/background-job-runtime/ids-and-status:
+  en: bdf1c8d8934a4639
+  zh: 067c8e7b43dab4d5
+/background-job-runtime/session-lifecycle-records:
+  en: 5fb99886e0ab2718
+  zh: bdea51368c935895
+/background-job-runtime/producer-contract:
+  en: 6f0dd7bc68243d3a
+  zh: e470acdfbb6f1e5c
+/background-job-runtime/the-output-ring:
+  en: cbf499fcefe31768
+  zh: 1b7aaf61adc1a7b8
+/background-job-runtime/consumer-views:
+  en: 8923d586da35964e
+  zh: 85437e407856cd5f
+/background-job-runtime/events:
+  en: 413216510fce678e
+  zh: 18efe733a0b35d0c
+/background-job-runtime/service-behavior:
+  en: 37b5d90876a9636e
+  zh: ba5abb746c406927

@@ -26,6 +26,7 @@
  * @module @nomix-ai/nomix-tool-fs-search
  */
 
+import type {} from '@nomix-ai/nomix-working-directory'
 import type { Context } from '@nomix-ai/cordis'
 import z from '@nomix-ai/schemastery'
 import { MAX_TIMER_DELAY_MS } from '@nomix-ai/nomix-timeout'
@@ -67,7 +68,7 @@ export type { GrepMatch, RipgrepRun, SearchErrorCode } from './search-core.ts'
 export const name = 'tool-fs-search'
 
 /** Services required by the search tool suite (`spillStore` is optional, read via `ctx.get()`). */
-export const inject = ['tools', 'systemPrompt', 'subprocess']
+export const inject = ['tools', 'systemPrompt', 'subprocess', 'workingDirectory']
 
 /** Plugin config; over-cap glob sampling is an explicit deployment choice and the remaining fields have defaults. */
 export interface Config {

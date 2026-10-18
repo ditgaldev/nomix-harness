@@ -1,0 +1,106 @@
+{
+  "name": "@nomix-ai/nomix-client-ui-chat",
+  "description": "Chat Conversation target, node definitions, renderers, and details surface",
+  "version": "0.2.9",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
+    "directory": "packages/client/ui-chat"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "nomix": {
+    "client": {
+      "inject": [
+        "@nomix-ai/nomix-api-session-controller",
+        "@nomix-ai/nomix-api-workspace-controller",
+        "@nomix-ai/nomix-client-locale",
+        "@nomix-ai/nomix-client-ui-conversation",
+        "@nomix-ai/nomix-client-ui-input-trigger",
+        "@nomix-ai/nomix-client-ui-layout",
+        "@nomix-ai/nomix-client-ui-renderer",
+        "@nomix-ai/nomix-client-ui-session",
+        "@nomix-ai/nomix-client-ui-settings",
+        "@nomix-ai/nomix-client-ui-sidebar-right",
+        "@nomix-ai/nomix-client-ui-workspace"
+      ],
+      "platform": "web"
+    }
+  },
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@nomix-ai/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-agent": "workspace:*",
+    "@nomix-ai/nomix-api-remotes": "workspace:*",
+    "@nomix-ai/nomix-api-session-controller": "workspace:*",
+    "@nomix-ai/nomix-api-workspace-controller": "workspace:*",
+    "@nomix-ai/nomix-api-workspace-files": "workspace:*",
+    "@nomix-ai/nomix-attachment": "workspace:*",
+    "@nomix-ai/nomix-brand": "workspace:*",
+    "@nomix-ai/nomix-client-locale": "workspace:*",
+    "@nomix-ai/nomix-client-store": "workspace:*",
+    "@nomix-ai/nomix-client-ui-approval": "workspace:*",
+    "@nomix-ai/nomix-client-ui-conversation": "workspace:*",
+    "@nomix-ai/nomix-client-ui-input-trigger": "workspace:*",
+    "@nomix-ai/nomix-client-ui-layout": "workspace:*",
+    "@nomix-ai/nomix-client-ui-primitives": "workspace:*",
+    "@nomix-ai/nomix-client-ui-renderer": "workspace:*",
+    "@nomix-ai/nomix-client-ui-session": "workspace:*",
+    "@nomix-ai/nomix-client-ui-settings": "workspace:*",
+    "@nomix-ai/nomix-client-ui-sidebar-browser": "workspace:*",
+    "@nomix-ai/nomix-client-ui-sidebar-documentpreview": "workspace:*",
+    "@nomix-ai/nomix-client-ui-sidebar-right": "workspace:*",
+    "@nomix-ai/nomix-client-ui-slots": "workspace:*",
+    "@nomix-ai/nomix-client-ui-workspace": "workspace:*",
+    "@nomix-ai/nomix-commands": "workspace:*",
+    "@nomix-ai/nomix-compaction": "workspace:*",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-llm-retry": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-session-stats": "workspace:*",
+    "@nomix-ai/nomix-session-turn-outline": "workspace:*",
+    "@nomix-ai/nomix-subagent": "workspace:*",
+    "@nomix-ai/nomix-token-meter": "workspace:*",
+    "@nomix-ai/nomix-tools": "workspace:*",
+    "@nomix-ai/nomix-util-workspace-path": "workspace:*",
+    "@nomix-ai/nomix-util-values": "workspace:*",
+    "@tanstack/react-virtual": "3.14.10",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@nomix-ai/nomix-settings": "workspace:*",
+    "@nomix-ai/nomix-client-product-analytics": "workspace:*"
+  },
+  "dependencies": {
+    "@nomix-ai/schemastery": "workspace:~"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/types/**/*.d.ts"
+  ]
+}

@@ -1,4 +1,5 @@
 import { mkdtemp, rm, writeFile } from 'node:fs/promises'
+import { provideWorkingDirectoryFixture, unsupportedInbox } from '@nomix-ai/nomix-agent-loop-testkit'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
@@ -6,15 +7,16 @@ import { afterEach, describe, expect, it } from 'vitest'
 import { Context } from '@nomix-ai/cordis'
 import Loader from '@nomix-ai/cordis-plugin-loader'
 import Include from '@nomix-ai/cordis-plugin-include'
-import { CallId } from '@nomix-ai/nomix-llm'
-import { Session, SessionId } from '@nomix-ai/nomix-session'
-import AgentRegistry, { Inbox } from '@nomix-ai/nomix-agent'
+import { ToolCallId } from '@nomix-ai/nomix-llm'
+import { SESSION_FORMAT_VERSION, Session, SessionId } from '@nomix-ai/nomix-session'
+import AgentRegistry from '@nomix-ai/nomix-agent'
 import type { Agent } from '@nomix-ai/nomix-agent'
 import TerminalSessionService from '@nomix-ai/nomix-terminal'
 import * as TerminalLocal from '@nomix-ai/nomix-terminal-bash'
 import SandboxProvider from '@nomix-ai/nomix-sandbox'
 import type { ConfinedArgv, SandboxPolicy } from '@nomix-ai/nomix-sandbox'
 import SandboxPolicyService from '@nomix-ai/nomix-sandbox-policy'
+import SessionProjectionRegistry from '@nomix-ai/nomix-session-projection'
 import LocalSubprocessRuntime from '@nomix-ai/nomix-subprocess-local'
 import SystemPrompt from '@nomix-ai/nomix-system-prompt'
 import ToolRuntime from '@nomix-ai/nomix-tools'
@@ -31,20 +33,22 @@ afterEach(async () => {
 })
 
 class PassthroughSandbox extends SandboxProvider {
-  confine(argv: readonly string[], _policy: SandboxPolicy): ConfinedArgv {
+  async confine(argv: readonly string[], _policy: SandboxPolicy): Promise<ConfinedArgv> {
     return { argv: [...argv], enforcement: 'full', denialSignatures: [], runnerFailureRules: [] }
   }
 }
 
-function agent(ctx: Context, cwd: string): Agent {
+async function agent(ctx: Context, cwd: string): Promise<Agent> {
   const id = SessionId('persistent-bash-loader-agent')
   const scope = ctx.plugin(() => {})
-  const session = Session.create(id, [], { version: 0, id, createdAt: 0, cwd })
+  const session = Session.create(id, [], {
+    version: SESSION_FORMAT_VERSION, id, createdAt: 0, cwd, isSeeded: false,
+  })
   const value: Agent = {
     id,
     options: {},
     session,
-    inbox: new Inbox(session, { inserted: () => {}, discarded: () => {}, claimed: () => {} }),
+    inbox: unsupportedInbox(),
     status: 'idle',
     ctx: scope.ctx,
     send: () => {},
@@ -55,7 +59,7 @@ function agent(ctx: Context, cwd: string): Agent {
     runMaintenance: task => task(new AbortController().signal),
     whenIdle: () => Promise.resolve(),
   }
-  ctx.agents.register(value)
+  await ctx.agents.register(value)
   return value
 }
 
@@ -75,6 +79,7 @@ suite('persistent Bash through a real cordis.yml Loader composition', () => {
       "- name: '@nomix-ai/nomix-tools'",
       "- name: '@nomix-ai/nomix-terminal'",
       "- name: '@nomix-ai/nomix-test-sandbox'",
+      "- name: '@nomix-ai/nomix-session-projection'",
       "- name: '@nomix-ai/nomix-sandbox-policy'",
       '  config:',
       '    mode: danger-full-access',
@@ -99,6 +104,8 @@ suite('persistent Bash through a real cordis.yml Loader composition', () => {
     ].join('\n'))
 
     context = new Context()
+
+    provideWorkingDirectoryFixture(context)
     context.baseUrl = pathToFileURL(root).href + '/'
     await context.plugin(Loader)
     context.loader.builtins.include = Include
@@ -108,6 +115,7 @@ suite('persistent Bash through a real cordis.yml Loader composition', () => {
       ['@nomix-ai/nomix-tools', ToolRuntime],
       ['@nomix-ai/nomix-terminal', TerminalSessionService],
       ['@nomix-ai/nomix-test-sandbox', PassthroughSandbox],
+      ['@nomix-ai/nomix-session-projection', SessionProjectionRegistry],
       ['@nomix-ai/nomix-sandbox-policy', SandboxPolicyService],
       ['@nomix-ai/nomix-subprocess-local', LocalSubprocessRuntime],
       ['@nomix-ai/nomix-terminal-bash', TerminalLocal],
@@ -123,11 +131,11 @@ suite('persistent Bash through a real cordis.yml Loader composition', () => {
     await context.loader.create({ name: 'cordis:include', config: { path: pathToFileURL(configPath).href } })
     await context.loader.await()
 
-    const owner = agent(context, root)
+    const owner = await agent(context, root)
     const signal = new AbortController().signal
     const execute = (id: string, command: string) => context!.tools.execute({
       signal,
-      callId: CallId(id),
+      callId: ToolCallId(id),
       name: 'bash',
       arguments: { command },
       agent: owner,
@@ -143,14 +151,26 @@ suite('persistent Bash through a real cordis.yml Loader composition', () => {
       'multiline',
       'value="line one"\nprintf "%s:%s\\n" "$value" "it\'s fine"',
     ))
-    expect(multiline).toBe("line one:it's fine")
+    expect(multiline).toBe("line one:it's fine\n[Command finished with exit code 0]")
     expect(multiline).not.toContain('NOMIX_PERSISTENT_BASH')
 
     const heredoc = text(await execute(
       'heredoc',
       "cat <<'EOF'\nalpha\nbeta\nEOF",
     ))
-    expect(heredoc).toBe('alpha\nbeta')
+    expect(heredoc).toBe('alpha\nbeta\n[Command finished with exit code 0]')
+
+    const pipeline = text(await execute(
+      'pipeline',
+      '{ sleep 0.1; printf "delayed\\n"; } | cat',
+    ))
+    expect(pipeline).toBe('delayed\n[Command finished with exit code 0]')
+
+    // Every trailing newline is dropped before the status trailer.
+    const trailing = text(await execute('trailing-newlines', 'printf "tail\\n\\n\\n"'))
+    expect(trailing).toBe('tail\n[Command finished with exit code 0]')
+    expect(text(await execute('nonzero', 'exit_code() { return 3; }; exit_code')))
+      .toBe('[Command finished with exit code 3]')
 
     const large = text(await execute('large-output', 'seq 1 12050'))
     expect(large.startsWith('1\n2\n3\n')).toBe(true)
@@ -165,6 +185,6 @@ suite('persistent Bash through a real cordis.yml Loader composition', () => {
 
     const exited = text(await execute('exit', 'exit'))
     expect(exited).toContain('next bash call starts from the workspace')
-    expect(text(await execute('after-exit', 'printf "%s\\n" "$PWD"'))).toBe(root)
+    expect(text(await execute('after-exit', 'printf "%s\\n" "$PWD"'))).toBe(`${root}\n[Command finished with exit code 0]`)
   }, 20_000)
 })

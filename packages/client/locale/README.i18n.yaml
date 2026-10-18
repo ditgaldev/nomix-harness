@@ -1,6 +1,64 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/client/locale/README.md
-README.md: 0bf7d0eea1fbb4b653efe4bb4b669b278925721f
-README.zh.md: 96f59a9189c37c50aef012b1beb5265ea544c454
+/:
+  en: d2aaa955e01c2679
+  zh: 9d264cf8be1536cf
+/nomix-ai-nomix-client-locale:
+  en: 74ddf40ac379a770
+  zh: 410bfb3c02def440
+/nomix-ai-nomix-client-locale/summary:
+  en: 96d312b3158d7c54
+  zh: b32a22068fae68ec
+/nomix-ai-nomix-client-locale/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: bda879a892f240f0
+/nomix-ai-nomix-client-locale/use-this-package:
+  en: 7fedfbcbc3ad8cea
+  zh: e29ba5230e0b9ecb
+/nomix-ai-nomix-client-locale/use-this-package/choosing-a-language:
+  en: 13cab9adcf85c212
+  zh: 865a09705ed06158
+/nomix-ai-nomix-client-locale/use-this-package/registering-a-dictionary:
+  en: 9b2fcfa8cae8dc4b
+  zh: 293012a4d364ef59
+/nomix-ai-nomix-client-locale/use-this-package/resolving-package-text:
+  en: 877a8f9a90529c0f
+  zh: 0af4b703e8922e1d
+/nomix-ai-nomix-client-locale/use-this-package/registering-a-language-pack:
+  en: aa4e9c70523339cc
+  zh: 3359eddc4e9ef15e
+/nomix-ai-nomix-client-locale/use-this-package/what-the-host-half-does:
+  en: 77a1f1c4c9077fe3
+  zh: b3627d5d2d362629
+/nomix-ai-nomix-client-locale/understand-the-implementation:
+  en: 288d8db39f9acfc5
+  zh: d65cf2ffae8ad35c
+/nomix-ai-nomix-client-locale/understand-the-implementation/design-concept:
+  en: fd50b07ef931f96c
+  zh: fc8be01487dbb7ef
+/nomix-ai-nomix-client-locale/understand-the-implementation/preference-resolution:
+  en: d602d957654641c6
+  zh: 2db822b746a6471d
+/nomix-ai-nomix-client-locale/understand-the-implementation/dictionary-lookup:
+  en: f8dcc4035830e738
+  zh: 8452ac63ee148c61
+/nomix-ai-nomix-client-locale/understand-the-implementation/source-map:
+  en: a382e032c06ced3f
+  zh: 419cb5f60b075388
+/nomix-ai-nomix-client-locale/further-exploration:
+  en: 87611c70c0e5577b
+  zh: 99f80c8840cabbcb
+/nomix-ai-nomix-client-locale/model-experience:
+  en: 209321ba2d2e6710
+  zh: 21deb6c973f69b66
+/nomix-ai-nomix-client-locale/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: de54f3467ef3b9be
+/nomix-ai-nomix-client-locale/known-limitations-and-deferred-work:
+  en: 500ede048ef44c6a
+  zh: f741fae55b29a627
+/nomix-ai-nomix-client-locale/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

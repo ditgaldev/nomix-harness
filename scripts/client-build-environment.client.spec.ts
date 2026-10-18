@@ -1,3 +1,5 @@
+import { execFileSync } from 'node:child_process'
+import * as childProcess from 'node:child_process'
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
@@ -7,12 +9,22 @@ import {
   assertClientBuildEnvironment,
   clientBuildEnvironmentDefines,
   clientBuildProcessEnvironment,
+  clientBuildValueDefines,
+  officialClientBuildEnvironment,
   readClientBuildRecord,
+  repositoryClientBuildEnvironment,
   repositoryCommitHash,
+  repositoryGitDirty,
+  repositoryVersion,
   resolveClientBuildEnvironment,
   writeClientBuildRecord,
 } from './client-build-environment.ts'
 import { clientBundle } from '../packages/client/tsdown.client.ts'
+
+vi.mock('node:child_process', async (importOriginal) => {
+  const actual = await importOriginal<typeof childProcess>()
+  return { ...actual, spawnSync: vi.fn(actual.spawnSync) }
+})
 
 const root = resolve(import.meta.dirname, '..')
 const PROBE_NAME = 'NOMIX_CLIENT_BUILD_TEST'
@@ -23,7 +35,6 @@ const roots: string[] = []
 const nomixBuildWorkflows = [
   'build-exe-for-python-sdk.yml',
   'ci.yml',
-  'e2b-e2e.yml',
   'e2e.yml',
   'release.yml',
   'sandbox.yml',
@@ -50,12 +61,35 @@ function buildFixture(environment: Record<string, string>): string {
   return fixtureRoot
 }
 
+function git(root: string, args: readonly string[]): string {
+  return execFileSync('git', [...args], {
+    cwd: root,
+    encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'pipe'],
+  }).trim()
+}
+
+function repositoryFixture(version = '1.2.3-rc.4'): string {
+  const fixtureRoot = mkdtempSync(join(tmpdir(), 'nomix-client-build-repository-'))
+  roots.push(fixtureRoot)
+  write(join(fixtureRoot, 'package.json'), `${JSON.stringify({ version })}\n`)
+  write(join(fixtureRoot, 'tracked.txt'), 'committed\n')
+  git(fixtureRoot, ['init'])
+  git(fixtureRoot, ['config', 'user.name', 'NOMIX test'])
+  git(fixtureRoot, ['config', 'user.email', 'nomix-test@example.invalid'])
+  git(fixtureRoot, ['config', 'commit.gpgsign', 'false'])
+  git(fixtureRoot, ['add', 'package.json', 'tracked.txt'])
+  git(fixtureRoot, ['commit', '-m', 'fixture'])
+  return fixtureRoot
+}
+
 describe('client build environment', () => {
   it('requires an exact public environment for a named artifact profile', () => {
     const expected = {
       NOMIX_CLIENT_BUILD_PROFILE: 'official',
       NOMIX_CLIENT_COMMIT_HASH: COMMIT_HASH.slice(0, 7),
       NOMIX_CLIENT_TITLE: 'Nomix Harness',
+      NOMIX_CLIENT_VERSION: '1.2.3',
     } as const
 
     expect(() => { assertClientBuildEnvironment({ PATH: '/bin', ...expected }, expected) }).not.toThrow()
@@ -72,7 +106,9 @@ describe('client build environment', () => {
       NOMIX_BUILD_CLIENT_PROFILE: 'official',
       NOMIX_CLIENT_BUILD_PROFILE: 'local',
       NOMIX_CLIENT_COMMIT_HASH: COMMIT_HASH.slice(0, 7),
+      NOMIX_CLIENT_GIT_DIRTY: 'true',
       NOMIX_CLIENT_TITLE: 'Local title',
+      NOMIX_CLIENT_VERSION: '1.2.3',
       NOMIX_CLIENT_EXTRA: 'local-extra',
     }
 
@@ -83,44 +119,148 @@ describe('client build environment', () => {
       NOMIX_CLIENT_BUILD_PROFILE: 'official',
       NOMIX_CLIENT_COMMIT_HASH: COMMIT_HASH.slice(0, 7),
       NOMIX_CLIENT_TITLE: 'Nomix Harness',
+      NOMIX_CLIENT_VERSION: '1.2.3',
     })
     expect(() => {
       resolveClientBuildEnvironment({ NOMIX_BUILD_CLIENT_PROFILE: 'official' })
     }).toThrow(/NOMIX_CLIENT_COMMIT_HASH/)
+    expect(() => {
+      resolveClientBuildEnvironment({
+        NOMIX_BUILD_CLIENT_PROFILE: 'official',
+        NOMIX_CLIENT_COMMIT_HASH: COMMIT_HASH.slice(0, 7),
+      })
+    }).toThrow(/NOMIX_CLIENT_VERSION/)
     expect(() => { resolveClientBuildEnvironment({}, 'unknown') }).toThrow(/unknown client build profile/)
     expect(clientBuildProcessEnvironment(parent, {
       NOMIX_CLIENT_BUILD_PROFILE: 'official',
       NOMIX_CLIENT_COMMIT_HASH: COMMIT_HASH.slice(0, 7),
       NOMIX_CLIENT_TITLE: 'Nomix Harness',
+      NOMIX_CLIENT_VERSION: '1.2.3',
     })).toEqual({
       PATH: '/bin',
       NOMIX_CLIENT_BUILD_PROFILE: 'official',
       NOMIX_CLIENT_COMMIT_HASH: COMMIT_HASH.slice(0, 7),
       NOMIX_CLIENT_TITLE: 'Nomix Harness',
+      NOMIX_CLIENT_VERSION: '1.2.3',
     })
     expect(repositoryCommitHash('/unused', { NOMIX_CLIENT_COMMIT_HASH: COMMIT_HASH })).toBe(COMMIT_HASH.slice(0, 7))
   })
 
+  it('owns repository version, commit, and dirty metadata for complete builds', () => {
+    const fixtureRoot = repositoryFixture()
+    const commit = git(fixtureRoot, ['rev-parse', '--short=7', 'HEAD'])
+
+    expect(repositoryVersion(fixtureRoot)).toBe('1.2.3-rc.4')
+    expect(repositoryGitDirty(fixtureRoot)).toBe(false)
+    expect(repositoryClientBuildEnvironment(fixtureRoot, {
+      NOMIX_CLIENT_COMMIT_HASH: COMMIT_HASH,
+      NOMIX_CLIENT_EXTRA: 'preserved',
+      NOMIX_CLIENT_GIT_DIRTY: 'true',
+      NOMIX_CLIENT_VERSION: 'spoofed',
+    })).toEqual({
+      NOMIX_CLIENT_COMMIT_HASH: COMMIT_HASH.slice(0, 7),
+      NOMIX_CLIENT_EXTRA: 'preserved',
+      NOMIX_CLIENT_VERSION: '1.2.3-rc.4',
+    })
+    expect(officialClientBuildEnvironment(fixtureRoot)).toEqual({
+      NOMIX_CLIENT_BUILD_PROFILE: 'official',
+      NOMIX_CLIENT_COMMIT_HASH: commit,
+      NOMIX_CLIENT_TITLE: 'Nomix Harness',
+      NOMIX_CLIENT_VERSION: '1.2.3-rc.4',
+    })
+
+    write(join(fixtureRoot, '.gitignore'), 'ignored.txt\n')
+    git(fixtureRoot, ['add', '.gitignore'])
+    git(fixtureRoot, ['commit', '-m', 'ignore fixture'])
+    write(join(fixtureRoot, 'ignored.txt'), 'ignored\n')
+    expect(repositoryGitDirty(fixtureRoot)).toBe(false)
+    rmSync(join(fixtureRoot, 'ignored.txt'))
+
+    write(join(fixtureRoot, 'tracked.txt'), 'unstaged\n')
+    expect(repositoryGitDirty(fixtureRoot)).toBe(true)
+    write(join(fixtureRoot, 'tracked.txt'), 'committed\n')
+    expect(repositoryGitDirty(fixtureRoot)).toBe(false)
+
+    write(join(fixtureRoot, 'tracked.txt'), 'staged\n')
+    git(fixtureRoot, ['add', 'tracked.txt'])
+    expect(repositoryGitDirty(fixtureRoot)).toBe(true)
+    git(fixtureRoot, ['commit', '-m', 'staged fixture'])
+    expect(repositoryGitDirty(fixtureRoot)).toBe(false)
+
+    write(join(fixtureRoot, 'untracked.txt'), 'untracked\n')
+    expect(repositoryGitDirty(fixtureRoot)).toBe(true)
+    expect(repositoryClientBuildEnvironment(fixtureRoot, {
+      NOMIX_CLIENT_COMMIT_HASH: COMMIT_HASH,
+    })).toEqual({
+      NOMIX_CLIENT_COMMIT_HASH: COMMIT_HASH.slice(0, 7),
+      NOMIX_CLIENT_GIT_DIRTY: 'true',
+      NOMIX_CLIENT_VERSION: '1.2.3-rc.4',
+    })
+
+    rmSync(join(fixtureRoot, 'untracked.txt'))
+    const submoduleSource = repositoryFixture('9.8.7')
+    git(fixtureRoot, ['-c', 'protocol.file.allow=always', 'submodule', 'add', submoduleSource, 'submodule'])
+    git(fixtureRoot, ['commit', '-am', 'submodule fixture'])
+    expect(repositoryGitDirty(fixtureRoot)).toBe(false)
+    write(join(fixtureRoot, 'submodule/tracked.txt'), 'modified submodule\n')
+    expect(repositoryGitDirty(fixtureRoot)).toBe(true)
+  })
+
+  it.each(['stdout', 'stderr'] as const)('handles Git %s beyond the subprocess capture limit', async (stream) => {
+    const fixtureRoot = mkdtempSync(join(tmpdir(), 'nomix-client-build-large-status-'))
+    roots.push(fixtureRoot)
+    const { spawnSync: actualSpawnSync } = await vi.importActual<typeof childProcess>('node:child_process')
+    const interception = vi.mocked(childProcess.spawnSync).mockImplementation((_command, args, options) => {
+      if (args?.[0] !== 'status') return actualSpawnSync(process.execPath, ['-e', 'process.stdout.write("true\\n")'], options)
+      return actualSpawnSync(process.execPath, ['-e',
+        `process.${stream}.write(' M tracked.txt\\n'.repeat(100000) + 'terminal diagnostic'); process.exitCode = ${stream === 'stderr' ? 1 : 0}`,
+      ], options)
+    })
+    try {
+      if (stream === 'stdout') expect(repositoryGitDirty(fixtureRoot)).toBe(true)
+      else expect(() => repositoryGitDirty(fixtureRoot)).toThrow('terminal diagnostic')
+    } finally {
+      interception.mockRestore()
+    }
+  })
+
+  it('omits dirty metadata when repository metadata is unavailable', () => {
+    const fixtureRoot = mkdtempSync(join(tmpdir(), 'nomix-client-build-no-git-'))
+    roots.push(fixtureRoot)
+    write(join(fixtureRoot, 'package.json'), '{"version":"2.0.0"}\n')
+
+    expect(repositoryGitDirty(fixtureRoot)).toBeUndefined()
+    expect(repositoryClientBuildEnvironment(fixtureRoot, {
+      NOMIX_CLIENT_COMMIT_HASH: COMMIT_HASH,
+      NOMIX_CLIENT_GIT_DIRTY: 'true',
+    })).toEqual({
+      NOMIX_CLIENT_COMMIT_HASH: COMMIT_HASH.slice(0, 7),
+      NOMIX_CLIENT_VERSION: '2.0.0',
+    })
+  })
+
   it('defines only public client values over a non-enumerable fallback', () => {
-    expect(clientBuildEnvironmentDefines({
+    const environment = {
       PATH: '/bin',
       NOMIX_TEST_API_KEY: 'secret',
       NOMIX_CLIENT_VARIANT: 'quoted "value"',
       NOMIX_CLIENT_EMPTY: '',
       NOMIX_CLIENT_UNSET: undefined,
-    })).toEqual({
-      'process.env': '{}',
+    }
+    const values = {
       'process.env.NOMIX_CLIENT_EMPTY': '""',
       'process.env.NOMIX_CLIENT_VARIANT': '"quoted \\"value\\""',
-    })
+    }
+    expect(clientBuildEnvironmentDefines(environment)).toEqual({ 'process.env': '{}', ...values })
+    // Node faces keep their runtime `process.env` and fix only the public values.
+    expect(clientBuildValueDefines(environment)).toEqual(values)
   })
 
-  it('feeds the same build-process value to dynamic tsdown bundles and the Vite shell', async () => {
+  it('feeds the same build-process value to dynamic tsdown bundles, their Node faces, and the Vite shell', async () => {
     process.env[PROBE_NAME] = 'shared-value'
 
-    const configs = clientBundle('@nomix-ai/nomix-client-ui-sidebar', [
+    const configs = clientBundle(join(import.meta.dirname, '../packages/client/ui-sidebar'), [
       'lib/types/index.js',
-      'lib/types/invariant.js',
     ])({ env: { NOMIX_BUILD_FACE: 'client' } })
     if (!Array.isArray(configs)) throw new TypeError('client bundle config must be an array')
     const dynamic = configs.find(config => config.name === '@nomix-ai/nomix-client-ui-sidebar/client')
@@ -128,6 +268,9 @@ describe('client build environment', () => {
       'process.env': '{}',
       [PROBE_KEY]: '"shared-value"',
     })
+    const node = configs.find(config => config.name === '@nomix-ai/nomix-client-ui-sidebar')
+    expect(node?.define).toMatchObject({ [PROBE_KEY]: '"shared-value"' })
+    expect(node?.define).not.toHaveProperty(['process.env'])
 
     const viteConfigPath = '../apps/web/vite.config.ts'
     const viteModule: unknown = await import(viteConfigPath)
@@ -150,6 +293,7 @@ describe('client build environment', () => {
       NOMIX_CLIENT_BUILD_PROFILE: 'official',
       NOMIX_CLIENT_COMMIT_HASH: COMMIT_HASH.slice(0, 7),
       NOMIX_CLIENT_TITLE: 'Nomix Harness',
+      NOMIX_CLIENT_VERSION: '1.2.3',
     }
     const official = buildFixture(officialEnvironment)
     const defaultBuild = buildFixture({})
@@ -160,6 +304,17 @@ describe('client build environment', () => {
 
     write(join(official, 'apps/web/dist/index.html'), '<main>changed</main>')
     expect(() => { readClientBuildRecord(official) }).toThrow(/artifacts differ/)
+
+    const chunked = buildFixture(officialEnvironment)
+    write(join(chunked, 'packages/client/example/lib/client.pdf.js'), 'module.exports = {}\n')
+    expect(() => { readClientBuildRecord(chunked) }).toThrow(/artifacts differ/)
+
+    const dual = buildFixture(officialEnvironment)
+    write(join(dual, 'packages/client/example/lib/client.node.js'), 'export const node = true\n')
+    write(join(dual, 'packages/client/example/lib/client.node.helper.js'), 'export const helper = true\n')
+    expect(() => { readClientBuildRecord(dual) }).not.toThrow()
+    write(join(dual, 'packages/client/example/lib/client.browser.js'), 'module.exports = { browser: true }\n')
+    expect(() => { readClientBuildRecord(dual) }).toThrow(/artifacts differ/)
   })
 
   it('keeps public client values out of workflow-wide environments', () => {

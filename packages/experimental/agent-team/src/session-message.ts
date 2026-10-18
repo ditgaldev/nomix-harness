@@ -1,4 +1,4 @@
-/** Durable Session-message acceptance checks shared by provisioning and mailbox recovery. */
+/** Durable Session-message acceptance checks for teammate provisioning. */
 
 import type { UserMessage } from '@nomix-ai/nomix-llm'
 import type { SessionEvent } from '@nomix-ai/nomix-session'

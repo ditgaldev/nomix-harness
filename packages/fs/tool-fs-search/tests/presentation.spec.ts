@@ -9,7 +9,7 @@
  */
 
 import { describe, expect, it } from 'vitest'
-import type { JsonValue } from '@nomix-ai/nomix-session'
+import type { JsonValue } from '@nomix-ai/nomix-util-values'
 import {
   globSearchMeta,
   grepSearchMeta,

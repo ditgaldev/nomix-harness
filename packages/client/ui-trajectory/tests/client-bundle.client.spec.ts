@@ -6,14 +6,14 @@
  * registers the view tab into a real SlotRegistry ring. Skips when dist/ is
  * not built (`pnpm --filter @nomix-ai/nomix-client-ui-trajectory bundle`).
  */
+import { createSnapshotStore } from '@nomix-ai/nomix-client-store'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { Context } from '@nomix-ai/cordis'
-import { stubSettingsScope } from '@nomix-ai/nomix-client-test-runtime'
-import { afterEach, describe, expect, it } from 'vitest'
-import {
-  ConversationEventRegistry, ConversationViewRegistry, SlotRegistry,
-} from '@nomix-ai/nomix-client-runtime/client'
+import { stubConfigForm } from '@nomix-ai/nomix-client-test-runtime'
+import { afterEach, describe, expect, it, onTestFinished } from 'vitest'
+import { UiConversation } from '@nomix-ai/nomix-client-ui-conversation/client'
+import { SlotRegistry } from '@nomix-ai/nomix-client-ui-renderer/client'
 
 const PLUGIN_ID = '@nomix-ai/nomix-client-ui-trajectory'
 
@@ -50,7 +50,9 @@ describe('tsdown client artifact', () => {
       ['react', await import('react')],
       ['react/jsx-runtime', await import('react/jsx-runtime')],
       ['react-dom', await import('react-dom')],
-      ['@nomix-ai/nomix-client-runtime/client', await import('@nomix-ai/nomix-client-runtime/client')],
+      ['@tanstack/react-virtual', await import('@tanstack/react-virtual')],
+      ['@nomix-ai/nomix-client-store', await import('@nomix-ai/nomix-client-store')],
+      ['@nomix-ai/nomix-client-ui-conversation/client', await import('@nomix-ai/nomix-client-ui-conversation/client')],
       ['@nomix-ai/nomix-client-ui-primitives', await import('@nomix-ai/nomix-client-ui-primitives')],
     ])
     const exports = handoff!.factory((spec) => {
@@ -65,16 +67,16 @@ describe('tsdown client artifact', () => {
     expect(handoff.id).toBe(PLUGIN_ID)
     expect(exports.apply).toBeTypeOf('function')
     expect(exports.inject).toEqual([
-      'slots', 'conversationEvents', 'conversationViews', 'sessions', 'locale',
+      'slots', 'sessions', 'uiSession', 'uiConversation', 'locale',
     ])
   })
 
   it.skipIf(code === undefined)('mounted as an object plugin, apply registers the view tab on the real ring', async () => {
     const { exports } = await loadArtifact()
     const ctx = new Context()
+    onTestFinished(() => ctx.fiber.dispose())
     const slots = new SlotRegistry(ctx)
-    await ctx.plugin(ConversationEventRegistry).await()
-    await ctx.plugin(ConversationViewRegistry).await()
+    ctx.provide('uiSession', { provide: () => () => {} } as never)
     // The conversation entry's role: the ring must be declared before riders land.
     slots.register({
       name: 'root',
@@ -84,16 +86,17 @@ describe('tsdown client artifact', () => {
     // entry, so the binding stays deliberately empty. The locale plugin backs
     // the locale-aware view tab label (its settings scope needs a connection
     // handle and the Host-facing settings/remote seams).
-    ctx.provide('sessions', { binding: () => undefined })
+    const sessions = { binding: () => undefined }
+    ctx.provide('sessions', sessions)
+    const uiConversation = new UiConversation(ctx, sessions as never)
+    const { events, views } = uiConversation
     ctx.provide('connection', { api: { settings: {} }, isLoopback: false } as never)
     ctx.provide('remote', { $on: () => () => {} } as never)
-    ctx.provide('settingsScope', { bind: () => stubSettingsScope().scope } as never)
+    ctx.provide('configForms', { developerTools: { enabled: createSnapshotStore(true) }, get: () => stubConfigForm().scope } as never)
     const locale = await import('@nomix-ai/nomix-client-locale/client')
-    ctx.plugin({ inject: [...locale.inject], apply: locale.apply })
+    await ctx.plugin({ inject: [...locale.inject], apply: locale.apply })
     const fiber = ctx.plugin(exports as { apply: (ctx: Context) => void })
     await fiber.await()
-    const events = ctx.get('conversationEvents') as ConversationEventRegistry
-    const views = ctx.get('conversationViews') as ConversationViewRegistry
     expect(slots.entries('conversation.view').map(e => e.options.id)).toEqual(['trajectory'])
     expect(events.entries().length).toBeGreaterThan(0)
     expect(views.entries()).toHaveLength(1)

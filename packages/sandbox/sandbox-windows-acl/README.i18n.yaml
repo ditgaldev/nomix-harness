@@ -1,6 +1,67 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/sandbox/sandbox-windows-acl/README.md
-README.md: d8af4249a9b3903eaa690b0cc46b648f637ee0bf
-README.zh.md: c258f23b83ba7ac7a6f5c02ec5af94dd737fe18e
+/:
+  en: 14d3fdd57b94c86f
+  zh: abcd3b4f9dd908fa
+/nomix-ai-nomix-sandbox-windows-acl:
+  en: f4818aa6a58722d8
+  zh: 3d1d5cf270fbeb69
+/nomix-ai-nomix-sandbox-windows-acl/summary:
+  en: 563446672f1c1a4c
+  zh: d68430beadcd47e3
+/nomix-ai-nomix-sandbox-windows-acl/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-sandbox-windows-acl/use-this-package:
+  en: 58b220faa66b2f05
+  zh: dda42e4197d80bfe
+/nomix-ai-nomix-sandbox-windows-acl/use-this-package/when-to-choose-it:
+  en: 510d0b1ef7db159d
+  zh: dc2cf25b3db14c63
+/nomix-ai-nomix-sandbox-windows-acl/use-this-package/direct-api:
+  en: 16596607bbccc2a3
+  zh: 30bc370a5281bf0d
+/nomix-ai-nomix-sandbox-windows-acl/use-this-package/what-confinement-gives-you:
+  en: 289e65bddf20dd79
+  zh: 7ff72ed64c4b4d1c
+/nomix-ai-nomix-sandbox-windows-acl/use-this-package/failures-and-recovery:
+  en: 38affc721dd88593
+  zh: f72db80186bd7714
+/nomix-ai-nomix-sandbox-windows-acl/understand-the-implementation:
+  en: c2cde86c85c2c619
+  zh: a29a114e591f9d3f
+/nomix-ai-nomix-sandbox-windows-acl/understand-the-implementation/mechanism:
+  en: 6c50f61dd5bf0ecf
+  zh: 485dab47eb335d67
+/nomix-ai-nomix-sandbox-windows-acl/understand-the-implementation/modes-and-token-lists:
+  en: 9c8d9af84f9abd99
+  zh: 1c82b355aa5f210f
+/nomix-ai-nomix-sandbox-windows-acl/understand-the-implementation/the-confinement-runner:
+  en: f689f111ca6f0701
+  zh: 95927ebc39a46da6
+/nomix-ai-nomix-sandbox-windows-acl/understand-the-implementation/verified-boundaries:
+  en: 848e791cc0309cfd
+  zh: 51a9cf59b679eac0
+/nomix-ai-nomix-sandbox-windows-acl/understand-the-implementation/header-verification-and-source-map:
+  en: ae05b2d50d249cc3
+  zh: 9236ece88e7dc038
+/nomix-ai-nomix-sandbox-windows-acl/further-exploration:
+  en: e3c2f0970eef39ed
+  zh: 8e6d4673cec885eb
+/nomix-ai-nomix-sandbox-windows-acl/model-experience:
+  en: 6210a30720747204
+  zh: 8cb4786892dd39cb
+/nomix-ai-nomix-sandbox-windows-acl/model-experience/kv-cache-effect:
+  en: 817eb1b7de13872e
+  zh: 06fe175e41e7459b
+/nomix-ai-nomix-sandbox-windows-acl/known-limitations-and-deferred-work:
+  en: ebebaec1a6722cbd
+  zh: a0d972ce55d6a602
+/nomix-ai-nomix-sandbox-windows-acl/known-limitations-and-deferred-work/dev-note:
+  en: cc273320f6a1beaf
+  zh: 5c57a312ddc50651
+/nomix-ai-nomix-sandbox-windows-acl/known-limitations-and-deferred-work/dev-note/future-warnings-and-cleanup-surfaces:
+  en: 8872c7b4c8ce1cc7
+  zh: c7fb4eefa013c7b0

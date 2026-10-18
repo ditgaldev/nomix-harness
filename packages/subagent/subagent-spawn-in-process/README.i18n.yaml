@@ -1,6 +1,79 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/subagent/subagent-spawn-in-process/README.md
-README.md: ba140b8896d0df829089c4b7620940c8a5bf3bb3
-README.zh.md: ff33d17068c2c4c1fdddf3804ff9ba9c27cf49d2
+/:
+  en: d510765ec1bebc28
+  zh: 35efb9f71f05f326
+/nomix-ai-nomix-subagent-spawn-in-process:
+  en: b607b4c131ae7e80
+  zh: 5d35b33bbc205e23
+/nomix-ai-nomix-subagent-spawn-in-process/summary:
+  en: 5988bb85c0cf05c0
+  zh: a7619a70d324feb2
+/nomix-ai-nomix-subagent-spawn-in-process/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-subagent-spawn-in-process/use-this-package:
+  en: 12cfcaae3ff3755e
+  zh: 3bfef598aa518465
+/nomix-ai-nomix-subagent-spawn-in-process/use-this-package/when-to-choose-it:
+  en: 5f14443940e59bb5
+  zh: 3e8610aec21c55e8
+/nomix-ai-nomix-subagent-spawn-in-process/use-this-package/minimal-configuration:
+  en: 57a8b12c3dd5c614
+  zh: 9d6d726a5ad2ddef
+/nomix-ai-nomix-subagent-spawn-in-process/use-this-package/what-a-delegation-does:
+  en: 5a2bd8623a04c471
+  zh: 9f33b39e92b12f33
+/nomix-ai-nomix-subagent-spawn-in-process/understand-the-implementation:
+  en: 7f34637751939818
+  zh: 2937553168e1aee5
+/nomix-ai-nomix-subagent-spawn-in-process/understand-the-implementation/design-concept:
+  en: dea97f6b4bb9718d
+  zh: ff65f310fde301cc
+/nomix-ai-nomix-subagent-spawn-in-process/understand-the-implementation/source-map:
+  en: b7c55a4bff3ae1f0
+  zh: 9d0f514f433250c6
+/nomix-ai-nomix-subagent-spawn-in-process/understand-the-implementation/run-flow:
+  en: 5f07f1044bf7c370
+  zh: d31a485a3e333500
+/nomix-ai-nomix-subagent-spawn-in-process/understand-the-implementation/ownership-and-scope:
+  en: 1288272d1eabfdc1
+  zh: 6efde7517f434179
+/nomix-ai-nomix-subagent-spawn-in-process/further-exploration:
+  en: 98ef4043cc93b87c
+  zh: d5251c72db1a2f4d
+/nomix-ai-nomix-subagent-spawn-in-process/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-subagent-spawn-in-process/model-experience/child-agent-request:
+  en: 05e6180f1498fdf9
+  zh: 2b05d2b97bfa67da
+/nomix-ai-nomix-subagent-spawn-in-process/model-experience/child-agent-request/what-the-model-sees:
+  en: c9dfab9a4d363fed
+  zh: 6cb3b0914ccb73e2
+/nomix-ai-nomix-subagent-spawn-in-process/model-experience/child-agent-request/token-effect:
+  en: eb373a4b35a4b548
+  zh: 9537d0e466e8bcd9
+/nomix-ai-nomix-subagent-spawn-in-process/model-experience/child-agent-request/kv-cache-effect:
+  en: 6da85bad412c741e
+  zh: c9af9fd1b4e7eed2
+/nomix-ai-nomix-subagent-spawn-in-process/model-experience/parent-tool-result-indirectly:
+  en: 75d061c2151624a7
+  zh: 71e58e020b60ff90
+/nomix-ai-nomix-subagent-spawn-in-process/model-experience/parent-tool-result-indirectly/what-the-model-sees:
+  en: 9d04b5546e1b63ce
+  zh: 429b78992a71226f
+/nomix-ai-nomix-subagent-spawn-in-process/model-experience/parent-tool-result-indirectly/token-effect:
+  en: ff8045aa0f466c2a
+  zh: e38fc5c6af2ce076
+/nomix-ai-nomix-subagent-spawn-in-process/model-experience/parent-tool-result-indirectly/kv-cache-effect:
+  en: f5d5f97a153f7c70
+  zh: 3d6bc05b9eadfbc2
+/nomix-ai-nomix-subagent-spawn-in-process/known-limitations-and-deferred-work:
+  en: 0c0b19dc1ccec027
+  zh: a7799c516dc3b034
+/nomix-ai-nomix-subagent-spawn-in-process/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

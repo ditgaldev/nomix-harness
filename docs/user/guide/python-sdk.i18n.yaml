@@ -1,6 +1,28 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for python-sdk.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/user/guide/python-sdk.md
-python-sdk.md: 166745e9dab0a3c6b1370d7527bfba7f9968f3bc
-python-sdk.zh.md: 3a3850bddecbcb8ac864620e1691fff2cefb60f6
+/get-started-with-the-python-sdk:
+  en: 67f455085e933ade
+  zh: 45fc228b38b82772
+/get-started-with-the-python-sdk/prerequisites:
+  en: b5a921f7d6c4a420
+  zh: ef51283857d18c64
+/get-started-with-the-python-sdk/install-the-sdk:
+  en: 5e6787c708da8a90
+  zh: db02974ad3e2bb12
+/get-started-with-the-python-sdk/run-the-checked-in-example:
+  en: bb57ccb62bf9fdcb
+  zh: 20c87ffe4da4eddd
+/get-started-with-the-python-sdk/use-the-sdk-in-your-program:
+  en: b0d8cff540ad83b6
+  zh: 9513627463c75d3c
+/get-started-with-the-python-sdk/install-or-define-plugins:
+  en: cb9979877ad2332e
+  zh: 03ed6bf97faa0921
+/get-started-with-the-python-sdk/install-or-define-plugins/opt-in-to-str-replace-editor:
+  en: cd54457d5e5bd472
+  zh: ed3eb5bae3d5d6fc
+/get-started-with-the-python-sdk/understand-the-minimal-profile:
+  en: 06fd4ad10c311e60
+  zh: e3c46d65a1e36103

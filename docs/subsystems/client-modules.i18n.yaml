@@ -1,6 +1,19 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for client-modules.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/subsystems/client-modules.md
-client-modules.md: 7bbd28a89bc607910c08e3207f6fd378527a6d1f
-client-modules.zh.md: fae49c14ed54e89925232f0d25b5266d95cdb5c1
+/client-modules:
+  en: 94501d6e44fdfe6b
+  zh: d4487a181bd34b19
+/client-modules/the-wire:
+  en: fd27794d0a932c90
+  zh: 84b016b15b55ff22
+/client-modules/the-scan:
+  en: db11d20548d144ea
+  zh: 4ed3fdf092f731a6
+/client-modules/the-bundle-route-and-index-injection:
+  en: d653be500d3a0d67
+  zh: fffb1901ce8ba7d9
+/client-modules/the-service:
+  en: 4882e8509cbb01e1
+  zh: e9f6d0c85f0a7b86

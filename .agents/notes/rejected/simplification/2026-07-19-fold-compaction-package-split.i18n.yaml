@@ -1,6 +1,22 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for 2026-07-19-fold-compaction-package-split.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/rejected/simplification/2026-07-19-fold-compaction-package-split.md
-2026-07-19-fold-compaction-package-split.md: be5e3a4c39ceee629a7af882d441aa54bd30b42b
-2026-07-19-fold-compaction-package-split.zh.md: a85fce8970aad573cc7af30115bddeca1d1830ec
+/agent-note-fold-the-single-compaction-backend-into-its-service-package:
+  en: d5da0326190fd41b
+  zh: 3af160f6e15afe8d
+/agent-note-fold-the-single-compaction-backend-into-its-service-package/problem:
+  en: 8f548e3575d03ea1
+  zh: 69460df6778f6a7f
+/agent-note-fold-the-single-compaction-backend-into-its-service-package/proposal:
+  en: e640c2a51f45e8ff
+  zh: 907b24ec70dfe1bc
+/agent-note-fold-the-single-compaction-backend-into-its-service-package/alternatives-considered:
+  en: 0c7f4bd4b7745c96
+  zh: 9bf5a98dd485dbbd
+/agent-note-fold-the-single-compaction-backend-into-its-service-package/acceptance-criteria:
+  en: a3a106352e1e02e7
+  zh: e5e313a02c0b3e79
+/agent-note-fold-the-single-compaction-backend-into-its-service-package/risks:
+  en: e9de53d54680b057
+  zh: 06341b321d4dec83

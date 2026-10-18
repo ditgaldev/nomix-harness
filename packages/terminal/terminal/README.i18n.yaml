@@ -1,6 +1,79 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/terminal/terminal/README.md
-README.md: dfd3c6dd5632ce0ab87ad2de826ae1701d555121
-README.zh.md: f2ba76bf495412e468b0cc81c2793f13f5c84222
+/:
+  en: 3d90ab1819787962
+  zh: d5279e899341168a
+/nomix-ai-nomix-terminal:
+  en: 442b373072099a1e
+  zh: 728367650a25a962
+/nomix-ai-nomix-terminal/summary:
+  en: f87bccf80401ae56
+  zh: 48da048302e9f3f0
+/nomix-ai-nomix-terminal/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-terminal/use-this-package:
+  en: 9c0b5f1d39cc1667
+  zh: f5b7e0241ea6c503
+/nomix-ai-nomix-terminal/use-this-package/when-to-choose-it:
+  en: c4244a1757ca3584
+  zh: b6fb10e30146b347
+/nomix-ai-nomix-terminal/use-this-package/composition:
+  en: 77499fe9f2d4976a
+  zh: d2e62fb74c240471
+/nomix-ai-nomix-terminal/use-this-package/what-sessions-give-you:
+  en: 6527302f4ad84cbb
+  zh: 8edc988f1d0a3cee
+/nomix-ai-nomix-terminal/use-this-package/ownership-and-isolation:
+  en: 47820d85ea37cb36
+  zh: 857686d08af67fcb
+/nomix-ai-nomix-terminal/use-this-package/observable-outcomes-and-failures:
+  en: 4fcedb18b5e8d5f2
+  zh: d72bb1a45e45cfff
+/nomix-ai-nomix-terminal/understand-the-implementation:
+  en: 0d0669b98b14a3dd
+  zh: 57416c205270e4e1
+/nomix-ai-nomix-terminal/understand-the-implementation/design-concept:
+  en: 6bae42fb7275816f
+  zh: 5f75e1b26074108c
+/nomix-ai-nomix-terminal/understand-the-implementation/source-map:
+  en: 48dab6fe2f770ced
+  zh: 9bbfd23bcc5ac2b3
+/nomix-ai-nomix-terminal/understand-the-implementation/data-model-and-lifecycle:
+  en: a2adfa2708882e19
+  zh: 002f257fd8c4addb
+/nomix-ai-nomix-terminal/understand-the-implementation/ownership-and-cleanup-rules:
+  en: 7af36e58919e41d5
+  zh: 4fe7b4db1099bcbf
+/nomix-ai-nomix-terminal/understand-the-implementation/send-reservation:
+  en: 5815723cd0c6089c
+  zh: 0c612ffa4b8c466c
+/nomix-ai-nomix-terminal/further-exploration:
+  en: 2745a48525da9cc1
+  zh: 160d827f6db9a602
+/nomix-ai-nomix-terminal/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-terminal/model-experience/indirect-consumer:
+  en: a601a3c4f5b848cd
+  zh: ec617f79f706aaa1
+/nomix-ai-nomix-terminal/model-experience/indirect-consumer/what-the-model-sees:
+  en: 8a38e2eba9614107
+  zh: 7b9b409ca370c61d
+/nomix-ai-nomix-terminal/model-experience/indirect-consumer/token-effect:
+  en: 477da21b0a5be3a6
+  zh: 3ae1d37fe671ef96
+/nomix-ai-nomix-terminal/model-experience/indirect-consumer/kv-cache-effect:
+  en: 1cb084310832f6d3
+  zh: 1434d5fdbeba2e1d
+/nomix-ai-nomix-terminal/known-limitations-and-deferred-work:
+  en: a133ebc47a4df34f
+  zh: 9bb949487ee566d5
+/nomix-ai-nomix-terminal/known-limitations-and-deferred-work/dev-note:
+  en: 112f870e68bd1ff3
+  zh: 693f37bbd32497a0
+/nomix-ai-nomix-terminal/known-limitations-and-deferred-work/dev-note/undecided-directions:
+  en: 3c5203a9c40a38ef
+  zh: a7660ca08bd0d279

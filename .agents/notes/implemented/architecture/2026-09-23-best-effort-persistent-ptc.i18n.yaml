@@ -1,0 +1,19 @@
+# Bilingual-pair consistency record for 2026-09-23-best-effort-persistent-ptc.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-09-23-best-effort-persistent-ptc.md
+/agent-note-node-ptc-execution-modes-and-in-memory-state:
+  en: 239f4146b5c7a748
+  zh: b6a5adb73d8bae02
+/agent-note-node-ptc-execution-modes-and-in-memory-state/problem:
+  en: e42db40b879fdbf4
+  zh: 6017da9c4da17835
+/agent-note-node-ptc-execution-modes-and-in-memory-state/decision:
+  en: 734c4cc09c5f5990
+  zh: 1666225cc726f725
+/agent-note-node-ptc-execution-modes-and-in-memory-state/alternatives-considered:
+  en: 396157a9fc293198
+  zh: a061f05b4423e26f
+/agent-note-node-ptc-execution-modes-and-in-memory-state/consequences:
+  en: b65459defac68e6f
+  zh: 2f1a22015b0b4d0a

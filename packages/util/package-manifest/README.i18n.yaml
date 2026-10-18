@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/util/package-manifest/README.md
+/:
+  en: b3bd4c7b3f20230e
+  zh: f6037bb4773f24d6
+/nomix-ai-nomix-package-manifest:
+  en: 61cc69c3e6420bba
+  zh: 835f275e61589b03
+/nomix-ai-nomix-package-manifest/summary:
+  en: bc9fc14db909b50a
+  zh: 6badd286fa4dd9fb
+/nomix-ai-nomix-package-manifest/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 1db86285abf6c499
+/nomix-ai-nomix-package-manifest/use-this-package:
+  en: 6ad26541eee7ed30
+  zh: a188e9a4e399de96
+/nomix-ai-nomix-package-manifest/understand-the-implementation:
+  en: 41ec449dee927f04
+  zh: ec1b583bd9025d84
+/nomix-ai-nomix-package-manifest/further-exploration:
+  en: 07cce280e522b07f
+  zh: 6e5db9c45d5f0ef4
+/nomix-ai-nomix-package-manifest/model-experience:
+  en: 0b5aaa4787068a57
+  zh: bdb5dabe0b33ff9d
+/nomix-ai-nomix-package-manifest/model-experience/kv-cache-effect:
+  en: 2ed74a2a33958543
+  zh: 7d63c3a3801bef13
+/nomix-ai-nomix-package-manifest/known-limitations-and-deferred-work:
+  en: a68b23013959408e
+  zh: 784f638a5f886e39
+/nomix-ai-nomix-package-manifest/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

@@ -1,0 +1,8 @@
+version: 1
+scenario: subagent-nomix-sdk-diagnostic
+profile: sdk
+composition: sdk-nomix-sdk-diagnostic
+recording: live
+header:
+  class: sdk-nomix-sdk-diagnostic
+  pin: true

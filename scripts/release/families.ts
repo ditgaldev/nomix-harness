@@ -38,7 +38,6 @@ const WORKSPACE_ROOT_PACKAGE = '@nomix-ai/nomix-root'
 
 /** One peer declaration the publish order leaves unordered. */
 interface DroppedPeerEdge {
-  /** Package declaring the peer. */
   readonly consumer: string
   /** The declared peer, which publishes after `consumer` or alongside it in a cycle. */
   readonly peer: string
@@ -52,7 +51,6 @@ interface DroppedPeerEdge {
  * log is the only one who can judge whether a newly dropped edge is expected.
  */
 export interface PublishPlan {
-  /** Members in publish order. */
   readonly order: readonly ReleaseMember[]
   /** Peer declarations left unordered, in the order the traversal reached them. */
   readonly droppedPeerEdges: readonly DroppedPeerEdge[]
@@ -60,13 +58,9 @@ export interface PublishPlan {
 
 /** One publishable package of a release family. */
 export interface ReleaseMember {
-  /** Repository-relative package directory, for example `packages/core/session`. */
   readonly directory: string
-  /** Package name from its manifest. */
   readonly name: string
-  /** Package version from its manifest. */
   readonly version: string
-  /** The parsed manifest, for payload policy and publication checks. */
   readonly manifest: Readonly<Record<string, unknown>>
 }
 
@@ -98,7 +92,6 @@ function requireString(manifest: Record<string, unknown>, field: string, context
 
 /** The executable a family's installed artifacts are driven through. */
 export interface InstalledEntry {
-  /** Package that carries the executable. */
   readonly packageName: string
   /** Command npm exec resolves from that package. */
   readonly command: string
@@ -110,14 +103,15 @@ export interface InstalledEntry {
   readonly startupArgs?: readonly string[]
   /** Readiness text required before the verifier stops the persistent application. */
   readonly startupOutput?: string
+  readonly binPath: string
 }
 
 /** A release sequence: its members, its version baseline, and its tag naming. */
 export abstract class ReleaseFamily {
-  /** Workflow-facing identifier, also the `--family` argument. */
+  /** Workflow-facing `--family` identifier. */
   abstract readonly id: string
 
-  /** Glob patterns, relative to the repository root, that select this family's manifests. */
+  /** Repository-relative glob patterns selecting this family's manifests. */
   abstract readonly patterns: readonly string[]
 
   /** Git tag prefix this family publishes from. */
@@ -136,7 +130,7 @@ export abstract class ReleaseFamily {
   /**
    * Discover this family's members.
    * @param root - repository root.
-   * @returns Members sorted by directory, with names validated and deduplicated.
+   * @returns Publishable members sorted by directory, with names validated and deduplicated.
    */
   members(root: string): ReleaseMember[] {
     const manifestPaths = globSync([...this.patterns], { cwd: root }).sort()
@@ -147,6 +141,7 @@ export abstract class ReleaseFamily {
     for (const manifestPath of manifestPaths) {
       const normalized = manifestPath.replaceAll('\\', '/')
       const manifest = readManifest(resolve(root, manifestPath))
+      if (manifest.private === true) continue
       const name = requireString(manifest, 'name', normalized)
       const version = requireString(manifest, 'version', normalized)
       if (name === WORKSPACE_ROOT_PACKAGE) throw new Error(`${normalized} selected the workspace root`)
@@ -315,6 +310,15 @@ export abstract class ReleaseFamily {
   abstract tagPrefixFor(member: ReleaseMember): string
 
   /**
+   * The npm dist-tag assigned while publishing a version.
+   * @param version - package version from the packed manifest.
+   * @returns `next` for a prerelease, or undefined so npm uses `latest`.
+   */
+  distTagForVersion(version: string): string | undefined {
+    return version.includes('-') ? 'next' : undefined
+  }
+
+  /**
    * The tag a member publishes from.
    * @param member - the member being published.
    * @returns The full tag name, without `refs/tags/`.
@@ -331,6 +335,17 @@ export abstract class ReleaseFamily {
   abstract validatePayload(member: ReleaseMember, files: readonly string[]): void
 
   /**
+   * Check the identity in the packed manifest before publishing its bytes.
+   * @param member - Source member selected for this release.
+   * @param manifest - Manifest read from its packed tarball.
+   */
+  validatePackedManifest(member: ReleaseMember, manifest: Readonly<Record<string, unknown>>): void {
+    if (manifest.name !== member.name || manifest.version !== member.version) {
+      throw new Error(`${member.name}: packed identity must match ${member.name}@${member.version}`)
+    }
+  }
+
+  /**
    * The executable that proves this family's artifacts install and run, or
    * `undefined` for a family that publishes no executable.
    */
@@ -340,7 +355,10 @@ export abstract class ReleaseFamily {
 /** Release packages and apps: one shared version across the whole family. */
 class NomixFamily extends ReleaseFamily {
   readonly id = 'nomix'
-  readonly patterns = ['packages/!(experimental)/*/package.json', 'apps/*/package.json'] as const
+  readonly patterns = [
+    'packages/*/*/package.json',
+    'apps/*/package.json',
+  ] as const
   readonly tagPrefix = 'nomix-v'
   override readonly packing = 'bundled-workspaces' as const
 
@@ -386,6 +404,14 @@ class NomixFamily extends ReleaseFamily {
     return this.tagPrefix
   }
 
+  override distTagForVersion(version: string): string | undefined {
+    const separator = version.indexOf('-')
+    if (separator === -1) return undefined
+    const [channel] = version.slice(separator + 1).split('.')
+    if (channel === 'alpha' || channel === 'canary') return channel
+    return 'next'
+  }
+
   /**
    * Reject source and declaration-map members, the repository's publication policy.
    * @param member - the packed member.
@@ -399,17 +425,37 @@ class NomixFamily extends ReleaseFamily {
       'package/node_modules/@nomix-ai/nomix-agent/lib/index.js',
       'package/node_modules/@nomix-ai/nomix-web-app/cordis.patch.yml',
       'package/node_modules/@nomix-ai/nomix-web-frontend/dist/index.html',
-      'package/node_modules/@nomix-ai/node-addon-landlock-run/lib/index.js',
-      'package/node_modules/@nomix-ai/node-addon-landlock-run-linux-x64/bin/landlock-run',
-      'package/node_modules/@nomix-ai/node-addon-landlock-run-linux-arm64/bin/landlock-run',
+      'package/node_modules/@nomix-ai/node-addon-system/lib/index.js',
+      'package/node_modules/@nomix-ai/node-addon-system-linux-x64/bin/landlock-run',
+      'package/node_modules/@nomix-ai/node-addon-system-linux-arm64/bin/landlock-run',
+      ...['linux-x64', 'linux-arm64'].flatMap(platform => ['glibc', 'musl'].map(libc =>
+        `package/node_modules/@nomix-ai/node-addon-system-${platform}/bin/${libc}/system.node`)),
+      ...['darwin-x64', 'darwin-arm64'].map(platform =>
+        `package/node_modules/@nomix-ai/node-addon-system-${platform}/bin/system.node`),
     ]) if (!files.includes(required)) throw new Error(`${member.name} carries no ${required.slice('package/'.length)}`)
     if (files.some(file => file.endsWith('.map') || file.includes('/src/'))) {
       throw new Error(`${member.name} exposes forbidden source or source-map members`)
     }
   }
 
+  /** Require the packed NOMIX runtime graph to stay on the shared exact release version. */
+  override validatePackedManifest(member: ReleaseMember, manifest: Readonly<Record<string, unknown>>): void {
+    super.validatePackedManifest(member, manifest)
+    for (const section of ['dependencies', 'optionalDependencies', 'peerDependencies']) {
+      const dependencies = manifest[section]
+      if (dependencies === null || typeof dependencies !== 'object' || Array.isArray(dependencies)) continue
+      for (const [name, range] of Object.entries(dependencies)) {
+        if (name !== '@nomix-ai/nomix-harness' && !name.startsWith('@nomix-ai/nomix-')) continue
+        if (range !== member.version) {
+          throw new Error(`${member.name}: packed ${section}.${name} must equal ${member.version}, got ${String(range)}`)
+        }
+      }
+    }
+  }
+
   readonly installedEntry = {
     packageName: '@nomix-ai/nomix-harness',
+    binPath: 'dist/cli/bin.js',
     command: 'nomix',
     smokeArgs: ['web', '--help'],
     smokeOutput: 'Usage: nomix --profile web',

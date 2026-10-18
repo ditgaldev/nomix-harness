@@ -1,6 +1,70 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/session/session-persistence-jsonl/README.md
-README.md: 54a957cf86a8ce35527111b3c5d0621bbd32ae7e
-README.zh.md: 3e1a8826f5d1106a649601b4d703e682dd8837d8
+/:
+  en: cc97ed79d262bf09
+  zh: 90a141669dc844f3
+/nomix-ai-nomix-session-persistence-jsonl:
+  en: 8987b16035b9fbf5
+  zh: 4c8592731bb3b48d
+/nomix-ai-nomix-session-persistence-jsonl/summary:
+  en: 521fd4363f5044b7
+  zh: b96134a8893120bb
+/nomix-ai-nomix-session-persistence-jsonl/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-session-persistence-jsonl/use-this-package:
+  en: d6112142a705ec43
+  zh: f0914d9e37216f97
+/nomix-ai-nomix-session-persistence-jsonl/use-this-package/when-to-choose-it:
+  en: 37c10302bbbde268
+  zh: 3d5c027bac868efd
+/nomix-ai-nomix-session-persistence-jsonl/use-this-package/minimal-configuration:
+  en: b9acb65e5c1a1f2d
+  zh: d1e811c22c9722a6
+/nomix-ai-nomix-session-persistence-jsonl/use-this-package/on-disk-layout:
+  en: e20cf32540d7c785
+  zh: 67e182529e9211ca
+/nomix-ai-nomix-session-persistence-jsonl/use-this-package/durability-and-crash-semantics:
+  en: 3347466cd413e891
+  zh: 74e2531f784b33b6
+/nomix-ai-nomix-session-persistence-jsonl/use-this-package/reading-the-logs:
+  en: 6485fa03aae4c533
+  zh: 74ec661dc70112e3
+/nomix-ai-nomix-session-persistence-jsonl/understand-the-implementation:
+  en: a35407bb25671e7e
+  zh: 6a00f9510c85adcb
+/nomix-ai-nomix-session-persistence-jsonl/understand-the-implementation/design-concept:
+  en: a422bd0f74a5b31a
+  zh: edc47e9530c87f67
+/nomix-ai-nomix-session-persistence-jsonl/understand-the-implementation/physical-encoding:
+  en: 5aaf80115840318f
+  zh: 0b0fb2b2e085a111
+/nomix-ai-nomix-session-persistence-jsonl/understand-the-implementation/source-map:
+  en: 2a4fd4bde1da0a1b
+  zh: d7a8cbdad7beee09
+/nomix-ai-nomix-session-persistence-jsonl/further-exploration:
+  en: 121e4433e0e3d95f
+  zh: d07f95a754ccbc42
+/nomix-ai-nomix-session-persistence-jsonl/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-session-persistence-jsonl/model-experience/resumed-conversation-history:
+  en: 062875aab7f3f138
+  zh: c7285918227e6f5c
+/nomix-ai-nomix-session-persistence-jsonl/model-experience/resumed-conversation-history/what-the-model-sees:
+  en: 2a3b5c6e3860eef6
+  zh: 82afe0f0359581b6
+/nomix-ai-nomix-session-persistence-jsonl/model-experience/resumed-conversation-history/token-effect:
+  en: 8fb2f7cdba1ff320
+  zh: e130ec2a92a53a5c
+/nomix-ai-nomix-session-persistence-jsonl/model-experience/resumed-conversation-history/kv-cache-effect:
+  en: 53ce4da7ce68d21c
+  zh: 10f40bc354100f77
+/nomix-ai-nomix-session-persistence-jsonl/known-limitations-and-deferred-work:
+  en: 1b4e54ecabe8ecc2
+  zh: 7ecc0ca04a91bc57
+/nomix-ai-nomix-session-persistence-jsonl/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

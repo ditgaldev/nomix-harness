@@ -1,0 +1,34 @@
+# Bilingual-pair consistency record for cli-help.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/cli-help.md
+/:
+  en: d11ca88bdc409249
+  zh: d11ca88bdc409249
+/nomix-cli-help:
+  en: 9063a9730a8fcfb6
+  zh: 9726bc87e8ec5259
+/nomix-cli-help/contents:
+  en: 2364effaeb376380
+  zh: dda882fe96bfee2b
+/nomix-cli-help/nomix:
+  en: 221e339a70cc49e2
+  zh: eae11b1a808dcfca
+/nomix-cli-help/nomix-plugin:
+  en: d2ee5b42538a4851
+  zh: 5dabcc1ee1ca3e9c
+/nomix-cli-help/nomix-acp:
+  en: 95019626bbbfa8bf
+  zh: 90dbfb87b30c0813
+/nomix-cli-help/nomix-headless:
+  en: 9e281f8a18c5b633
+  zh: fa2a2400dea639c3
+/nomix-cli-help/nomix-sdk:
+  en: 47e5f6ffb2701ce7
+  zh: 39d3f20ba7f28748
+/nomix-cli-help/nomix-sdk-minimal:
+  en: a30e22d5278424c7
+  zh: 2738acef2c73f60a
+/nomix-cli-help/nomix-web:
+  en: d70526606d7ab4d0
+  zh: 738317b9e7b4f390

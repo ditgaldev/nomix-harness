@@ -1,0 +1,46 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/browser-use-playwright-mcp/README.md
+/:
+  en: 65c3ef2e9fa0bb0e
+  zh: 530a4b4ca63094e8
+/nomix-ai-nomix-experimental-browser-use-playwright-mcp:
+  en: 429d31550fa73a41
+  zh: 368c5f4c66372e41
+/nomix-ai-nomix-experimental-browser-use-playwright-mcp/summary:
+  en: e7e2be79affd38a3
+  zh: 77934d7769ade556
+/nomix-ai-nomix-experimental-browser-use-playwright-mcp/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: ea2227f28624a0e6
+/nomix-ai-nomix-experimental-browser-use-playwright-mcp/use-this-package:
+  en: 553b715bc6ffd6a0
+  zh: 9c9f99e034bd1d09
+/nomix-ai-nomix-experimental-browser-use-playwright-mcp/understand-the-implementation:
+  en: 46b063171a3342d0
+  zh: 0187c807d0189d94
+/nomix-ai-nomix-experimental-browser-use-playwright-mcp/further-exploration:
+  en: 6a085be8fdb9d1b6
+  zh: 0e5645a583c4176e
+/nomix-ai-nomix-experimental-browser-use-playwright-mcp/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-experimental-browser-use-playwright-mcp/model-experience/browser-tools-and-screenshots:
+  en: 1adc972910db543b
+  zh: 7a06e0d265f19499
+/nomix-ai-nomix-experimental-browser-use-playwright-mcp/model-experience/browser-tools-and-screenshots/what-the-model-sees:
+  en: 39b4784b86018ba7
+  zh: 0c8b06751b97520e
+/nomix-ai-nomix-experimental-browser-use-playwright-mcp/model-experience/browser-tools-and-screenshots/token-effect:
+  en: bc6d5d5db77d5fc3
+  zh: bbbd79e4ae29675f
+/nomix-ai-nomix-experimental-browser-use-playwright-mcp/model-experience/browser-tools-and-screenshots/kv-cache-effect:
+  en: 86e83cc10f829b2b
+  zh: c2e61c09531a5de2
+/nomix-ai-nomix-experimental-browser-use-playwright-mcp/known-limitations-and-deferred-work:
+  en: 0aa15fdd3026cadc
+  zh: 09fedde1fc484685
+/nomix-ai-nomix-experimental-browser-use-playwright-mcp/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 8ec3e73528ddb1a6

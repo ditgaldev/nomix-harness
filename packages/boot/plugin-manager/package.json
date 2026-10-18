@@ -1,0 +1,112 @@
+{
+  "name": "@nomix-ai/nomix-plugin-manager",
+  "description": "Current-profile plugin and bundle management shared by nomix CLI, Web and agent tools",
+  "version": "0.2.9",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
+    "directory": "packages/boot/plugin-manager"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./registry": {
+      "types": "./lib/types/registry.d.ts",
+      "default": "./lib/types/registry.js"
+    },
+    "./typert": {
+      "types": "./lib/typert.host.d.ts",
+      "default": "./lib/typert.host.js"
+    },
+    "./remote": {
+      "types": "./lib/typert.remote-client.d.ts",
+      "default": "./lib/typert.remote-client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./operations": {
+      "types": "./lib/types/operations.d.ts",
+      "default": "./lib/types/operations.js"
+    },
+    "./tools": {
+      "types": "./lib/types/tools.d.ts",
+      "default": "./lib/types/tools.js"
+    },
+    "./tools/locale/*.json": "./locale/tools/*.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "locale/tools/*.json",
+    "lib/index.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts",
+    "lib/typert.host.js",
+    "lib/typert.host.d.ts",
+    "lib/typert.remote-client.js",
+    "lib/typert.remote-client.d.ts"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@nomix-ai/nomix-app-boot": "workspace:*",
+    "@nomix-ai/nomix-atomic-write": "workspace:*",
+    "@nomix-ai/schemastery": "workspace:~",
+    "execa": "^10.0.1",
+    "yaml": "^2.9.0",
+    "zod": "4.4.3",
+    "@nomix-ai/nomix-util-values": "workspace:*"
+  },
+  "peerDependencies": {
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/cordis-plugin-loader": "workspace:~",
+    "@nomix-ai/nomix-host-plugin-inventory": "workspace:*",
+    "@nomix-ai/nomix-subprocess": "workspace:*",
+    "@nomix-ai/nomix-typert-protocol": "workspace:*",
+    "@nomix-ai/nomix-tools": "workspace:*",
+    "@nomix-ai/nomix-hmr": "workspace:*",
+    "@nomix-ai/nomix-brand": "workspace:*",
+    "@nomix-ai/nomix-sandbox-policy": "workspace:*",
+    "@nomix-ai/nomix-sandbox": "workspace:*",
+    "@nomix-ai/nomix-user-approval": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@nomix-ai/nomix-hmr": {
+      "optional": true
+    },
+    "@nomix-ai/nomix-user-approval": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "chokidar": "^4.0.3",
+    "@nomix-ai/nomix-package-manifest": "workspace:*",
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/cordis-plugin-loader": "workspace:~",
+    "@nomix-ai/nomix-host-plugin-inventory": "workspace:*",
+    "@nomix-ai/nomix-subprocess": "workspace:*",
+    "@nomix-ai/nomix-typert-protocol": "workspace:*",
+    "@nomix-ai/nomix-tools": "workspace:*",
+    "@nomix-ai/nomix-system-prompt": "workspace:*",
+    "@nomix-ai/nomix-hmr": "workspace:*",
+    "@nomix-ai/cordis-plugin-timer": "workspace:~",
+    "@nomix-ai/nomix-brand": "workspace:*",
+    "@nomix-ai/nomix-sandbox-policy": "workspace:*",
+    "@nomix-ai/nomix-agent": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-session-projection": "workspace:*",
+    "@nomix-ai/nomix-sandbox": "workspace:*",
+    "@nomix-ai/nomix-user-approval": "workspace:*"
+  }
+}

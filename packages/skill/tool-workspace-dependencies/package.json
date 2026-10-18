@@ -1,0 +1,44 @@
+{
+  "name": "@nomix-ai/nomix-tool-workspace-dependencies",
+  "description": "The load_workspace_dependencies tool: absolute paths into a bundled Python, Node.js, and pnpm payload",
+  "version": "0.2.9",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
+    "directory": "packages/skill/tool-workspace-dependencies"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@nomix-ai/nomix-tools": "workspace:*",
+    "@nomix-ai/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@nomix-ai/nomix-tools": "workspace:*",
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/cordis-plugin-loader": "workspace:~",
+    "@nomix-ai/cordis-plugin-include": "workspace:~",
+    "@nomix-ai/nomix-agent": "workspace:*",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-system-prompt": "workspace:*"
+  },
+  "dependencies": {
+    "@nomix-ai/schemastery": "workspace:~"
+  }
+}

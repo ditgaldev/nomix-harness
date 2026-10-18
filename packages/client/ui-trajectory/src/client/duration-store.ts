@@ -1,6 +1,6 @@
 import {
   createSnapshotStore, type SnapshotStore,
-} from '@nomix-ai/nomix-client-runtime/client'
+} from '@nomix-ai/nomix-client-store'
 
 /**
  * Create the browser-wide trajectory duration preference source.

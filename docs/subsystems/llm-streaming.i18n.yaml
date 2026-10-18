@@ -1,6 +1,49 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for llm-streaming.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/subsystems/llm-streaming.md
-llm-streaming.md: 8f013518d2cc8fb7813d10b456c8693b4851bb8c
-llm-streaming.zh.md: cc4fec1dfb50a166f13719aab9395f513b95eafe
+/llm-streaming:
+  en: 348a033a73ca63f3
+  zh: 506a4ef5643f4606
+/llm-streaming/content-blocks-and-messages:
+  en: e37dc4b759ce5f88
+  zh: 90e9e22cd4416cd0
+/llm-streaming/streamchunk-the-raw-protocol:
+  en: a18fe401763efde4
+  zh: ef59a76d9c694654
+/llm-streaming/compact-assistant-streams:
+  en: b83f41f9f7e697f1
+  zh: 9d688503d0094d00
+/llm-streaming/llmfailure:
+  en: 13415501869b4ca9
+  zh: 723c7533cce3d1d6
+/llm-streaming/request-image-pricing:
+  en: 10598e1a98262415
+  zh: 7fb85b22174a1497
+/llm-streaming/the-adapter-contract:
+  en: 02502d1b96cbfb7d
+  zh: 1b09b158ab37ce7b
+/llm-streaming/resolvedretrypolicy:
+  en: 1b642b7bcbde9e23
+  zh: 70b9944c2b118b89
+/llm-streaming/appidentity-app-attribution:
+  en: e053f18c7dc070a8
+  zh: 90ded9a892ed2fd5
+/llm-streaming/tokenusage:
+  en: 33830f78fdb845fa
+  zh: f43a4502c4c3bfff
+/llm-streaming/blockassembler:
+  en: 58dec2259b0b1c6f
+  zh: fc99fe965acaabf3
+/llm-streaming/the-model-request:
+  en: 90f2734edc1bb71c
+  zh: f44a57c350f9b958
+/llm-streaming/the-model-request/the-request-envelope-llmcallconfig-and-the-logged-header:
+  en: 1fb93b0e68bd7b77
+  zh: 1e1ab90220819559
+/llm-streaming/official-deepseek-request-extensions:
+  en: b96f195920c62417
+  zh: d415fd66d1776fe1
+/llm-streaming/service-and-provider-contracts:
+  en: d90f1652816185b8
+  zh: e8ef624b62fc00ce

@@ -1,0 +1,28 @@
+# Bilingual-pair consistency record for package-surface.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/defensive-patterns/package-surface.md
+/package-surface-rules:
+  en: 40b2e2ef7cf6bc14
+  zh: 3b699de35ce4ee81
+/package-surface-rules/a-plugin-package-exports-what-the-loader-loads:
+  en: 588b6393e9ac0bf9
+  zh: cfe2a12bef5127c4
+/package-surface-rules/two-package-shapes-and-both-are-dynamic-plugin-packages:
+  en: 24ff62a6be3380e2
+  zh: 792dfdec07ae7f1f
+/package-surface-rules/package-json-exports-uses-the-standard-key-set:
+  en: a4e164c08e4a1c67
+  zh: ce8d04a1ee613f58
+/package-surface-rules/dependency-declarations-and-version-consistency-are-enforced-by-the-dependency-scan:
+  en: 22559873132e51bb
+  zh: feb2383e0605e9f5
+/package-surface-rules/internal-dependency-syntax-follows-the-package-family:
+  en: f526e21c68f6bd15
+  zh: e9a5581eddc437be
+/package-surface-rules/a-new-resolve-hook-is-refused-outright:
+  en: f1d31cc065b01144
+  zh: 059b246a58f5722a
+/package-surface-rules/package-modules-do-not-await-at-module-scope:
+  en: 29a58b3f804be042
+  zh: 8a83a21366dac897

@@ -1,0 +1,171 @@
+{
+  "name": "@nomix-ai/nomix-api-session-controller",
+  "description": "Session Remote commands, cold reads, and live control transport",
+  "version": "0.2.9",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
+    "directory": "packages/api/session-controller"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./remote-events": {
+      "types": "./lib/types/remote-events.d.ts",
+      "default": "./lib/types/remote-events.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./typert": {
+      "types": "./lib/typert.host.d.ts",
+      "default": "./lib/typert.host.js"
+    },
+    "./remote": {
+      "types": "./lib/typert.remote-client.d.ts",
+      "default": "./lib/typert.remote-client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "nomix": {
+    "client": {
+      "external": [
+        "@nomix-ai/nomix-api-gateway/client"
+      ],
+      "inject": [
+        "@nomix-ai/nomix-api-gateway",
+        "@nomix-ai/nomix-client-file-upload"
+      ],
+      "platform": "web"
+    }
+  },
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts",
+    "lib/typert.host.js",
+    "lib/typert.host.d.ts",
+    "lib/typert.remote-client.js",
+    "lib/typert.remote-client.d.ts"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@nomix-ai/nomix-brand": "workspace:*",
+    "@nomix-ai/nomix-deque": "workspace:*",
+    "@nomix-ai/schemastery": "workspace:~",
+    "mime-types": "^3.0.2",
+    "zod": "4.4.3"
+  },
+  "peerDependencies": {
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-agent": "workspace:*",
+    "@nomix-ai/nomix-agent-default-model": "workspace:*",
+    "@nomix-ai/nomix-agent-preset-registry": "workspace:*",
+    "@nomix-ai/nomix-api-gateway": "workspace:*",
+    "@nomix-ai/nomix-attachment": "workspace:*",
+    "@nomix-ai/nomix-client-connection": "workspace:*",
+    "@nomix-ai/nomix-client-file-upload": "workspace:*",
+    "@nomix-ai/nomix-commands": "workspace:*",
+    "@nomix-ai/nomix-credentials": "workspace:*",
+    "@nomix-ai/nomix-file-reference": "workspace:*",
+    "@nomix-ai/nomix-fs": "workspace:*",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-native-command": "workspace:*",
+    "@nomix-ai/nomix-scope": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-session-persistence": "workspace:*",
+    "@nomix-ai/nomix-session-projection": "workspace:*",
+    "@nomix-ai/nomix-session-projection-cache": "workspace:*",
+    "@nomix-ai/nomix-session-query": "workspace:*",
+    "@nomix-ai/nomix-session-title": "workspace:*",
+    "@nomix-ai/nomix-settings": "workspace:*",
+    "@nomix-ai/nomix-skill": "workspace:*",
+    "@nomix-ai/nomix-subagent": "workspace:*",
+    "@nomix-ai/nomix-typert-protocol": "workspace:*",
+    "@nomix-ai/nomix-typert-registry": "workspace:*",
+    "@nomix-ai/nomix-util-time": "workspace:*",
+    "@nomix-ai/nomix-util-values": "workspace:*",
+    "@nomix-ai/nomix-util-workspace-path": "workspace:*",
+    "@nomix-ai/nomix-workspace": "workspace:*",
+    "@nomix-ai/nomix-working-directory": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@nomix-ai/nomix-session-persistence": {
+      "optional": true
+    },
+    "@nomix-ai/nomix-session-projection-cache": {
+      "optional": true
+    },
+    "@nomix-ai/nomix-settings": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@nomix-ai/nomix-api-remote-access": "workspace:*",
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-agent": "workspace:*",
+    "@nomix-ai/nomix-agent-default-model": "workspace:*",
+    "@nomix-ai/nomix-agent-loop": "workspace:*",
+    "@nomix-ai/nomix-agent-loop-testkit": "workspace:*",
+    "@nomix-ai/nomix-agent-preset-registry": "workspace:*",
+    "@nomix-ai/nomix-api-gateway": "workspace:*",
+    "@nomix-ai/nomix-attachment": "workspace:*",
+    "@nomix-ai/nomix-client-connection": "workspace:*",
+    "@nomix-ai/nomix-client-file-upload": "workspace:*",
+    "@nomix-ai/nomix-client-store": "workspace:*",
+    "@nomix-ai/nomix-client-test-runtime": "workspace:*",
+    "@nomix-ai/nomix-commands": "workspace:*",
+    "@nomix-ai/nomix-credentials": "workspace:*",
+    "@nomix-ai/nomix-file-reference": "workspace:*",
+    "@nomix-ai/nomix-fs": "workspace:*",
+    "@nomix-ai/nomix-fs-local": "workspace:*",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-native-command": "workspace:*",
+    "@nomix-ai/nomix-permission-presets": "workspace:*",
+    "@nomix-ai/nomix-remote-mock": "workspace:*",
+    "@nomix-ai/nomix-scope": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-session-persistence": "workspace:*",
+    "@nomix-ai/nomix-session-persistence-jsonl": "workspace:*",
+    "@nomix-ai/nomix-session-projection": "workspace:*",
+    "@nomix-ai/nomix-session-projection-cache": "workspace:*",
+    "@nomix-ai/nomix-session-query": "workspace:*",
+    "@nomix-ai/nomix-session-title": "workspace:*",
+    "@nomix-ai/nomix-settings": "workspace:*",
+    "@nomix-ai/nomix-skill": "workspace:*",
+    "@nomix-ai/nomix-storage": "workspace:*",
+    "@nomix-ai/nomix-storage-domain": "workspace:*",
+    "@nomix-ai/nomix-storage-json": "workspace:*",
+    "@nomix-ai/nomix-subagent": "workspace:*",
+    "@nomix-ai/nomix-typert-protocol": "workspace:*",
+    "@nomix-ai/nomix-typert-registry": "workspace:*",
+    "@nomix-ai/nomix-util-crypto": "workspace:*",
+    "@nomix-ai/nomix-util-time": "workspace:*",
+    "@nomix-ai/nomix-util-values": "workspace:*",
+    "@nomix-ai/nomix-util-workspace-path": "workspace:*",
+    "@nomix-ai/nomix-workspace": "workspace:*",
+    "@types/mime-types": "^3.0.1",
+    "@nomix-ai/nomix-working-directory": "workspace:*"
+  }
+}

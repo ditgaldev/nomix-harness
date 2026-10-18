@@ -1,0 +1,70 @@
+{
+  "name": "@nomix-ai/nomix-client-ui-plugin-market",
+  "description": "Discover tab of the nomix web Plugins page: browse configured plugin market indexes and install their bundles",
+  "version": "0.2.9",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
+    "directory": "packages/client/ui-plugin-market"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "nomix": {
+    "client": {
+      "inject": [
+        "@nomix-ai/nomix-api-remotes",
+        "@nomix-ai/nomix-client-locale",
+        "@nomix-ai/nomix-client-ui-plugin-manager"
+      ],
+      "platform": "web"
+    }
+  },
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@nomix-ai/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-api-remotes": "workspace:*",
+    "@nomix-ai/nomix-client-locale": "workspace:*",
+    "@nomix-ai/nomix-client-store": "workspace:*",
+    "@nomix-ai/nomix-client-test-runtime": "workspace:*",
+    "@nomix-ai/nomix-client-ui-plugin-manager": "workspace:*",
+    "@nomix-ai/nomix-client-ui-primitives": "workspace:*",
+    "@nomix-ai/nomix-client-ui-renderer": "workspace:*",
+    "@nomix-ai/nomix-client-ui-slots": "workspace:*",
+    "@nomix-ai/nomix-package-manifest": "workspace:*",
+    "@nomix-ai/nomix-plugin-manager": "workspace:*",
+    "@nomix-ai/nomix-plugin-market": "workspace:*",
+    "@nomix-ai/nomix-plugin-market-index": "workspace:*",
+    "@nomix-ai/nomix-typert-protocol": "workspace:*",
+    "@testing-library/react": "^16.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/client.js",
+    "lib/types/**/*.d.ts"
+  ]
+}

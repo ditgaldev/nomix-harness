@@ -1,6 +1,61 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/fs/fs-local/README.md
-README.md: ea8250421c2f922385007216a25733e8b8753d9a
-README.zh.md: 67337755c9b2d3f185abeaa3ea290cac82bec57a
+/:
+  en: ce32f58ec51489e8
+  zh: d12c4665bd72e452
+/nomix-ai-nomix-fs-local:
+  en: ed10ae51507d6dfa
+  zh: cb63fba8a849c69d
+/nomix-ai-nomix-fs-local/summary:
+  en: 7694bb5db4f91f9c
+  zh: 313461f0c2590cdc
+/nomix-ai-nomix-fs-local/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-fs-local/use-this-package:
+  en: dba3ee1d0f1ab592
+  zh: 770911fd474512e9
+/nomix-ai-nomix-fs-local/use-this-package/when-to-choose-it:
+  en: c74663dc1e5f862c
+  zh: f7d46e13926d9793
+/nomix-ai-nomix-fs-local/use-this-package/minimal-configuration:
+  en: 29df7224df5bdd49
+  zh: b15ae09a58f603ab
+/nomix-ai-nomix-fs-local/use-this-package/what-you-can-do:
+  en: cff37f0ccf4cff2a
+  zh: d26ce57570880789
+/nomix-ai-nomix-fs-local/understand-the-implementation:
+  en: 6ffc93e09381bd3d
+  zh: 57c3192c26a080ef
+/nomix-ai-nomix-fs-local/understand-the-implementation/design-concept:
+  en: 197876fc5f05cdc3
+  zh: a6e7a9eb921d394b
+/nomix-ai-nomix-fs-local/understand-the-implementation/source-map:
+  en: e69aa171af80b6b4
+  zh: 5ebf652092c70aad
+/nomix-ai-nomix-fs-local/understand-the-implementation/write-path:
+  en: eefa5c3b69af4614
+  zh: d5ac6b2e14efe268
+/nomix-ai-nomix-fs-local/understand-the-implementation/edit-path:
+  en: 1e130ab16c931821
+  zh: b3690b8e13292027
+/nomix-ai-nomix-fs-local/understand-the-implementation/ownership-and-invariants:
+  en: f094e3ea30517cb4
+  zh: b213bb41b7a0201d
+/nomix-ai-nomix-fs-local/further-exploration:
+  en: ad58a30ba191a0bf
+  zh: 69c692cdd8376d3c
+/nomix-ai-nomix-fs-local/model-experience:
+  en: 901844f90caa0c86
+  zh: a72ad889b09e15c3
+/nomix-ai-nomix-fs-local/model-experience/kv-cache-effect:
+  en: 40294c1c31b74824
+  zh: 0857e9b4dd363e0a
+/nomix-ai-nomix-fs-local/known-limitations-and-deferred-work:
+  en: 653e3d81d6a5f82d
+  zh: 633f47afeb0da9ba
+/nomix-ai-nomix-fs-local/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

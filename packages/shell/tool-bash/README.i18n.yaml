@@ -1,6 +1,127 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/shell/tool-bash/README.md
-README.md: 797869c89e0abfd7134b162e37ab38e660b35168
-README.zh.md: a34e58d854ef3217e5aabd6550e894b9013d88c2
+/:
+  en: aa0f6a31440050d2
+  zh: 388fc575115b9a4f
+/nomix-ai-nomix-tool-bash:
+  en: 43fc33b5b1cf6032
+  zh: 6c120244a8c4619e
+/nomix-ai-nomix-tool-bash/summary:
+  en: fc1f4c2ea4ff7b3b
+  zh: 942cfc822f193c6e
+/nomix-ai-nomix-tool-bash/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-tool-bash/use-this-package:
+  en: d8524d4ad308e6bf
+  zh: 4e9087b58ef4a185
+/nomix-ai-nomix-tool-bash/use-this-package/minimal-configuration:
+  en: 53856f1407945f3a
+  zh: aee8a0a13c14b0a4
+/nomix-ai-nomix-tool-bash/use-this-package/running-a-command:
+  en: 7610fa7c373e339a
+  zh: e3001ca072f53734
+/nomix-ai-nomix-tool-bash/use-this-package/running-long-commands-in-the-background:
+  en: 0e7b9945880ab19d
+  zh: 8e9e0ff3cdef6298
+/nomix-ai-nomix-tool-bash/use-this-package/foreground-commands-as-jobs:
+  en: 5eef538028ca60d6
+  zh: dc1c8ec24c81d2ca
+/nomix-ai-nomix-tool-bash/use-this-package/sandboxed-execution-and-escalation:
+  en: c27d63aaf022a896
+  zh: 70a81d4c009bb614
+/nomix-ai-nomix-tool-bash/use-this-package/what-can-go-wrong:
+  en: 668a92d1a479acc1
+  zh: cc46f432b01bc32b
+/nomix-ai-nomix-tool-bash/understand-the-implementation:
+  en: 165313776a851b51
+  zh: 828f48807036aff0
+/nomix-ai-nomix-tool-bash/understand-the-implementation/design-philosophy:
+  en: c223541258c42455
+  zh: e3bd8502542282b5
+/nomix-ai-nomix-tool-bash/understand-the-implementation/source-map:
+  en: 0547d68864628d08
+  zh: 5adb79f945b17a0d
+/nomix-ai-nomix-tool-bash/understand-the-implementation/request-resolution:
+  en: 56dae7757fab0a79
+  zh: 7930235dc0490c73
+/nomix-ai-nomix-tool-bash/understand-the-implementation/rendering-story:
+  en: e4db34658821c9cd
+  zh: 807dc49af8f0fd4c
+/nomix-ai-nomix-tool-bash/further-exploration:
+  en: c526be343cbf0599
+  zh: 1cc99f7de56230eb
+/nomix-ai-nomix-tool-bash/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-tool-bash/model-experience/system-prompt:
+  en: cf78b9dd5596495f
+  zh: bd44560f8c2435e8
+/nomix-ai-nomix-tool-bash/model-experience/system-prompt/what-the-model-sees:
+  en: f8173d0103e0c6b6
+  zh: ed8b92539ee74156
+/nomix-ai-nomix-tool-bash/model-experience/system-prompt/what-the-model-sees/bash-guidance:
+  en: 2d65d6ca9b82df1d
+  zh: 016a14eee33eba62
+/nomix-ai-nomix-tool-bash/model-experience/system-prompt/token-effect:
+  en: a38d59e3e6d8a1c9
+  zh: 96d60abecd38307b
+/nomix-ai-nomix-tool-bash/model-experience/system-prompt/kv-cache-effect:
+  en: 06f29b209347522f
+  zh: 4dd39a5a3b738c59
+/nomix-ai-nomix-tool-bash/model-experience/tool-schemas:
+  en: 3039bc5e7a796b21
+  zh: 6b7a9eaf69c9ea53
+/nomix-ai-nomix-tool-bash/model-experience/tool-schemas/what-the-model-sees:
+  en: f73be29b976081f2
+  zh: 89ea6acda97fd6fd
+/nomix-ai-nomix-tool-bash/model-experience/tool-schemas/token-effect:
+  en: cdbd4262314e6856
+  zh: e8c12c0cf5492386
+/nomix-ai-nomix-tool-bash/model-experience/tool-schemas/kv-cache-effect:
+  en: 8b821a8b34948af9
+  zh: 858244c080bfc5cb
+/nomix-ai-nomix-tool-bash/model-experience/foreground-result:
+  en: d83f1f25a3719c54
+  zh: 445ca808e28dc936
+/nomix-ai-nomix-tool-bash/model-experience/foreground-result/what-the-model-sees:
+  en: 805100fad971be9c
+  zh: bf3593577751040a
+/nomix-ai-nomix-tool-bash/model-experience/foreground-result/token-effect:
+  en: b2018adbda15b8a7
+  zh: 79521073a45c7f80
+/nomix-ai-nomix-tool-bash/model-experience/foreground-result/kv-cache-effect:
+  en: f5d5f97a153f7c70
+  zh: 31911b4f3506d6c8
+/nomix-ai-nomix-tool-bash/model-experience/background-job-context-and-results:
+  en: 38ce70c1818a5694
+  zh: ed3ad10f12ed1b8e
+/nomix-ai-nomix-tool-bash/model-experience/background-job-context-and-results/what-the-model-sees:
+  en: 3dbf6fe36ad03d3f
+  zh: b9cc203f2f8d0481
+/nomix-ai-nomix-tool-bash/model-experience/background-job-context-and-results/token-effect:
+  en: 3a0d2d43640158d6
+  zh: 45ae711aedaa1d41
+/nomix-ai-nomix-tool-bash/model-experience/background-job-context-and-results/kv-cache-effect:
+  en: f5d5f97a153f7c70
+  zh: 31911b4f3506d6c8
+/nomix-ai-nomix-tool-bash/model-experience/tool-errors:
+  en: 2d4f2c8605eccab3
+  zh: 67f1f0218f73c6bf
+/nomix-ai-nomix-tool-bash/model-experience/tool-errors/what-the-model-sees:
+  en: f877e55c2f8bd72b
+  zh: 897f79b3cf42132e
+/nomix-ai-nomix-tool-bash/model-experience/tool-errors/token-effect:
+  en: a3a78ef476ec5e56
+  zh: dd2c8ad0f69e8ff1
+/nomix-ai-nomix-tool-bash/model-experience/tool-errors/kv-cache-effect:
+  en: f5d5f97a153f7c70
+  zh: 31911b4f3506d6c8
+/nomix-ai-nomix-tool-bash/known-limitations-and-deferred-work:
+  en: 21d096a84b6b4ef2
+  zh: bced95384aa24309
+/nomix-ai-nomix-tool-bash/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

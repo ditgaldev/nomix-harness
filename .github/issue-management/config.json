@@ -5,7 +5,8 @@
   "projectTitle": "NOMIX Issue Management",
   "lifecycleActor": "nomix-issue-management",
   "priorityField": "Priority",
-  "allowUnassignedOwner": true,
+  "startDateField": "Start Date",
+  "projectTimeZone": "Asia/Shanghai",
   "statuses": [
     "Inbox",
     "Backlog",

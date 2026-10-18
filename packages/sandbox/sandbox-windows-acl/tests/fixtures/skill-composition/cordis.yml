@@ -1,0 +1,4 @@
+- id: sandbox
+  name: '@nomix-ai/nomix-sandbox-local'
+- id: skills
+  name: '@nomix-ai/nomix-skill'

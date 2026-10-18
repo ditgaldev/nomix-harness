@@ -1,6 +1,52 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/core/scope/README.md
-README.md: bceef010ffd08bd4ad1eac924047980fd7bfb0de
-README.zh.md: 6f9cb5e9f48c0d2a0eeb358c41fb4fe6299bd96a
+/:
+  en: 47f2816e2d2cecb9
+  zh: e051427327761450
+/nomix-ai-nomix-scope:
+  en: 8be82b5ae706f74e
+  zh: 0c762b7bc1f9ea87
+/nomix-ai-nomix-scope/summary:
+  en: 54b9984f041a9179
+  zh: c8ea1cec3ada9421
+/nomix-ai-nomix-scope/table-of-contents:
+  en: 80b31a934611cb4a
+  zh: 05f3f7f9cb2fd881
+/nomix-ai-nomix-scope/use-this-package:
+  en: 82414eb10f802f2c
+  zh: 30f3233b7a626ab9
+/nomix-ai-nomix-scope/use-this-package/mint-a-scope:
+  en: e7bfa7a59f61fd72
+  zh: 852d6d4b113babd1
+/nomix-ai-nomix-scope/use-this-package/route-scoped-events:
+  en: 7439a6c862956a63
+  zh: bfeda5194bb8cdc9
+/nomix-ai-nomix-scope/use-this-package/build-a-scoped-registry-layer:
+  en: 187aa0e904782395
+  zh: 14fa36d3716eaff2
+/nomix-ai-nomix-scope/understand-the-implementation:
+  en: ce7e776e9d516bdb
+  zh: 59d2751743db7795
+/nomix-ai-nomix-scope/understand-the-implementation/design-concept:
+  en: 1d19d421fa6f3546
+  zh: ed6679cfc9166f14
+/nomix-ai-nomix-scope/understand-the-implementation/source-map:
+  en: 95547c563d2f7677
+  zh: 8a830f9643455207
+/nomix-ai-nomix-scope/understand-the-implementation/the-parent-chain:
+  en: f0c433a9b0091de4
+  zh: 21cecb4194aff7d0
+/nomix-ai-nomix-scope/understand-the-implementation/event-filtering:
+  en: 9ec9b8d491c7dfe7
+  zh: da82e63bac268535
+/nomix-ai-nomix-scope/further-exploration:
+  en: 2e1961ddd45b7412
+  zh: c429f41ea82eb695
+/nomix-ai-nomix-scope/known-limitations-and-deferred-work:
+  en: 87eea2029792dc14
+  zh: ba020413273d3235
+/nomix-ai-nomix-scope/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

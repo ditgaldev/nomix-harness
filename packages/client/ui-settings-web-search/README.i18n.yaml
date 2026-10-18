@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-settings-web-search/README.md
+/:
+  en: a54401af92e66243
+  zh: 4c515f9cb7e71086
+/nomix-ai-nomix-client-ui-settings-web-search:
+  en: 5f9090c2b592c363
+  zh: b99b41c82243ac16
+/nomix-ai-nomix-client-ui-settings-web-search/summary:
+  en: f0f8d6a8f0f74de3
+  zh: 1926ea7e173eea51
+/nomix-ai-nomix-client-ui-settings-web-search/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-client-ui-settings-web-search/use-this-package:
+  en: 07373091142e08ec
+  zh: 41be33510125e79b
+/nomix-ai-nomix-client-ui-settings-web-search/understand-the-implementation:
+  en: 4695da9b39a614a3
+  zh: 5ebe668df937e12e
+/nomix-ai-nomix-client-ui-settings-web-search/further-exploration:
+  en: df22d1d09aaa174f
+  zh: dc586b5e91e475e0
+/nomix-ai-nomix-client-ui-settings-web-search/model-experience:
+  en: 6b7c6f82ab6c8435
+  zh: 4517689c899abcbe
+/nomix-ai-nomix-client-ui-settings-web-search/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: 6e1c9a8fdde89577
+/nomix-ai-nomix-client-ui-settings-web-search/known-limitations-and-deferred-work:
+  en: 2f7f093f506401cd
+  zh: a9b748ae7d4c64e4
+/nomix-ai-nomix-client-ui-settings-web-search/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

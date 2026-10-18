@@ -1,0 +1,78 @@
+{
+  "name": "@nomix-ai/nomix-sdk-minimal",
+  "description": "The standalone minimal SDK profile bundle: JSON-RPC, one DeepSeek adapter, persistent shell, and JSONL sessions",
+  "version": "0.2.9",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
+    "directory": "packages/bundle/sdk-minimal"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "cordis.patch.yml",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "nomix": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "dependencies": {
+    "@nomix-ai/cordis-plugin-timer": "workspace:~",
+    "@nomix-ai/nomix-agent": "workspace:*",
+    "@nomix-ai/nomix-agent-loop": "workspace:*",
+    "@nomix-ai/nomix-attachment-local": "workspace:*",
+    "@nomix-ai/nomix-compaction-basic": "workspace:*",
+    "@nomix-ai/nomix-compaction-image-offload": "workspace:*",
+    "@nomix-ai/nomix-deepseek-llm-api-extensions": "workspace:*",
+    "@nomix-ai/nomix-jobs-local": "workspace:*",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-llm-deepseek-api-key": "workspace:*",
+    "@nomix-ai/nomix-llm-retry": "workspace:*",
+    "@nomix-ai/nomix-mcp-resources": "workspace:*",
+    "@nomix-ai/nomix-plugin-package-inventory-deepseek": "workspace:*",
+    "@nomix-ai/nomix-sandbox-local": "workspace:*",
+    "@nomix-ai/nomix-sandbox-policy": "workspace:*",
+    "@nomix-ai/nomix-sdk-app": "workspace:*",
+    "@nomix-ai/nomix-sdk-jsonrpc-server": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-session-log-deepseek": "workspace:*",
+    "@nomix-ai/nomix-session-persistence-jsonl": "workspace:*",
+    "@nomix-ai/nomix-session-projection": "workspace:*",
+    "@nomix-ai/nomix-session-title": "workspace:*",
+    "@nomix-ai/nomix-subprocess-local": "workspace:*",
+    "@nomix-ai/nomix-system-prompt": "workspace:*",
+    "@nomix-ai/nomix-terminal": "workspace:*",
+    "@nomix-ai/nomix-terminal-bash": "workspace:*",
+    "@nomix-ai/nomix-token-meter": "workspace:*",
+    "@nomix-ai/nomix-tool-bash-persistent": "workspace:*",
+    "@nomix-ai/nomix-tool-fs": "workspace:*",
+    "@nomix-ai/nomix-tool-pwsh-persistent": "workspace:*",
+    "@nomix-ai/nomix-tools": "workspace:*",
+    "@nomix-ai/nomix-working-directory": "workspace:*",
+    "@nomix-ai/nomix-tool-working-directory": "workspace:*",
+    "@nomix-ai/nomix-fs-local": "workspace:*"
+  },
+  "peerDependencies": {
+    "@nomix-ai/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@nomix-ai/cordis": "workspace:~"
+  }
+}

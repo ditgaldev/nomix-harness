@@ -2,7 +2,9 @@
   "name": "@nomix-ai/nomix-session-log-export",
   "description": "Web Session-log export command and shared download dialog",
   "version": "0.2.9",
-  "publishConfig": { "access": "public" },
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ditgaldev/nomix-harness.git",
@@ -12,47 +14,69 @@
   "main": "lib/index.js",
   "types": "lib/types/index.d.ts",
   "exports": {
-    ".": { "types": "./lib/types/index.d.ts", "default": "./lib/index.js" },
-    "./invariant": { "types": "./lib/types/invariant.d.ts", "default": "./lib/invariant.js" },
-    "./client": { "types": "./lib/types/client/index.d.ts", "default": "./lib/client.js" },
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
     "./src/*": "./src/*",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
   },
-  "files": ["lib/index.js", "lib/invariant.js", "lib/client.js", "lib/types/**/*.d.ts"],
-  "scripts": { "bundle": "tsdown", "watch": "tsdown --watch" },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
   "license": "MIT",
+  "dependencies": {
+    "@nomix-ai/nomix-session-format": "workspace:*",
+    "@nomix-ai/schemastery": "workspace:~",
+    "fflate": "^0.8.2",
+    "@nomix-ai/nomix-brand": "workspace:*"
+  },
   "peerDependencies": {
-    "@nomix-ai/cordis": "workspace:^",
-    "@nomix-ai/nomix-client-locale": "workspace:^",
-    "@nomix-ai/nomix-client-runtime": "workspace:^",
-    "@nomix-ai/nomix-client-ui-commands": "workspace:^",
-    "@nomix-ai/nomix-client-ui-conversation": "workspace:^",
-    "@nomix-ai/nomix-commands": "workspace:^",
-    "@nomix-ai/nomix-invariants": "workspace:^"
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-session-persistence": "workspace:*"
   },
   "devDependencies": {
-    "@nomix-ai/cordis": "workspace:^",
-    "@nomix-ai/cordis-plugin-loader": "workspace:^",
-    "@nomix-ai/nomix-agent": "workspace:^",
-    "@nomix-ai/nomix-client-locale": "workspace:^",
-    "@nomix-ai/nomix-client-runtime": "workspace:^",
-    "@nomix-ai/nomix-client-ui-commands": "workspace:^",
-    "@nomix-ai/nomix-client-ui-conversation": "workspace:^",
-    "@nomix-ai/nomix-client-ui-primitives": "workspace:^",
-    "@nomix-ai/nomix-client-ui-slots": "workspace:^",
-    "@nomix-ai/nomix-commands": "workspace:^",
-    "@nomix-ai/nomix-invariants": "workspace:^",
-    "@nomix-ai/nomix-session": "workspace:^",
-    "@types/react": "~18.3.1",
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/cordis-plugin-loader": "workspace:~",
+    "@nomix-ai/nomix-agent": "workspace:*",
+    "@nomix-ai/nomix-attachment": "workspace:*",
+    "@nomix-ai/nomix-client-connection": "workspace:*",
+    "@nomix-ai/nomix-client-locale": "workspace:*",
+    "@nomix-ai/nomix-client-store": "workspace:*",
+    "@nomix-ai/nomix-client-ui-commands": "workspace:*",
+    "@nomix-ai/nomix-client-ui-conversation": "workspace:*",
+    "@nomix-ai/nomix-client-ui-message-feedback": "workspace:*",
+    "@nomix-ai/nomix-client-ui-primitives": "workspace:*",
+    "@nomix-ai/nomix-client-ui-renderer": "workspace:*",
+    "@nomix-ai/nomix-client-ui-session": "workspace:*",
+    "@nomix-ai/nomix-client-ui-slots": "workspace:*",
+    "@nomix-ai/nomix-commands": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-session-persistence": "workspace:*",
+    "@nomix-ai/nomix-session-query": "workspace:*",
     "react": "^18.2.0"
   },
   "nomix": {
     "client": {
       "inject": [
         "@nomix-ai/nomix-client-locale",
-        "@nomix-ai/nomix-client-runtime",
         "@nomix-ai/nomix-client-ui-commands",
-        "@nomix-ai/nomix-client-ui-conversation"
+        "@nomix-ai/nomix-client-ui-conversation",
+        "@nomix-ai/nomix-client-ui-renderer",
+        "@nomix-ai/nomix-client-ui-session"
       ],
       "platform": "web"
     }

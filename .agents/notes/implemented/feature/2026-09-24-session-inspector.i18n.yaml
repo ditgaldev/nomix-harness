@@ -1,0 +1,25 @@
+# Bilingual-pair consistency record for 2026-09-24-session-inspector.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-09-24-session-inspector.md
+/agent-note-session-inspector-data-ownership-and-navigation:
+  en: 246505bf990af023
+  zh: 22ee0431ad9349d8
+/agent-note-session-inspector-data-ownership-and-navigation/problem:
+  en: 701a51da8516dda5
+  zh: 5c816c6d0123e332
+/agent-note-session-inspector-data-ownership-and-navigation/decision:
+  en: cb76ed18770d4290
+  zh: 2b7044b3978b2df3
+/agent-note-session-inspector-data-ownership-and-navigation/runtime-diagnostics:
+  en: f8703376e1305042
+  zh: db6016bffa99e24f
+/agent-note-session-inspector-data-ownership-and-navigation/alternatives-considered:
+  en: 64658e4c356224cb
+  zh: ceabef316dca2457
+/agent-note-session-inspector-data-ownership-and-navigation/consequences:
+  en: dc036a559efcf073
+  zh: 1c489be788d72490
+/agent-note-session-inspector-data-ownership-and-navigation/testing:
+  en: ff09aac1983cef78
+  zh: c3b5669826b5777b

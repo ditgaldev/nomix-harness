@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for 2026-08-21-deepseek-llm-api-request-extensions.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-08-21-deepseek-llm-api-request-extensions.md
+/agent-note-deepseek-llm-api-request-extensions-for-session-logs-and-plugin-packages:
+  en: 4fa32a0b039c5632
+  zh: 7924c6ab3f6b9e1c
+/agent-note-deepseek-llm-api-request-extensions-for-session-logs-and-plugin-packages/problem:
+  en: 4945ce54f66df55c
+  zh: 9fbd833c1d8122a7
+/agent-note-deepseek-llm-api-request-extensions-for-session-logs-and-plugin-packages/decision:
+  en: 913a25c03b590730
+  zh: 36daea8e1430126f
+/agent-note-deepseek-llm-api-request-extensions-for-session-logs-and-plugin-packages/incremental-session-log-field:
+  en: c1e8121c2c17685d
+  zh: 353f2213dddc467e
+/agent-note-deepseek-llm-api-request-extensions-for-session-logs-and-plugin-packages/plugin-package-field:
+  en: d3d5bdd244339e37
+  zh: 24c503c163e067c5
+/agent-note-deepseek-llm-api-request-extensions-for-session-logs-and-plugin-packages/deferred-inventory-caching:
+  en: eb69576e756f4aa1
+  zh: 5c1923159da3f7a2
+/agent-note-deepseek-llm-api-request-extensions-for-session-logs-and-plugin-packages/verification:
+  en: ed730f117365f007
+  zh: a9a36702bc72a9f7
+/agent-note-deepseek-llm-api-request-extensions-for-session-logs-and-plugin-packages/alternatives-considered:
+  en: 5faf7699272f99b4
+  zh: 7a402e24c80131cf
+/agent-note-deepseek-llm-api-request-extensions-for-session-logs-and-plugin-packages/alternatives-considered/why-not-request-relative-message-references:
+  en: 3f03c2028adf5814
+  zh: c50f7f7b0af04655
+/agent-note-deepseek-llm-api-request-extensions-for-session-logs-and-plugin-packages/alternatives-considered/why-not-omit-assistant-chunks-or-overlapping-event-data:
+  en: f0650b9422ae8651
+  zh: 961d466dfe65add3
+/agent-note-deepseek-llm-api-request-extensions-for-session-logs-and-plugin-packages/consequences:
+  en: a4ba0e3e322b667a
+  zh: 146ca42dded34cc1

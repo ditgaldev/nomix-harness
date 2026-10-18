@@ -1,6 +1,22 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for adding-a-settings-card.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/cookbook/adding-a-settings-card.md
-adding-a-settings-card.md: ae7ff61e613202e3f646878f44cb521816ec1dc2
-adding-a-settings-card.zh.md: d8b146fee5faa96377b07299546925b8e57021d7
+/cookbook-live-configuration-forms:
+  en: 47b4aea1067ebfc5
+  zh: 74b05706ea5ab744
+/cookbook-live-configuration-forms/1-declare-live-fields:
+  en: a758ea63530ecf34
+  zh: 0ce644333a8a4e85
+/cookbook-live-configuration-forms/2-compose-the-plugin:
+  en: 9c2680c175632a58
+  zh: 46927fca484b5df0
+/cookbook-live-configuration-forms/3-verify-editing:
+  en: 9b78a1eeb9d1eea3
+  zh: 41ba5505392e3831
+/cookbook-live-configuration-forms/4-contribute-to-another-plugin-s-page:
+  en: 0abb582a1a25b3d9
+  zh: 6078a707324ec515
+/cookbook-live-configuration-forms/5-where-the-browser-half-rides:
+  en: 300da2fecb24be28
+  zh: fe4a6b29cab151bf

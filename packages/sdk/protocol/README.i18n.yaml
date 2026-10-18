@@ -1,6 +1,55 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/sdk/protocol/README.md
-README.md: e576f24ec1b33890e1e7094163ac3e144d5fac9e
-README.zh.md: a7953db29002c67449819a2d58551b05349e307c
+/:
+  en: f7e65364dfe462b8
+  zh: 20d2b8f84f10f681
+/nomix-ai-nomix-sdk-protocol:
+  en: 099c021f7fb6ab44
+  zh: ea22da21ca7d61e5
+/nomix-ai-nomix-sdk-protocol/summary:
+  en: 9818fb52b9d38eda
+  zh: 5668d57748fe5266
+/nomix-ai-nomix-sdk-protocol/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-sdk-protocol/use-this-package:
+  en: c4ca91b51aab452a
+  zh: 1c77b1deaeb34931
+/nomix-ai-nomix-sdk-protocol/use-this-package/framing-and-transport:
+  en: be53c71505c0d1b4
+  zh: 6210dee577715539
+/nomix-ai-nomix-sdk-protocol/use-this-package/the-sdk-methods:
+  en: 8057053746fc2755
+  zh: 36d5989488c1a351
+/nomix-ai-nomix-sdk-protocol/use-this-package/payload-semantics:
+  en: f6f9de28327a2b8c
+  zh: 9187912f963757bf
+/nomix-ai-nomix-sdk-protocol/understand-the-implementation:
+  en: a11b136d8296deda
+  zh: 85081da5be53c9e1
+/nomix-ai-nomix-sdk-protocol/understand-the-implementation/design-concept:
+  en: bc4b8dfc36ed4565
+  zh: 6a707eff1a4bbf2f
+/nomix-ai-nomix-sdk-protocol/understand-the-implementation/source-map:
+  en: b62c1e92501ebc93
+  zh: d1ac1a11653e97ed
+/nomix-ai-nomix-sdk-protocol/understand-the-implementation/frame-dispatch:
+  en: eaf7d095810481c8
+  zh: 92767f908500be5e
+/nomix-ai-nomix-sdk-protocol/further-exploration:
+  en: e633e62c1961e8f7
+  zh: 2c0487cc02e0c51c
+/nomix-ai-nomix-sdk-protocol/model-experience:
+  en: 1c3205c59385b059
+  zh: 9198a341567beca0
+/nomix-ai-nomix-sdk-protocol/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: 696d26adaf4eda6d
+/nomix-ai-nomix-sdk-protocol/known-limitations-and-deferred-work:
+  en: 643b1057cf965b9d
+  zh: ab92e9e16d1762bd
+/nomix-ai-nomix-sdk-protocol/known-limitations-and-deferred-work/dev-note:
+  en: 951fa06249790ac1
+  zh: da66e7f53df3ab00

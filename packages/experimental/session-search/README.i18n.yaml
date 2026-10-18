@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/session-search/README.md
+/:
+  en: ac0fb71830f58337
+  zh: 0ece950cf48261a1
+/nomix-ai-nomix-experimental-session-search:
+  en: e7cba109b691ea29
+  zh: 4b2094f007c2b24c
+/nomix-ai-nomix-experimental-session-search/summary:
+  en: 3461520fc9a6b225
+  zh: aeedca620262e8ae
+/nomix-ai-nomix-experimental-session-search/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 988e839059414d27
+/nomix-ai-nomix-experimental-session-search/use-this-package:
+  en: 29e4de34bed1ed2e
+  zh: 539638a62c0a99c3
+/nomix-ai-nomix-experimental-session-search/understand-the-implementation:
+  en: 1d348dab4495f347
+  zh: f2fdb4102727d0d2
+/nomix-ai-nomix-experimental-session-search/further-exploration:
+  en: 09083448dc731635
+  zh: 158ee996e5b61820
+/nomix-ai-nomix-experimental-session-search/model-experience:
+  en: 2ab7bca38b8c427b
+  zh: d488782348d2936e
+/nomix-ai-nomix-experimental-session-search/model-experience/kv-cache-effect:
+  en: 25f20eda0e696067
+  zh: 378c4a15a5704ba0
+/nomix-ai-nomix-experimental-session-search/known-limitations-and-deferred-work:
+  en: 5ba4aae8ef1f62d2
+  zh: a7599243880f7482
+/nomix-ai-nomix-experimental-session-search/known-limitations-and-deferred-work/dev-note:
+  en: 279d01435256cd2a
+  zh: 83780964e5de2f54

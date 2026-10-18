@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/worktree/README.md
+/:
+  en: abb4e123de7c0434
+  zh: 40f28bb7301d3d0a
+/nomix-ai-nomix-experimental-worktree:
+  en: 0dca6c82b17361b6
+  zh: 66dc25ac1b7de7f7
+/nomix-ai-nomix-experimental-worktree/summary:
+  en: 954278bb62827f55
+  zh: cb96870bfb05ec23
+/nomix-ai-nomix-experimental-worktree/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 2f8a621b991260a1
+/nomix-ai-nomix-experimental-worktree/use-this-package:
+  en: bbed0d6d69cae401
+  zh: 9bcd773bbdd1ebb8
+/nomix-ai-nomix-experimental-worktree/understand-the-implementation:
+  en: 6971a7ca9073bef1
+  zh: b977c28a75c7f963
+/nomix-ai-nomix-experimental-worktree/further-exploration:
+  en: b0f39f67cca208fc
+  zh: 2f16701706384b58
+/nomix-ai-nomix-experimental-worktree/model-experience:
+  en: 4a3506885138c925
+  zh: 7ac65dc18dc5c292
+/nomix-ai-nomix-experimental-worktree/model-experience/kv-cache-effect:
+  en: 6826dfaadb24f3da
+  zh: 2e2ee715247fc015
+/nomix-ai-nomix-experimental-worktree/known-limitations-and-deferred-work:
+  en: 0adcf97622e86f3b
+  zh: 8bcdc336011cd7e1
+/nomix-ai-nomix-experimental-worktree/known-limitations-and-deferred-work/dev-note:
+  en: ad12746a6cc96d8a
+  zh: 66275f30a35c88e4

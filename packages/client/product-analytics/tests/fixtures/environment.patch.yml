@@ -1,0 +1,19 @@
+- id: session-telemetry-otel
+  disabled: true
+- id: headless-startup
+  disabled: true
+- id: headless-runner
+  disabled: true
+- insert:
+    - id: product-telemetry-otel
+      name: '@nomix-ai/nomix-host-product-telemetry-otel'
+      config:
+        endpoint: !!js process.env.NOMIX_PRODUCT_TELEMETRY_TEST_ENDPOINT
+        serviceName: nomix-environment-test
+        serviceVersion: synthetic-release
+        compression: none
+    - id: product-analytics
+      name: '@nomix-ai/nomix-client-product-analytics'
+      config:
+        enabled: true
+        appVersion: synthetic-release

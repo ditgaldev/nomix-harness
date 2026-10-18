@@ -1,6 +1,31 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write apps/cli/reference/README.md
-README.md: db4f1ce9eb3c4e55065b1a942f69047e4283bc6b
-README.zh.md: 64cbbabf8af577e76d287284b2a7106a991f4602
+/nomix-cli-behavior-reference:
+  en: 4cf8092d028cca63
+  zh: 071c9ef358c9ad68
+/nomix-cli-behavior-reference/profile-boot:
+  en: 4e6e23bcaba2dae3
+  zh: 60e6646e92e8bdee
+/nomix-cli-behavior-reference/profile-boot/app-arguments:
+  en: 4d01c87be2c2cfc0
+  zh: 3bef68d24bdeec24
+/nomix-cli-behavior-reference/profile-boot/config-schema-dump:
+  en: c2ee30ef56745047
+  zh: 69fe04a5f29e1403
+/nomix-cli-behavior-reference/startup-diagnostics:
+  en: 1220df70551a41e4
+  zh: 057aa51f0ad61b33
+/nomix-cli-behavior-reference/plugin-management:
+  en: 62d9f83594005eba
+  zh: dfe677a0596043a8
+/nomix-cli-behavior-reference/web-profile:
+  en: d52dc9f29b9023be
+  zh: 02cf982b2574f330
+/nomix-cli-behavior-reference/shared-deployment-behavior:
+  en: 6a431b9d3265d1cc
+  zh: 2658165edc84e83c
+/nomix-cli-behavior-reference/source-execution:
+  en: 24702ff005f1d223
+  zh: 1a3a5aa9bb3b5e99

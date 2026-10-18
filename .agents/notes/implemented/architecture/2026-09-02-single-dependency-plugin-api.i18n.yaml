@@ -1,6 +1,19 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for 2026-09-02-single-dependency-plugin-api.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-09-02-single-dependency-plugin-api.md
-2026-09-02-single-dependency-plugin-api.md: e67eb4127e18a25318e45644ea7ade75242d48e7
-2026-09-02-single-dependency-plugin-api.zh.md: 04501e484e45183fbac3df3be489482773f86a7c
+/agent-note-single-dependency-plugin-api:
+  en: 3a95f246a85dbce4
+  zh: 32aff793e0402ab5
+/agent-note-single-dependency-plugin-api/problem:
+  en: ce842ef56c756d5e
+  zh: f0a8985b29f7e548
+/agent-note-single-dependency-plugin-api/decision:
+  en: 20c20fca3d833175
+  zh: 39277ba9257dea06
+/agent-note-single-dependency-plugin-api/alternatives-considered:
+  en: d4547dff1a95e338
+  zh: d304785f6c7bb602
+/agent-note-single-dependency-plugin-api/consequences:
+  en: a1f68db9330ba9a2
+  zh: e272358ee4a0e6c3

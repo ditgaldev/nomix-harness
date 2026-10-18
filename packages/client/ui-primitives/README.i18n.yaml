@@ -1,6 +1,61 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/client/ui-primitives/README.md
-README.md: d2dac4d226e57595d5f4f8d75d94823892fdeaeb
-README.zh.md: 43628957917f59274617a65db1bd8a499976aee9
+/:
+  en: f9b23ee4b8b8593e
+  zh: 7a325c3a87d5c63d
+/nomix-ai-nomix-client-ui-primitives:
+  en: 86e79140eb36e5fb
+  zh: 3ad87493c99b3860
+/nomix-ai-nomix-client-ui-primitives/summary:
+  en: 60d284873e1c73ad
+  zh: 93e30751f39ed610
+/nomix-ai-nomix-client-ui-primitives/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-client-ui-primitives/use-this-package:
+  en: 7bae72c97d0449f5
+  zh: 4589ecc2b216edc5
+/nomix-ai-nomix-client-ui-primitives/use-this-package/component-catalog:
+  en: b8cd7c8e5b8ac226
+  zh: a6540afc9753b6ab
+/nomix-ai-nomix-client-ui-primitives/use-this-package/controls-and-icons:
+  en: de3a336d6fb4a773
+  zh: b937f49b0d45de76
+/nomix-ai-nomix-client-ui-primitives/use-this-package/rendering-agent-output:
+  en: bff00424db14183a
+  zh: 5bfd67df8abd8972
+/nomix-ai-nomix-client-ui-primitives/use-this-package/localizing-copy:
+  en: 4aef65dea11de083
+  zh: abc22cd7c65cdf38
+/nomix-ai-nomix-client-ui-primitives/understand-the-implementation:
+  en: e1b8310a5f33b9c2
+  zh: 0a471ce6f3270ddf
+/nomix-ai-nomix-client-ui-primitives/understand-the-implementation/source-map:
+  en: 44eb32370cbeafe8
+  zh: 728009c66375c6bb
+/nomix-ai-nomix-client-ui-primitives/understand-the-implementation/input-modality:
+  en: 412159de288e1955
+  zh: 3d9914e402b5b0a5
+/nomix-ai-nomix-client-ui-primitives/understand-the-implementation/streaming-markdown:
+  en: 8bbfa14c27f3bfd7
+  zh: 88f7548ac3a114e1
+/nomix-ai-nomix-client-ui-primitives/understand-the-implementation/geometry-and-overflow:
+  en: 45f4cd1ef96bb6d2
+  zh: f264d25b780ad1dc
+/nomix-ai-nomix-client-ui-primitives/further-exploration:
+  en: 527813f8b9885435
+  zh: aa90289a28818cc8
+/nomix-ai-nomix-client-ui-primitives/model-experience:
+  en: 3120df665299c634
+  zh: 1d9f365d091d0d2a
+/nomix-ai-nomix-client-ui-primitives/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: de54f3467ef3b9be
+/nomix-ai-nomix-client-ui-primitives/known-limitations-and-deferred-work:
+  en: 6580c60db2d09f00
+  zh: 319cbfa10a36626e
+/nomix-ai-nomix-client-ui-primitives/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

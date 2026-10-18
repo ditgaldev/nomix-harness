@@ -23,6 +23,7 @@ import { parseArgs } from 'node:util'
 import { releaseFamily } from './families.ts'
 import { capture, commandInvocation, isEntry, run, type CommandInvocation } from './process.ts'
 import { packedIdentity } from './tarball.ts'
+import { verifyInstalledProductIsolation } from './installed-product-isolation.ts'
 
 /**
  * Environment for the installed artifact: no host Node hooks, no host Nomix home, and no ambient
@@ -328,6 +329,12 @@ async function main(): Promise<void> {
     console.log(`release verify-packed-install: installing ${expected.url} with ${manager} in ${consumerRoot}`)
     install(manager, consumerRoot, environment)
     console.log(`release verify-packed-install: executing installed ${entry.command} with ${manager} in ${consumerRoot}`)
+    const installedEntry = join(consumerRoot, 'node_modules', entry.packageName)
+    const packageCount = verifyInstalledProductIsolation(installedEntry)
+    console.log(`release verify-packed-install: ${String(packageCount)} default-product packages exclude experimental packages`)
+    const bin = join(installedEntry, entry.binPath)
+    const directVersion = capture(process.execPath, [bin, '--version'], { cwd: consumerRoot, env: environment })
+    if (directVersion !== expected.version) throw new Error(`installed ${entry.packageName} bin reports ${JSON.stringify(directVersion)}, expected ${expected.version}`)
     const version = execute(manager, entry.command, ['--version'], consumerRoot, environment)
     if (version !== expected.version) {
       throw new Error(`installed ${entry.packageName} --version reported ${JSON.stringify(version)}, expected ${expected.version}`)

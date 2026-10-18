@@ -18,29 +18,25 @@
       "types": "./lib/types/index.d.ts",
       "default": "./lib/index.js"
     },
-    "./invariant": {
-      "types": "./lib/types/invariant.d.ts",
-      "default": "./lib/invariant.js"
-    },
     "./src/*": "./src/*",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
   },
   "files": [
+    "locale/*.json",
     "lib/index.js",
-    "lib/invariant.js",
     "lib/types/**/*.d.ts"
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@nomix-ai/nomix-agent": "workspace:^",
-    "@nomix-ai/nomix-compaction": "workspace:^",
-    "@nomix-ai/nomix-commands": "workspace:^",
-    "@nomix-ai/nomix-invariants": "workspace:^",
-    "@nomix-ai/nomix-llm": "workspace:^",
-    "@nomix-ai/nomix-session": "workspace:^",
-    "@nomix-ai/nomix-token-meter": "workspace:^",
-    "@nomix-ai/nomix-compaction-tool-result-pruner": "workspace:^",
-    "@nomix-ai/cordis": "workspace:^"
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-agent": "workspace:*",
+    "@nomix-ai/nomix-commands": "workspace:*",
+    "@nomix-ai/nomix-compaction": "workspace:*",
+    "@nomix-ai/nomix-compaction-tool-result-pruner": "workspace:*",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-token-meter": "workspace:*"
   },
   "peerDependenciesMeta": {
     "@nomix-ai/nomix-compaction-tool-result-pruner": {
@@ -48,23 +44,25 @@
     }
   },
   "dependencies": {
-    "@nomix-ai/schemastery": "workspace:^"
+    "@nomix-ai/nomix-util-values": "workspace:*",
+    "@nomix-ai/schemastery": "workspace:~"
   },
   "devDependencies": {
-    "@nomix-ai/cordis-plugin-include": "workspace:^",
-    "@nomix-ai/cordis-plugin-loader": "workspace:^",
-    "@nomix-ai/nomix-agent": "workspace:^",
-    "@nomix-ai/nomix-agent-loop": "workspace:^",
-    "@nomix-ai/nomix-agent-loop-testkit": "workspace:^",
-    "@nomix-ai/nomix-compaction": "workspace:^",
-    "@nomix-ai/nomix-commands": "workspace:^",
-    "@nomix-ai/nomix-invariants": "workspace:^",
-    "@nomix-ai/nomix-llm": "workspace:^",
-    "@nomix-ai/nomix-llm-retry": "workspace:^",
-    "@nomix-ai/nomix-session": "workspace:^",
-    "@nomix-ai/nomix-token-meter": "workspace:^",
-    "@nomix-ai/nomix-compaction-tool-result-pruner": "workspace:^",
-    "@nomix-ai/nomix-tools": "workspace:^",
-    "@nomix-ai/cordis": "workspace:^"
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/cordis-plugin-include": "workspace:~",
+    "@nomix-ai/cordis-plugin-loader": "workspace:~",
+    "@nomix-ai/nomix-agent": "workspace:*",
+    "@nomix-ai/nomix-agent-loop": "workspace:*",
+    "@nomix-ai/nomix-agent-loop-testkit": "workspace:*",
+    "@nomix-ai/nomix-commands": "workspace:*",
+    "@nomix-ai/nomix-compaction": "workspace:*",
+    "@nomix-ai/nomix-compaction-tool-result-pruner": "workspace:*",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-llm-retry": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-session-projection": "workspace:*",
+    "@nomix-ai/nomix-token-meter": "workspace:*",
+    "@nomix-ai/nomix-tools": "workspace:*",
+    "@nomix-ai/nomix-compaction-image-offload": "workspace:*"
   }
 }

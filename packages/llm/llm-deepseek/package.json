@@ -1,6 +1,6 @@
 {
   "name": "@nomix-ai/nomix-llm-deepseek",
-  "description": "DeepSeek chat-completions adapter for the Nomix Harness LLM seam",
+  "description": "DeepSeek Messages adapter",
   "version": "0.2.9",
   "publishConfig": {
     "access": "public"
@@ -18,49 +18,67 @@
       "types": "./lib/types/index.d.ts",
       "default": "./lib/index.js"
     },
-    "./invariant": {
-      "types": "./lib/types/invariant.d.ts",
-      "default": "./lib/invariant.js"
-    },
     "./src/*": "./src/*",
     "./package.json": "./package.json"
   },
   "files": [
     "lib/index.js",
-    "lib/invariant.js",
     "lib/types/**/*.d.ts"
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@nomix-ai/nomix-attachment": "workspace:^",
-    "@nomix-ai/nomix-atomic-write": "workspace:^",
-    "@nomix-ai/nomix-brand": "workspace:^",
-    "@nomix-ai/nomix-credentials": "workspace:^",
-    "@nomix-ai/nomix-launch-environment": "workspace:^",
-    "@nomix-ai/nomix-invariants": "workspace:^",
-    "@nomix-ai/nomix-llm": "workspace:^",
-    "@nomix-ai/nomix-home-paths": "workspace:^",
-    "@nomix-ai/nomix-settings": "workspace:^",
-    "@nomix-ai/nomix-timeout": "workspace:^",
-    "@nomix-ai/nomix-anonymous-user-id": "workspace:^",
-    "@nomix-ai/cordis": "workspace:^"
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-anonymous-user-id": "workspace:*",
+    "@nomix-ai/nomix-atomic-write": "workspace:*",
+    "@nomix-ai/nomix-attachment": "workspace:*",
+    "@nomix-ai/nomix-deepseek-llm-api-extensions": "workspace:*",
+    "@nomix-ai/nomix-fs": "workspace:*",
+    "@nomix-ai/nomix-home-paths": "workspace:*",
+    "@nomix-ai/nomix-launch-environment": "workspace:*",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-timeout": "workspace:*",
+    "@nomix-ai/cordis-plugin-loader": "workspace:~"
   },
   "dependencies": {
-    "eventsource-parser": "^3.1.0",
-    "@nomix-ai/schemastery": "workspace:^"
+    "@nomix-ai/cosmokit": "workspace:~",
+    "@nomix-ai/nomix-brand": "workspace:*",
+    "@nomix-ai/nomix-util-values": "workspace:*",
+    "@nomix-ai/schemastery": "workspace:~",
+    "eventsource-parser": "^3.1.0"
   },
   "devDependencies": {
-    "@nomix-ai/nomix-attachment": "workspace:^",
-    "@nomix-ai/nomix-atomic-write": "workspace:^",
-    "@nomix-ai/nomix-brand": "workspace:^",
-    "@nomix-ai/nomix-credentials": "workspace:^",
-    "@nomix-ai/nomix-launch-environment": "workspace:^",
-    "@nomix-ai/nomix-invariants": "workspace:^",
-    "@nomix-ai/nomix-llm": "workspace:^",
-    "@nomix-ai/nomix-home-paths": "workspace:^",
-    "@nomix-ai/nomix-settings": "workspace:^",
-    "@nomix-ai/nomix-timeout": "workspace:^",
-    "@nomix-ai/nomix-anonymous-user-id": "workspace:^",
-    "@nomix-ai/cordis": "workspace:^"
+    "@nomix-ai/nomix-llm-deepseek-api-key": "workspace:*",
+    "@nomix-ai/nomix-llm-deepseek-account": "workspace:*",
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-agent": "workspace:*",
+    "@nomix-ai/nomix-anonymous-user-id": "workspace:*",
+    "@nomix-ai/nomix-atomic-write": "workspace:*",
+    "@nomix-ai/nomix-attachment": "workspace:*",
+    "@nomix-ai/nomix-attachment-local": "workspace:*",
+    "@nomix-ai/nomix-credentials": "workspace:*",
+    "@nomix-ai/nomix-deepseek-llm-api-extensions": "workspace:*",
+    "@nomix-ai/nomix-fs": "workspace:*",
+    "@nomix-ai/nomix-home-paths": "workspace:*",
+    "@nomix-ai/nomix-launch-environment": "workspace:*",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-plugin-package-inventory-deepseek": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-session-log-deepseek": "workspace:*",
+    "@nomix-ai/nomix-timeout": "workspace:*",
+    "@nomix-ai/nomix-http-proxy": "workspace:*",
+    "@nomix-ai/cordis-plugin-loader": "workspace:~",
+    "@nomix-ai/cordis-plugin-include": "workspace:~",
+    "@nomix-ai/nomix-agent-loop": "workspace:*",
+    "@nomix-ai/nomix-session-projection": "workspace:*",
+    "@nomix-ai/nomix-system-prompt": "workspace:*",
+    "@nomix-ai/nomix-tools": "workspace:*",
+    "@nomix-ai/nomix-credentials-local": "workspace:*",
+    "@nomix-ai/nomix-settings": "workspace:*",
+    "@nomix-ai/nomix-deepseek-account": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@nomix-ai/cordis-plugin-loader": {
+      "optional": true
+    }
   }
 }

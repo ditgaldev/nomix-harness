@@ -1,6 +1,6 @@
 /** Injected faces and the Package-owned `tool.view.cordis` slot declaration. */
 
-import type { SessionId } from '@nomix-ai/nomix-client-connection/client'
+import type { SessionId } from '@nomix-ai/nomix-api-remotes/client'
 import type { HostObservable } from '@nomix-ai/nomix-client-ui-slots'
 import type {
   CordisRunActivity, CordisRunFailure, CordisUserRunRequest, DynamicCordisLivePackage,

@@ -1,0 +1,19 @@
+# Bilingual-pair consistency record for 2026-09-12-browser-use-provider-registration.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-09-12-browser-use-provider-registration.md
+/agent-note-browser-use-provider-registration-and-session-ownership:
+  en: ea8bfe5d7d9f3a85
+  zh: cf6602f00e2840cd
+/agent-note-browser-use-provider-registration-and-session-ownership/problem:
+  en: b3513236c712132d
+  zh: df7701029eae9b31
+/agent-note-browser-use-provider-registration-and-session-ownership/decision:
+  en: ecda5be377b4fd63
+  zh: 7fc97883b4e6f8b6
+/agent-note-browser-use-provider-registration-and-session-ownership/alternatives-considered:
+  en: 452c958bf217165c
+  zh: 65d49f16d33bc629
+/agent-note-browser-use-provider-registration-and-session-ownership/consequences:
+  en: f155b6002ed06d0f
+  zh: 9cc3417e2213172b

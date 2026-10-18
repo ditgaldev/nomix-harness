@@ -1,6 +1,67 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/skill/skill-filesystem/README.md
-README.md: c1fa39d264f7f1a5439629e444c2ec2271c2a564
-README.zh.md: 22151ff4986fa0a0aca7ba49f61eba086d199579
+/:
+  en: ef9fab89ad1a57aa
+  zh: 6d434e8a3dae16ca
+/nomix-ai-nomix-skill-filesystem:
+  en: 2cce970bc747500e
+  zh: fd151fa6eda94e1a
+/nomix-ai-nomix-skill-filesystem/summary:
+  en: 72f57b86b715452e
+  zh: 234273fc4eb65832
+/nomix-ai-nomix-skill-filesystem/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-skill-filesystem/use-this-package:
+  en: 2fcfbaea3c62a766
+  zh: 27c917ba822329e5
+/nomix-ai-nomix-skill-filesystem/use-this-package/when-to-choose-it:
+  en: 012a123601c7d8f2
+  zh: 0e13f5e0d2e4ea7a
+/nomix-ai-nomix-skill-filesystem/use-this-package/skill-format:
+  en: 78ac4e731c6a24c1
+  zh: e8c33db4aa0cc527
+/nomix-ai-nomix-skill-filesystem/use-this-package/roots-and-priority:
+  en: 3479597087625a10
+  zh: 3bab60b1c5a2ec3f
+/nomix-ai-nomix-skill-filesystem/use-this-package/mount-and-configure:
+  en: bce3167a1f14b34b
+  zh: 9bd5636eb487ca16
+/nomix-ai-nomix-skill-filesystem/use-this-package/change-detection:
+  en: 77acbd43e89b6043
+  zh: 8169bbbc55f3f114
+/nomix-ai-nomix-skill-filesystem/use-this-package/observable-success-and-failures:
+  en: 272693c35012ffb5
+  zh: bbbe788b11ef567f
+/nomix-ai-nomix-skill-filesystem/understand-the-implementation:
+  en: a95eb63f5a570c79
+  zh: cd964a36cf8a3715
+/nomix-ai-nomix-skill-filesystem/understand-the-implementation/design-concept:
+  en: 8529fb4c1989d5fc
+  zh: 115372aaa959dc6c
+/nomix-ai-nomix-skill-filesystem/understand-the-implementation/source-map:
+  en: f9d3b4bdedb897a6
+  zh: 962f7638d30741fd
+/nomix-ai-nomix-skill-filesystem/understand-the-implementation/discovery-flow:
+  en: 7e26750408a63587
+  zh: 9eed631a7bdf00ae
+/nomix-ai-nomix-skill-filesystem/understand-the-implementation/watching-and-invalidation:
+  en: e1f03485692f61a0
+  zh: 7c3ce24eacc3a047
+/nomix-ai-nomix-skill-filesystem/further-exploration:
+  en: 37f9c8497dc7af78
+  zh: e32eee65f577dc84
+/nomix-ai-nomix-skill-filesystem/model-experience:
+  en: dcb9e7e796660a0e
+  zh: 5811aaa7357c2946
+/nomix-ai-nomix-skill-filesystem/model-experience/kv-cache-effect:
+  en: 14ddbda337682082
+  zh: 2e4dc3c26b45f62c
+/nomix-ai-nomix-skill-filesystem/known-limitations-and-deferred-work:
+  en: a7f37a7b9e54945d
+  zh: b9d3b15027757301
+/nomix-ai-nomix-skill-filesystem/known-limitations-and-deferred-work/dev-note:
+  en: 53584bc8292df1f9
+  zh: 921253cd64aa7511

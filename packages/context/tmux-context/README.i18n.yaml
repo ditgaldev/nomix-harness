@@ -1,6 +1,67 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/context/tmux-context/README.md
-README.md: 7643df0ffe69a013ffafa3b7b34bf263dc591d93
-README.zh.md: 66b75c193cd90aad45857bcc79847279877ff1f5
+/:
+  en: d1bef1216dfe10fa
+  zh: aee241b6eed43293
+/nomix-ai-nomix-tmux-context:
+  en: fc17ebbaa3d15a7a
+  zh: d918ccef234e6b36
+/nomix-ai-nomix-tmux-context/summary:
+  en: e561d46bed519e39
+  zh: 8ac8aacce29ad3bd
+/nomix-ai-nomix-tmux-context/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-tmux-context/use-this-package:
+  en: 872d46d8bbbcda8d
+  zh: 9d14bbdb45851c07
+/nomix-ai-nomix-tmux-context/use-this-package/what-the-model-gets:
+  en: 8d594d379878de46
+  zh: cfa52a5e0b297a6d
+/nomix-ai-nomix-tmux-context/use-this-package/configuration:
+  en: d21e6aa49b8b81f0
+  zh: 8c917ddd0eaffe03
+/nomix-ai-nomix-tmux-context/use-this-package/when-the-location-is-known:
+  en: 360821e2ef8f3d50
+  zh: 691d23a188558e9f
+/nomix-ai-nomix-tmux-context/understand-the-implementation:
+  en: 2d21fa2aad5a729d
+  zh: cfbfada0eb647435
+/nomix-ai-nomix-tmux-context/understand-the-implementation/design-concept:
+  en: 1902de51becf7c7d
+  zh: 130e673b471c38c4
+/nomix-ai-nomix-tmux-context/understand-the-implementation/source-map:
+  en: 14bc5e3279f9da27
+  zh: 90953dfbf892033a
+/nomix-ai-nomix-tmux-context/understand-the-implementation/main-flow:
+  en: 2d5768fe44120780
+  zh: cd601c59d9604e6e
+/nomix-ai-nomix-tmux-context/further-exploration:
+  en: 12f88a10dffa3f3a
+  zh: c7b4ff6d07828788
+/nomix-ai-nomix-tmux-context/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-tmux-context/model-experience/preparation-time-tmux-location:
+  en: 9c9825ee622e4b92
+  zh: b9edc0c529612fe6
+/nomix-ai-nomix-tmux-context/model-experience/preparation-time-tmux-location/what-the-model-sees:
+  en: 8697059219e2ab02
+  zh: d321f11003c93de9
+/nomix-ai-nomix-tmux-context/model-experience/preparation-time-tmux-location/what-the-model-sees/changed-turn-reading:
+  en: efdd843a7c1aa9d7
+  zh: 533b6f25b583363e
+/nomix-ai-nomix-tmux-context/model-experience/preparation-time-tmux-location/token-effect:
+  en: 6a0348385ba38e7e
+  zh: 02af00a2c5aea469
+/nomix-ai-nomix-tmux-context/model-experience/preparation-time-tmux-location/kv-cache-effect:
+  en: 2fbf2175168e8244
+  zh: b70653f9cbe2a47b
+/nomix-ai-nomix-tmux-context/known-limitations-and-deferred-work:
+  en: af80ce3c69f582ab
+  zh: da5ad546c19d7d56
+/nomix-ai-nomix-tmux-context/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

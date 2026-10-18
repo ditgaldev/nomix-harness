@@ -1,6 +1,22 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for maintaining-nomix-code-review.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/cookbook/maintaining-nomix-code-review.md
-maintaining-nomix-code-review.md: aae87a4692626e91105f50266a6735ff7f0abed7
-maintaining-nomix-code-review.zh.md: 3b962bc82df87578b9dff02a968239e7f72960c0
+/maintaining-the-nomix-code-review-skill:
+  en: 0c50351146a035e1
+  zh: 22280df5385336f9
+/maintaining-the-nomix-code-review-skill/what-the-maintainer-receives:
+  en: dfcbd6fe4199d752
+  zh: 4b586d75c61dff47
+/maintaining-the-nomix-code-review-skill/what-the-operator-does-with-a-candidate-diff:
+  en: 653be97170e717b7
+  zh: f36eae3591c1db57
+/maintaining-the-nomix-code-review-skill/when-a-run-produces-no-candidate:
+  en: feb6d261939d6c19
+  zh: 044d8238cd6537d3
+/maintaining-the-nomix-code-review-skill/interruptions-and-handoff:
+  en: 285be0ddd05adeac
+  zh: 18624b03b342739a
+/maintaining-the-nomix-code-review-skill/where-the-operator-s-private-setup-lives:
+  en: ae06145764738c16
+  zh: d527b944db8c52be

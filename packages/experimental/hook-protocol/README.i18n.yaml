@@ -1,0 +1,61 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/hook-protocol/README.md
+/:
+  en: 7cfe3761eedff848
+  zh: 80b0bed5743d0924
+/nomix-ai-nomix-hook-protocol:
+  en: ecfdade7fb067d06
+  zh: 839c3561cbeee11d
+/nomix-ai-nomix-hook-protocol/summary:
+  en: c7a06378d1b34da7
+  zh: 16fcf50913ddaeb2
+/nomix-ai-nomix-hook-protocol/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-hook-protocol/use-this-package:
+  en: bc77ecee980ab363
+  zh: c7b1ffbaf443f8e0
+/nomix-ai-nomix-hook-protocol/use-this-package/when-to-choose-it:
+  en: 2bb52dd09128a43a
+  zh: d8bd2cea1d55f908
+/nomix-ai-nomix-hook-protocol/use-this-package/what-a-hook-can-do:
+  en: 043f54b3a5b518a7
+  zh: a4115083a9b1cef1
+/nomix-ai-nomix-hook-protocol/use-this-package/what-you-see-when-hooks-run:
+  en: ba2d6ed1db063f53
+  zh: ab1b8d72dccd2ff1
+/nomix-ai-nomix-hook-protocol/understand-the-implementation:
+  en: 08b3960150e9c5e2
+  zh: 6bb2f236d697de01
+/nomix-ai-nomix-hook-protocol/understand-the-implementation/processing-pipeline:
+  en: ce6c1b08f99e7dc2
+  zh: e117e9b6897310ec
+/nomix-ai-nomix-hook-protocol/understand-the-implementation/hook-session-events:
+  en: a6145bc863ca5507
+  zh: 95bc2fc16f8eb0c0
+/nomix-ai-nomix-hook-protocol/understand-the-implementation/design-philosophy:
+  en: 0db3f1761b71c78f
+  zh: 393c1be0eda16903
+/nomix-ai-nomix-hook-protocol/understand-the-implementation/source-map:
+  en: 0d8956a6d8608ee0
+  zh: 9f554284c4c0a36e
+/nomix-ai-nomix-hook-protocol/further-exploration:
+  en: 22b56e985d4d82ba
+  zh: 95322826f4eb4f4d
+/nomix-ai-nomix-hook-protocol/model-experience:
+  en: 83203fef2c0c8c54
+  zh: e3a0ffc7bdc54944
+/nomix-ai-nomix-hook-protocol/model-experience/kv-cache-effect:
+  en: e290ccc9b3c92c08
+  zh: cb3c8823f41e7afe
+/nomix-ai-nomix-hook-protocol/known-limitations-and-deferred-work:
+  en: e7b8dccf38bac01b
+  zh: fe608e96515ee5cd
+/nomix-ai-nomix-hook-protocol/known-limitations-and-deferred-work/dev-note:
+  en: ac1d08360a93382b
+  zh: 6c58749bae9a6e65
+/nomix-ai-nomix-hook-protocol/known-limitations-and-deferred-work/dev-note/future-run-level-halt:
+  en: bfb3db50de22c1d0
+  zh: 2a979359b0edbbe7

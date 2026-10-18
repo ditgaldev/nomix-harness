@@ -12,6 +12,8 @@ import {
   bundleManifestPaths,
   bundlePluginDependencyErrors,
   metadataExpressionErrors,
+  packageTestFixtureDependencyErrors,
+  packageTestPluginDependencyErrors,
 } from './verify-cordis-config.ts'
 
 describe('verify-cordis-config metadata expressions', () => {
@@ -84,5 +86,70 @@ describe('workspace Bundle discovery and product dependency closures', () => {
     ])).toEqual([
       `${file}: @nomix-ai/nomix-missing-plugin must be declared in ${manifestPath} dependencies`,
     ])
+  })
+})
+
+describe('package-owned Loader test dependency closures', () => {
+  it('requires package test configs to declare each named plugin they load', () => {
+    const manifestPath = 'packages/example/owner/package.json'
+    const file = 'packages/example/owner/tests/fixtures/cordis.yml'
+    const manifest = {
+      name: '@nomix-ai/nomix-owner',
+      dependencies: {},
+      devDependencies: {
+        '@nomix-ai/nomix-declared': 'workspace:^',
+      },
+    }
+    expect(packageTestPluginDependencyErrors(manifestPath, manifest, [
+      { file, name: '@nomix-ai/nomix-owner' },
+      { file, name: '@nomix-ai/nomix-declared' },
+      { file, name: '@nomix-ai/nomix-missing' },
+    ])).toEqual([
+      `${file}: @nomix-ai/nomix-missing must be declared in ${manifestPath} dependencies or devDependencies`,
+    ])
+  })
+
+  it('requires executable package test fixtures to declare their bare imports', () => {
+    const fixture = mkdtempSync(join(tmpdir(), 'nomix-package-test-entrypoint-'))
+    try {
+      const packageDir = join(fixture, 'packages/example/owner')
+      const driverDir = join(packageDir, 'tests/fixtures/loader')
+      mkdirSync(driverDir, { recursive: true })
+      writeFileSync(join(packageDir, 'package.json'), JSON.stringify({
+        name: '@nomix-ai/nomix-owner',
+        devDependencies: {
+          '@nomix-ai/nomix-declared': 'workspace:^',
+        },
+      }))
+      writeFileSync(join(driverDir, 'driver.ts'), [
+        "import '@nomix-ai/nomix-owner'",
+        "import '@nomix-ai/nomix-declared'",
+        "import '@nomix-ai/nomix-missing'",
+      ].join('\n'))
+      writeFileSync(join(driverDir, 'cordis.yml'), '[]\n')
+      writeFileSync(join(driverDir, 'fixture.mjs'), "import '@nomix-ai/nomix-declared'\n")
+      const unrelatedDir = join(packageDir, 'tests/fixtures/unrelated')
+      mkdirSync(unrelatedDir, { recursive: true })
+      writeFileSync(join(unrelatedDir, 'driver.ts'), "import '@nomix-ai/nomix-unrelated'\n")
+
+      expect(packageTestFixtureDependencyErrors(fixture)).toEqual([
+        'packages/example/owner/tests/fixtures/loader/driver.ts: '
+        + '@nomix-ai/nomix-missing must be declared in '
+        + 'packages/example/owner/package.json dependencies or devDependencies',
+      ])
+    } finally {
+      rmSync(fixture, { recursive: true, force: true })
+    }
+  })
+
+  it('fails loud when package-owned Loader fixtures disappear from the scan', () => {
+    const fixture = mkdtempSync(join(tmpdir(), 'nomix-empty-package-test-entrypoint-'))
+    try {
+      expect(packageTestFixtureDependencyErrors(fixture)).toEqual([
+        'package test fixture dependency scan found no package-owned Loader configs',
+      ])
+    } finally {
+      rmSync(fixture, { recursive: true, force: true })
+    }
   })
 })

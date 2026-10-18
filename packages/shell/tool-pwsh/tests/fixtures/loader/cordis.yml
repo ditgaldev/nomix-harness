@@ -1,0 +1,36 @@
+# Minimal tool-pwsh composition: real app boot path, real pwsh executor, real
+# foreground + background tool calls; driven by the package's loader.spec.ts.
+- id: system-prompt
+  name: '@nomix-ai/nomix-system-prompt'
+
+- id: fs
+  name: '@nomix-ai/nomix-fs-local'
+
+- id: session-projections
+  name: '@nomix-ai/nomix-session-projection'
+
+- id: working-directory
+  name: '@nomix-ai/nomix-working-directory'
+
+- id: tools
+  name: '@nomix-ai/nomix-tools'
+
+- id: subprocess
+  name: '@nomix-ai/nomix-subprocess-local'
+
+- id: bash
+  name: '@nomix-ai/nomix-pwsh-local'
+  config:
+    graceMs: 200
+
+- id: shell-env
+  name: '@nomix-ai/nomix-shell-env'
+
+- id: tasks
+  name: '@nomix-ai/nomix-jobs-local'
+
+- id: tool-jobs
+  name: '@nomix-ai/nomix-tool-jobs'
+
+- id: tool-pwsh
+  name: '@nomix-ai/nomix-tool-pwsh'

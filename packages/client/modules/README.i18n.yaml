@@ -1,6 +1,73 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/client/modules/README.md
-README.md: 1473ee82b1106d251fa28929c659974e5824f03e
-README.zh.md: 1376491d156235a65ed60cad338dbde79a9496ec
+/:
+  en: 97d39db1617684ea
+  zh: de11ba354583a044
+/nomix-ai-nomix-client-modules:
+  en: 0fb46f812341fa69
+  zh: 5533df9cf1107fec
+/nomix-ai-nomix-client-modules/summary:
+  en: 2b3e87d3cd86902a
+  zh: 5f64860ea558094b
+/nomix-ai-nomix-client-modules/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-client-modules/use-this-package:
+  en: 89afbb2a725ecea3
+  zh: 40b383405c52b2c8
+/nomix-ai-nomix-client-modules/use-this-package/declaring-a-client-plugin:
+  en: 393d645d3a8f94d5
+  zh: 452d996b7ea47516
+/nomix-ai-nomix-client-modules/use-this-package/what-the-browser-loads:
+  en: 1383d68472b3c057
+  zh: 94dd7d9abbdbccf3
+/nomix-ai-nomix-client-modules/use-this-package/live-plugin-composition:
+  en: 45740a56e931d094
+  zh: fa44cf77c86019af
+/nomix-ai-nomix-client-modules/use-this-package/host-release-changes:
+  en: 5c0aa6f1d8df8e1c
+  zh: 34005131c9bdce3b
+/nomix-ai-nomix-client-modules/use-this-package/sharing-modules:
+  en: 934f83921d5aaf89
+  zh: 565af94e024b2f24
+/nomix-ai-nomix-client-modules/use-this-package/build-requirements:
+  en: b6a4d3b901c89efe
+  zh: 615b5f3eec41f281
+/nomix-ai-nomix-client-modules/understand-the-implementation:
+  en: 7ab11d2c2bdc6eaa
+  zh: 54c3c9091cf59711
+/nomix-ai-nomix-client-modules/understand-the-implementation/design-concept:
+  en: b3032988f4630e33
+  zh: b391bd01922714a7
+/nomix-ai-nomix-client-modules/understand-the-implementation/lazy-cjs-model:
+  en: 6d16b74acb333e3b
+  zh: fcb3a20cc8c39e4a
+/nomix-ai-nomix-client-modules/understand-the-implementation/incremental-composition:
+  en: 41c38d220c99e49e
+  zh: 4501a507fb1d97d5
+/nomix-ai-nomix-client-modules/understand-the-implementation/boot-manifest-injection:
+  en: 253d9f265cd83ed0
+  zh: 9d0f8df84d9d3ac9
+/nomix-ai-nomix-client-modules/understand-the-implementation/entry-ownership:
+  en: df2994f9ff8872c9
+  zh: cd776526ed2b51e6
+/nomix-ai-nomix-client-modules/understand-the-implementation/source-map:
+  en: e449d7c816da4ebd
+  zh: aa56e26ba8854565
+/nomix-ai-nomix-client-modules/further-exploration:
+  en: ba1325d94df5122b
+  zh: 80d3ab8fcc315c5d
+/nomix-ai-nomix-client-modules/model-experience:
+  en: abb2fc0416e1482c
+  zh: 0e8a913d424a0c28
+/nomix-ai-nomix-client-modules/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: de54f3467ef3b9be
+/nomix-ai-nomix-client-modules/known-limitations-and-deferred-work:
+  en: 6dbb155bc65c9d65
+  zh: 368b553a56e46dfc
+/nomix-ai-nomix-client-modules/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

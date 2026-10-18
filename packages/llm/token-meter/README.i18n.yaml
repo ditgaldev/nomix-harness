@@ -1,6 +1,64 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/llm/token-meter/README.md
-README.md: 69babd8d4869d754de17ed90fc2e367a770d9798
-README.zh.md: 0b9549374eb27c032ca634c4078740050f49239c
+/:
+  en: 6eda56ef696001df
+  zh: 13f961071e8609a7
+/nomix-ai-nomix-token-meter:
+  en: 4ef51baf27c0714d
+  zh: be3c861c30099c24
+/nomix-ai-nomix-token-meter/summary:
+  en: 106e3eda9a85bdd1
+  zh: 051bc764bf7a1912
+/nomix-ai-nomix-token-meter/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-token-meter/use-this-package:
+  en: 5907ef1472773a47
+  zh: 06f1e988290a32c6
+/nomix-ai-nomix-token-meter/use-this-package/when-to-choose-it:
+  en: e8c4cd1e945f86ba
+  zh: 133c1f1a85179d30
+/nomix-ai-nomix-token-meter/use-this-package/measuring-pressure:
+  en: 58de3b364ab5af6b
+  zh: c5440af43d321e56
+/nomix-ai-nomix-token-meter/use-this-package/session-projections:
+  en: 6720ae9c7a0602b2
+  zh: 699a0b9927300aa3
+/nomix-ai-nomix-token-meter/use-this-package/composition:
+  en: 882e5a247788c3bc
+  zh: a50952b797664aee
+/nomix-ai-nomix-token-meter/use-this-package/reading-the-numbers:
+  en: 7950203e0c146123
+  zh: 4fe421b2268f12a9
+/nomix-ai-nomix-token-meter/understand-the-implementation:
+  en: 9630d7e26193a512
+  zh: 94222c2a487c4b8c
+/nomix-ai-nomix-token-meter/understand-the-implementation/design-philosophy:
+  en: 921a2c40433abc06
+  zh: 5172de58e8724be8
+/nomix-ai-nomix-token-meter/understand-the-implementation/source-map:
+  en: 0bea6321416c49d4
+  zh: 5446b39910df9829
+/nomix-ai-nomix-token-meter/understand-the-implementation/fold-flow:
+  en: c97959d84cf8a1a4
+  zh: f17570caa42a1a8e
+/nomix-ai-nomix-token-meter/understand-the-implementation/projection-semantics:
+  en: 407ac209fd44b76a
+  zh: f502caecf0291511
+/nomix-ai-nomix-token-meter/further-exploration:
+  en: 44241708b822649f
+  zh: 4494af4d3af969a1
+/nomix-ai-nomix-token-meter/model-experience:
+  en: 4955f79bf7f60745
+  zh: 53167dc9ae38b562
+/nomix-ai-nomix-token-meter/model-experience/kv-cache-effect:
+  en: 40294c1c31b74824
+  zh: c2284876b56d2dbc
+/nomix-ai-nomix-token-meter/known-limitations-and-deferred-work:
+  en: a8c57e6f8c5009a2
+  zh: 5975018d14bfbdbb
+/nomix-ai-nomix-token-meter/known-limitations-and-deferred-work/dev-note:
+  en: 50b57427bfda172e
+  zh: 48d666dcc8c7290f

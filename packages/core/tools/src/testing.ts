@@ -1,7 +1,7 @@
 /** Canonical tool-definition fixtures for repository tests. @module nomix-tools/testing */
 
 import type { ContentBlock } from '@nomix-ai/nomix-llm'
-import type { JsonValue } from '@nomix-ai/nomix-session'
+import type { JsonValue } from '@nomix-ai/nomix-util-values'
 import { defineTool } from './schema.ts'
 import type { DefineToolOptions, ParameterSchemaSpec } from './schema.ts'
 import type { ToolDefinition, ToolRunContext } from './index.ts'

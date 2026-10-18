@@ -1,6 +1,55 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/feedback/message-feedback/README.md
-README.md: 7d0254a76177c97de86fab33cd7bf6afc43e9aac
-README.zh.md: b23e73c33eace56fd5730ff351efb1ff7b076a0e
+/:
+  en: f3648275facc4888
+  zh: 110c0e8aedf63e4e
+/nomix-ai-nomix-message-feedback:
+  en: 4a699ee6a08e0db7
+  zh: 8cdcbb02da765330
+/nomix-ai-nomix-message-feedback/summary:
+  en: 07fec1cc63536ffb
+  zh: 530c8f20786c7af6
+/nomix-ai-nomix-message-feedback/table-of-contents:
+  en: 122f0d41696980b1
+  zh: 528864635b577290
+/nomix-ai-nomix-message-feedback/use-this-package:
+  en: 9c09e9b3aaaad2b3
+  zh: 954b2325c6a27c01
+/nomix-ai-nomix-message-feedback/use-this-package/configuration:
+  en: fca4009bd75dd92a
+  zh: af4b3466b0b1061d
+/nomix-ai-nomix-message-feedback/use-this-package/reading-and-changing-feedback:
+  en: fed12d93b538866d
+  zh: 4b45e81d9e5a8260
+/nomix-ai-nomix-message-feedback/understand-the-implementation:
+  en: ee4615a04fa6503d
+  zh: ee2c5fb2204a43cf
+/nomix-ai-nomix-message-feedback/understand-the-implementation/canonical-log-and-durability:
+  en: 73ddbcf524f213a1
+  zh: 050f1a72c7f56fd6
+/nomix-ai-nomix-message-feedback/understand-the-implementation/source-map:
+  en: 3a6bcf892a0ee525
+  zh: e7548d98cb15f2e4
+/nomix-ai-nomix-message-feedback/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-message-feedback/model-experience/message-feedback:
+  en: 73eacb58a40342f6
+  zh: 1ee3049173128f61
+/nomix-ai-nomix-message-feedback/model-experience/message-feedback/what-the-model-sees:
+  en: 3928187c2f20ec0f
+  zh: fd5273ee1a885bde
+/nomix-ai-nomix-message-feedback/model-experience/message-feedback/token-effect:
+  en: 5ff6c3ac5017b3ef
+  zh: 4ccd5af39b37dd1c
+/nomix-ai-nomix-message-feedback/model-experience/message-feedback/kv-cache-effect:
+  en: 2bdd13dcb4078358
+  zh: 591328cf1a061fca
+/nomix-ai-nomix-message-feedback/known-limitations-and-deferred-work:
+  en: 4652c7b864423bf5
+  zh: 916c92ccdfc17bf9
+/nomix-ai-nomix-message-feedback/known-limitations-and-deferred-work/dev-note:
+  en: 3c3ce6ed67282e05
+  zh: 213816553e3581b4

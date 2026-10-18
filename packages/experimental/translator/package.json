@@ -1,0 +1,68 @@
+{
+  "name": "@nomix-ai/nomix-experimental-translator",
+  "description": "Machine translation with reusable Session results",
+  "version": "0.2.9",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
+    "directory": "packages/experimental/translator"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@nomix-ai/schemastery": "workspace:~"
+  },
+  "peerDependencies": {
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-timeout": "workspace:*",
+    "@nomix-ai/nomix-util-values": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-session-persistence": "workspace:*",
+    "@nomix-ai/cordis-plugin-loader": "workspace:~",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-credentials": "workspace:*",
+    "@nomix-ai/nomix-launch-environment": "workspace:*"
+  },
+  "devDependencies": {
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-app-boot": "workspace:*",
+    "@nomix-ai/nomix-timeout": "workspace:*",
+    "@nomix-ai/nomix-util-values": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-session-persistence": "workspace:*",
+    "@nomix-ai/nomix-session-persistence-jsonl": "workspace:*",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/cordis-plugin-loader": "workspace:~",
+    "@nomix-ai/nomix-credentials": "workspace:*",
+    "@nomix-ai/nomix-launch-environment": "workspace:*",
+    "@nomix-ai/nomix-llm-deepseek": "workspace:*",
+    "@nomix-ai/nomix-llm-deepseek-api-key": "workspace:*",
+    "@nomix-ai/nomix-llm-deepseek-account": "workspace:*",
+    "@nomix-ai/nomix-deepseek-account": "workspace:*",
+    "@nomix-ai/nomix-deepseek-llm-api-extensions": "workspace:*",
+    "@nomix-ai/nomix-session-log-deepseek": "workspace:*",
+    "@nomix-ai/nomix-session-query-sqlite": "workspace:*"
+  }
+}

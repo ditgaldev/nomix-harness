@@ -1,5 +1,6 @@
-- id: skill-badge
-  disabled: false
+- insert:
+    - id: skill-badge
+      name: '@nomix-ai/nomix-skill-badge'
 
 - id: skill-filesystem
   config:

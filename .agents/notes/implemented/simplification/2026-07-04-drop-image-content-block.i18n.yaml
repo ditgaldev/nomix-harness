@@ -1,6 +1,25 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for 2026-07-04-drop-image-content-block.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/simplification/2026-07-04-drop-image-content-block.md
-2026-07-04-drop-image-content-block.md: 5d0357270973ac20234d8ce72c403f27ce2ad0e0
-2026-07-04-drop-image-content-block.zh.md: a13133059cdf4f6e6e8fe44e313a9795a57c10c9
+/agent-note-drop-the-image-content-block-until-a-path-can-honor-it:
+  en: 386fc712acc2267b
+  zh: 38907b6c6eebcabc
+/agent-note-drop-the-image-content-block-until-a-path-can-honor-it/problem:
+  en: f0b1ea9b1084fae7
+  zh: bbe2f40c263aca72
+/agent-note-drop-the-image-content-block-until-a-path-can-honor-it/decision:
+  en: 71c63a143ede16ad
+  zh: 91e205bcc495cc4f
+/agent-note-drop-the-image-content-block-until-a-path-can-honor-it/alternatives-considered:
+  en: 6119e2aff3b6be5a
+  zh: 76136ef5249c23eb
+/agent-note-drop-the-image-content-block-until-a-path-can-honor-it/alternatives-considered/why-not-keep-it:
+  en: 355f79f6aeae9b8b
+  zh: 410fad67b0f5c063
+/agent-note-drop-the-image-content-block-until-a-path-can-honor-it/verification:
+  en: 6c8e30298bb0012a
+  zh: 4bec3fda3e43ec3b
+/agent-note-drop-the-image-content-block-until-a-path-can-honor-it/consequences:
+  en: 8710a8a2279b795f
+  zh: 06abdcc797001896

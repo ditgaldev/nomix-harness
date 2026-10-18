@@ -1,6 +1,6 @@
 import { staticLinked } from '../tsdown.client.ts'
 
 export default staticLinked(
-  '@nomix-ai/nomix-client-web',
-  ['lib/types/index.js', 'lib/types/invariant.js'],
+  import.meta.dirname,
+  ['lib/types/index.js', 'lib/types/apply-injections.js'],
 )

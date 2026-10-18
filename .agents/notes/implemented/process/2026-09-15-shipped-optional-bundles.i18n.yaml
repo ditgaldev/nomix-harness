@@ -1,0 +1,19 @@
+# Bilingual-pair consistency record for 2026-09-15-shipped-optional-bundles.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/process/2026-09-15-shipped-optional-bundles.md
+/agent-note-ship-optional-bundles-with-the-installation:
+  en: 35804b8be32a9b55
+  zh: 0d29476d50867d73
+/agent-note-ship-optional-bundles-with-the-installation/problem:
+  en: 338931867c64bd1d
+  zh: ff0dea251388dd42
+/agent-note-ship-optional-bundles-with-the-installation/decision:
+  en: 82395e2ee63aa07b
+  zh: 76bf3240f35337ad
+/agent-note-ship-optional-bundles-with-the-installation/alternatives-considered:
+  en: defb8c601512ffe3
+  zh: a1eeeb35141a6915
+/agent-note-ship-optional-bundles-with-the-installation/consequences:
+  en: 4a9d3a049a605150
+  zh: 67b50bbc9f7f4bb0

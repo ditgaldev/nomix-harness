@@ -1,6 +1,34 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write README.md
-README.md: 8890a5e3f8668e6ca2062ad429b55e87c183a2c0
-README.zh.md: 9e0fe511b100f91b30e335028dd7d59ae0707e8c
+/nomix-harness:
+  en: df615af668460d43
+  zh: c14dc4ed4d01cb49
+/nomix-harness/developer-preview:
+  en: 98172391e4b5a3f8
+  zh: 68928d447d31a89c
+/nomix-harness/run:
+  en: 4e0248e4c6474fc6
+  zh: eb2fb8d78c7d6bc0
+/nomix-harness/run/run-from-npm:
+  en: ee9d297c3235c042
+  zh: 99a12d9c5631c145
+/nomix-harness/run/run-from-source:
+  en: 93cf98b85bb012a3
+  zh: 5d87f2019b399522
+/nomix-harness/community-and-support:
+  en: e1bc35afa0c4588e
+  zh: d20efe4b92dae550
+/nomix-harness/contributing:
+  en: 98eebb1deb706ca1
+  zh: 72b8cc667d6531f6
+/nomix-harness/development:
+  en: e40cfd8562f74698
+  zh: 9a4c35984db7d5a2
+/nomix-harness/citation:
+  en: 6704e9e5a8d49a91
+  zh: 85c9cdd8d56f8e9d
+/nomix-harness/license:
+  en: 926995344fc1c72b
+  zh: c92fab5abf85932f

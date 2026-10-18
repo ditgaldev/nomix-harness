@@ -1,0 +1,19 @@
+# Bilingual-pair consistency record for 2026-09-19-profile-owned-live-configuration.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-09-19-profile-owned-live-configuration.md
+/agent-note-keep-live-configuration-in-the-owning-profile:
+  en: 66ca4a16aa77df25
+  zh: d6e0d1b1a907a553
+/agent-note-keep-live-configuration-in-the-owning-profile/problem:
+  en: 2abacff687661d28
+  zh: 2d7ba3ae27dba888
+/agent-note-keep-live-configuration-in-the-owning-profile/decision:
+  en: 1c0e5276e15c444e
+  zh: d0cd381fe8edb55c
+/agent-note-keep-live-configuration-in-the-owning-profile/alternatives-considered:
+  en: 4089464ad1fb60bd
+  zh: 3168e9e4a205145d
+/agent-note-keep-live-configuration-in-the-owning-profile/consequences:
+  en: ad11e09fc6ee1da6
+  zh: 0504abf005d0dc25

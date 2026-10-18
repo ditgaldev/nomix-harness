@@ -1,0 +1,49 @@
+# Bilingual-pair consistency record for 2026-06-15-ptc.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-06-15-ptc.md
+/agent-note-ptc-mode-the-model-writes-typescript-against-the-tool-registry:
+  en: 81bbd083269009ae
+  zh: 98906286f8dc9c1c
+/agent-note-ptc-mode-the-model-writes-typescript-against-the-tool-registry/problem:
+  en: 81da08e049b7f69b
+  zh: 6ee513b271deec1b
+/agent-note-ptc-mode-the-model-writes-typescript-against-the-tool-registry/decision:
+  en: 274a99e5dad8a0e6
+  zh: 38d282ccf4a77100
+/agent-note-ptc-mode-the-model-writes-typescript-against-the-tool-registry/decision/per-program-execution-controls:
+  en: 2da28a76d7f5e2f3
+  zh: b4f472a7a215e833
+/agent-note-ptc-mode-the-model-writes-typescript-against-the-tool-registry/decision/the-registry-owns-the-mode:
+  en: 53f806273e06607b
+  zh: c0c0fd0af4e47cd3
+/agent-note-ptc-mode-the-model-writes-typescript-against-the-tool-registry/decision/the-run-code-tool-and-the-dispatch-bridge:
+  en: 697acbf7792d07e0
+  zh: 03020c3e96566ed0
+/agent-note-ptc-mode-the-model-writes-typescript-against-the-tool-registry/decision/observability-tool-ptc-dispatch:
+  en: 1a7bb67d0b896b27
+  zh: d0e12621885a5047
+/agent-note-ptc-mode-the-model-writes-typescript-against-the-tool-registry/decision/the-ptc-runtime-seam:
+  en: c96f9b0ee16c3119
+  zh: fef2a426654c0a9d
+/agent-note-ptc-mode-the-model-writes-typescript-against-the-tool-registry/decision/the-node-process-runtime:
+  en: 0b846ed33977e383
+  zh: e45158758d657f9a
+/agent-note-ptc-mode-the-model-writes-typescript-against-the-tool-registry/decision/trust-posture:
+  en: d62b41a6a5c58e5f
+  zh: ef72c5a9b32b370e
+/agent-note-ptc-mode-the-model-writes-typescript-against-the-tool-registry/decision/what-the-model-sees:
+  en: 81c12f19f7a967c1
+  zh: 29734ca964acdec2
+/agent-note-ptc-mode-the-model-writes-typescript-against-the-tool-registry/consequences:
+  en: 761eb6c1aeb7af18
+  zh: 5434456a3d0a1b65
+/agent-note-ptc-mode-the-model-writes-typescript-against-the-tool-registry/testing:
+  en: c3ae65d62976a09f
+  zh: 15f68e42b612dc64
+/agent-note-ptc-mode-the-model-writes-typescript-against-the-tool-registry/alternatives-considered:
+  en: dce54f1c323aa681
+  zh: be3e69421865a523
+/agent-note-ptc-mode-the-model-writes-typescript-against-the-tool-registry/risks:
+  en: d877dfe9e1c38c83
+  zh: fce20f7f82d714b0

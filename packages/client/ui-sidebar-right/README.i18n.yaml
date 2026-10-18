@@ -1,0 +1,55 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-sidebar-right/README.md
+/:
+  en: 735a073c43b7e20f
+  zh: 6462930ab049d25f
+/nomix-ai-nomix-client-ui-sidebar-right:
+  en: 2290cedf1410e784
+  zh: b415e7638de64972
+/nomix-ai-nomix-client-ui-sidebar-right/summary:
+  en: 8aafe5400014fdac
+  zh: b2d7d0e8dc4f1291
+/nomix-ai-nomix-client-ui-sidebar-right/table-of-contents:
+  en: ff17f27d8c5557d1
+  zh: 6efe4b3d4902a441
+/nomix-ai-nomix-client-ui-sidebar-right/what-lives-here-and-what-does-not:
+  en: e0f6d344a4a13547
+  zh: c02ff37cc7a16aff
+/nomix-ai-nomix-client-ui-sidebar-right/presentations:
+  en: 4d134dc6ad4e06e3
+  zh: 28a776a7ddfc6889
+/nomix-ai-nomix-client-ui-sidebar-right/the-expand-button:
+  en: 2614d3f179290606
+  zh: 88c08ee260ba57b7
+/nomix-ai-nomix-client-ui-sidebar-right/state:
+  en: 839cd8ee6642b331
+  zh: 24de2377eb420d73
+/nomix-ai-nomix-client-ui-sidebar-right/extension-seats:
+  en: 0cda2d2d3421d2bc
+  zh: 8f8d7778e796ab6e
+/nomix-ai-nomix-client-ui-sidebar-right/ctx-sidebarright:
+  en: 78d407e56b34b188
+  zh: 194e7fd678bdcee5
+/nomix-ai-nomix-client-ui-sidebar-right/the-tab-domain:
+  en: 9b2727fb8d4fe720
+  zh: b62f7706f71b85ce
+/nomix-ai-nomix-client-ui-sidebar-right/the-guide:
+  en: 601f9f6635babc4d
+  zh: e345004fe30a65b9
+/nomix-ai-nomix-client-ui-sidebar-right/copy:
+  en: 4315a1c03ca5fef3
+  zh: c09a09f1d9b99107
+/nomix-ai-nomix-client-ui-sidebar-right/model-experience:
+  en: 3120df665299c634
+  zh: 242f3d68e8267e55
+/nomix-ai-nomix-client-ui-sidebar-right/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: f57cc48a1b5cbfa9
+/nomix-ai-nomix-client-ui-sidebar-right/known-limitations-and-deferred-work:
+  en: 76a763b4dd71babd
+  zh: fdc966dd427a82fb
+/nomix-ai-nomix-client-ui-sidebar-right/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

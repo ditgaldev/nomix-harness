@@ -1,6 +1,73 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/sdk/server/README.md
-README.md: 29631450438d1e28b72b1c36e838395715a452be
-README.zh.md: b2f950e057a5d290d207eea6ea9e72319bf97989
+/:
+  en: 655abb835e729c72
+  zh: a7c93a94b669510f
+/nomix-ai-nomix-sdk-jsonrpc-server:
+  en: ac5b45c5f4679504
+  zh: 4441c63aa9e429c6
+/nomix-ai-nomix-sdk-jsonrpc-server/summary:
+  en: c560b43860caf425
+  zh: 3eabc773fa9f3136
+/nomix-ai-nomix-sdk-jsonrpc-server/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-sdk-jsonrpc-server/use-this-package:
+  en: e136ff3a0b42cc22
+  zh: f6c4df5bbafa335f
+/nomix-ai-nomix-sdk-jsonrpc-server/use-this-package/wiring:
+  en: 47a33e9397e36e15
+  zh: e6d173820f9ea6e5
+/nomix-ai-nomix-sdk-jsonrpc-server/use-this-package/configuration:
+  en: 7bca8c9c9e09628f
+  zh: 79701e2b8abaac6b
+/nomix-ai-nomix-sdk-jsonrpc-server/use-this-package/stdout-is-the-protocol:
+  en: 784b68b5a498f2d5
+  zh: 2c3c5a1490845179
+/nomix-ai-nomix-sdk-jsonrpc-server/use-this-package/what-sdk-clients-can-do:
+  en: b4a864118dfc0c42
+  zh: e2df9d355e0a1ca9
+/nomix-ai-nomix-sdk-jsonrpc-server/use-this-package/shutdown-and-exit:
+  en: 08c3858f53090f39
+  zh: dfae960e11515b06
+/nomix-ai-nomix-sdk-jsonrpc-server/understand-the-implementation:
+  en: eca39e7027d67d8f
+  zh: dd3f494276322857
+/nomix-ai-nomix-sdk-jsonrpc-server/understand-the-implementation/design-concept:
+  en: b6bd80834a3229a9
+  zh: 98b880112fad7274
+/nomix-ai-nomix-sdk-jsonrpc-server/understand-the-implementation/source-map:
+  en: 9ef78eca4d95d97c
+  zh: 45ff05f4d6c1cd0b
+/nomix-ai-nomix-sdk-jsonrpc-server/understand-the-implementation/request-flow:
+  en: 2658804b2f90b135
+  zh: 085aa00c8f0bbbcd
+/nomix-ai-nomix-sdk-jsonrpc-server/understand-the-implementation/teardown:
+  en: 7e4403a7b1da7ff4
+  zh: ef75ee9411486b90
+/nomix-ai-nomix-sdk-jsonrpc-server/further-exploration:
+  en: cae8a55f917182c7
+  zh: ca7abfd46547670d
+/nomix-ai-nomix-sdk-jsonrpc-server/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-sdk-jsonrpc-server/model-experience/sdk-user-message:
+  en: 04d1b73cd8e06dfe
+  zh: cd67fbbfdf39f776
+/nomix-ai-nomix-sdk-jsonrpc-server/model-experience/sdk-user-message/what-the-model-sees:
+  en: 2b5a80ec4b4df11e
+  zh: e459fe77cc14d9b8
+/nomix-ai-nomix-sdk-jsonrpc-server/model-experience/sdk-user-message/token-effect:
+  en: 372ed851986b76d2
+  zh: 075b94a565275368
+/nomix-ai-nomix-sdk-jsonrpc-server/model-experience/sdk-user-message/kv-cache-effect:
+  en: f5d5f97a153f7c70
+  zh: f681f89596f500f5
+/nomix-ai-nomix-sdk-jsonrpc-server/known-limitations-and-deferred-work:
+  en: a6d0b12d02961572
+  zh: 92822e033db55980
+/nomix-ai-nomix-sdk-jsonrpc-server/known-limitations-and-deferred-work/dev-note:
+  en: 583a835f84c55c33
+  zh: a4377e2c9bea8c4e

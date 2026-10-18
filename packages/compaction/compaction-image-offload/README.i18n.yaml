@@ -1,0 +1,55 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/compaction/compaction-image-offload/README.md
+/:
+  en: b599a8ee08c48558
+  zh: 4534254e1fd4cdcf
+/nomix-ai-nomix-compaction-image-offload:
+  en: aabd00cec3b81322
+  zh: dea74d5fa39bf16d
+/nomix-ai-nomix-compaction-image-offload/summary:
+  en: 8881f7155e7f99c7
+  zh: 1e01354c7a7b1e68
+/nomix-ai-nomix-compaction-image-offload/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-compaction-image-offload/use-this-package:
+  en: 4a543435200c4641
+  zh: e5d6c5d84c075ae2
+/nomix-ai-nomix-compaction-image-offload/use-this-package/minimal-configuration:
+  en: 7e32fdf2571d190c
+  zh: 6b455c98d3afa3e0
+/nomix-ai-nomix-compaction-image-offload/use-this-package/what-you-can-observe:
+  en: 6a156ba4e44b520a
+  zh: a61fc63697f85095
+/nomix-ai-nomix-compaction-image-offload/use-this-package/failures-and-recovery:
+  en: 453802a8e8338955
+  zh: c49c3d1871cca863
+/nomix-ai-nomix-compaction-image-offload/understand-the-implementation:
+  en: 61d7de1373f1c420
+  zh: bec696992dfa774a
+/nomix-ai-nomix-compaction-image-offload/further-exploration:
+  en: beb5eaf1a7c8fed0
+  zh: 0aa67b0b7388a0fa
+/nomix-ai-nomix-compaction-image-offload/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-compaction-image-offload/model-experience/offloaded-request-images:
+  en: e57e89ce994680bd
+  zh: b31ac5142af08695
+/nomix-ai-nomix-compaction-image-offload/model-experience/offloaded-request-images/what-the-model-sees:
+  en: 54a927e19008dd58
+  zh: 45ec6d988b73e2fb
+/nomix-ai-nomix-compaction-image-offload/model-experience/offloaded-request-images/token-effect:
+  en: a1a6386bbdad684e
+  zh: 09a1f02f013390cd
+/nomix-ai-nomix-compaction-image-offload/model-experience/offloaded-request-images/kv-cache-effect:
+  en: 1ddf05ccd042aa85
+  zh: 0f2984a2e6b8c5c7
+/nomix-ai-nomix-compaction-image-offload/known-limitations-and-deferred-work:
+  en: 56e34b1ca548fa07
+  zh: 8ad247f5251a5461
+/nomix-ai-nomix-compaction-image-offload/known-limitations-and-deferred-work/dev-note:
+  en: 699a8ae4642c8f5a
+  zh: 19a4edd00e473c8a

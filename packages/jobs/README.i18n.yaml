@@ -1,6 +1,25 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/jobs/README.md
-README.md: daad96ae561f8f943759332b6b1ea1e20fcaf40e
-README.zh.md: 586f195f2603cd1b8e4cd5e23174841cb1a39910
+/:
+  en: b25bee480c2d5ffb
+  zh: 8c10268ce42d83b1
+/jobs-background-job-capability-family:
+  en: 8b367e38f6156319
+  zh: 80972c2ae648dfe8
+/jobs-background-job-capability-family/summary:
+  en: 6c7629a9fdaadbe6
+  zh: 60314e79eaec6446
+/jobs-background-job-capability-family/table-of-contents:
+  en: 1eb35b015a6c423f
+  zh: a8a3dceee2c9e943
+/jobs-background-job-capability-family/packages:
+  en: 147412861b4e3d55
+  zh: 6f2b3d48f8fba22f
+/jobs-background-job-capability-family/related-documentation:
+  en: eb87c86dedeb9566
+  zh: 2887615367b8619d
+/jobs-background-job-capability-family/dev-note:
+  en: 5de1d6304e00c58f
+  zh: 8d8225361cfa29e5

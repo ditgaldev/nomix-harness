@@ -1,0 +1,31 @@
+# Keyless replay counterpart: deterministic HTTP remains real; only the model
+# adapter is replaced by replay.
+- id: llm-deepseek
+  name: '@nomix-ai/nomix-llm-deepseek-api-key'
+  disabled: true
+
+- insert:
+    - id: llm-replay
+      name: '@nomix-ai/nomix-llm-replay'
+      config:
+        providers:
+          - id: deepseek-official
+            name: DeepSeek
+            models:
+              - id: deepseek-v4-flash
+              - id: deepseek-v4-pro
+
+    - id: web-fetch-fixture
+      name: './web-fetch-fixture-server.mjs'
+
+- id: web
+  name: '@nomix-ai/nomix-web'
+
+- id: web-fetch-http
+  name: '@nomix-ai/nomix-web-fetch-http'
+  disabled: true
+
+- id: tool-web
+  name: '@nomix-ai/nomix-tool-web'
+  config:
+    search: false

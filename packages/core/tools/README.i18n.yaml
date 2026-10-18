@@ -1,6 +1,103 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/core/tools/README.md
-README.md: fd31d3af43e2ccb163ba74cf295c46ae898820d5
-README.zh.md: ee0f82a0b1f2402302353c09fc7beae27c1b3d7e
+/:
+  en: 3b12a77945c0d1e9
+  zh: e9af32047e4f658b
+/nomix-ai-nomix-tools:
+  en: a7544b97e22d1bc3
+  zh: d26c310e78ba937b
+/nomix-ai-nomix-tools/summary:
+  en: 92e7b50e98871592
+  zh: ffa94661d52f6592
+/nomix-ai-nomix-tools/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-tools/use-this-package:
+  en: d3d9809f010f216d
+  zh: b1147e1f159c28a5
+/nomix-ai-nomix-tools/use-this-package/register-a-tool:
+  en: 9d2e6caa39c53d62
+  zh: 096a777f828c7565
+/nomix-ai-nomix-tools/use-this-package/configure-the-presentation-mode:
+  en: abe100c87772f6f7
+  zh: 36f30196623a4a4b
+/nomix-ai-nomix-tools/use-this-package/restrict-tools-per-agent:
+  en: c6f98b2283cc2e47
+  zh: c2cdce5d13473f15
+/nomix-ai-nomix-tools/use-this-package/enforce-policy-on-calls:
+  en: cbfe8317565ac62d
+  zh: 1e71c66941e50881
+/nomix-ai-nomix-tools/use-this-package/host-presentation-descriptors:
+  en: 00dcfd78f3bebb63
+  zh: 73dcd767ddb6275c
+/nomix-ai-nomix-tools/understand-the-implementation:
+  en: ce7e776e9d516bdb
+  zh: 59d2751743db7795
+/nomix-ai-nomix-tools/understand-the-implementation/design-concept:
+  en: 92e8af53e6067bad
+  zh: 33c7b99b42c5acac
+/nomix-ai-nomix-tools/understand-the-implementation/source-map:
+  en: c14e20d6a5c4c408
+  zh: ab9dc0fd38006749
+/nomix-ai-nomix-tools/understand-the-implementation/execution-and-cancellation:
+  en: dc44a88997777988
+  zh: 56454aeace1c8b77
+/nomix-ai-nomix-tools/understand-the-implementation/ptc-mode:
+  en: 79d7dcdee01f3865
+  zh: d5af16967e73b679
+/nomix-ai-nomix-tools/understand-the-implementation/extension-points:
+  en: c2a14d6f22bc9428
+  zh: 89c1414fca465931
+/nomix-ai-nomix-tools/further-exploration:
+  en: 082b1c27f0e03a09
+  zh: 35716939d0d7e13c
+/nomix-ai-nomix-tools/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-tools/model-experience/normal-tool-schemas:
+  en: 483b01d9bb2cb49a
+  zh: 1d95095e76fb0996
+/nomix-ai-nomix-tools/model-experience/normal-tool-schemas/what-the-model-sees:
+  en: ef7bc2d49cc23414
+  zh: bfa7d3cc1fc49d43
+/nomix-ai-nomix-tools/model-experience/normal-tool-schemas/token-effect:
+  en: d594b71ff5e4cc87
+  zh: dcec1ea0dd2a0fa6
+/nomix-ai-nomix-tools/model-experience/normal-tool-schemas/kv-cache-effect:
+  en: 7c5e75964e020b2c
+  zh: d50d0402d15232d9
+/nomix-ai-nomix-tools/model-experience/ptc-mode-schema-and-system-prompt:
+  en: eaefd7303f22977d
+  zh: 9c425f9501128224
+/nomix-ai-nomix-tools/model-experience/ptc-mode-schema-and-system-prompt/what-the-model-sees:
+  en: 497e4cf64753b943
+  zh: f8f14902eb9d5490
+/nomix-ai-nomix-tools/model-experience/ptc-mode-schema-and-system-prompt/what-the-model-sees/typescript-ptc-mode-sdk-instructions-with-bash:
+  en: 3a8df15e4ae32f9e
+  zh: fc4a800ba363e835
+/nomix-ai-nomix-tools/model-experience/ptc-mode-schema-and-system-prompt/token-effect:
+  en: 12296fcafc14562c
+  zh: f8e9351bb8c6437d
+/nomix-ai-nomix-tools/model-experience/ptc-mode-schema-and-system-prompt/kv-cache-effect:
+  en: 78906628d634441f
+  zh: 492f133aea50cfe3
+/nomix-ai-nomix-tools/model-experience/tool-call-history-and-results:
+  en: a8503137ad03720c
+  zh: 611a2dadf7c0c706
+/nomix-ai-nomix-tools/model-experience/tool-call-history-and-results/what-the-model-sees:
+  en: 7c568da5a45e99ab
+  zh: 7e78f04448fc5450
+/nomix-ai-nomix-tools/model-experience/tool-call-history-and-results/token-effect:
+  en: 8fe3f024f364ed9f
+  zh: 89c1d5d24c5f950b
+/nomix-ai-nomix-tools/model-experience/tool-call-history-and-results/kv-cache-effect:
+  en: 2fbf2175168e8244
+  zh: ad59a120b54a0996
+/nomix-ai-nomix-tools/known-limitations-and-deferred-work:
+  en: 973ad9e12a96a558
+  zh: 3d025d10c1bd7ff6
+/nomix-ai-nomix-tools/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

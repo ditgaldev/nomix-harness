@@ -1,6 +1,91 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/llm/llm-deepseek/README.md
-README.md: 746455b3c84305afbf89ea796da85347cecee21d
-README.zh.md: bf87db7abd5abba8e0ef5429ca9372b087a7e583
+/:
+  en: c6924d7c0d7c82ff
+  zh: 95fbf06db428f532
+/nomix-ai-nomix-llm-deepseek:
+  en: fba5f4c27b6a013e
+  zh: fa543152ff9afd27
+/nomix-ai-nomix-llm-deepseek/summary:
+  en: 180441747aed5795
+  zh: 3d9837eea89706b5
+/nomix-ai-nomix-llm-deepseek/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-llm-deepseek/use-this-package:
+  en: 6bcabe617d1d53e5
+  zh: 59b17efac2a1546b
+/nomix-ai-nomix-llm-deepseek/use-this-package/when-to-choose-it:
+  en: 570f9e6c5d0cea31
+  zh: 0e1bc51fc0bfcace
+/nomix-ai-nomix-llm-deepseek/use-this-package/minimal-configuration:
+  en: f81be0080aab6d94
+  zh: aaf8074f1076a02f
+/nomix-ai-nomix-llm-deepseek/use-this-package/endpoint-and-wire-format:
+  en: 522e74b770e9d4ca
+  zh: a8b261b41677bfe7
+/nomix-ai-nomix-llm-deepseek/use-this-package/account-credentials:
+  en: 44bc8af544bf82f7
+  zh: a094980201feb191
+/nomix-ai-nomix-llm-deepseek/use-this-package/streaming-with-thinking-and-images:
+  en: 81bf213499f015ba
+  zh: e9107ef322213e56
+/nomix-ai-nomix-llm-deepseek/use-this-package/dynamic-configuration:
+  en: 49290fc5647136b4
+  zh: 96fa9ce0f9e83c13
+/nomix-ai-nomix-llm-deepseek/use-this-package/provider-specific-request-fields:
+  en: 03deec50998d709a
+  zh: 789a78f86ea90b8c
+/nomix-ai-nomix-llm-deepseek/use-this-package/failures-and-recovery:
+  en: 23a821bedfd8e4b7
+  zh: e21d8e0b52448e6c
+/nomix-ai-nomix-llm-deepseek/understand-the-implementation:
+  en: 1598ac8a8bb9b6bf
+  zh: fdd089c5ae7722cd
+/nomix-ai-nomix-llm-deepseek/understand-the-implementation/design-philosophy:
+  en: 829203c4c282dc46
+  zh: e05dada4a1420a95
+/nomix-ai-nomix-llm-deepseek/understand-the-implementation/source-map:
+  en: dc2d2409ad8c41cc
+  zh: 51fc4ad65dab6378
+/nomix-ai-nomix-llm-deepseek/understand-the-implementation/wire-flow:
+  en: 9477d8af3d762450
+  zh: 52a2967518509f94
+/nomix-ai-nomix-llm-deepseek/further-exploration:
+  en: 4293f79cf7ffb01a
+  zh: d44ba2da70efb1a1
+/nomix-ai-nomix-llm-deepseek/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-llm-deepseek/model-experience/deepseek-request:
+  en: 1dc50052999253c6
+  zh: 7abf968fc18bffcd
+/nomix-ai-nomix-llm-deepseek/model-experience/deepseek-request/what-the-model-sees:
+  en: 14110610860656e8
+  zh: 995e28d6931ebe4e
+/nomix-ai-nomix-llm-deepseek/model-experience/deepseek-request/token-effect:
+  en: 1ba876071e3254f6
+  zh: 8357d93964e78a11
+/nomix-ai-nomix-llm-deepseek/model-experience/deepseek-request/kv-cache-effect:
+  en: 87ac92776176ee15
+  zh: bb49edf3a68dda07
+/nomix-ai-nomix-llm-deepseek/model-experience/deepseek-response:
+  en: 957d6665495e5ca5
+  zh: 0aa72b2c2dc07167
+/nomix-ai-nomix-llm-deepseek/model-experience/deepseek-response/what-the-model-sees:
+  en: 36a3d0297d6ca209
+  zh: bfc68b8300f61593
+/nomix-ai-nomix-llm-deepseek/model-experience/deepseek-response/token-effect:
+  en: 533309d1f93b89de
+  zh: 4cc0b86f05c9be53
+/nomix-ai-nomix-llm-deepseek/model-experience/deepseek-response/kv-cache-effect:
+  en: ddfbea043596878d
+  zh: 4fbf5864a684c053
+/nomix-ai-nomix-llm-deepseek/known-limitations-and-deferred-work:
+  en: 09ef296162034c10
+  zh: 0eef9a72c9568762
+/nomix-ai-nomix-llm-deepseek/known-limitations-and-deferred-work/dev-note:
+  en: 6c3bd9b7297fab79
+  zh: 1447936137eacd7f

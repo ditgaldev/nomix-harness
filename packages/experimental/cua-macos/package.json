@@ -1,0 +1,88 @@
+{
+  "name": "@nomix-ai/nomix-experimental-cua-macos",
+  "description": "macOS native provider for shared Computer Use application and window objects",
+  "version": "0.2.9",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
+    "directory": "packages/experimental/cua-macos"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "native/bin",
+    "native/Package.swift",
+    "native/Sources",
+    "native/tests/swift",
+    "native/tests/test_swift.py",
+    "native/LICENSE.cua-driver",
+    "native/upstream.json",
+    "native/README.md",
+    "native/README.zh.md",
+    "native/protocol.schema.json",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-computer-use": "workspace:*",
+    "@nomix-ai/nomix-system-prompt": "workspace:*",
+    "@nomix-ai/nomix-tools": "workspace:*",
+    "@nomix-ai/nomix-agent": "workspace:*",
+    "@nomix-ai/nomix-subprocess": "workspace:*",
+    "@nomix-ai/nomix-user-questions": "workspace:*"
+  },
+  "dependencies": {
+    "zod": "^4.4.3",
+    "@nomix-ai/nomix-atomic-write": "workspace:*",
+    "@nomix-ai/nomix-cua": "workspace:*"
+  },
+  "devDependencies": {
+    "@nomix-ai/nomix-working-directory": "workspace:*",
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/cordis-plugin-include": "workspace:~",
+    "@nomix-ai/cordis-plugin-loader": "workspace:~",
+    "@nomix-ai/nomix-agent": "workspace:*",
+    "@nomix-ai/nomix-agent-loop": "workspace:*",
+    "@nomix-ai/nomix-agent-loop-testkit": "workspace:*",
+    "@nomix-ai/nomix-attachment": "workspace:*",
+    "@nomix-ai/nomix-attachment-local": "workspace:*",
+    "@nomix-ai/nomix-computer-use": "workspace:*",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-session-projection": "workspace:*",
+    "@nomix-ai/nomix-system-prompt": "workspace:*",
+    "@nomix-ai/nomix-tools": "workspace:*",
+    "@nomix-ai/nomix-subprocess": "workspace:*",
+    "@nomix-ai/nomix-subprocess-local": "workspace:*",
+    "@nomix-ai/nomix-fs-local": "workspace:*",
+    "@nomix-ai/nomix-llm-deepseek": "workspace:*",
+    "@nomix-ai/nomix-ptc-runtime-node": "workspace:*",
+    "@nomix-ai/nomix-sandbox-local": "workspace:*",
+    "@nomix-ai/nomix-sandbox-policy": "workspace:*",
+    "sharp": "^0.35.3",
+    "@nomix-ai/nomix-ptc-runtime": "workspace:*",
+    "@nomix-ai/nomix-user-questions": "workspace:*",
+    "@nomix-ai/nomix-settings": "workspace:*",
+    "@nomix-ai/nomix-app-boot": "workspace:*",
+    "@nomix-ai/nomix-config-editor": "workspace:*",
+    "@nomix-ai/nomix-hmr": "workspace:*",
+    "@nomix-ai/cordis-plugin-timer": "workspace:~"
+  },
+  "scripts": {
+    "build:native": "swift build --package-path native --configuration release"
+  }
+}

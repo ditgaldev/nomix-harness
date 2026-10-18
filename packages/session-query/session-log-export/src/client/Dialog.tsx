@@ -1,4 +1,5 @@
-import type { ObservableSnapshot, SessionId } from '@nomix-ai/nomix-client-runtime/client'
+import type { ObservableSnapshot } from '@nomix-ai/nomix-client-store'
+import type { SessionId } from '@nomix-ai/nomix-session/types'
 import { Button, Modal } from '@nomix-ai/nomix-client-ui-primitives'
 import type { InjectFace, PropsLocale, PropsRuntime } from '@nomix-ai/nomix-client-ui-slots'
 import type { SessionLogDownloadState } from './controller.ts'
@@ -17,7 +18,7 @@ export type SessionLogDownloadDialogProps =
   & InjectFace<SessionLogDownloadDialogInjected>
 
 /**
- * Modal shared by the Session Header button and this browser's `/export` command.
+ * Modal shared by the Session Header download menu item and this browser's `/export` command.
  * @param props - Session runtime, bound controller state, actions, and localized copy.
  * @returns the modal portal contribution.
  */

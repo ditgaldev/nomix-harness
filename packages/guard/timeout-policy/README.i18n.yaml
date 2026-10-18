@@ -1,6 +1,67 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/guard/timeout-policy/README.md
-README.md: c67fee6fc36752bc171cc385b31184479e155d9a
-README.zh.md: 5a2f019c233af7a73ea3f37a7718c0080324837a
+/:
+  en: 7020f47046dc8148
+  zh: 191dea4c788f374b
+/nomix-ai-nomix-tool-call-timeout-policy:
+  en: cec7680a28a1e2a9
+  zh: 0d152adfaebf1820
+/nomix-ai-nomix-tool-call-timeout-policy/summary:
+  en: 8ce2180ef73fc35c
+  zh: 6353fed21dca9aa1
+/nomix-ai-nomix-tool-call-timeout-policy/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-tool-call-timeout-policy/use-this-package:
+  en: f9b8074c0ce43fed
+  zh: 9225352ea12c6f2e
+/nomix-ai-nomix-tool-call-timeout-policy/use-this-package/when-to-choose-it:
+  en: 2c6495054dfaf09c
+  zh: 7f2d65c3202d75f3
+/nomix-ai-nomix-tool-call-timeout-policy/use-this-package/setting-it-up:
+  en: dbf53e216d2eed1a
+  zh: 60f0d7c4e2bb8bbf
+/nomix-ai-nomix-tool-call-timeout-policy/use-this-package/what-you-get:
+  en: 339ff1d6001f3def
+  zh: c3e378abc7c58fa4
+/nomix-ai-nomix-tool-call-timeout-policy/understand-the-implementation:
+  en: 9bdd0f9388915825
+  zh: c101ec504869d187
+/nomix-ai-nomix-tool-call-timeout-policy/understand-the-implementation/design-philosophy:
+  en: c52d2cf5800edb27
+  zh: af3efb7ed2d2795d
+/nomix-ai-nomix-tool-call-timeout-policy/understand-the-implementation/how-a-deadline-is-armed-and-mapped:
+  en: 4c2f31d760d5ad4b
+  zh: 42e5c42675c32dcc
+/nomix-ai-nomix-tool-call-timeout-policy/understand-the-implementation/composing-with-other-wrappers:
+  en: 09fba7333cf511f6
+  zh: 965c60634d370287
+/nomix-ai-nomix-tool-call-timeout-policy/understand-the-implementation/source-map:
+  en: 1fa5646d5e9d18eb
+  zh: d09dfc46cbc654f4
+/nomix-ai-nomix-tool-call-timeout-policy/further-exploration:
+  en: 46fcd80e2480d161
+  zh: bb46794367b98594
+/nomix-ai-nomix-tool-call-timeout-policy/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-tool-call-timeout-policy/model-experience/conditional-tool-result:
+  en: 7877631ca859b191
+  zh: fb6f2aa33f70b82c
+/nomix-ai-nomix-tool-call-timeout-policy/model-experience/conditional-tool-result/what-the-model-sees:
+  en: 1fd9832261036f56
+  zh: 245b04969f3bc26d
+/nomix-ai-nomix-tool-call-timeout-policy/model-experience/conditional-tool-result/token-effect:
+  en: 063d0485b8631d04
+  zh: 13c1a680cfa9f02b
+/nomix-ai-nomix-tool-call-timeout-policy/model-experience/conditional-tool-result/kv-cache-effect:
+  en: 2fbf2175168e8244
+  zh: f681f89596f500f5
+/nomix-ai-nomix-tool-call-timeout-policy/known-limitations-and-deferred-work:
+  en: 8b51b07b2fc6d1bc
+  zh: f65e3760a6ea5f2f
+/nomix-ai-nomix-tool-call-timeout-policy/known-limitations-and-deferred-work/dev-note:
+  en: f6cb4450104f068e
+  zh: 0d8cda53bf56c132

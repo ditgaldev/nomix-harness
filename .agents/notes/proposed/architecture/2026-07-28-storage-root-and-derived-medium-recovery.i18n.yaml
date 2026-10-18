@@ -1,6 +1,28 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for 2026-07-28-storage-root-and-derived-medium-recovery.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/proposed/architecture/2026-07-28-storage-root-and-derived-medium-recovery.md
-2026-07-28-storage-root-and-derived-medium-recovery.md: 29b013191e26455b02f7c8a09179563cfa27ff0f
-2026-07-28-storage-root-and-derived-medium-recovery.zh.md: 70b6c7f176648f179a69150d8ca18b2301410aa8
+/agent-note-storage-root-placement-and-derived-medium-recovery:
+  en: e9dbee9617ef27be
+  zh: d58b5229f7b3148e
+/agent-note-storage-root-placement-and-derived-medium-recovery/problem:
+  en: 4f161f1257413d45
+  zh: 149ea9e815472819
+/agent-note-storage-root-placement-and-derived-medium-recovery/proposal:
+  en: bd212f50ff01960a
+  zh: de2c69ef9be74629
+/agent-note-storage-root-placement-and-derived-medium-recovery/proposal/one-global-storage-root-shipped-amended-form-resolved-once-at-construction-still-open:
+  en: ee4413da615faa22
+  zh: 8cbdc0a254ca6739
+/agent-note-storage-root-placement-and-derived-medium-recovery/proposal/declared-derived-media-reset-instead-of-reject:
+  en: 11e9dd194e73921f
+  zh: 48fbb156396dc7ec
+/agent-note-storage-root-placement-and-derived-medium-recovery/alternatives-considered:
+  en: b5fab4b550256e96
+  zh: 1d13d4de6b70e2df
+/agent-note-storage-root-placement-and-derived-medium-recovery/acceptance-criteria:
+  en: 9beca0162cfb19c1
+  zh: 67538fc13020aa49
+/agent-note-storage-root-placement-and-derived-medium-recovery/risks:
+  en: be70695cbd77824b
+  zh: 163ffebf285d7e5b

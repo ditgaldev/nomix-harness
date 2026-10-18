@@ -1,6 +1,64 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/spill/spill-local/README.md
-README.md: dbeb23d5d2ae127f197531c11c43595cc7a50bc5
-README.zh.md: c66d7f26ef3c1f4ec3c2be253927736e609902f0
+/:
+  en: 081da64c1be2d775
+  zh: cd51e86e3c5c49cf
+/nomix-ai-nomix-spill-local:
+  en: c9215fabb962efae
+  zh: 5eba7f28f3e4fc81
+/nomix-ai-nomix-spill-local/summary:
+  en: 5f468e321b37ee3e
+  zh: f96c5b707d5704e1
+/nomix-ai-nomix-spill-local/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-spill-local/use-this-package:
+  en: 067d6e865f0f5a1c
+  zh: 67d564d3df1fa58e
+/nomix-ai-nomix-spill-local/use-this-package/minimal-configuration:
+  en: 398fa83537b56711
+  zh: 4aec7be68565d66b
+/nomix-ai-nomix-spill-local/use-this-package/what-you-get-back:
+  en: c8aca7d0d3fe321e
+  zh: b7f7a168d3ca78e0
+/nomix-ai-nomix-spill-local/use-this-package/where-files-land:
+  en: 32262a03c40c49df
+  zh: 9a028fff66aed750
+/nomix-ai-nomix-spill-local/use-this-package/startup-cleanup:
+  en: e8de2d3bd653e02e
+  zh: 36676da7fb23fb24
+/nomix-ai-nomix-spill-local/use-this-package/failures-and-recovery:
+  en: 910bbe363921952d
+  zh: 1c21b9ca1d050a1e
+/nomix-ai-nomix-spill-local/understand-the-implementation:
+  en: deb655b3b1860576
+  zh: d83d8a3c24a71a16
+/nomix-ai-nomix-spill-local/understand-the-implementation/design-philosophy:
+  en: 905f7242345308cd
+  zh: 66907177a6dd4b94
+/nomix-ai-nomix-spill-local/understand-the-implementation/source-map:
+  en: 4396717876acc2be
+  zh: a08321bdb3768143
+/nomix-ai-nomix-spill-local/understand-the-implementation/file-naming-and-write:
+  en: cb92a60310c465a8
+  zh: ce474c16abd2df5d
+/nomix-ai-nomix-spill-local/further-exploration:
+  en: d294dfba97c9fcee
+  zh: 10b0dbbe55d05554
+/nomix-ai-nomix-spill-local/model-experience:
+  en: ae2966f8fc63dc5b
+  zh: 141aa4ebbc52574f
+/nomix-ai-nomix-spill-local/model-experience/kv-cache-effect:
+  en: 40294c1c31b74824
+  zh: 6b9a967b5b4765e4
+/nomix-ai-nomix-spill-local/known-limitations-and-deferred-work:
+  en: 363cf4b1b822e043
+  zh: c28e52f67ef21400
+/nomix-ai-nomix-spill-local/known-limitations-and-deferred-work/dev-note:
+  en: a63e51f03bdb279f
+  zh: 191a48d3bfc4a792
+/nomix-ai-nomix-spill-local/known-limitations-and-deferred-work/dev-note/future-workspace-confinement-interplay:
+  en: 7cc389241a5b9a4c
+  zh: af4b8e65ed565ec6

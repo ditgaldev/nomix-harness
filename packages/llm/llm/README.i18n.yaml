@@ -1,6 +1,64 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/llm/llm/README.md
-README.md: 6ff366195a0b0a720815015c372b0e6543967a0c
-README.zh.md: b43163e7a5851ecf65991536b48045eba479e276
+/:
+  en: 860509fb08c860f4
+  zh: b2c4448e8afc1f12
+/nomix-ai-nomix-llm:
+  en: f50bd7ad00b48c0b
+  zh: f07b3bc0c8d99e6c
+/nomix-ai-nomix-llm/summary:
+  en: 38d0577fe064747e
+  zh: 89627fd9de6da696
+/nomix-ai-nomix-llm/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-llm/use-this-package:
+  en: 33738e61ce410ac0
+  zh: 363760460f4d4bed
+/nomix-ai-nomix-llm/use-this-package/when-to-choose-it:
+  en: b9f85bef114f3575
+  zh: c166b5c2c3e958e6
+/nomix-ai-nomix-llm/use-this-package/minimal-composition:
+  en: 9d481d19dc52e404
+  zh: aa09cf4462e93ba6
+/nomix-ai-nomix-llm/use-this-package/what-you-can-do:
+  en: dc61eb86585f6e0d
+  zh: 9c0d6b240dfd2cda
+/nomix-ai-nomix-llm/use-this-package/failures-and-recovery:
+  en: f94e9fe0e44bc9be
+  zh: 49744587c989f174
+/nomix-ai-nomix-llm/understand-the-implementation:
+  en: 9630d7e26193a512
+  zh: 94222c2a487c4b8c
+/nomix-ai-nomix-llm/understand-the-implementation/design-philosophy:
+  en: 12d0444c18a397c7
+  zh: 9d4a5468b4bb7fcd
+/nomix-ai-nomix-llm/understand-the-implementation/source-map:
+  en: ae1618577f4e8364
+  zh: a6e8ab1563c08dfb
+/nomix-ai-nomix-llm/understand-the-implementation/main-flow:
+  en: d3b371d062ec2c82
+  zh: 9eaae2166ec796f9
+/nomix-ai-nomix-llm/understand-the-implementation/invariants:
+  en: 0163a050239248e5
+  zh: 885c95bedcbe2ff4
+/nomix-ai-nomix-llm/further-exploration:
+  en: a6eaa944d8cdecb3
+  zh: 4449e3f5c3165302
+/nomix-ai-nomix-llm/model-experience:
+  en: fa5677003ad6bc0a
+  zh: ba33cfc860d9c37c
+/nomix-ai-nomix-llm/model-experience/kv-cache-effect:
+  en: a81634136baef72f
+  zh: b92dda883986b0e1
+/nomix-ai-nomix-llm/known-limitations-and-deferred-work:
+  en: 24efed6fa70b25c9
+  zh: d33171a2e099fcc3
+/nomix-ai-nomix-llm/known-limitations-and-deferred-work/dev-note:
+  en: ecbc333b88e14d88
+  zh: 77c725d92efd8646
+/nomix-ai-nomix-llm/known-limitations-and-deferred-work/dev-note/open-items:
+  en: 73a98b4859a866bd
+  zh: 534e11e9cadc1535

@@ -1,0 +1,60 @@
+{
+  "name": "@nomix-ai/nomix-session-log-deepseek",
+  "description": "Incremental lossless session-log request extension for the official DeepSeek LLM API",
+  "version": "0.2.9",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
+    "directory": "packages/session/session-log-deepseek"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./types": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types/types.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/types/**/*.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@nomix-ai/nomix-brand": "workspace:*",
+    "@nomix-ai/nomix-util-values": "workspace:*",
+    "@nomix-ai/schemastery": "workspace:~"
+  },
+  "peerDependencies": {
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-deepseek-llm-api-extensions": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*"
+  },
+  "devDependencies": {
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/cordis-plugin-include": "workspace:~",
+    "@nomix-ai/cordis-plugin-loader": "workspace:~",
+    "@nomix-ai/nomix-command-feedback": "workspace:*",
+    "@nomix-ai/nomix-deepseek-llm-api-extensions": "workspace:*",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-llm-deepseek": "workspace:*",
+    "@nomix-ai/nomix-llm-deepseek-api-key": "workspace:*",
+    "@nomix-ai/nomix-llm-mock-server": "workspace:*",
+    "@nomix-ai/nomix-message-feedback": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-session-persistence-jsonl": "workspace:*"
+  }
+}

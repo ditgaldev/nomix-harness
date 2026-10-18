@@ -7,7 +7,7 @@
 
 import { describe, expect, it } from 'vitest'
 import { Context } from '@nomix-ai/cordis'
-import { CallId } from '@nomix-ai/nomix-llm'
+import { ToolCallId } from '@nomix-ai/nomix-llm'
 import { SessionId } from '@nomix-ai/nomix-session'
 import { SpillLocator, SpillStore } from '@nomix-ai/nomix-spill'
 import type { SaveTextSpill, SpillRef } from '@nomix-ai/nomix-spill'
@@ -29,7 +29,7 @@ class StubStore extends SpillStore {
 function request(content: string): SaveTextSpill {
   return {
     owner: { sessionId: SessionId('s1') },
-    source: { toolName: 'web_fetch', callId: CallId('c1'), label: 'result' },
+    source: { kind: 'tool', toolName: 'web_fetch', callId: ToolCallId('c1'), label: 'result' },
     suggestedName: 'web_fetch.txt',
     content,
   }

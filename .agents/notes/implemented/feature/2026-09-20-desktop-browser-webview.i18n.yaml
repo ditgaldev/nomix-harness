@@ -1,0 +1,25 @@
+# Bilingual-pair consistency record for 2026-09-20-desktop-browser-webview.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-09-20-desktop-browser-webview.md
+/agent-note-retained-desktop-browser-webviews:
+  en: 5c952fa68bb8fa68
+  zh: ac3f59543b46ef37
+/agent-note-retained-desktop-browser-webviews/problem:
+  en: c6abffbd4077e427
+  zh: a7a0a2c2a99cc70b
+/agent-note-retained-desktop-browser-webviews/decision:
+  en: b26676740bad4704
+  zh: cc08025a5eb5a9f0
+/agent-note-retained-desktop-browser-webviews/decision/storage-ownership:
+  en: e603ee712c2ba1fd
+  zh: 5503db907974d871
+/agent-note-retained-desktop-browser-webviews/decision/initial-guest-policy:
+  en: 8e8b2542aeb67a60
+  zh: 5961443a6dccc516
+/agent-note-retained-desktop-browser-webviews/alternatives-considered:
+  en: 884daa089df32dcc
+  zh: 7e16d740897555c9
+/agent-note-retained-desktop-browser-webviews/consequences:
+  en: 01d4a2e6f638d5e9
+  zh: 9804b00edea2b03c

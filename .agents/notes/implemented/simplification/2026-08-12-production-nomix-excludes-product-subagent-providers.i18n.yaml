@@ -1,6 +1,0 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
-#   pnpm run verify-translation-pairing --write .agents/notes/implemented/simplification/2026-08-12-production-nomix-excludes-product-subagent-providers.md
-2026-08-12-production-nomix-excludes-product-subagent-providers.md: a0e8600b8980a356e074500fe2b0a3ade51538df
-2026-08-12-production-nomix-excludes-product-subagent-providers.zh.md: 931ccfad5058f5c00d07705205e7de2c34280213

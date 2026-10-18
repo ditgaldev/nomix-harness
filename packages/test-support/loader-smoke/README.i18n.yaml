@@ -1,6 +1,58 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/test-support/loader-smoke/README.md
-README.md: 983dd7581a896bd5607c774c8ba0ce472f28adb4
-README.zh.md: 43eb115fa71155c5efe425792807a8bdb349cc6b
+/:
+  en: 00a7ac59f751e4d0
+  zh: 35334966b956621d
+/nomix-ai-nomix-loader-smoke:
+  en: cbe87d4e725c16a4
+  zh: a35c3cdaf5c5f1a9
+/nomix-ai-nomix-loader-smoke/summary:
+  en: d0dc33555540d1d7
+  zh: 123883b7fc24b904
+/nomix-ai-nomix-loader-smoke/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-loader-smoke/use-this-package:
+  en: 682780f6cbeb85cb
+  zh: 07a2458db985471a
+/nomix-ai-nomix-loader-smoke/use-this-package/booting-an-application-fixture:
+  en: cdd35e30ac5099b1
+  zh: a539c16d29283973
+/nomix-ai-nomix-loader-smoke/use-this-package/testing-a-shipped-profile:
+  en: bac34fc14a486c7e
+  zh: 85c967a019668f15
+/nomix-ai-nomix-loader-smoke/use-this-package/driving-a-fixture-turn:
+  en: c99402b3d2219738
+  zh: cbff00f4bfb7d625
+/nomix-ai-nomix-loader-smoke/use-this-package/source-or-built-mode:
+  en: 7e9492c1d8847825
+  zh: 1fc246c27e769283
+/nomix-ai-nomix-loader-smoke/use-this-package/what-can-go-wrong:
+  en: 97c3b8846f2af4eb
+  zh: e528f111f0c8651d
+/nomix-ai-nomix-loader-smoke/understand-the-implementation:
+  en: 3ffb8df759bf5071
+  zh: a93d3dd6472d9782
+/nomix-ai-nomix-loader-smoke/understand-the-implementation/design:
+  en: 0cae4142c72a9bd4
+  zh: 3a552e439590b90d
+/nomix-ai-nomix-loader-smoke/understand-the-implementation/source-map:
+  en: 1dd2e4e1cd1fad2d
+  zh: 4783ddacfbcf2cd5
+/nomix-ai-nomix-loader-smoke/further-exploration:
+  en: af2a9fa7718f2025
+  zh: 2e730d0955e753dc
+/nomix-ai-nomix-loader-smoke/model-experience:
+  en: 27696a3c4d31d171
+  zh: 48b6df074e0b0911
+/nomix-ai-nomix-loader-smoke/model-experience/kv-cache-effect:
+  en: c204a02c386ca3a0
+  zh: ce9b24304f9644aa
+/nomix-ai-nomix-loader-smoke/known-limitations-and-deferred-work:
+  en: a3e0e21178bb00cc
+  zh: f3dc6139370330f6
+/nomix-ai-nomix-loader-smoke/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

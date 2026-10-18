@@ -1,6 +1,91 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/core/agent/README.md
-README.md: 62b49c56d168172fc732d4d9135300c42ecaceab
-README.zh.md: 71daaf377e4c77e86b9894279015b0b40dc54fc0
+/:
+  en: b6bcf3c8b941d336
+  zh: 28b5d2aa43fdd026
+/nomix-ai-nomix-agent:
+  en: f147947a6aba9c7b
+  zh: 78bafe05894d71f6
+/nomix-ai-nomix-agent/summary:
+  en: 5c045af200a7990e
+  zh: f8c75d930cd9e059
+/nomix-ai-nomix-agent/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-agent/use-this-package:
+  en: 859a6740bc96f233
+  zh: be98b816041da094
+/nomix-ai-nomix-agent/use-this-package/create-or-resume-an-agent:
+  en: e305441a5a4a9b44
+  zh: 3e997b12ce0ce04c
+/nomix-ai-nomix-agent/use-this-package/drive-an-agent-s-conversation:
+  en: 71e258897e2e7d73
+  zh: abf0991012faa17e
+/nomix-ai-nomix-agent/use-this-package/scope-registrations-to-one-agent:
+  en: 2594a1e02adea801
+  zh: cae8860369728efb
+/nomix-ai-nomix-agent/use-this-package/intercept-or-observe-work-in-flight:
+  en: ad525789fe53aeda
+  zh: 881839f6bd747389
+/nomix-ai-nomix-agent/understand-the-implementation:
+  en: ce7e776e9d516bdb
+  zh: 59d2751743db7795
+/nomix-ai-nomix-agent/understand-the-implementation/design-concept:
+  en: 99cb7ed05530ff70
+  zh: a8b5fb1299e54632
+/nomix-ai-nomix-agent/understand-the-implementation/step-admission:
+  en: 348b9ecd0890c585
+  zh: d0f73d28d0d2c6f1
+/nomix-ai-nomix-agent/understand-the-implementation/durable-inbox:
+  en: da7c90f43177b176
+  zh: dbb946ac0271d32c
+/nomix-ai-nomix-agent/understand-the-implementation/source-map:
+  en: 7e09b94c79dc97ca
+  zh: 3f9c5455c4dc563a
+/nomix-ai-nomix-agent/understand-the-implementation/registry-and-lifecycle:
+  en: d3ecae9f885a5130
+  zh: ad0c83f2fa970173
+/nomix-ai-nomix-agent/understand-the-implementation/initiator-scope:
+  en: f96fcb31063af54c
+  zh: 2cb4cb77a14e0e46
+/nomix-ai-nomix-agent/understand-the-implementation/ownership-invariants:
+  en: e48eae6c7de88cf8
+  zh: 1f5b37bdb0e53788
+/nomix-ai-nomix-agent/further-exploration:
+  en: bcd1c691fb477c3a
+  zh: 370903ddbd681333
+/nomix-ai-nomix-agent/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-agent/model-experience/user-steering-and-injected-messages:
+  en: 962c598672b0eed6
+  zh: d05b3bc936685ad3
+/nomix-ai-nomix-agent/model-experience/user-steering-and-injected-messages/what-the-model-sees:
+  en: 55fcf97dbcb7a41e
+  zh: 691c0ab3ea41f6f0
+/nomix-ai-nomix-agent/model-experience/user-steering-and-injected-messages/token-effect:
+  en: 5f428bfadaf4394b
+  zh: 03308df9fd3492a7
+/nomix-ai-nomix-agent/model-experience/user-steering-and-injected-messages/kv-cache-effect:
+  en: 75dc61fe240860f0
+  zh: 621720291d1b4bd3
+/nomix-ai-nomix-agent/model-experience/agent-scoped-request-composition:
+  en: 215fc35b0f30e38a
+  zh: 21788ec980c300ea
+/nomix-ai-nomix-agent/model-experience/agent-scoped-request-composition/what-the-model-sees:
+  en: 057babd515991736
+  zh: acf0c05c490b689c
+/nomix-ai-nomix-agent/model-experience/agent-scoped-request-composition/token-effect:
+  en: dfebf42b629656d9
+  zh: 9369ace52f58a579
+/nomix-ai-nomix-agent/model-experience/agent-scoped-request-composition/kv-cache-effect:
+  en: 07a408b32e49ecaf
+  zh: 9684b80cb3c0e75c
+/nomix-ai-nomix-agent/known-limitations-and-deferred-work:
+  en: 00a2d12980ffe756
+  zh: c8bf69d06d165b36
+/nomix-ai-nomix-agent/known-limitations-and-deferred-work/dev-note:
+  en: 217405c92be96543
+  zh: 7bc21e6842079a57

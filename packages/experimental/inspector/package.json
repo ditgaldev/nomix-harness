@@ -1,0 +1,84 @@
+{
+  "name": "@nomix-ai/nomix-experimental-inspector",
+  "description": "Experimental cross-realm CDP hub for Host debugging and Client Runtime inspection",
+  "version": "0.2.9",
+  "icon": "./icon.svg",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
+    "directory": "packages/experimental/inspector"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./locale/*.json": "./locale/*.json",
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "nomix": {
+    "client": {
+      "inject": [],
+      "platform": "web",
+      "immediately": true
+    }
+  },
+  "files": [
+    "icon.svg",
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/client.*.js",
+    "lib/worker.js",
+    "lib/devtools/**",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@nomix-ai/nomix-app-boot": "workspace:*",
+    "@nomix-ai/nomix-util-crypto": "workspace:*",
+    "@nomix-ai/schemastery": "workspace:~",
+    "open": "^11.0.2",
+    "serve-static": "^2.2.1",
+    "ws": "^8.21.3"
+  },
+  "peerDependencies": {
+    "@nomix-ai/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "chrome-devtools-frontend": "1.0.1638082",
+    "@types/serve-static": "^2.2.0",
+    "@nomix-ai/nomix-client-test-runtime": "workspace:*",
+    "@testing-library/react": "^16.3.3",
+    "@nomix-ai/nomix-client-ui-renderer": "workspace:*",
+    "@nomix-ai/nomix-client-ui-layout": "workspace:*",
+    "@nomix-ai/nomix-client-shortcuts": "workspace:*",
+    "@nomix-ai/nomix-client-store": "workspace:*",
+    "@nomix-ai/nomix-client-ui-slots": "workspace:*",
+    "@nomix-ai/nomix-client-ui-primitives": "workspace:*",
+    "@nomix-ai/nomix-client-locale": "workspace:*",
+    "react": "^18.2.0",
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/cordis-plugin-include": "workspace:~",
+    "@nomix-ai/cordis-plugin-loader": "workspace:~",
+    "@nomix-ai/nomix-host-webserver": "workspace:*",
+    "@nomix-ai/nomix-cmdline": "workspace:*",
+    "@nomix-ai/nomix-client-connection": "workspace:*",
+    "@types/ws": "^8.18.1",
+    "playwright": "^1.49.0",
+    "tsx": "^4.23.13",
+    "@nomix-ai/nomix-brand": "workspace:*",
+    "@nomix-ai/nomix-client-modules": "workspace:*"
+  }
+}

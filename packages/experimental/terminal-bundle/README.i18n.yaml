@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/terminal-bundle/README.md
+/:
+  en: a7cd372176f1d476
+  zh: 07276ed339e7bc02
+/nomix-ai-nomix-experimental-terminal-bundle:
+  en: 1a0b755cb991bdd3
+  zh: f3bd0826261d7122
+/nomix-ai-nomix-experimental-terminal-bundle/summary:
+  en: 161ff8d60aa7623e
+  zh: 90ea4ac87b96f20a
+/nomix-ai-nomix-experimental-terminal-bundle/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 988e839059414d27
+/nomix-ai-nomix-experimental-terminal-bundle/use-this-package:
+  en: 924d2c0de1f247a7
+  zh: 7d77aef5ceb3f097
+/nomix-ai-nomix-experimental-terminal-bundle/understand-the-implementation:
+  en: 721ebd44ecb6648f
+  zh: 37b429e2ffc2846a
+/nomix-ai-nomix-experimental-terminal-bundle/further-exploration:
+  en: 5eb8554682c2c228
+  zh: 73e008dfe0608f36
+/nomix-ai-nomix-experimental-terminal-bundle/model-experience:
+  en: bbf85fbc91f39ef1
+  zh: 2ae70fc65d001016
+/nomix-ai-nomix-experimental-terminal-bundle/model-experience/kv-cache-effect:
+  en: 25f20eda0e696067
+  zh: 378c4a15a5704ba0
+/nomix-ai-nomix-experimental-terminal-bundle/known-limitations-and-deferred-work:
+  en: 733d0915ef050bf3
+  zh: 5a063b82230c73a4
+/nomix-ai-nomix-experimental-terminal-bundle/known-limitations-and-deferred-work/dev-note:
+  en: 279d01435256cd2a
+  zh: 83780964e5de2f54

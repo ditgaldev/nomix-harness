@@ -15,6 +15,7 @@ describe('Session Typert provider', () => {
     expect(lookup).toMatchObject({
       parameter: 'session',
       wire: 'sessionId',
+      resource: 'session',
       hostTypeSymbol: '@nomix-ai/nomix-session#Session',
       wireTypeSymbol: '@nomix-ai/nomix-session/types#SessionId',
     })

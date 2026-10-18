@@ -3,9 +3,9 @@
 import type { Context } from '@nomix-ai/cordis'
 import type {
   CordisInspectProviderManifest, CordisInspectQueryRequest, CordisInspectQueryResolution,
-  CordisInspectRequestId, JsonValue,
+  CordisInspectRequestId, SessionId,
 } from '@nomix-ai/nomix-api-remotes/client'
-import type { SessionId } from '@nomix-ai/nomix-client-connection/client'
+import type { JsonValue } from '@nomix-ai/nomix-util-values'
 
 /** Context supplied to a Client inspect provider query. */
 export interface ClientCordisInspectQueryContext {

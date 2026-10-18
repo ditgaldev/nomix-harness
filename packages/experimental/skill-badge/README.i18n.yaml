@@ -1,0 +1,55 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/skill-badge/README.md
+/:
+  en: 8785df47b0ac572a
+  zh: ea9f954fd463e058
+/nomix-ai-nomix-skill-badge:
+  en: 1c60e117ad641a5e
+  zh: c36d29cbe867037d
+/nomix-ai-nomix-skill-badge/summary:
+  en: 1f84b4a371c798b3
+  zh: ee3b749b1ae2e136
+/nomix-ai-nomix-skill-badge/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-skill-badge/use-this-package:
+  en: 6466c1c0a876c22e
+  zh: 4b7b233c14a7a90b
+/nomix-ai-nomix-skill-badge/use-this-package/when-to-choose-it:
+  en: c16d5c4703924e5f
+  zh: 3e7b8243c1747462
+/nomix-ai-nomix-skill-badge/use-this-package/enable-the-plugin:
+  en: 2b5ee9bd4dd74318
+  zh: 856762ec20a3bc3a
+/nomix-ai-nomix-skill-badge/use-this-package/what-the-badge-skill-provides:
+  en: d0daa17c3c5763c1
+  zh: cf839d8e4f5f9f31
+/nomix-ai-nomix-skill-badge/use-this-package/observable-success-and-failures:
+  en: cd1c78b3a5017f54
+  zh: 37d87ae564018dd0
+/nomix-ai-nomix-skill-badge/understand-the-implementation:
+  en: 63465b0133f30e85
+  zh: 84bebb7c1fe0ceba
+/nomix-ai-nomix-skill-badge/understand-the-implementation/design-concept:
+  en: cf021d276485743a
+  zh: cae51ad5754c000c
+/nomix-ai-nomix-skill-badge/understand-the-implementation/source-map:
+  en: ecd55199927e2e1c
+  zh: c556cbf4d666fa71
+/nomix-ai-nomix-skill-badge/further-exploration:
+  en: c461bd4bd1303666
+  zh: 0093c3a1c244ee3a
+/nomix-ai-nomix-skill-badge/model-experience:
+  en: 17f6004d29549a21
+  zh: d3744cbe91f58244
+/nomix-ai-nomix-skill-badge/model-experience/kv-cache-effect:
+  en: 5b5bcb4fc0513bef
+  zh: 67a1d939c6a18c2e
+/nomix-ai-nomix-skill-badge/known-limitations-and-deferred-work:
+  en: c62aac80e2e401af
+  zh: 8d9cfba63d3f6ca0
+/nomix-ai-nomix-skill-badge/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

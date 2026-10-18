@@ -1,6 +1,67 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/typert/generator/README.md
-README.md: 2906a8730d9cbb44de2b562a9fc53521d5e7e362
-README.zh.md: 705ef3897872afad993b8bc05cab390743d8a163
+/:
+  en: 3fe330c4d51197ec
+  zh: 5874f3bcd419dbbc
+/nomix-ai-nomix-typert-generator:
+  en: 6371b4a0c4c2da00
+  zh: 1f7cfaa12b00eda4
+/nomix-ai-nomix-typert-generator/summary:
+  en: 550179b0fc474b5c
+  zh: 1d916fb7d39bacad
+/nomix-ai-nomix-typert-generator/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-typert-generator/use-this-package:
+  en: 949dec3bb987644a
+  zh: 0ed333a6067465dc
+/nomix-ai-nomix-typert-generator/use-this-package/publishing-typert-artifacts-from-a-package:
+  en: a775e27538387708
+  zh: f19cfa1889ebd7eb
+/nomix-ai-nomix-typert-generator/use-this-package/ordinary-remote-metadata:
+  en: a9fba30cd1bacb8c
+  zh: 0d7193b6bd362da8
+/nomix-ai-nomix-typert-generator/use-this-package/analyzing-a-workspace-statically:
+  en: 8227097859169cdf
+  zh: 249790ed62e8558a
+/nomix-ai-nomix-typert-generator/use-this-package/running-generation-inside-a-tsdown-build:
+  en: ebcb4850a5620d93
+  zh: 55f6f54265830f28
+/nomix-ai-nomix-typert-generator/use-this-package/generating-without-a-bundler:
+  en: e1afb26aea87fe46
+  zh: ed3cdfde78d87825
+/nomix-ai-nomix-typert-generator/understand-the-implementation:
+  en: b90762df7a978580
+  zh: 123ab225a2b5df2a
+/nomix-ai-nomix-typert-generator/understand-the-implementation/design-concept:
+  en: 0a515742229bf442
+  zh: dfd2c5eddd943af9
+/nomix-ai-nomix-typert-generator/understand-the-implementation/source-map:
+  en: 89d9205446b496a6
+  zh: d7bcae876c1905ec
+/nomix-ai-nomix-typert-generator/understand-the-implementation/analysis-and-faces:
+  en: a76eb52a6b133cbb
+  zh: e27e395e343425ee
+/nomix-ai-nomix-typert-generator/understand-the-implementation/emission-and-publication-contract:
+  en: e5f4f1782c78296d
+  zh: dfd35edd513bb748
+/nomix-ai-nomix-typert-generator/understand-the-implementation/catalog-projection:
+  en: e85b521a1e01ab2c
+  zh: 4416dca569de0f61
+/nomix-ai-nomix-typert-generator/further-exploration:
+  en: 6017468e0e1cda57
+  zh: 4055b6717e0a94fe
+/nomix-ai-nomix-typert-generator/model-experience:
+  en: e6641e8b5e5f42ca
+  zh: 2fdc0d3fde7e9216
+/nomix-ai-nomix-typert-generator/model-experience/kv-cache-effect:
+  en: 09310605f7d136d4
+  zh: 3535ec7eba83b90f
+/nomix-ai-nomix-typert-generator/known-limitations-and-deferred-work:
+  en: fdc6707a82ceb4c3
+  zh: 91fb8cab9fcf56bc
+/nomix-ai-nomix-typert-generator/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

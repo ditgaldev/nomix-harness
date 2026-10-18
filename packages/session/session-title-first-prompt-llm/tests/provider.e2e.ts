@@ -2,9 +2,10 @@ import { createUserMessage } from '@nomix-ai/nomix-llm'
 import { afterEach, describe, expect, it } from 'vitest'
 import { Context } from '@nomix-ai/cordis'
 import LlmRuntime from '@nomix-ai/nomix-llm'
-import * as LlmDeepSeek from '@nomix-ai/nomix-llm-deepseek'
+import * as LlmDeepSeek from '@nomix-ai/nomix-llm-deepseek-api-key'
 import SessionStore, { SessionId } from '@nomix-ai/nomix-session'
 import SessionTitleService from '@nomix-ai/nomix-session-title'
+import SessionProjectionRegistry from '@nomix-ai/nomix-session-projection'
 import * as FirstMessageTitleProvider from '@nomix-ai/nomix-session-title-first-prompt-llm'
 
 const contexts: Context[] = []
@@ -20,6 +21,7 @@ describe.skipIf(!process.env.DEEPSEEK_API_KEY)('first-prompt title provider with
     await ctx.plugin(LlmRuntime)
     await ctx.plugin(LlmDeepSeek, { thinking: 'disabled' })
     await ctx.plugin(SessionStore)
+    await ctx.plugin(SessionProjectionRegistry)
     await ctx.plugin(SessionTitleService, {
       fallbackMaxWords: 5,
       fallbackMaxBytes: 40,

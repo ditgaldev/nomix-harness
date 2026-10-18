@@ -1,6 +1,25 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/context/README.md
-README.md: 9c59c786b4fc0a246e3c4b54c31e1e5f44697f58
-README.zh.md: 62e62369299d568110b15467eb3e8574f8f678ca
+/:
+  en: f080d3d805b5c2d2
+  zh: c59f6324c66ddcf9
+/context-request-context-plugins:
+  en: 01646a887cd1fb57
+  zh: 55cee24b98d15d36
+/context-request-context-plugins/summary:
+  en: 080d51fb7c008fca
+  zh: 31b6fe15f798b52a
+/context-request-context-plugins/table-of-contents:
+  en: 1eb35b015a6c423f
+  zh: a8a3dceee2c9e943
+/context-request-context-plugins/packages:
+  en: beac25b28bb0cbf8
+  zh: 09e16b0050306853
+/context-request-context-plugins/related-documentation:
+  en: 51cbf64a85c14fcc
+  zh: 974a68f633fc18db
+/context-request-context-plugins/dev-note:
+  en: 5de1d6304e00c58f
+  zh: 8d8225361cfa29e5

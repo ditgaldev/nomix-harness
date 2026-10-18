@@ -1,6 +1,28 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for skills.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/subsystems/skills.md
-skills.md: 63219cee1efb72ec28ffe68cd2f34cbc1224b59b
-skills.zh.md: cbbebb1daa2974320143a6f8d669bd24a3db817f
+/skills:
+  en: e89406c22b97f20f
+  zh: ce64200b5a8b7b69
+/skills/provider-registry:
+  en: 971748b8afd12ac3
+  zh: 5275c691004079bf
+/skills/local-discovery-priority:
+  en: 0c2b38e2a1c002c0
+  zh: f3336f512ec28035
+/skills/skill-identity:
+  en: 61295a9cf1c51588
+  zh: 1c4c1582688d2310
+/skills/summaries-candidates-and-complete-definitions:
+  en: 8819c25fac497a1f
+  zh: 5795f0d16f09750e
+/skills/lookup-and-configuration:
+  en: a3be27c762aaab14
+  zh: 6835acbfd80e3546
+/skills/session-catalog-and-tool-contract:
+  en: b224e1979245a3ba
+  zh: 172345577b7f092a
+/skills/browser-session-catalog:
+  en: 1209dc6ee65fd476
+  zh: af3b7ef836564d05

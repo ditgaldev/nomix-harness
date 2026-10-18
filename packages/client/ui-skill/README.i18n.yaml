@@ -1,6 +1,58 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/client/ui-skill/README.md
-README.md: 6f253b5ea6360ddbb9dae3c169de91c070c50b25
-README.zh.md: 39257660d57949b52a6fa7da33d0632db3713520
+/:
+  en: bde638793d6cdb50
+  zh: 46d3e8e7feb37d53
+/nomix-ai-nomix-client-ui-skill:
+  en: 5ee4019d2931c435
+  zh: 497321f81db4d67c
+/nomix-ai-nomix-client-ui-skill/summary:
+  en: 178b73bea60ed1df
+  zh: 4744f94bcbf03d45
+/nomix-ai-nomix-client-ui-skill/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-client-ui-skill/use-this-package:
+  en: 2f17d0875048ef3c
+  zh: 6878ee4c75f2b2cf
+/nomix-ai-nomix-client-ui-skill/use-this-package/what-the-source-offers:
+  en: 2ba1a6158c85b46e
+  zh: 9ab58ceef8743849
+/nomix-ai-nomix-client-ui-skill/use-this-package/the-skill-tool-row:
+  en: 270bc37a226ed247
+  zh: 15a1c4c82c3a1f00
+/nomix-ai-nomix-client-ui-skill/understand-the-implementation:
+  en: df2a0ee9d2638f41
+  zh: 3b4af7e505e990ca
+/nomix-ai-nomix-client-ui-skill/understand-the-implementation/candidate-flow:
+  en: e8921ef18728794c
+  zh: dabc89ee5186d8c6
+/nomix-ai-nomix-client-ui-skill/understand-the-implementation/registration:
+  en: 59365c20329bc611
+  zh: 48f5eafbd7ee1ba3
+/nomix-ai-nomix-client-ui-skill/further-exploration:
+  en: 276f24a5b6561dc0
+  zh: bda0acb67ffdae4d
+/nomix-ai-nomix-client-ui-skill/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-client-ui-skill/model-experience/user-explicit-skill-invocation:
+  en: ae1928252b0ea55c
+  zh: 6c78cb51c6805a2d
+/nomix-ai-nomix-client-ui-skill/model-experience/user-explicit-skill-invocation/what-the-model-sees:
+  en: 6b6e97ab1040dbee
+  zh: 6dc909b662c2694a
+/nomix-ai-nomix-client-ui-skill/model-experience/user-explicit-skill-invocation/token-effect:
+  en: cb759321f8c62a96
+  zh: 6d479501856d9cd6
+/nomix-ai-nomix-client-ui-skill/model-experience/user-explicit-skill-invocation/kv-cache-effect:
+  en: da53c649077dad7e
+  zh: 845f77793f8e10a2
+/nomix-ai-nomix-client-ui-skill/known-limitations-and-deferred-work:
+  en: 3c5dd1c12e5a5d61
+  zh: 19e27163cb94dbc1
+/nomix-ai-nomix-client-ui-skill/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

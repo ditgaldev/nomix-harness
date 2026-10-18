@@ -10,7 +10,7 @@ import type { Context, Events } from '@nomix-ai/cordis'
 import { scopeTarget } from '@nomix-ai/nomix-scope'
 import type { Scoped } from '@nomix-ai/nomix-scope'
 import type { AssembleContext } from '@nomix-ai/nomix-system-prompt'
-import type { Agent } from './runtime-types.ts'
+import type { Agent } from './types.ts'
 
 /** Extract the parameter tuple from an event handler type (its `this` is not part of the tuple). */
 type Params<F> = F extends (...args: infer P) => unknown ? P : never

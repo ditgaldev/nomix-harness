@@ -1,0 +1,52 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/agent-team-profile/README.md
+/:
+  en: e263a0edd266210f
+  zh: c5779bf7f64631d3
+/nomix-ai-nomix-experimental-agent-team-profile:
+  en: bda0388b4f450b10
+  zh: 01efeb04ac950b83
+/nomix-ai-nomix-experimental-agent-team-profile/summary:
+  en: 1b81904c80d536b7
+  zh: 6561096c07e4b7c0
+/nomix-ai-nomix-experimental-agent-team-profile/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-experimental-agent-team-profile/use-this-package:
+  en: bbff250eba0f1b89
+  zh: 0a618f05cc88ee2b
+/nomix-ai-nomix-experimental-agent-team-profile/use-this-package/install-into-a-profile:
+  en: b50308c90034eb53
+  zh: e67ad32cef2d080d
+/nomix-ai-nomix-experimental-agent-team-profile/use-this-package/what-you-get:
+  en: 8800de3e3eac2c02
+  zh: 80d13fec2692fd4a
+/nomix-ai-nomix-experimental-agent-team-profile/understand-the-implementation:
+  en: fa02016d1766fc76
+  zh: 6d82257478b0efd2
+/nomix-ai-nomix-experimental-agent-team-profile/further-exploration:
+  en: 3b4c4c00cc4ce31c
+  zh: dca00348f4b9bd69
+/nomix-ai-nomix-experimental-agent-team-profile/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-experimental-agent-team-profile/model-experience/team-policy-and-tools:
+  en: 8e1e365ff3b0dfb2
+  zh: c6c91fbf1e1df934
+/nomix-ai-nomix-experimental-agent-team-profile/model-experience/team-policy-and-tools/what-the-model-sees:
+  en: 2b4a96db1113f86c
+  zh: cd507f5facce711e
+/nomix-ai-nomix-experimental-agent-team-profile/model-experience/team-policy-and-tools/token-effect:
+  en: 73e3283b99e245a8
+  zh: 45624cd4144f2886
+/nomix-ai-nomix-experimental-agent-team-profile/model-experience/team-policy-and-tools/kv-cache-effect:
+  en: 891c137ca1e038a8
+  zh: 3cee2a9b7b32bee4
+/nomix-ai-nomix-experimental-agent-team-profile/known-limitations-and-deferred-work:
+  en: e9bc034f07699cc5
+  zh: 94712d04176c56c2
+/nomix-ai-nomix-experimental-agent-team-profile/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

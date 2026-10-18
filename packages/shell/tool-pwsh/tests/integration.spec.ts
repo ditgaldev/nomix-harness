@@ -9,17 +9,18 @@
  * gate.
  */
 
+import { provideWorkingDirectoryFixture } from '@nomix-ai/nomix-agent-loop-testkit'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { spawnSync } from 'node:child_process'
 import { Context } from '@nomix-ai/cordis'
-import { CallId } from '@nomix-ai/nomix-llm'
+import { ToolCallId } from '@nomix-ai/nomix-llm'
 import SystemPrompt from '@nomix-ai/nomix-system-prompt'
 import ToolRuntime, { TOOL_ABORTED } from '@nomix-ai/nomix-tools'
 import LocalJobRegistry from '@nomix-ai/nomix-jobs-local'
-import * as ToolTasks from '@nomix-ai/nomix-tool-jobs'
+import * as ToolJobs from '@nomix-ai/nomix-tool-jobs'
 import LocalSubprocessRuntime from '@nomix-ai/nomix-subprocess-local'
 import { PwshLocalExecutor, resolvePwshPath } from '@nomix-ai/nomix-pwsh-local'
 import * as ToolPwsh from '@nomix-ai/nomix-tool-pwsh'
@@ -41,7 +42,7 @@ let callCounter = 0
 function call(name: string, args: unknown, agentObj?: object, signal?: AbortSignal) {
   return ctx.tools.execute({
     signal: signal ?? testToolSignal,
-    callId: CallId(`it-${++callCounter}`),
+    callId: ToolCallId(`it-${++callCounter}`),
     name,
     arguments: args,
     ...agentObj ? { agent: agentObj as never } : {},
@@ -58,14 +59,18 @@ describe.skipIf(!hasPwsh)('pwsh tool over the real pwsh executor', () => {
     await writeFile(join(dir, 'greeting.txt'), 'hello pwsh\n')
 
     ctx = new Context()
+
+    provideWorkingDirectoryFixture(ctx)
     await ctx.plugin(SystemPrompt)
     await ctx.plugin(ToolRuntime)
     await ctx.plugin(LocalJobRegistry)
-    await ctx.plugin(ToolTasks)
+    await ctx.plugin(ToolJobs)
     await ctx.plugin(LocalSubprocessRuntime)
     await ctx.plugin(BashEnvPlugin)
     await ctx.plugin(PwshLocalExecutor, { timeoutMs: 20_000, graceMs: 200 })
-    await ctx.plugin(ToolPwsh)
+    // This suite pins the executor's own deadline behaviour; the job-backed
+    // foreground path is pinned by background.spec.
+    await ctx.plugin(ToolPwsh, { promoteOnTimeout: false })
   })
 
   afterEach(async () => {

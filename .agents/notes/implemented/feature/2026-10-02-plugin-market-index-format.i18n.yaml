@@ -1,0 +1,46 @@
+# Bilingual-pair consistency record for 2026-10-02-plugin-market-index-format.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-10-02-plugin-market-index-format.md
+/agent-note-plugin-market-index-format:
+  en: 9d184d063a717aeb
+  zh: 8328f688471d3320
+/agent-note-plugin-market-index-format/problem:
+  en: 4126a1855f1c4fdc
+  zh: 91fccbc587299b09
+/agent-note-plugin-market-index-format/decision:
+  en: f21f34a604259110
+  zh: a53e3fc8ffca6cbe
+/agent-note-plugin-market-index-format/decision/example:
+  en: 42e5bda2db7a64f0
+  zh: 0fd8be18efccc7db
+/agent-note-plugin-market-index-format/decision/root-fields:
+  en: 4fac5a9b8261342d
+  zh: f9168a8a4209feab
+/agent-note-plugin-market-index-format/decision/plugin-fields:
+  en: b79abd05a957948b
+  zh: b6f0c203ea8e4838
+/agent-note-plugin-market-index-format/decision/version-fields:
+  en: ccbb05893bd045aa
+  zh: a8f57e20f084199f
+/agent-note-plugin-market-index-format/decision/install-arguments:
+  en: 87a4a7c6524b2f1f
+  zh: c85bd4ee2d6e8a70
+/agent-note-plugin-market-index-format/decision/nomix-compatibility:
+  en: 2b86ddd8d3ebf7c8
+  zh: 6ff7f3a7ee2cd708
+/agent-note-plugin-market-index-format/decision/generator-obligations:
+  en: 7d620f037f1a1b62
+  zh: 54735a1025f6c213
+/agent-note-plugin-market-index-format/decision/reader-rules:
+  en: a10c2b1bee841e7f
+  zh: 33926875904decfd
+/agent-note-plugin-market-index-format/alternatives-considered:
+  en: 0789283fea75fe78
+  zh: 4a0e7d4789a851bb
+/agent-note-plugin-market-index-format/consequences:
+  en: 9364bc36773069b2
+  zh: 90177b2b399ad52a
+/agent-note-plugin-market-index-format/risks:
+  en: 1175a88c9fd25316
+  zh: 5f35034aa3865d27

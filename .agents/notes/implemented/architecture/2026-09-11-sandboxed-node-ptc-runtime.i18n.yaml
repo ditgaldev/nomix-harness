@@ -1,0 +1,31 @@
+# Bilingual-pair consistency record for 2026-09-11-sandboxed-node-ptc-runtime.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-09-11-sandboxed-node-ptc-runtime.md
+/agent-note-sandboxed-node-execution-for-ptc:
+  en: e4877b5172b46220
+  zh: adea3d84e5b59b3a
+/agent-note-sandboxed-node-execution-for-ptc/problem:
+  en: 53a735dd659d0cae
+  zh: 3e65a21a8c4f7023
+/agent-note-sandboxed-node-execution-for-ptc/decision:
+  en: 0ed4c6ab9ec079f7
+  zh: f0c80d8a2a75f835
+/agent-note-sandboxed-node-execution-for-ptc/decision/resolved-inputs-and-policy:
+  en: 038598b6f86ce406
+  zh: e05d51ffcddc6b63
+/agent-note-sandboxed-node-execution-for-ptc/decision/control-and-lifetime:
+  en: 2c7a694b04951772
+  zh: 133b95b0477b127f
+/agent-note-sandboxed-node-execution-for-ptc/decision/resource-limits:
+  en: b6f0247eaf0c2b0c
+  zh: 32d0dc47fdcd81b0
+/agent-note-sandboxed-node-execution-for-ptc/alternatives-considered:
+  en: 8ffcc2b32a2243d7
+  zh: 81d48d38947abc76
+/agent-note-sandboxed-node-execution-for-ptc/consequences:
+  en: c0aa3a23a03ba234
+  zh: 257c7d35a17abbea
+/agent-note-sandboxed-node-execution-for-ptc/deferred-timeout-design:
+  en: 455d66252cd23253
+  zh: bf3839a13dbaaab5

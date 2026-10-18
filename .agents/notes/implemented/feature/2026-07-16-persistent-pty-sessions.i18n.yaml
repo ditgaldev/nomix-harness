@@ -1,6 +1,49 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for 2026-07-16-persistent-pty-sessions.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-07-16-persistent-pty-sessions.md
-2026-07-16-persistent-pty-sessions.md: 1ca12e45c1c862c0f3b99bb3af1e8fb5adc154b2
-2026-07-16-persistent-pty-sessions.zh.md: 2c388f8004c888b116add679e06598be4d2ba4b8
+/agent-note-persistent-pty-sessions:
+  en: 54f4f3ce42128f92
+  zh: bff40cf16273382e
+/agent-note-persistent-pty-sessions/problem:
+  en: 389a877b5ef08fc6
+  zh: b57e9f0e9ae099c0
+/agent-note-persistent-pty-sessions/decision:
+  en: 022054e7a1f4a6f4
+  zh: 6920ef9787c7c885
+/agent-note-persistent-pty-sessions/decision/package-topology:
+  en: 270f6755c61a413b
+  zh: 8cfa71c99f2a9fb1
+/agent-note-persistent-pty-sessions/decision/agent-ownership-and-identity:
+  en: bdbb2106c3e823f0
+  zh: 89deb2ab4b3f50b8
+/agent-note-persistent-pty-sessions/decision/security-and-process-boundary:
+  en: 45af336b503c7564
+  zh: 0d3f144e30516924
+/agent-note-persistent-pty-sessions/decision/six-model-facing-tools:
+  en: e226ec743425ddfc
+  zh: 383e48b17da7a525
+/agent-note-persistent-pty-sessions/decision/local-readiness-detection:
+  en: 11f145e19f79aeb1
+  zh: 46fce82bb762f461
+/agent-note-persistent-pty-sessions/decision/model-visible-output-and-durability:
+  en: 1b504ab41b47216d
+  zh: 8fb3d360b3a4e6a1
+/agent-note-persistent-pty-sessions/decision/process-tree-teardown:
+  en: e96a972845bc3513
+  zh: d76d7dfb80985e9d
+/agent-note-persistent-pty-sessions/decision/composition-and-rollout:
+  en: 3b679c7ff2a259ca
+  zh: b149bc948226eb19
+/agent-note-persistent-pty-sessions/decision/deferred-work:
+  en: c0ae6d86dd5c0635
+  zh: 737bd3fda903d5e3
+/agent-note-persistent-pty-sessions/alternatives-considered:
+  en: f9349de2b5996335
+  zh: 6a5075cb1e469d04
+/agent-note-persistent-pty-sessions/verification:
+  en: 08cd5f0369ee69e9
+  zh: 3e9b13ba1f8b6bff
+/agent-note-persistent-pty-sessions/consequences:
+  en: 664754d5c6c54522
+  zh: a56da8dac1a1a718

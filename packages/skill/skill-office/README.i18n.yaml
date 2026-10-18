@@ -1,0 +1,40 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/skill/skill-office/README.md
+/:
+  en: b65118b967447a79
+  zh: 83afe7dbc1a82c44
+/nomix-ai-nomix-skill-office:
+  en: ce64816c01f20ade
+  zh: 5e6f99574016ec64
+/nomix-ai-nomix-skill-office/summary:
+  en: 3f41e39809756048
+  zh: 5ec8623eeb617755
+/nomix-ai-nomix-skill-office/table-of-contents:
+  en: c361195a73cf5755
+  zh: 745b04e7be0be369
+/nomix-ai-nomix-skill-office/use-this-package:
+  en: c31fc001e4a2bd08
+  zh: 6faf20bd1356ccb1
+/nomix-ai-nomix-skill-office/use-this-package/progressive-loading:
+  en: d251c551dc229a2b
+  zh: 82201ee78d37948a
+/nomix-ai-nomix-skill-office/understand-the-implementation:
+  en: 6946e30f3663c72f
+  zh: 81dd5de9c7e61562
+/nomix-ai-nomix-skill-office/further-exploration:
+  en: bb26b5f21f75398b
+  zh: a403d41562e429d6
+/nomix-ai-nomix-skill-office/model-experience:
+  en: 882bf88608d2788e
+  zh: d848f6ae36716de3
+/nomix-ai-nomix-skill-office/model-experience/kv-cache-effect:
+  en: dc9e9205d989f1d0
+  zh: 01bdbbfba743813a
+/nomix-ai-nomix-skill-office/known-limitations-and-deferred-work:
+  en: 1f718fc3bb4352d9
+  zh: c1aa108ad2b05fdd
+/nomix-ai-nomix-skill-office/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 8ec3e73528ddb1a6

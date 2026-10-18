@@ -1,6 +1,55 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/util/home-paths/README.md
-README.md: 981f7472f1c2727ff273301dd36c2ef1ea6c6f66
-README.zh.md: 1707ac9e098bbc0106cce86442cca216d146e1dd
+/:
+  en: 1d35ba3695edd049
+  zh: 5c9740a09a4cd9a8
+/nomix-ai-nomix-home-paths:
+  en: 67c523bd7064867c
+  zh: 7e9803465ea4619d
+/nomix-ai-nomix-home-paths/summary:
+  en: 0ee827986166cbca
+  zh: 074c86a17fe20b1e
+/nomix-ai-nomix-home-paths/table-of-contents:
+  en: 80b31a934611cb4a
+  zh: 05f3f7f9cb2fd881
+/nomix-ai-nomix-home-paths/use-this-package:
+  en: 5322022224da2f27
+  zh: d5cba67f4ea3e429
+/nomix-ai-nomix-home-paths/use-this-package/resolving-the-home:
+  en: 31ad4f5b50dc7b44
+  zh: 6003683da7551868
+/nomix-ai-nomix-home-paths/use-this-package/resolving-the-shared-agents-root:
+  en: 976f378faba56f95
+  zh: a8171317e49882e8
+/nomix-ai-nomix-home-paths/use-this-package/displaying-a-home:
+  en: 27757a243c7c8260
+  zh: 74753e7fe89c5d9b
+/nomix-ai-nomix-home-paths/use-this-package/expanding-user-paths:
+  en: 80bf5dead177c1d8
+  zh: 6faf257afbb9c246
+/nomix-ai-nomix-home-paths/use-this-package/canonicalizing-watch-paths:
+  en: 55c5d8179de704c5
+  zh: b86395e9605807cd
+/nomix-ai-nomix-home-paths/understand-the-implementation:
+  en: 3f97bd4606e12d4a
+  zh: 8f09f108141a478e
+/nomix-ai-nomix-home-paths/understand-the-implementation/source-map:
+  en: 584610e67c4aa386
+  zh: 766f77e35c65193d
+/nomix-ai-nomix-home-paths/understand-the-implementation/resolution-rules:
+  en: d8da215e2ea84588
+  zh: ef0bbb281ab64eab
+/nomix-ai-nomix-home-paths/understand-the-implementation/canonicalization-mechanics:
+  en: a79aecd162317dc2
+  zh: 342f9bae0231c3de
+/nomix-ai-nomix-home-paths/further-exploration:
+  en: ee69f0de607baba5
+  zh: 6a0bfd2e0a9f703f
+/nomix-ai-nomix-home-paths/known-limitations-and-deferred-work:
+  en: aa4aecf31a596da0
+  zh: 22dea997610fae2d
+/nomix-ai-nomix-home-paths/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/cordis-plugin-loader",
   "description": "Plugin loader for cordis",
-  "version": "1.0.2",
+  "version": "1.0.6",
   "publishConfig": {
     "access": "public"
   },
@@ -30,8 +30,8 @@
   "author": "Shigma <shigma10826@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "@nomix-ai/cordis": "workspace:^",
-    "node-addon-require-builtin": "^0.1.4"
+    "@nomix-ai/cordis": "workspace:~",
+    "node-addon-require-builtin": "^0.1.9"
   },
   "peerDependenciesMeta": {
     "node-addon-require-builtin": {
@@ -39,6 +39,7 @@
     }
   },
   "dependencies": {
-    "@nomix-ai/cosmokit": "workspace:^"
+    "@nomix-ai/cosmokit": "workspace:~",
+    "@nomix-ai/schemastery": "workspace:~"
   }
 }

@@ -7,7 +7,7 @@
 
 import { describe, expect, it } from 'vitest'
 import fc from 'fast-check'
-import { isJsonValue } from '@nomix-ai/nomix-session'
+import { isJsonValue } from '@nomix-ai/nomix-util-values'
 import { parameterSchemaSpecToJsonSchema, validateArgs } from '@nomix-ai/nomix-tools'
 import type { ParameterPropertySpec, ParameterSchemaSpec, ValueSchemaSpec } from '@nomix-ai/nomix-tools'
 

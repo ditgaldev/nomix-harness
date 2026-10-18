@@ -1,0 +1,46 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-sidebar-documentpreview/README.md
+/:
+  en: ef50065f5ff17aa1
+  zh: ee5d2b7986739fca
+/nomix-ai-nomix-client-ui-sidebar-documentpreview:
+  en: 490ac055120dff2b
+  zh: fa65fc0141420269
+/nomix-ai-nomix-client-ui-sidebar-documentpreview/summary:
+  en: a74c16667d0baada
+  zh: 4fd709ff9f98b84f
+/nomix-ai-nomix-client-ui-sidebar-documentpreview/table-of-contents:
+  en: 0dd8c3a22e28aacf
+  zh: c27c11bf4b5cceba
+/nomix-ai-nomix-client-ui-sidebar-documentpreview/what-it-registers:
+  en: a5ac3ddb97fba107
+  zh: fb8358fd1d0be57c
+/nomix-ai-nomix-client-ui-sidebar-documentpreview/addresses:
+  en: c639c02479080972
+  zh: a46eb34bef559475
+/nomix-ai-nomix-client-ui-sidebar-documentpreview/how-it-reads:
+  en: e904342d299d4d43
+  zh: 98ede71dbaacf8de
+/nomix-ai-nomix-client-ui-sidebar-documentpreview/excel-preview:
+  en: 479ea2b3040b24c1
+  zh: a023ea240ea70368
+/nomix-ai-nomix-client-ui-sidebar-documentpreview/office-preview:
+  en: 75754b2afad67076
+  zh: b1213435da5270ed
+/nomix-ai-nomix-client-ui-sidebar-documentpreview/navigation:
+  en: 5cd81a7b3cdc83bd
+  zh: 4cdd1b7ede497925
+/nomix-ai-nomix-client-ui-sidebar-documentpreview/model-experience:
+  en: ca1deb99d0e44755
+  zh: f285fc56cee669ec
+/nomix-ai-nomix-client-ui-sidebar-documentpreview/model-experience/kv-cache-effect:
+  en: 7edb4c0bb5f13847
+  zh: ae5d0bbebe4aa563
+/nomix-ai-nomix-client-ui-sidebar-documentpreview/known-limitations-and-deferred-work:
+  en: b6fe654895feedf2
+  zh: ebf89dc4f611b64d
+/nomix-ai-nomix-client-ui-sidebar-documentpreview/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

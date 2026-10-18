@@ -2,9 +2,9 @@ import { writeFile } from 'node:fs/promises'
 import { Context } from '@nomix-ai/cordis'
 import AgentLoop from '@nomix-ai/nomix-agent-loop'
 import { mountAgentLoopTestDependencies } from '@nomix-ai/nomix-agent-loop-testkit'
-import { createUserMessage, CallId, type GenerateOptions, LlmAdapter, type StreamChunk  } from '@nomix-ai/nomix-llm'
+import { createUserMessage, ToolCallId, type GenerateOptions, LlmAdapter, type StreamChunk  } from '@nomix-ai/nomix-llm'
 import { SessionId } from '@nomix-ai/nomix-session'
-import JsonlSessionPersistence from '@nomix-ai/nomix-session-persistence-jsonl'
+import * as JsonlSessionPersistence from '@nomix-ai/nomix-session-persistence-jsonl'
 import * as checkpointPolicy from '../../src/index.ts'
 
 function waitForCrash(): Promise<never> {
@@ -29,7 +29,7 @@ class CrashAdapter extends LlmAdapter {
     yield {
       type: 'block-end',
       index: 0,
-      block: { type: 'tool-call', id: CallId('crash-call'), name: 'crash_tool', arguments: '{}' },
+      block: { type: 'tool-call', id: ToolCallId('crash-call'), name: 'crash_tool', arguments: '{}' },
     }
     yield { type: 'finish', reason: { kind: 'tool-calls' } }
   }

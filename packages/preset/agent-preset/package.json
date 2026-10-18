@@ -1,0 +1,52 @@
+{
+  "name": "@nomix-ai/nomix-agent-preset",
+  "description": "Declare an Agent capability composition in Cordis YAML",
+  "version": "0.2.9",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
+    "directory": "packages/preset/agent-preset"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "skills",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/cordis-plugin-loader": "workspace:~",
+    "@nomix-ai/nomix-agent-preset-registry": "workspace:*"
+  },
+  "dependencies": {
+    "@nomix-ai/schemastery": "workspace:~"
+  },
+  "devDependencies": {
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/cordis-plugin-include": "workspace:~",
+    "@nomix-ai/cordis-plugin-loader": "workspace:~",
+    "@nomix-ai/nomix-agent-preset-registry": "workspace:*",
+    "@nomix-ai/nomix-compaction-tool-result-pruner": "workspace:*",
+    "@nomix-ai/nomix-skill": "workspace:*",
+    "@nomix-ai/nomix-skill-filesystem": "workspace:*",
+    "@nomix-ai/schemastery": "workspace:~",
+    "@types/js-yaml": "^4.0.9",
+    "js-yaml": "^4.3.2"
+  }
+}

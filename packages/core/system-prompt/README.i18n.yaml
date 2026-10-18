@@ -1,6 +1,88 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/core/system-prompt/README.md
-README.md: b33ff111f1b08afa40f90d6622fdae2e3aeaf101
-README.zh.md: 52d8d8b7acffd265efa7970667311ecb738084d3
+/:
+  en: 51d99b2500db958f
+  zh: 91f2b113ba7989fd
+/nomix-ai-nomix-system-prompt:
+  en: add99ea87a4b958c
+  zh: be1e7835213eb783
+/nomix-ai-nomix-system-prompt/summary:
+  en: 9aba0a7e82c7f63c
+  zh: 03a6a8d5dbffed10
+/nomix-ai-nomix-system-prompt/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-system-prompt/use-this-package:
+  en: 3a5b085100a0fd1b
+  zh: a233d6e651120bf3
+/nomix-ai-nomix-system-prompt/use-this-package/configure-the-prompt:
+  en: 0f1dcff8f40d0f3e
+  zh: bb57a02c955454f3
+/nomix-ai-nomix-system-prompt/use-this-package/contribute-a-prompt-section:
+  en: 165fecb5329b00b6
+  zh: a7c595d1787916c9
+/nomix-ai-nomix-system-prompt/use-this-package/contribute-a-prompt-variable:
+  en: 731a9bfaec2042e4
+  zh: 01a83cf714707268
+/nomix-ai-nomix-system-prompt/use-this-package/contribute-tool-schemas:
+  en: 009ef267dac2f270
+  zh: e79c24bff5cd836f
+/nomix-ai-nomix-system-prompt/use-this-package/suppress-runtime-context:
+  en: a664608a3b37f8d7
+  zh: d6dd60772f4d72b8
+/nomix-ai-nomix-system-prompt/understand-the-implementation:
+  en: ce7e776e9d516bdb
+  zh: 59d2751743db7795
+/nomix-ai-nomix-system-prompt/understand-the-implementation/design-concept:
+  en: c91963b89a866fed
+  zh: ef9ef4940145778f
+/nomix-ai-nomix-system-prompt/understand-the-implementation/source-map:
+  en: d9575bcb07a1145b
+  zh: 0f1a388780d055b1
+/nomix-ai-nomix-system-prompt/understand-the-implementation/assembly-and-rendering:
+  en: 54977e6c431f851e
+  zh: ef60007054b97ff0
+/nomix-ai-nomix-system-prompt/understand-the-implementation/scoping:
+  en: 1100ab1dfe961631
+  zh: c510275c893951b4
+/nomix-ai-nomix-system-prompt/further-exploration:
+  en: a6e939cda1443650
+  zh: 7826ad127f0744f9
+/nomix-ai-nomix-system-prompt/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-system-prompt/model-experience/system-prompt:
+  en: cf78b9dd5596495f
+  zh: bd44560f8c2435e8
+/nomix-ai-nomix-system-prompt/model-experience/system-prompt/what-the-model-sees:
+  en: 0aaabee3a9883eea
+  zh: 13e6ead5b455fa30
+/nomix-ai-nomix-system-prompt/model-experience/system-prompt/what-the-model-sees/harness-identity:
+  en: 40effd71cb503319
+  zh: 9969356237a4f398
+/nomix-ai-nomix-system-prompt/model-experience/system-prompt/token-effect:
+  en: 29722e212137deaa
+  zh: 92cd0f1a16b10315
+/nomix-ai-nomix-system-prompt/model-experience/system-prompt/kv-cache-effect:
+  en: f3db3674fb0bd039
+  zh: ba659ce71b23d69a
+/nomix-ai-nomix-system-prompt/model-experience/tool-schemas:
+  en: 3039bc5e7a796b21
+  zh: 6b7a9eaf69c9ea53
+/nomix-ai-nomix-system-prompt/model-experience/tool-schemas/what-the-model-sees:
+  en: c6bb6f762c48afcd
+  zh: 79f8ebb5218e3364
+/nomix-ai-nomix-system-prompt/model-experience/tool-schemas/token-effect:
+  en: f3a7d374c55e1720
+  zh: 0ee48af678cb875f
+/nomix-ai-nomix-system-prompt/model-experience/tool-schemas/kv-cache-effect:
+  en: ebd329e360f0d143
+  zh: 9d67fe503a6a095a
+/nomix-ai-nomix-system-prompt/known-limitations-and-deferred-work:
+  en: 23bb9f59ceb1620c
+  zh: be34f1770fa2e027
+/nomix-ai-nomix-system-prompt/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

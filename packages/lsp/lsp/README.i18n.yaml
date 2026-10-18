@@ -1,6 +1,58 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/lsp/lsp/README.md
-README.md: f63a88d58befecca0232d1e23824ff1ec577de76
-README.zh.md: 0e306eab30e2821b814f17f2d35f2466c4185e8e
+/:
+  en: 1a8099ab9b557ff7
+  zh: 7054b2eab0e1fda8
+/nomix-ai-nomix-lsp:
+  en: 3990d857523fe2c9
+  zh: 803fae344d900745
+/nomix-ai-nomix-lsp/summary:
+  en: 0da4d9f3651bfb69
+  zh: 33da602bd698e4ec
+/nomix-ai-nomix-lsp/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-lsp/use-this-package:
+  en: 39ddcc57203b5a43
+  zh: ee46b6bb58434337
+/nomix-ai-nomix-lsp/use-this-package/when-to-choose-it:
+  en: 104953d3732e7d81
+  zh: 54acd5d4742bd728
+/nomix-ai-nomix-lsp/use-this-package/composing-a-navigation-stack:
+  en: 16f33dedf239c315
+  zh: 8b584a37af01f89c
+/nomix-ai-nomix-lsp/use-this-package/the-four-operations:
+  en: 201a9b2f8dfb13eb
+  zh: c9041adde15602c1
+/nomix-ai-nomix-lsp/use-this-package/failures-and-recovery:
+  en: eeeff6f68bba6807
+  zh: a83372441c505bb6
+/nomix-ai-nomix-lsp/understand-the-implementation:
+  en: 1e0acac55fc6c314
+  zh: fe4ebe8a86dc480f
+/nomix-ai-nomix-lsp/understand-the-implementation/design-philosophy:
+  en: 6a849c4b1269c4a2
+  zh: 0e21422a47383817
+/nomix-ai-nomix-lsp/understand-the-implementation/source-map:
+  en: 052a99d148619000
+  zh: 76624984e9bdbdd2
+/nomix-ai-nomix-lsp/understand-the-implementation/registration-and-selection-lifecycle:
+  en: 549e97f436b1570c
+  zh: df0436c58dd31175
+/nomix-ai-nomix-lsp/further-exploration:
+  en: 7d7a15b842f4790a
+  zh: b080dfb0733ac02d
+/nomix-ai-nomix-lsp/model-experience:
+  en: ee92b4e7091c9394
+  zh: c0e8833e2c32d80c
+/nomix-ai-nomix-lsp/model-experience/kv-cache-effect:
+  en: 3925b4c72d4e7fdf
+  zh: d1c8111f66448498
+/nomix-ai-nomix-lsp/known-limitations-and-deferred-work:
+  en: e7ba99257e4da9e6
+  zh: e384e82d4c707af1
+/nomix-ai-nomix-lsp/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

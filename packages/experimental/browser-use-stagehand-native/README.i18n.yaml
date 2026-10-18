@@ -1,0 +1,67 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/browser-use-stagehand-native/README.md
+/:
+  en: 3f9127c3981e9453
+  zh: b4fcc1468319b9b2
+/nomix-ai-nomix-experimental-browser-use-stagehand-native:
+  en: 6fec296e44a52983
+  zh: 825fd63b7966ce1a
+/nomix-ai-nomix-experimental-browser-use-stagehand-native/summary:
+  en: 05c2fd0d2d2856a0
+  zh: fd90ef7fce885498
+/nomix-ai-nomix-experimental-browser-use-stagehand-native/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: a949126695843224
+/nomix-ai-nomix-experimental-browser-use-stagehand-native/use-this-package:
+  en: de47f71ab56fd0ed
+  zh: fdc58f273a7dba3d
+/nomix-ai-nomix-experimental-browser-use-stagehand-native/use-this-package/minimal-configuration:
+  en: 1554d55fd5be9735
+  zh: d39e7dd0b8ff1b7d
+/nomix-ai-nomix-experimental-browser-use-stagehand-native/use-this-package/verification:
+  en: dbb85e5db3e4294c
+  zh: 2f1e2c3f8d511a36
+/nomix-ai-nomix-experimental-browser-use-stagehand-native/understand-the-implementation:
+  en: 59315d15c5d81716
+  zh: 77919c0185288b0f
+/nomix-ai-nomix-experimental-browser-use-stagehand-native/further-exploration:
+  en: d437f23d533594f0
+  zh: a13556c17a3780fb
+/nomix-ai-nomix-experimental-browser-use-stagehand-native/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-experimental-browser-use-stagehand-native/model-experience/browser-guidance:
+  en: db27706a7478c425
+  zh: d36d746cf60e56c4
+/nomix-ai-nomix-experimental-browser-use-stagehand-native/model-experience/browser-guidance/what-the-model-sees:
+  en: c76eeb849a7dcc9d
+  zh: 466f6573ee758f66
+/nomix-ai-nomix-experimental-browser-use-stagehand-native/model-experience/browser-guidance/what-the-model-sees/browser-guidance-text:
+  en: d618f1a8fcd2f9b4
+  zh: a2c8620646573b9f
+/nomix-ai-nomix-experimental-browser-use-stagehand-native/model-experience/browser-guidance/token-effect:
+  en: 54fb52d906a0ed1d
+  zh: 0c92cb1daf790ce9
+/nomix-ai-nomix-experimental-browser-use-stagehand-native/model-experience/browser-guidance/kv-cache-effect:
+  en: 8b85590b83e40fc0
+  zh: 9061599a76700e66
+/nomix-ai-nomix-experimental-browser-use-stagehand-native/model-experience/native-browser-tools-and-results:
+  en: 0295a32030d24cd0
+  zh: 65ef3d8920d811c2
+/nomix-ai-nomix-experimental-browser-use-stagehand-native/model-experience/native-browser-tools-and-results/what-the-model-sees:
+  en: e16526daaa091df4
+  zh: 26129ca8c42e507c
+/nomix-ai-nomix-experimental-browser-use-stagehand-native/model-experience/native-browser-tools-and-results/token-effect:
+  en: 621f120c7ae88c8a
+  zh: 1d981105fa6d400d
+/nomix-ai-nomix-experimental-browser-use-stagehand-native/model-experience/native-browser-tools-and-results/kv-cache-effect:
+  en: 2bd36c8da753a1e5
+  zh: 172e2151f7c7b0cd
+/nomix-ai-nomix-experimental-browser-use-stagehand-native/known-limitations-and-deferred-work:
+  en: bbc52aea1442fcc2
+  zh: b1bf4565db09bedf
+/nomix-ai-nomix-experimental-browser-use-stagehand-native/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

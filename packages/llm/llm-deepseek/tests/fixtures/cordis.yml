@@ -1,0 +1,24 @@
+- name: '@nomix-ai/nomix-llm'
+- name: '@nomix-ai/nomix-session'
+- name: '@nomix-ai/nomix-session-projection'
+- name: '@nomix-ai/nomix-system-prompt'
+- name: '@nomix-ai/nomix-tools'
+- name: '@nomix-ai/nomix-agent'
+- name: '@nomix-ai/nomix-agent-loop'
+  config:
+    agents: []
+- name: '@nomix-ai/nomix-credentials-local'
+  config:
+    path: {{credentials}}
+    watch: false
+- name: '@nomix-ai/nomix-llm-deepseek-api-key'
+  config:
+    apiKeyEnv: DEEPSEEK_API_KEY
+    baseURL: {{endpoint}}
+    thinking: enabled
+    reasoningEffort: high
+    maxTokens: 256000
+    streamIdleTimeoutMs: 300000
+- name: '@nomix-ai/nomix-llm-deepseek-account'
+  config:
+    baseURL: {{endpoint}}

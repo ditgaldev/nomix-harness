@@ -1,6 +1,55 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/host/directory-picker-native/README.md
-README.md: b0babafec5f2e439eb6acfa632a72543800e4a6c
-README.zh.md: 5079c0f11353b2371c5d49461cbd46da848d2540
+/:
+  en: caa1e08492610d5a
+  zh: ea5b4fca758305d4
+/nomix-ai-nomix-host-directory-picker-native:
+  en: f8b9873b09e120f6
+  zh: 79c13a5f81a1f487
+/nomix-ai-nomix-host-directory-picker-native/summary:
+  en: 0385d738a5c1301e
+  zh: edbdaa88e0ac5a5b
+/nomix-ai-nomix-host-directory-picker-native/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-host-directory-picker-native/use-this-package:
+  en: ae1b7eabeea5047d
+  zh: 192d3f3bdb96b5eb
+/nomix-ai-nomix-host-directory-picker-native/use-this-package/when-to-choose-it:
+  en: 72e59a5bf6716b31
+  zh: 821e59ace95531b8
+/nomix-ai-nomix-host-directory-picker-native/use-this-package/what-an-operator-experiences:
+  en: 6ea5dc02d78653c1
+  zh: 5d247656f3650d6f
+/nomix-ai-nomix-host-directory-picker-native/use-this-package/observable-failures:
+  en: 0d836264f9ef78c8
+  zh: 46b8a1e10c0d5594
+/nomix-ai-nomix-host-directory-picker-native/understand-the-implementation:
+  en: 42b15ac6321706aa
+  zh: 4ed0861911abaf5d
+/nomix-ai-nomix-host-directory-picker-native/understand-the-implementation/design-concept:
+  en: bec40f8c11a8deb8
+  zh: 90fc9668a0c92dd7
+/nomix-ai-nomix-host-directory-picker-native/understand-the-implementation/platform-mechanics:
+  en: cbc4ceea15a89d43
+  zh: ce659dc6993cb25b
+/nomix-ai-nomix-host-directory-picker-native/understand-the-implementation/source-map:
+  en: 22ecabd6b74d6ecb
+  zh: af59381cf2957b68
+/nomix-ai-nomix-host-directory-picker-native/further-exploration:
+  en: 96544d51ed0e5de7
+  zh: be4a4a34d51ff59b
+/nomix-ai-nomix-host-directory-picker-native/model-experience:
+  en: cdbb9c75fbb91bb5
+  zh: 35047dda1956f0ac
+/nomix-ai-nomix-host-directory-picker-native/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: de54f3467ef3b9be
+/nomix-ai-nomix-host-directory-picker-native/known-limitations-and-deferred-work:
+  en: 08faf27d90fde463
+  zh: b8edfb7ec238f2b4
+/nomix-ai-nomix-host-directory-picker-native/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

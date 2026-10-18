@@ -1,6 +1,25 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for storage.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/subsystems/storage.md
-storage.md: 52a841d69046cc040a940eb7d7906d8b5e26a2a3
-storage.zh.md: 3cb7d44fc548903da60a05aa4886bf82d0f168b5
+/storage:
+  en: e8d6a17707428684
+  zh: d71ee9e804bb363f
+/storage/the-hub-ctx-storage:
+  en: b11e06e7c0e0fd13
+  zh: 4585f26ff416cb41
+/storage/the-backend-contract:
+  en: ab116037bcc6035b
+  zh: deca2453d201bd41
+/storage/declaring-a-domain:
+  en: 1d328f7ed1f1f531
+  zh: 1a7ffacfae2913ea
+/storage/the-open-domain:
+  en: 2468b5df66c49b51
+  zh: 1587f460e9769db2
+/storage/the-domain-facility-ctx-storagedomain:
+  en: deed74fcd4506ef4
+  zh: 8e3e6e5d2dc2e989
+/storage/the-change-event-domain-changed:
+  en: a3a4ebdd9cb3cca1
+  zh: f54667b0170327e3

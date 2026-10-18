@@ -1,30 +1,37 @@
 import { fileURLToPath } from 'node:url'
-import { Context } from '@nomix-ai/cordis'
-import { agentEvents, Inbox, type Agent } from '@nomix-ai/nomix-agent'
-import { CallId } from '@nomix-ai/nomix-llm'
+import { agentEvents, type Agent } from '@nomix-ai/nomix-agent'
+import { ToolCallId } from '@nomix-ai/nomix-llm'
 import { boot, loadOverlayPatches } from '@nomix-ai/nomix-app-boot'
 import { SessionId } from '@nomix-ai/nomix-session'
 import type {} from '@nomix-ai/nomix-skill'
 import type {} from '@nomix-ai/nomix-tools'
+import { unsupportedInbox } from '@nomix-ai/nomix-agent-loop-testkit'
 
 const overlayPath = process.argv[2]
 if (overlayPath === undefined) throw new Error('nomix-badge snapshot requires an overlay path')
 const rootConfigPath = fileURLToPath(new URL('../../../../../packages/bundle/base/tests/fixtures/root.cordis.yml', import.meta.url))
 const basePatchPath = fileURLToPath(new URL('../../../../../packages/bundle/base/cordis.patch.yml', import.meta.url))
+// The fixture owns the optional provider; the base bundle has no dependency on it.
+const overlays = loadOverlayPatches('nomix-badge-snapshot', overlayPath).map(patch => patch.insert === undefined ? patch : {
+  ...patch,
+  insert: patch.insert.map(row => row.name === '@nomix-ai/nomix-skill-badge'
+    ? { ...row, name: import.meta.resolve('@nomix-ai/nomix-skill-badge') }
+    : row),
+})
 const ctx = await boot('nomix-badge-snapshot', rootConfigPath, [
   ...loadOverlayPatches('nomix-badge-snapshot', basePatchPath),
-  ...loadOverlayPatches('nomix-badge-snapshot', overlayPath),
+  ...overlays,
 ])
 
 try {
   const agentId = SessionId('nomix-badge-snapshot')
   const session = ctx.sessions.create(agentId, { meta: { cwd: process.cwd() } })
   const agent: Agent = {
-    ctx: new Context(),
+    ctx,
     id: agentId,
     options: {},
     session,
-    inbox: new Inbox(session, { inserted: () => {}, discarded: () => {}, claimed: () => {} }),
+    inbox: unsupportedInbox(),
     status: 'idle',
     send: () => {},
     followup: () => {},
@@ -45,7 +52,7 @@ try {
     : undefined
   const summary = (await ctx.skills.list()).find(skill => skill.name === 'nomix-badge')
   const result = await ctx.tools.execute({
-    callId: CallId('nomix-badge-snapshot'),
+    callId: ToolCallId('nomix-badge-snapshot'),
     name: 'skill',
     arguments: { name: 'nomix-badge' },
     signal: new AbortController().signal,

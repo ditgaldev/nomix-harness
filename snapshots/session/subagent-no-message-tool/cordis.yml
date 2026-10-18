@@ -1,0 +1,48 @@
+# The parent owns its file and web tools; the child selects a separate preset.
+- id: tool-fs
+  disabled: true
+
+- id: tool-fs-search
+  disabled: true
+
+- id: tool-web
+  disabled: true
+
+- id: tool-subagent-control
+  disabled: true
+
+- insert:
+    - id: agent-preset-registry
+      name: '@nomix-ai/nomix-agent-preset-registry'
+      config:
+        default: parent
+    - id: preset-parent
+      name: '@nomix-ai/nomix-agent-preset'
+      config:
+        id: parent
+        plugins:
+          - name: '@nomix-ai/nomix-tool-fs'
+          - name: '@nomix-ai/nomix-tool-fs-search'
+            config:
+              sampleOverCapGlobResults: false
+          - name: '@nomix-ai/nomix-tool-web'
+            config:
+              fetch: true
+              searchTimeoutMs: 60000
+          - name: '@nomix-ai/nomix-tool-subagent-control'
+    - id: preset-child
+      name: '@nomix-ai/nomix-agent-preset'
+      config:
+        id: child
+        plugins: []
+    - id: parent-agent-preset
+      name: '../../../packages/test-support/session-snapshot/tests/fixtures/parent-agent-preset.ts'
+
+- id: tool-subagent
+  name: '@nomix-ai/nomix-tool-subagent'
+  inject: [agentPresets]
+  config:
+    provider: spawn
+    toolName: subagent
+    maxDepth: 1
+    agentPreset: child

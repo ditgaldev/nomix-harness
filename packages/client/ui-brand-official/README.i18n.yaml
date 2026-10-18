@@ -1,6 +1,43 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/client/ui-brand-official/README.md
-README.md: 1c65aeb74afc04d81d29914795989ff0c0afcb11
-README.zh.md: 20e7ab22d18bbdfec1125806b88f09b883f4e6b4
+/:
+  en: 272760001e972562
+  zh: 714096495435bdb5
+/nomix-ai-nomix-client-ui-brand-official:
+  en: be293e050b6ee354
+  zh: b3ae0c68099da3ab
+/nomix-ai-nomix-client-ui-brand-official/summary:
+  en: edcc5ab4ef0f8f66
+  zh: 4040ecd362728e83
+/nomix-ai-nomix-client-ui-brand-official/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-client-ui-brand-official/use-this-package:
+  en: cc9fb3deddb30025
+  zh: 1506871970512ee5
+/nomix-ai-nomix-client-ui-brand-official/use-this-package/choosing-the-profile:
+  en: caa11a35efb227dd
+  zh: e1eaeadd4a0bf8f7
+/nomix-ai-nomix-client-ui-brand-official/use-this-package/replacing-the-brand:
+  en: 6a923aa630d01d65
+  zh: 5df0c24eebd9d0d0
+/nomix-ai-nomix-client-ui-brand-official/understand-the-implementation:
+  en: 2df46179ac854168
+  zh: 6159b980eeea6eec
+/nomix-ai-nomix-client-ui-brand-official/further-exploration:
+  en: b1b7be2fafc04a13
+  zh: 1a45652ae91c9d77
+/nomix-ai-nomix-client-ui-brand-official/model-experience:
+  en: 618008c7641070e7
+  zh: 7233febb4d92ccfb
+/nomix-ai-nomix-client-ui-brand-official/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: f57cc48a1b5cbfa9
+/nomix-ai-nomix-client-ui-brand-official/known-limitations-and-deferred-work:
+  en: 33cdb3d8cb039c78
+  zh: f639f935e85147bf
+/nomix-ai-nomix-client-ui-brand-official/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

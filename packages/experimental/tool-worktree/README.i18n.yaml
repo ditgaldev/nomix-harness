@@ -1,0 +1,46 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/tool-worktree/README.md
+/:
+  en: 7c7c8316f315eee0
+  zh: dfd3abcef256029e
+/nomix-ai-nomix-experimental-tool-worktree:
+  en: 87c7e4365e159d10
+  zh: 4b3a333bae7c069e
+/nomix-ai-nomix-experimental-tool-worktree/summary:
+  en: f0df470fd16d8d29
+  zh: 5f2d371d844b0568
+/nomix-ai-nomix-experimental-tool-worktree/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 2f8a621b991260a1
+/nomix-ai-nomix-experimental-tool-worktree/use-this-package:
+  en: 3c29115989c0e2b1
+  zh: 332c6775cc594bfa
+/nomix-ai-nomix-experimental-tool-worktree/understand-the-implementation:
+  en: c03f875211ab69a8
+  zh: 8f49b82f90a60223
+/nomix-ai-nomix-experimental-tool-worktree/further-exploration:
+  en: 73ff190043656378
+  zh: 2786f5c0966c762c
+/nomix-ai-nomix-experimental-tool-worktree/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-experimental-tool-worktree/model-experience/creation-tool:
+  en: 4062fcaa4794bed7
+  zh: b56d35fc675fc430
+/nomix-ai-nomix-experimental-tool-worktree/model-experience/creation-tool/what-the-model-sees:
+  en: 93e544d7727fa7f3
+  zh: 6d7c44f926c9cb79
+/nomix-ai-nomix-experimental-tool-worktree/model-experience/creation-tool/token-effect:
+  en: 6c3f73ba01233a36
+  zh: d64d87a425db4fbd
+/nomix-ai-nomix-experimental-tool-worktree/model-experience/creation-tool/kv-cache-effect:
+  en: 365f8ccedfa61bbb
+  zh: aa328044ba2528b8
+/nomix-ai-nomix-experimental-tool-worktree/known-limitations-and-deferred-work:
+  en: 72ddda200de29e82
+  zh: 5ebb04a8cfeae572
+/nomix-ai-nomix-experimental-tool-worktree/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

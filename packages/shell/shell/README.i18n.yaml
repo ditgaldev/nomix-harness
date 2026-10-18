@@ -1,6 +1,67 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/shell/shell/README.md
-README.md: f6eb756e446c2e59a56667b46acc6294de99ca98
-README.zh.md: 537e7da39921bcca2aba8caf8e06b5468b834b42
+/:
+  en: 4a173bf52227a3b6
+  zh: 76bb85595252765c
+/nomix-ai-nomix-shell:
+  en: a8f0f7a68e86fd79
+  zh: 3a777db5c53c31bf
+/nomix-ai-nomix-shell/summary:
+  en: bb40932744bc4b80
+  zh: 22e2af1327b2f835
+/nomix-ai-nomix-shell/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-shell/use-this-package:
+  en: b81fffe9eb713a49
+  zh: ac37478e7f1f7499
+/nomix-ai-nomix-shell/use-this-package/foreground-commands:
+  en: cf38f6bc0e150602
+  zh: 2ff6cfb0ce48a7b8
+/nomix-ai-nomix-shell/use-this-package/background-processes:
+  en: 277c543917453017
+  zh: d2c100e37944f151
+/nomix-ai-nomix-shell/use-this-package/deadlines-and-bounded-waits:
+  en: 719b0708bf3cf1cf
+  zh: 044f53d543960f42
+/nomix-ai-nomix-shell/use-this-package/requests-and-resolved-specs:
+  en: 1be18b2ab6608e48
+  zh: a4fdfaf2d0b95bb1
+/nomix-ai-nomix-shell/use-this-package/choosing-and-composing-an-executor:
+  en: 57628e7b9555fe71
+  zh: ecac46144741af11
+/nomix-ai-nomix-shell/use-this-package/the-shared-exit-status-contract:
+  en: f4125282c1deab36
+  zh: 46b8ee789ae68a9a
+/nomix-ai-nomix-shell/understand-the-implementation:
+  en: d2192b68c2faf92b
+  zh: 7678a2fd356d8587
+/nomix-ai-nomix-shell/understand-the-implementation/design-philosophy:
+  en: d391da4270f12cc0
+  zh: b0bbb9258fdda254
+/nomix-ai-nomix-shell/understand-the-implementation/source-map:
+  en: 1e9231bae2662059
+  zh: 2bac2b8e8fc08eb9
+/nomix-ai-nomix-shell/understand-the-implementation/settings-namespace:
+  en: a5b81ecee7fe9938
+  zh: 25fcf060b48e14cf
+/nomix-ai-nomix-shell/understand-the-implementation/background-lifecycle-and-ownership:
+  en: 63853c610719e1bb
+  zh: 09668e6fd34c9161
+/nomix-ai-nomix-shell/further-exploration:
+  en: bfa8028e9f9b1003
+  zh: bb41c789e9aa7fd3
+/nomix-ai-nomix-shell/model-experience:
+  en: 55b94dc9d817ff43
+  zh: ca3343bfbc4046a5
+/nomix-ai-nomix-shell/model-experience/kv-cache-effect:
+  en: 40294c1c31b74824
+  zh: 788a4799b1d65a8b
+/nomix-ai-nomix-shell/known-limitations-and-deferred-work:
+  en: 8b1b5d78fd6ac7b7
+  zh: be9e77f116cdb4bd
+/nomix-ai-nomix-shell/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3c8bbe93d71a3377

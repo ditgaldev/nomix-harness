@@ -1,6 +1,46 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/client/ui-commands/README.md
-README.md: d4f2b6867e14d310ccb04a27a583bc54f6f0f0bf
-README.zh.md: 9781d5ef05a2186470ec866288d1080ea54a46eb
+/:
+  en: e85ec1ccd1b80d98
+  zh: 1272b2ae6abeabdc
+/nomix-ai-nomix-client-ui-commands:
+  en: d75babf56d8b4646
+  zh: ee066d1996f3cfd0
+/nomix-ai-nomix-client-ui-commands/summary:
+  en: 770b1f492ac735e7
+  zh: 5602493729149219
+/nomix-ai-nomix-client-ui-commands/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-client-ui-commands/use-this-package:
+  en: 01adce72791579fa
+  zh: 70eb55a1529038e7
+/nomix-ai-nomix-client-ui-commands/use-this-package/kinds-and-decorations:
+  en: 57679a20574d8b3f
+  zh: 98d5e5a7781e6de1
+/nomix-ai-nomix-client-ui-commands/use-this-package/built-in-row-faces:
+  en: e96156be95ea87e3
+  zh: f5350db26483ec9f
+/nomix-ai-nomix-client-ui-commands/use-this-package/attachment-carrying-submissions:
+  en: 4feecdbec0c3f39e
+  zh: 618944ecade8a3a2
+/nomix-ai-nomix-client-ui-commands/understand-the-implementation:
+  en: 5a73ec5ca87d8b30
+  zh: 93a4322ccee3e3d6
+/nomix-ai-nomix-client-ui-commands/further-exploration:
+  en: eccc013d682009e7
+  zh: 333e0729d44408c9
+/nomix-ai-nomix-client-ui-commands/model-experience:
+  en: 3ec197644f2fe6ce
+  zh: a06a6fe8909b064f
+/nomix-ai-nomix-client-ui-commands/model-experience/kv-cache-effect:
+  en: 08efc268737977ca
+  zh: 7772a59064ea4039
+/nomix-ai-nomix-client-ui-commands/known-limitations-and-deferred-work:
+  en: cfce26d6a603cb7d
+  zh: 8332a8d1ad44abcf
+/nomix-ai-nomix-client-ui-commands/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

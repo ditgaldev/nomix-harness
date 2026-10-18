@@ -1,0 +1,43 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/client-ui-agent-team/README.md
+/:
+  en: 6deb254c416ff51b
+  zh: e0913c7be837da78
+/nomix-ai-nomix-experimental-client-ui-agent-team:
+  en: 5f711d12d24f1eca
+  zh: 9298aae47b507b05
+/nomix-ai-nomix-experimental-client-ui-agent-team/summary:
+  en: a30d7bbb951ed3ec
+  zh: 8b12eca1138820f0
+/nomix-ai-nomix-experimental-client-ui-agent-team/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-experimental-client-ui-agent-team/use-this-package:
+  en: d9f35aed3bb0ed46
+  zh: 3ee43cbab0771baf
+/nomix-ai-nomix-experimental-client-ui-agent-team/use-this-package/inspect-and-navigate-the-roster:
+  en: 62778e911a4ee9e9
+  zh: dff1dbbc3d5e4af6
+/nomix-ai-nomix-experimental-client-ui-agent-team/use-this-package/inspect-the-task-board:
+  en: cf09faa436dad9fd
+  zh: e7423f4111eb88f9
+/nomix-ai-nomix-experimental-client-ui-agent-team/understand-the-implementation:
+  en: 3ea723e7ea467be7
+  zh: dba02b20bef0fd7f
+/nomix-ai-nomix-experimental-client-ui-agent-team/further-exploration:
+  en: c5f17f45beb36607
+  zh: 7563dff652daf7c9
+/nomix-ai-nomix-experimental-client-ui-agent-team/model-experience:
+  en: 47ebeba07d72759d
+  zh: 8fe8133f6dd845a9
+/nomix-ai-nomix-experimental-client-ui-agent-team/model-experience/kv-cache-effect:
+  en: b51b320f5e4dacfc
+  zh: 6695947c3f9fed28
+/nomix-ai-nomix-experimental-client-ui-agent-team/known-limitations-and-deferred-work:
+  en: 254e4aa2f81037d2
+  zh: 3cdf19dffafb51df
+/nomix-ai-nomix-experimental-client-ui-agent-team/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

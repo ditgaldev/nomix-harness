@@ -1,0 +1,13 @@
+# Bilingual-pair consistency record for worktrees.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/subsystems/worktrees.md
+/git-worktrees:
+  en: 5ccb9bc4ff48ed86
+  zh: 193cf153f97b1bbf
+/git-worktrees/creation-and-retention:
+  en: 1d6c2fc4203fd954
+  zh: 768204d826146515
+/git-worktrees/request-and-result:
+  en: 8391b091607600eb
+  zh: 6c735a337d60d566

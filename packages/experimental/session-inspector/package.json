@@ -1,0 +1,75 @@
+{
+  "name": "@nomix-ai/nomix-experimental-session-inspector",
+  "description": "Experimental virtualized Session log and live Chat group/node inspectors",
+  "version": "0.2.9",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
+    "directory": "packages/experimental/session-inspector"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./locale/*.json": "./locale/*.json",
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "nomix": {
+    "client": {
+      "inject": [
+        "@nomix-ai/nomix-client-locale",
+        "@nomix-ai/nomix-client-ui-conversation",
+        "@nomix-ai/nomix-client-ui-sidebar-right",
+        "@nomix-ai/nomix-client-ui-session",
+        "@nomix-ai/nomix-client-ui-renderer"
+      ],
+      "platform": "web"
+    }
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/client.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@nomix-ai/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@nomix-ai/nomix-client-test-runtime": "workspace:*",
+    "@testing-library/react": "^16.3.3",
+    "react-dom": "^18.2.0",
+    "@nomix-ai/nomix-api-session-controller": "workspace:*",
+    "@nomix-ai/nomix-client-store": "workspace:*",
+    "@nomix-ai/nomix-client-ui-chat": "workspace:*",
+    "@nomix-ai/nomix-client-ui-primitives": "workspace:*",
+    "@nomix-ai/nomix-client-ui-sidebar-right": "workspace:*",
+    "@nomix-ai/nomix-client-ui-session": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@tanstack/react-virtual": "^3.14.10",
+    "react": "^18.2.0",
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-client-locale": "workspace:*",
+    "@nomix-ai/nomix-client-ui-conversation": "workspace:*",
+    "@nomix-ai/nomix-client-ui-renderer": "workspace:*",
+    "@nomix-ai/nomix-client-ui-slots": "workspace:*"
+  }
+}

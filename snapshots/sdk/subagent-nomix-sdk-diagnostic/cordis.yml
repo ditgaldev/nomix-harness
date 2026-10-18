@@ -1,0 +1,65 @@
+# TypeScript SDK snapshot patch for automatic NOMIX SDK failure notices.
+
+- id: skill-filesystem
+  name: '@nomix-ai/nomix-skill-filesystem'
+  config:
+    includeDefaultRoots: false
+
+- id: llm-deepseek
+  name: '@nomix-ai/nomix-llm-deepseek-api-key'
+  config:
+    thinking: enabled
+    reasoningEffort: max
+
+- id: session-persistence-jsonl
+  name: '@nomix-ai/nomix-session-persistence-jsonl'
+  config:
+    root: !!js nomixHomePath('sessions')
+    compression: !!js "process.env.NOMIX_SNAPSHOT === undefined ? 'zstd' : 'none'"
+
+- id: session-log-deepseek
+  name: '@nomix-ai/nomix-session-log-deepseek'
+  config:
+    enabled: true
+
+- insert:
+    - id: subagent-nomix-sdk-diagnostic
+      name: '@nomix-ai/nomix-subagent-nomix-sdk'
+      config:
+        providerName: nomix-sdk-diagnostic
+        profile: sdk
+        patches:
+          - !!js process.env.NOMIX_TEST_CHILD_PATCH
+        nomixHome: !!js nomixHomePath('children/first')
+        provider: mock
+        model: mock-echo
+        env:
+          NOMIX_TELEMETRY_DISABLED: '1'
+          NOMIX_TEST_CHILD_FAILURE: '1'
+    - id: tool-subagent-nomix-sdk-diagnostic
+      name: '@nomix-ai/nomix-tool-subagent'
+      config:
+        provider: nomix-sdk-diagnostic
+        toolName: subagent_nomix_sdk
+        maxDepth: provider-managed
+    - id: subagent-nomix-sdk-diagnostic-second
+      name: '@nomix-ai/nomix-subagent-nomix-sdk'
+      config:
+        providerName: nomix-sdk-diagnostic-second
+        profile: sdk
+        patches:
+          - !!js process.env.NOMIX_TEST_CHILD_PATCH
+        nomixHome: !!js nomixHomePath('children/second')
+        provider: mock
+        model: mock-echo
+        env:
+          NOMIX_TELEMETRY_DISABLED: '1'
+          NOMIX_TEST_CHILD_FAILURE: '1'
+    - id: tool-subagent-nomix-sdk-diagnostic-second
+      name: '@nomix-ai/nomix-tool-subagent'
+      config:
+        provider: nomix-sdk-diagnostic-second
+        toolName: subagent_nomix_sdk_second
+        maxDepth: provider-managed
+    - id: await-external-subagents
+      name: '../../../packages/test-support/session-snapshot/tests/fixtures/subagent-settlement-barrier.ts'

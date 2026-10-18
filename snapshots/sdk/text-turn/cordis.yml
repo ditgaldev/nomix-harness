@@ -1,0 +1,37 @@
+# TypeScript SDK snapshot-record patch over `nomix --profile sdk`.
+
+# The fixture corpus must not depend on the developer's personal skill roots.
+# Ordinary product launches retain the sdk profile's default skill discovery.
+- id: skill-filesystem
+  name: '@nomix-ai/nomix-skill-filesystem'
+  config:
+    includeDefaultRoots: false
+
+- id: llm-deepseek
+  name: '@nomix-ai/nomix-llm-deepseek-api-key'
+  config:
+    thinking: enabled
+    reasoningEffort: max
+
+- id: session-persistence-jsonl
+  name: '@nomix-ai/nomix-session-persistence-jsonl'
+  config:
+    root: !!js nomixHomePath('sessions')
+    compression: !!js "process.env.NOMIX_SNAPSHOT === undefined ? 'zstd' : 'none'"
+
+- id: tool-subagent
+  name: '@nomix-ai/nomix-tool-subagent'
+  config:
+    provider: spawn
+    toolName: subagent
+    maxDepth: 1
+
+- insert:
+    - id: snapshot-message-feedback
+      name: '@nomix-ai/nomix-message-feedback'
+      disabled: !!js "process.env.NOMIX_SNAPSHOT_FEEDBACK !== '1'"
+      config:
+        maxNoteBytes: 1024
+    - id: snapshot-feedback-producer
+      name: './feedback-producer.mjs'
+      disabled: !!js "process.env.NOMIX_SNAPSHOT_FEEDBACK !== '1'"

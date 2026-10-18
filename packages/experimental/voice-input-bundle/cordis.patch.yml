@@ -1,0 +1,13 @@
+- insert:
+    - id: speech-to-text
+      name: '@nomix-ai/nomix-experimental-speech-to-text'
+      config:
+        defaultProvider: sensevoice-local
+    - id: speech-to-text-sensevoice
+      name: '@nomix-ai/nomix-experimental-speech-to-text-sensevoice'
+      config:
+        dataRoot: !!js nomixHomePath('speech-to-text', 'sensevoice')
+    - id: api-speech-to-text
+      name: '@nomix-ai/nomix-experimental-api-speech-to-text'
+    - id: ui-voice-input
+      name: '@nomix-ai/nomix-experimental-client-ui-voice-input'

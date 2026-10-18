@@ -5,7 +5,7 @@
  */
 import { createElement } from 'react'
 import type { ReactElement } from 'react'
-import type { DirectoryListing } from '@nomix-ai/nomix-client-runtime/client'
+import type { DirectoryListing } from '@nomix-ai/nomix-api-remotes/client'
 import type { Translate } from '@nomix-ai/nomix-client-locale/client'
 // Type-only: the owner contract of the directory-flow holes.
 import type { DirectoryFlowOwnerProps } from '@nomix-ai/nomix-client-ui-workspace/client'

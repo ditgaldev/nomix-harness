@@ -1,17 +1,20 @@
 import { spawnSync } from 'node:child_process'
-import { mkdtemp, rm, writeFile } from 'node:fs/promises'
-import { tmpdir } from 'node:os'
+import { provideWorkingDirectoryFixture, unsupportedInbox } from '@nomix-ai/nomix-agent-loop-testkit'
+import { mkdtemp, realpath, rm, writeFile } from 'node:fs/promises'
+import { release, tmpdir, version } from 'node:os'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, onTestFailed, vi } from 'vitest'
 import { Context } from '@nomix-ai/cordis'
 import Loader from '@nomix-ai/cordis-plugin-loader'
 import Include from '@nomix-ai/cordis-plugin-include'
-import { CallId } from '@nomix-ai/nomix-llm'
-import { Session, SessionId } from '@nomix-ai/nomix-session'
-import AgentRegistry, { Inbox } from '@nomix-ai/nomix-agent'
+import { ToolCallId } from '@nomix-ai/nomix-llm'
+import { SESSION_FORMAT_VERSION, Session, SessionId } from '@nomix-ai/nomix-session'
+import AgentRegistry from '@nomix-ai/nomix-agent'
+import SessionProjectionRegistry from '@nomix-ai/nomix-session-projection'
 import type { Agent } from '@nomix-ai/nomix-agent'
 import TerminalSessionService from '@nomix-ai/nomix-terminal'
+import type { TerminalWaitReason } from '@nomix-ai/nomix-terminal'
 import * as TerminalBash from '@nomix-ai/nomix-terminal-bash'
 import SandboxProvider from '@nomix-ai/nomix-sandbox'
 import type { ConfinedArgv, SandboxPolicy } from '@nomix-ai/nomix-sandbox'
@@ -21,16 +24,43 @@ import { resolvePwshPath } from '@nomix-ai/nomix-pwsh-local/src/resolve.ts'
 import SystemPrompt from '@nomix-ai/nomix-system-prompt'
 import ToolRegistry from '@nomix-ai/nomix-tools'
 import * as ToolPwshPersistent from '@nomix-ai/nomix-tool-pwsh-persistent'
+import { ReadinessTimeline, TIMELINE_HEADER } from './readiness-timeline.ts'
 
+const pwshPath = resolvePwshPath()
 const hasPwsh = spawnSync(
-  resolvePwshPath(), ['-NoLogo', '-NoProfile', '-NonInteractive', '-Command', '$true'],
+  pwshPath, ['-NoLogo', '-NoProfile', '-NonInteractive', '-Command', '$true'],
   { encoding: 'utf8' },
 ).status === 0
+
+// The system conhost version identifies the host OS; Windows PTYs use node-pty's bundled
+// OpenConsole, so that version does not identify the console rendering these sessions.
+const HOST_FACTS_COMMAND = [
+  '"pwsh $($PSVersionTable.PSVersion) PSReadLine $((Get-Module PSReadLine -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1).Version)"',
+  'if ($env:OS -eq \'Windows_NT\') { "system conhost (unused) $((Get-Item (Join-Path $env:SystemRoot \'System32\\conhost.exe\')).VersionInfo.FileVersion)" }',
+].join('; ')
+
+function hostFacts(): string {
+  const probe = spawnSync(
+    pwshPath, ['-NoLogo', '-NoProfile', '-NonInteractive', '-Command', HOST_FACTS_COMMAND],
+    { encoding: 'utf8', timeout: 30_000 },
+  )
+  const shell = probe.status === 0
+    ? probe.stdout.trim().split(/\r?\n/).join('; ')
+    : `version probe failed: ${probe.error?.message ?? probe.stderr.trim()}`
+  return [
+    `host: ${process.platform} ${process.arch} ${release()} (${version()}); node ${process.version}`,
+    `shell: ${pwshPath}; ${shell}`,
+    process.platform === 'win32'
+      ? 'conpty: node-pty bundled OpenConsole (useConptyDll=true)'
+      : 'conpty: not applicable (POSIX PTY)',
+  ].join('\n')
+}
 
 let root: string | undefined
 let context: Context | undefined
 
 afterEach(async () => {
+  vi.restoreAllMocks()
   await context?.fiber.dispose()
   context = undefined
   if (root !== undefined) await rm(root, { recursive: true, force: true })
@@ -38,20 +68,22 @@ afterEach(async () => {
 })
 
 class PassthroughSandbox extends SandboxProvider {
-  confine(argv: readonly string[], _policy: SandboxPolicy): ConfinedArgv {
+  async confine(argv: readonly string[], _policy: SandboxPolicy): Promise<ConfinedArgv> {
     return { argv: [...argv], enforcement: 'full', denialSignatures: [], runnerFailureRules: [] }
   }
 }
 
-function agent(ctx: Context, cwd: string): Agent {
+async function agent(ctx: Context, cwd: string): Promise<Agent> {
   const id = SessionId('persistent-pwsh-loader-agent')
   const scope = ctx.plugin(() => {})
-  const session = Session.create(id, [], { version: 0, id, createdAt: 0, cwd })
+  const session = Session.create(id, [], {
+    version: SESSION_FORMAT_VERSION, id, createdAt: 0, cwd, isSeeded: false,
+  })
   const value: Agent = {
     id,
     options: {},
     session,
-    inbox: new Inbox(session, { inserted: () => {}, discarded: () => {}, claimed: () => {} }),
+    inbox: unsupportedInbox(),
     status: 'idle',
     ctx: scope.ctx,
     send: () => {},
@@ -62,7 +94,7 @@ function agent(ctx: Context, cwd: string): Agent {
     runMaintenance: task => task(new AbortController().signal),
     whenIdle: () => Promise.resolve(),
   }
-  ctx.agents.register(value)
+  await ctx.agents.register(value)
   return value
 }
 
@@ -72,7 +104,7 @@ function text(result: { content: { type: string; text?: string }[] }): string {
 
 describe.skipIf(!hasPwsh)('persistent pwsh through a real cordis.yml Loader composition', () => {
   it('preserves cwd and environment across calls', async () => {
-    root = await mkdtemp(join(tmpdir(), 'nomix-persistent-pwsh-loader-'))
+    root = await realpath(await mkdtemp(join(tmpdir(), 'nomix-persistent-pwsh-loader-')))
     const configPath = join(root, 'cordis.yml')
     await writeFile(configPath, [
       "- name: '@nomix-ai/nomix-agent'",
@@ -80,6 +112,7 @@ describe.skipIf(!hasPwsh)('persistent pwsh through a real cordis.yml Loader comp
       "- name: '@nomix-ai/nomix-tools'",
       "- name: '@nomix-ai/nomix-terminal'",
       "- name: '@nomix-ai/nomix-test-sandbox'",
+      "- name: '@nomix-ai/nomix-session-projection'",
       "- name: '@nomix-ai/nomix-sandbox-policy'",
       '  config:',
       '    mode: danger-full-access',
@@ -90,18 +123,33 @@ describe.skipIf(!hasPwsh)('persistent pwsh through a real cordis.yml Loader comp
       '    shellDialect: pwsh',
       '    pollIntervalMs: 10',
       '    exactProbeAfterMs: 20',
-      '    idleSilenceMs: 300',
+      // The silence tier keeps its product default; the case body records each
+      // send's wait reason, which pins the controlled-prompt fast path directly
+      // instead of relying on how long silence would take to settle.
       '    handoffGraceMs: 300',
+      // promptTailGraceMs keeps its product default (0): the self-hosted Windows failures of
+      // 2026-09-25..27 settled at the plain silence bound with the tolerance present and absent
+      // alike, so it never applied there and would only lengthen a never-arriving-tail fallback.
       '    scrollbackLines: 20000',
-      '    timeoutMs: 8000',
+      // The first call pays the full pwsh cold-start latency (spawn + .NET +
+      // PSReadLine + Defender) inside the tool deadline; a 60s bound on the
+      // fully loaded self-hosted Windows pool is exceeded often enough to
+      // reset the session mid-test (2026-09-01, two runs ~62s each). 300s
+      // matches the nomix-tool-pwsh-persistent product default; the
+      // nomix-terminal-bash value bounds one send plus the complete startup
+      // sequence, so it covers the same cold start (its 30s product default
+      // would not).
+      '    timeoutMs: 300000',
       '    disposeGraceMs: 500',
       "- name: '@nomix-ai/nomix-tool-pwsh-persistent'",
       '  config:',
-      '    timeoutMs: 20000',
+      '    timeoutMs: 300000',
       '',
     ].join('\n'))
 
     context = new Context()
+
+    provideWorkingDirectoryFixture(context)
     context.baseUrl = pathToFileURL(root).href + '/'
     await context.plugin(Loader)
     context.loader.builtins.include = Include
@@ -111,6 +159,7 @@ describe.skipIf(!hasPwsh)('persistent pwsh through a real cordis.yml Loader comp
       ['@nomix-ai/nomix-tools', ToolRegistry],
       ['@nomix-ai/nomix-terminal', TerminalSessionService],
       ['@nomix-ai/nomix-test-sandbox', PassthroughSandbox],
+      ['@nomix-ai/nomix-session-projection', SessionProjectionRegistry],
       ['@nomix-ai/nomix-sandbox-policy', SandboxPolicyService],
       ['@nomix-ai/nomix-subprocess-local', LocalSubprocessService],
       ['@nomix-ai/nomix-terminal-bash', TerminalBash],
@@ -126,15 +175,53 @@ describe.skipIf(!hasPwsh)('persistent pwsh through a real cordis.yml Loader comp
     await context.loader.create({ name: 'cordis:include', config: { path: pathToFileURL(configPath).href } })
     await context.loader.await()
 
-    const owner = agent(context, root)
-    const signal = new AbortController().signal
-    const execute = (id: string, command: string) => context!.tools.execute({
-      signal,
-      callId: CallId(id),
-      name: 'pwsh',
-      arguments: { command },
-      agent: owner,
+    const terminals = context.terminals
+    const startSend = terminals.startSend.bind(terminals)
+    // A send that lost the controlled-prompt fast path settles as inferred_idle
+    // after the silence tier, so recording why every send settled detects that
+    // regression immediately instead of through accumulated wall-clock. The
+    // timeline records what the session observed on the way there — every pty
+    // chunk's prompt verdict, every foreground poll, every write — because the
+    // reason alone cannot say whether the marker was missing, its tail was
+    // invalidated by later output, or the foreground comparison failed.
+    const timeline = new ReadinessTimeline(hostFacts)
+    timeline.observeSanitizer()
+    const spawnTerminal = context.subprocess.spawnTerminal.bind(context.subprocess)
+    vi.spyOn(context.subprocess, 'spawnTerminal').mockImplementation(async (spec) => {
+      const handle = await spawnTerminal(spec)
+      timeline.observeTerminal(handle)
+      return handle
     })
+    const settleReasons: TerminalWaitReason[] = []
+    vi.spyOn(terminals, 'startSend').mockImplementation((owner, id, request) => {
+      const operation = startSend(owner, id, request)
+      timeline.track(operation, request)
+      void operation.done.then(
+        (settled) => { settleReasons.push(settled.waitReason) },
+        // A rejected send is the tool's error path, not a settle reason.
+        () => {},
+      )
+      return operation
+    })
+    // The runner's timeout never reaches the assertions below; print the timeline
+    // for that path too, unless a failed assertion already carries it.
+    onTestFailed(({ task }) => {
+      if (task.result?.errors?.some(error => error.message?.includes(TIMELINE_HEADER))) return
+      console.error(timeline.format())
+    })
+
+    const owner = await agent(context, root)
+    const signal = new AbortController().signal
+    const execute = (id: string, command: string) => {
+      timeline.label(id)
+      return context!.tools.execute({
+        signal,
+        callId: ToolCallId(id),
+        name: 'pwsh',
+        arguments: { command },
+        agent: owner,
+      })
+    }
 
     expect(context.tools.schemas().map(schema => schema.name)).toEqual(['pwsh'])
     await execute('state', '$env:KEEP = "loader"; New-Item -ItemType Directory -Force -Path nested | Out-Null; Set-Location nested')
@@ -160,8 +247,23 @@ describe.skipIf(!hasPwsh)('persistent pwsh through a real cordis.yml Loader comp
     expect(large).toContain('<response clipped>')
     expect(large).not.toContain('beginning of this command output was dropped')
 
+    const afterScroll = text(await execute('after-scroll', 'Write-Output "cwd=$PWD keep=$env:KEEP"'))
+    expect(afterScroll).toBe(`cwd=${join(root, 'nested')} keep=loader`)
+
     const exited = text(await execute('exit', 'exit'))
     expect(exited).toContain('next pwsh call starts from the workspace')
     expect(text(await execute('after-exit', 'Write-Output "$PWD"'))).toBe(root)
-  }, 60_000)
+
+    // Each ordinary command must settle on the prompt, including the next command on the
+    // scrolled shell and the first command after restart. Extra sends can conceal a timeout.
+    // Formatting probes host versions, so only a failed sequence pays that cost.
+    const expected: TerminalWaitReason[] = [
+      'stdin_read', 'stdin_read', 'stdin_read', 'stdin_read',
+      'stdin_read', 'stdin_read', 'session_exit', 'stdin_read',
+    ]
+    const degraded = settleReasons.length !== expected.length
+      || settleReasons.some((reason, index) => reason !== expected[index])
+    const failure = degraded ? `${JSON.stringify(settleReasons)}\n${timeline.format()}` : ''
+    expect(settleReasons, failure).toEqual(expected)
+  }, 120_000)
 })

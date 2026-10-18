@@ -1,0 +1,22 @@
+# Bilingual-pair consistency record for ssh.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/subsystems/ssh.md
+/ssh:
+  en: 9923e9441f16bfd8
+  zh: 756d7f1f987097e0
+/ssh/execution-coordinates:
+  en: 07d24f4198036acb
+  zh: 2dab1059916e0345
+/ssh/transport-and-trust:
+  en: bb3a8563b0cf45b5
+  zh: cf8b8b7d5c802a27
+/ssh/process-lifetime-and-cancellation:
+  en: 3e29eb0f47ca4d21
+  zh: 9d880e082d39577e
+/ssh/composition-scope:
+  en: 33a6f660b403f713
+  zh: 4bd385cf7f3e4f65
+/ssh/connection-api:
+  en: eae91ed9211f563b
+  zh: 78bebc76c4a82306

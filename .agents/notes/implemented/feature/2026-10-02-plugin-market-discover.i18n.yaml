@@ -1,0 +1,19 @@
+# Bilingual-pair consistency record for 2026-10-02-plugin-market-discover.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-10-02-plugin-market-discover.md
+/agent-note-plugin-market-discover-page-and-index-reader:
+  en: ab5e4974cc5f3f9f
+  zh: 204c43fcc0a3ca7f
+/agent-note-plugin-market-discover-page-and-index-reader/problem:
+  en: a8c7979869ddee06
+  zh: 42b27eb920475eab
+/agent-note-plugin-market-discover-page-and-index-reader/decision:
+  en: ffb2297d6f29db37
+  zh: e33b135d8b075cec
+/agent-note-plugin-market-discover-page-and-index-reader/alternatives-considered:
+  en: 62e7691dc8efd5c0
+  zh: b13769634979b950
+/agent-note-plugin-market-discover-page-and-index-reader/consequences:
+  en: 672397a936cae42f
+  zh: 1f535708b914a915

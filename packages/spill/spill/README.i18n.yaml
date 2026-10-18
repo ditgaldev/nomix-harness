@@ -1,6 +1,70 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/spill/spill/README.md
-README.md: da33ee699ea1db797d4cf43274d898505cb44954
-README.zh.md: 26773bee42a468b75857197b6e8b04aa541ee1fd
+/:
+  en: 0ddb7676fe45581a
+  zh: 245f536e58988853
+/nomix-ai-nomix-spill:
+  en: ac1c7808ac6ff26d
+  zh: 50b27386167426bb
+/nomix-ai-nomix-spill/summary:
+  en: 5390a643d0c99ad4
+  zh: b706806c2024df09
+/nomix-ai-nomix-spill/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-spill/use-this-package:
+  en: 9a181638490ad33a
+  zh: b68254c114fb2129
+/nomix-ai-nomix-spill/use-this-package/when-to-choose-it:
+  en: b16ef40f98105af7
+  zh: 44a4ec686474f3a7
+/nomix-ai-nomix-spill/use-this-package/smallest-working-composition:
+  en: 6f5ac80b98eaae27
+  zh: 2278dfb2c7c6c9b7
+/nomix-ai-nomix-spill/use-this-package/saving-text:
+  en: 9f86b77d2274633a
+  zh: 98a04bbb7b02f17a
+/nomix-ai-nomix-spill/use-this-package/ownership-and-boundaries:
+  en: 59d9880807abdbc1
+  zh: a484e95b459e99ed
+/nomix-ai-nomix-spill/use-this-package/failures-and-recovery:
+  en: 53c9e5879c926cb4
+  zh: 5399bd58ff2a4ec0
+/nomix-ai-nomix-spill/understand-the-implementation:
+  en: a3364d8193deb7f0
+  zh: 38ca428f37fc7190
+/nomix-ai-nomix-spill/understand-the-implementation/design-philosophy:
+  en: 8ff0a6cac8219c20
+  zh: 3ee9398711fc2439
+/nomix-ai-nomix-spill/understand-the-implementation/source-map:
+  en: c24cc87afcef2824
+  zh: c5138e85650eb20e
+/nomix-ai-nomix-spill/understand-the-implementation/data-model:
+  en: 7b1480904f62a1a8
+  zh: c51e680012536f2b
+/nomix-ai-nomix-spill/understand-the-implementation/lifecycle:
+  en: e66fa489470c595c
+  zh: a1870ddc42a846af
+/nomix-ai-nomix-spill/further-exploration:
+  en: 0a6313cc93d3c792
+  zh: 3d5646cba147ea27
+/nomix-ai-nomix-spill/model-experience:
+  en: 76d7dd75ff4784d9
+  zh: ef5c2e7a943923b8
+/nomix-ai-nomix-spill/model-experience/kv-cache-effect:
+  en: 40294c1c31b74824
+  zh: d75d48f485447a74
+/nomix-ai-nomix-spill/known-limitations-and-deferred-work:
+  en: eeb7f53fb1d76905
+  zh: 5519325032645483
+/nomix-ai-nomix-spill/known-limitations-and-deferred-work/dev-note:
+  en: a06f45acc8cb962a
+  zh: e314617f8a2309d4
+/nomix-ai-nomix-spill/known-limitations-and-deferred-work/dev-note/future-executor-spill-file-integration:
+  en: cbdea66e4fffb488
+  zh: e6e10b0c1b84ec6c
+/nomix-ai-nomix-spill/known-limitations-and-deferred-work/dev-note/future-non-local-backends-and-cleanup:
+  en: a60a513b473a9183
+  zh: 02593482f360c3ff

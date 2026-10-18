@@ -1,0 +1,40 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/bundle/sdk-app/README.md
+/:
+  en: 8148fef9eb6f852e
+  zh: f4419bed153c9760
+/nomix-ai-nomix-sdk-app:
+  en: 57f85c34c20ec7c6
+  zh: 5b123a2ef6372a7f
+/nomix-ai-nomix-sdk-app/summary:
+  en: debd16a4504625b8
+  zh: 80aa8ac1552e8395
+/nomix-ai-nomix-sdk-app/table-of-contents:
+  en: 4e53164159b5ce41
+  zh: 89582dc0294d0776
+/nomix-ai-nomix-sdk-app/use-this-package:
+  en: c88b397d8dd9ff94
+  zh: a6654aebba1c8543
+/nomix-ai-nomix-sdk-app/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-sdk-app/model-experience/sdk-model-context:
+  en: 4f88e647c6df4f42
+  zh: 2bd3e4b0bdfe9412
+/nomix-ai-nomix-sdk-app/model-experience/sdk-model-context/what-the-model-sees:
+  en: 59ced0f5378c5359
+  zh: b648076369bf0b79
+/nomix-ai-nomix-sdk-app/model-experience/sdk-model-context/token-effect:
+  en: 4a0cdca06d358f53
+  zh: d27080dcb68c661c
+/nomix-ai-nomix-sdk-app/model-experience/sdk-model-context/kv-cache-effect:
+  en: 5b0e33295fb90e19
+  zh: 4d48ca75bb677202
+/nomix-ai-nomix-sdk-app/known-limitations-and-deferred-work:
+  en: af9b1fda50dbff47
+  zh: 939f2d8c9083c219
+/nomix-ai-nomix-sdk-app/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

@@ -1,0 +1,54 @@
+{
+  "name": "@nomix-ai/nomix-experimental-voice-input-bundle",
+  "description": "Experimental voice input with local SenseVoice; downloads its runtime on first use",
+  "version": "0.2.9",
+  "icon": "./icon.svg",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
+    "directory": "packages/experimental/voice-input-bundle"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "icon.svg",
+    "locale/*.json",
+    "lib/index.js",
+    "cordis.patch.yml",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@nomix-ai/nomix-experimental-speech-to-text": "workspace:*",
+    "@nomix-ai/nomix-experimental-speech-to-text-sensevoice": "workspace:*",
+    "@nomix-ai/nomix-experimental-api-speech-to-text": "workspace:*",
+    "@nomix-ai/nomix-experimental-client-ui-voice-input": "workspace:*"
+  },
+  "peerDependencies": {
+    "@nomix-ai/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/cordis-plugin-include": "workspace:~",
+    "js-yaml": "^4.3.2"
+  },
+  "nomix": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

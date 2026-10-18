@@ -12,6 +12,10 @@ import {
 } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { subset, valid } from 'semver'
+import { OPTIONAL_BUNDLES } from '../packages/boot/app-boot/src/profile.ts'
+import { ON_DEMAND_BUNDLES } from '../packages/boot/app-boot/src/official-bundle-packages.ts'
+import { isExperimentalPackageName } from './experimental-package-policy.ts'
 
 /** Required distribution classification for every workspace. */
 export type WorkspaceDistribution =
@@ -35,10 +39,12 @@ const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)))
 /** Classify a workspace by ownership and runtime role. */
 export function classifyWorkspace(directory: string): WorkspaceDistribution {
   const normalized = directory.replaceAll('\\', '/')
+  if (normalized === 'vendor/hmr') return 'development-only'
   if (normalized.startsWith('vendor/')) return 'runtime'
-  if (normalized === 'native/landlock-run/packages/entry') return 'runtime'
+  if (normalized === 'native/system/packages/entry') return 'runtime'
   if (normalized.startsWith('native/') || normalized.startsWith('python/')) return 'separate-distribution'
-  if (normalized === 'website' || normalized.startsWith('packages/test-support/') || normalized.startsWith('packages/examples/')) {
+  if (['website', 'benchmarks', 'apps/desktop', 'apps/desktop-host', 'apps/plugin-market-generator'].includes(normalized)
+    || normalized.startsWith('packages/test-support/') || normalized.startsWith('packages/examples/')) {
     return 'development-only'
   }
   if (normalized.startsWith('packages/bundle/')) return 'bundle'
@@ -59,10 +65,12 @@ function workspacePackages(): WorkspacePackage[] {
     'packages/*/*/package.json',
     'apps/*/package.json',
     'vendor/*/package.json',
-    'native/landlock-run/package.json',
-    'native/landlock-run/packages/*/package.json',
+    'native/system/package.json',
+    'native/system/packages/*/package.json',
+    'benchmarks/package.json',
+    'python/sdk-runtime/package.json',
     'website/package.json',
-  ], { cwd: ROOT }).sort()
+  ], { cwd: ROOT }).map(path => path.replaceAll('\\', '/')).sort()
   return manifests.map((path) => {
     const manifest = readJson(join(ROOT, path))
     const name = manifest.name
@@ -141,14 +149,16 @@ export function pluginFacadeExport(packageName: string): {
 
 function packageVersion(pkg: WorkspacePackage): string {
   const version = pkg.manifest.version
-  if (typeof version !== 'string') throw new Error(`${pkg.directory}/package.json has no version`)
+  if (typeof version !== 'string' || valid(version) !== version) {
+    throw new Error(`${pkg.directory}/package.json requires an exact package version`)
+  }
   return version
 }
 
 /**
  * Replace workspace dependency selectors in one bundled manifest with concrete package versions.
  * @param manifest - source workspace manifest.
- * @param versions - bundled package versions by canonical package name.
+ * @param versions - exact bundled and outer Harness package versions by canonical name.
  * @returns a detached manifest suitable for npm installation outside the workspace.
  */
 export function bundledManifest(
@@ -164,6 +174,7 @@ export function bundledManifest(
       if (typeof value !== 'string' || !value.startsWith('workspace:')) continue
       const version = versions.get(name)
       if (version === undefined) throw new Error(`bundled manifest cannot resolve workspace dependency ${name}`)
+      if (valid(version) !== version) throw new Error(`bundled manifest requires an exact version for ${name}: ${version}`)
       dependencies[name] = version
     }
   }
@@ -202,19 +213,7 @@ function normalizedDependencyVersion(name: string, range: string, all: ReadonlyM
   if (!range.startsWith('workspace:')) return range
   const target = all.get(name)
   if (target === undefined) throw new Error(`cannot resolve workspace version for external dependency ${name}`)
-  const version = packageVersion(target)
-  const selector = range.slice('workspace:'.length)
-  return selector === '^' || selector === '*' ? `^${version}` : selector === '~' ? `~${version}` : selector
-}
-
-const DEPENDENCY_CONVERGENCE: Readonly<Record<string, {
-  readonly acceptedRanges: readonly string[]
-  readonly outputRange: string
-}>> = {
-  chokidar: {
-    acceptedRanges: ['^4.0.3', '^5.0.0'],
-    outputRange: '^5.0.0',
-  },
+  return packageVersion(target)
 }
 
 /**
@@ -226,58 +225,90 @@ const DEPENDENCY_CONVERGENCE: Readonly<Record<string, {
  */
 export function mergeDependencyRanges(name: string, left: string | undefined, right: string): string {
   if (left === undefined || left === right) return right
-  const convergence = DEPENDENCY_CONVERGENCE[name]
-  if (convergence !== undefined
-    && convergence.acceptedRanges.includes(left)
-    && convergence.acceptedRanges.includes(right)) return convergence.outputRange
-  const parse = (range: string): { operator: '^' | '~'; parts: [number, number, number] } | undefined => {
-    const match = /^(\^|~)(\d+)\.(\d+)\.(\d+)$/u.exec(range)
-    return match === null
-      ? undefined
-      : {
-        operator: match[1] as '^' | '~',
-        parts: [Number(match[2]), Number(match[3]), Number(match[4])],
-      }
-  }
-  const a = parse(left)
-  const b = parse(right)
-  if (a === undefined || b === undefined || a.operator !== b.operator) {
-    throw new Error(`conflicting dependency ranges for ${name}: ${left} and ${right}`)
-  }
-  const compatible = a.operator === '~'
-    ? a.parts[0] === b.parts[0] && a.parts[1] === b.parts[1]
-    : a.parts[0] === b.parts[0] && (a.parts[0] !== 0 || a.parts[1] === b.parts[1])
-  if (!compatible) throw new Error(`conflicting dependency ranges for ${name}: ${left} and ${right}`)
-  const [aMajor, aMinor, aPatch] = a.parts
-  const [bMajor, bMinor, bPatch] = b.parts
-  if (aMajor !== bMajor) return aMajor > bMajor ? left : right
-  if (aMinor !== bMinor) return aMinor > bMinor ? left : right
-  if (aPatch !== bPatch) return aPatch > bPatch ? left : right
-  return left
+  if (subset(left, right)) return left
+  if (subset(right, left)) return right
+  throw new Error(`conflicting dependency ranges for ${name}: ${left} and ${right}`)
 }
 
-function aggregateExternalDependencies(
+/**
+ * Collect third-party dependencies without promoting bundled or outer-package references.
+ * @param packages - packages included in the public artifact.
+ * @param all - workspace manifests by package name.
+ * @param internalNames - bundled and outer Harness package names.
+ * @param defaultPackages - packages whose ordinary third-party dependencies belong to the default product.
+ * @returns compatible required and optional dependency ranges.
+ */
+export function aggregateExternalDependencies(
   packages: readonly WorkspacePackage[],
   all: ReadonlyMap<string, WorkspacePackage>,
-  bundledNames: ReadonlySet<string>,
+  internalNames: ReadonlySet<string>,
+  defaultPackages: ReadonlySet<string> = new Set(packages.map(pkg => pkg.name)),
 ): { dependencies: Record<string, string>; optionalDependencies: Record<string, string> } {
-  const dependencies: Record<string, string> = {}
-  const optionalDependencies: Record<string, string> = {}
+  const ranges = new Map<string, string>()
+  const required = new Set<string>()
   for (const pkg of packages) {
     for (const section of ['dependencies', 'peerDependencies', 'optionalDependencies'] as const) {
       const values = pkg.manifest[section]
       if (values === null || typeof values !== 'object' || Array.isArray(values)) continue
       for (const [name, raw] of Object.entries(values)) {
-        if (bundledNames.has(name) || typeof raw !== 'string') continue
+        if (internalNames.has(name) || typeof raw !== 'string') continue
         const range = normalizedDependencyVersion(name, raw, all)
-        const target = section === 'optionalDependencies' || name.startsWith('@nomix-ai/node-addon-')
-          ? optionalDependencies
-          : dependencies
-        target[name] = mergeDependencyRanges(name, target[name], range)
+        ranges.set(name, mergeDependencyRanges(name, ranges.get(name), range))
+        if (defaultPackages.has(pkg.name) && section !== 'optionalDependencies'
+          && !name.startsWith('@nomix-ai/node-addon-')) required.add(name)
       }
     }
   }
-  return { dependencies, optionalDependencies }
+  return {
+    dependencies: Object.fromEntries([...ranges].filter(([name]) => required.has(name))),
+    optionalDependencies: Object.fromEntries([...ranges].filter(([name]) => !required.has(name))),
+  }
+}
+
+/**
+ * Keep shipped implementations available without adding their optional capabilities to the default dependency graph.
+ * @param harness - outer CLI package whose declarations select the default product.
+ * @param bundled - physically bundled implementation and platform packages.
+ * @param all - workspace manifests by canonical name.
+ * @returns required defaults and optional carried implementations with compatible third-party ranges.
+ */
+export function aggregateRuntimeDependencies(
+  harness: WorkspacePackage,
+  bundled: readonly WorkspacePackage[],
+  all: ReadonlyMap<string, WorkspacePackage>,
+): { dependencies: Record<string, string>; optionalDependencies: Record<string, string> } {
+  const offered = new Set(OPTIONAL_BUNDLES)
+  const onDemand = new Set(ON_DEMAND_BUNDLES)
+  const defaults = new Set([harness.name])
+  const queue = [harness]
+  for (const pkg of queue) {
+    for (const section of ['dependencies', 'peerDependencies', 'optionalDependencies']) {
+      const raw = pkg.manifest[section]
+      if (raw === null || typeof raw !== 'object' || Array.isArray(raw)) continue
+      for (const name of Object.keys(raw)) {
+        if (pkg === harness && (offered.has(name) || onDemand.has(name))) continue
+        const target = all.get(name)
+        if (target === undefined || defaults.has(name)) continue
+        if (isExperimentalPackageName(name)) throw new Error(`default product depends on experimental package: ${pkg.name} -> ${name}`)
+        if (onDemand.has(name)) throw new Error(`default product depends on on-demand package: ${pkg.name} -> ${name}`)
+        defaults.add(name)
+        queue.push(target)
+      }
+    }
+  }
+  const internal = new Set([harness.name, ...bundled.map(pkg => pkg.name)])
+  const result = aggregateExternalDependencies([harness, ...bundled], all, internal, defaults)
+  const direct = harness.manifest.dependencies
+  const sourceDependencies = direct !== null && typeof direct === 'object' && !Array.isArray(direct)
+    ? direct as Record<string, unknown>
+    : {}
+  for (const pkg of bundled) {
+    const required = pkg.classification !== 'separate-distribution'
+      && (defaults.has(pkg.name) || offered.has(pkg.name) && Object.hasOwn(sourceDependencies, pkg.name))
+    const destination = required ? result.dependencies : result.optionalDependencies
+    destination[pkg.name] = packageVersion(pkg)
+  }
+  return result
 }
 
 function copyCli(destinationRoot: string): void {
@@ -289,10 +320,9 @@ function copyCli(destinationRoot: string): void {
     const target = join(destination, file)
     writeFileSync(target, rewriteHarnessPackageAnchor(readFileSync(source, 'utf8')))
   }
-  cpSync(
-    join(sourceRoot, 'types', 'plugin-api.d.ts'),
-    join(destination, 'plugin-api.d.ts'),
-  )
+  for (const file of globSync('*.d.ts', { cwd: join(sourceRoot, 'types') })) {
+    cpSync(join(sourceRoot, 'types', file), join(destination, file))
+  }
 }
 
 /** Generate stable Harness subpaths that forward to bundled capability packages. */
@@ -315,7 +345,8 @@ function writePluginFacades(
 }
 
 function platformPackages(packages: readonly WorkspacePackage[]): WorkspacePackage[] {
-  return packages.filter(pkg => /^native\/landlock-run\/packages\/linux-[^/]+$/u.test(pkg.directory))
+  return packages.filter(pkg => pkg.directory.startsWith('native/system/packages/')
+    && pkg.directory !== 'native/system/packages/entry')
 }
 
 /** Build one complete npm package directory from already-built workspace artifacts. */
@@ -328,20 +359,16 @@ export function buildNpmHarnessDistribution(destinationRoot: string): void {
     && pkg.name !== harness.name)
   const platforms = platformPackages(packages)
   const bundled = [...runtime, ...platforms]
-  const versions = new Map(bundled.map(pkg => [pkg.name, packageVersion(pkg)]))
-  const bundledNames = new Set(versions.keys())
+  const versions = new Map([harness, ...bundled].map(pkg => [pkg.name, packageVersion(pkg)]))
+  const external = aggregateRuntimeDependencies(harness, bundled, byName)
 
   rmSync(destinationRoot, { recursive: true, force: true })
   copyCli(destinationRoot)
   const pluginExports = writePluginFacades(destinationRoot, runtime)
-  cpSync(join(ROOT, 'apps', 'cli', 'config'), join(destinationRoot, 'dist', 'config'), { recursive: true })
   for (const pkg of bundled) copyRuntimeFiles(pkg, bundledPackagePath(destinationRoot, pkg.name), versions)
 
-  const external = aggregateExternalDependencies([harness, ...bundled], byName, bundledNames)
   const dependencies = { ...external.dependencies }
-  for (const pkg of runtime) dependencies[pkg.name] = packageVersion(pkg)
   const optionalDependencies = { ...external.optionalDependencies }
-  for (const pkg of platforms) optionalDependencies[pkg.name] = packageVersion(pkg)
   const manifest = {
     name: harness.name,
     version: packageVersion(harness),
@@ -357,6 +384,7 @@ export function buildNpmHarnessDistribution(destinationRoot: string): void {
     exports: {
       '.': { types: './dist/cli/plugin-api.d.ts', default: './dist/cli/plugin-api.js' },
       './plugin': { types: './dist/cli/plugin-api.d.ts', default: './dist/cli/plugin-api.js' },
+      './profile-boot': { types: './dist/cli/profile-boot.d.ts', default: './dist/cli/profile-boot.js' },
       ...pluginExports,
       './package.json': './package.json',
     },

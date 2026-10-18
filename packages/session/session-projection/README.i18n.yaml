@@ -1,6 +1,58 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/session/session-projection/README.md
-README.md: cb9530d50215b1e5f5ad929ac87da9df86a55a3c
-README.zh.md: 2349463334954856aa438a7ff0ac9290d369b74f
+/:
+  en: 85229e402add27cf
+  zh: 66473d34393c44db
+/nomix-ai-nomix-session-projection:
+  en: d165bdf877831cf4
+  zh: d90dbc658dcc9096
+/nomix-ai-nomix-session-projection/summary:
+  en: 64dc242145a65506
+  zh: f08f025a1935084a
+/nomix-ai-nomix-session-projection/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-session-projection/use-this-package:
+  en: 71389b53e4ebe079
+  zh: eaa97402be07aa45
+/nomix-ai-nomix-session-projection/use-this-package/when-to-choose-it:
+  en: 90b7c26cb45be52a
+  zh: 386e294ec09607c1
+/nomix-ai-nomix-session-projection/use-this-package/define-a-projection-unit:
+  en: 09758d1475fad86e
+  zh: 473637cb34aebe72
+/nomix-ai-nomix-session-projection/use-this-package/register-and-read:
+  en: 6a19c075f826b3f7
+  zh: c200277cb58062be
+/nomix-ai-nomix-session-projection/use-this-package/persisted-checkpoints:
+  en: 8a4a1a10af7e581b
+  zh: d836bd506ba6a415
+/nomix-ai-nomix-session-projection/understand-the-implementation:
+  en: 3397f58d6f49bfda
+  zh: efb85d382e25574d
+/nomix-ai-nomix-session-projection/understand-the-implementation/design-concept:
+  en: 8afa0fdb49898f6d
+  zh: 6b2da34455963935
+/nomix-ai-nomix-session-projection/understand-the-implementation/source-map:
+  en: b0263d26c5a65d7a
+  zh: 2e58d3181dde901c
+/nomix-ai-nomix-session-projection/understand-the-implementation/drive-and-checkpoint-flow:
+  en: 00136880bb586403
+  zh: bd35f645111c068c
+/nomix-ai-nomix-session-projection/further-exploration:
+  en: be06e8995588a56a
+  zh: eb2bc5355c012dd6
+/nomix-ai-nomix-session-projection/model-experience:
+  en: a24045627fb43695
+  zh: a8465196c3948796
+/nomix-ai-nomix-session-projection/model-experience/kv-cache-effect:
+  en: 8a592dae9bc946ab
+  zh: eca939995bb5f8e0
+/nomix-ai-nomix-session-projection/known-limitations-and-deferred-work:
+  en: ea44f7493a76c011
+  zh: 23b68e4835fbcbfd
+/nomix-ai-nomix-session-projection/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

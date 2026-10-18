@@ -1,0 +1,49 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/bundle/sdk-minimal/README.md
+/:
+  en: b2fce08b0fa865da
+  zh: 97e214d87ded4b54
+/nomix-ai-nomix-sdk-minimal:
+  en: 5deedf5406636178
+  zh: 44935c9795d3df76
+/nomix-ai-nomix-sdk-minimal/summary:
+  en: f8101386355d47e5
+  zh: 5498d5c00baad717
+/nomix-ai-nomix-sdk-minimal/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-sdk-minimal/use-this-package:
+  en: ba4df5d8c4eac091
+  zh: 9c67b7aa26633b73
+/nomix-ai-nomix-sdk-minimal/understand-the-implementation:
+  en: 0b5ac53002fc7889
+  zh: fb420aefefd76ea7
+/nomix-ai-nomix-sdk-minimal/understand-the-implementation/source-map:
+  en: 3784c554e96ab004
+  zh: 0a05d4fe1e26b3b1
+/nomix-ai-nomix-sdk-minimal/further-exploration:
+  en: 426bb02b0ca2bc2d
+  zh: e7ae7e50181023ab
+/nomix-ai-nomix-sdk-minimal/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-sdk-minimal/model-experience/minimal-coding-agent-composition:
+  en: bd87e16b0c6e0506
+  zh: c8ee5e3b4578754e
+/nomix-ai-nomix-sdk-minimal/model-experience/minimal-coding-agent-composition/what-the-model-sees:
+  en: 39e87251bbeed17e
+  zh: dec0e6a8ddecaed9
+/nomix-ai-nomix-sdk-minimal/model-experience/minimal-coding-agent-composition/token-effect:
+  en: 6c618765e8a81b7b
+  zh: 3d4fdc350293465d
+/nomix-ai-nomix-sdk-minimal/model-experience/minimal-coding-agent-composition/kv-cache-effect:
+  en: dd887b6519f40ab3
+  zh: a98e56411fdc79df
+/nomix-ai-nomix-sdk-minimal/known-limitations-and-deferred-work:
+  en: 820376d52128c0a1
+  zh: 5abf965639a512fd
+/nomix-ai-nomix-sdk-minimal/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

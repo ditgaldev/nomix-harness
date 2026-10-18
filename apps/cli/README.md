@@ -2,18 +2,22 @@
 
 English | [中文](README.zh.md)
 
-The `nomix` command is the product launcher for profiles: ordered stacks of plugin-bundle patch layers under the user's own overrides. [`src/args.ts`](src/args.ts) owns the command grammar, and [`src/bin.ts`](src/bin.ts) loads only the selected runner. Invalid commands, options from another mode, configuration errors, and boot failures exit nonzero.
+The `nomix` command is the sole supported Node application launcher: profiles are ordered stacks of plugin-bundle patch layers under the user's own overrides. SDK and ACP are profiles, not separate public bins. The Python runtime wheel packages this same command; the SDK defaults to `sdk`, and the minimal example selects `sdk-minimal`. [`src/args.ts`](src/args.ts) owns the command grammar, and [`src/bin.ts`](src/bin.ts) loads only the selected runner. Invalid commands, options from another mode, and fatal configuration or boot failures exit nonzero.
 
 ## Entry modes
 
 | Command | Purpose |
 |---|---|
-| `nomix --profile <name>` | Boot the named profile under `$NOMIX_HOME/profiles/<name>`. |
+| `nomix <name>` / `nomix --profile <name>` | Boot the named profile under `$NOMIX_HOME/profiles/<name>`. |
+| `nomix --profile <name> --from-default-profile <template>` | Replace a custom profile with a fresh copy of a shipped template, then boot it. |
+| `nomix --profile acp` | Serve automation clients over ACP stdio until disconnect. |
 | `nomix --profile headless "job"` | Run one fresh persisted session, print the final answer, and exit. |
-| `nomix web` | Alias of `--profile web`. |
+| `nomix --profile sdk` | Serve SDK clients over JSON-RPC stdio until shutdown or disconnect. |
+| `nomix --profile sdk-minimal` | Serve SDK clients with the standalone minimal agent tree. |
+| `nomix web` | Boot the Web profile. |
 | `nomix plugin --profile <name> <pnpm args>` | Manage a profile's plugins by forwarding to pnpm in the profile directory. |
 
-The invoking directory is the default workspace root. The `web` and `headless` profiles auto-initialize on first use from shipped templates; any other profile must be created through `nomix plugin`.
+The invoking directory is the default workspace root. The `web`, `headless`, `sdk`, `sdk-minimal`, and `acp` profiles auto-initialize on first use from shipped templates. Create or reset another profile at a non-shipped name with `--from-default-profile`, or initialize a base-backed profile through `nomix plugin`. The `desktop` name is reserved for the Electron-owned profile, so the CLI rejects boot and config-dump requests for it. The npm CLI also rejects its plugin-management requests; the [Desktop-installed command](../desktop/README.md#bundled-command-runtime) can manage the initialized Desktop profile using that installation’s runtime.
 
 ## Plugin authoring API
 
@@ -21,7 +25,7 @@ An out-of-tree plugin declares only `@nomix-ai/nomix-harness` as its Nomix depen
 
 ## App arguments
 
-The launcher parses only its own flags and hands everything after them to the booted profile, where any injected app plugin may parse the shared immutable snapshot ([`nomix-cmdline`](../../packages/boot/cmdline/README.md)). Launcher flags therefore come first, and the first token the launcher does not recognize starts the app's arguments:
+The launcher parses only its own flags and hands everything after them to the booted profile, where any injected app plugin may parse the shared immutable snapshot ([`nomix-cmdline`](../../packages/boot/cmdline/README.md)). The first token the launcher does not recognize starts the app's arguments:
 
 ```sh
 nomix --profile web --port 8080       # --port belongs to the web app
@@ -31,21 +35,34 @@ nomix --profile web --help            # the web app's flags, not the launcher's
 nomix --help                          # the launcher's own help
 ```
 
+<a id="profiles"></a>
 ## Profiles
 
-A profile directory holds a `package.json` (out-of-tree plugin dependencies plus the profile manifest `nomix.profile` with its ordered `bundles` list) and a `cordis.patch.yml` (the user's own patch layer).
+A profile directory holds a `package.json` (out-of-tree plugin dependencies plus the profile manifest `nomix.profile` with its ordered `bundles` list) and a `cordis.patch.yml` (the user's own patch layer). `nomix-hmr`, when enabled in YAML, watches the profile manifest and both profile and home patch files, then recomposes all layers through one serialized reload. Without HMR, changes apply on restart. Edits arriving during watcher registration use the same nonfatal reload reporting as later edits. [Plugin Manager](../../packages/boot/plugin-manager/README.md) shares package operations and the profile write lock with `nomix plugin`; package updates retain disabled bundle selections. CLI package commands inherit authentication variables and terminal descriptors, including interactive build approval; service calls retain their scrubbed environment and captured diagnostics.
+
+Installation and profile startup enforce the declared `engines.nomix` range, or NOMIX peer ranges when it is absent, against the same runtime version shown by `nomix --version`. Incompatible plugins require an explicitly acknowledged exact-version exemption. The [plugin manager's compatibility reference](../../packages/boot/plugin-manager/README.md#version-compatibility-and-exemptions) documents `version-exemptions`, `allow-version`, `revoke-version`, persistence, and risks.
 
 The tree composes over an empty root:
 - each bundle's patch in `nomix.profile.bundles` order
 - then the profile's `cordis.patch.yml`, then the home-level `$NOMIX_HOME/cordis.patch.yml`
 - then `--patch` overlays
 
-Bundles named in `nomix.profile.bundles` resolve from the nomix installation first (`@nomix-ai/nomix-base`, `@nomix-ai/nomix-web-app`, `@nomix-ai/nomix-headless`), then from the profile's own `node_modules`, where pnpm installs out-of-tree plugins.
+Bundles named in `nomix.profile.bundles` resolve from the nomix installation first (`@nomix-ai/nomix-base`, `@nomix-ai/nomix-web-app`, `@nomix-ai/nomix-headless`, `@nomix-ai/nomix-sdk-app`, `@nomix-ai/nomix-sdk-minimal`, `@nomix-ai/nomix-acp-app`), then from the profile's own `node_modules`, where pnpm installs out-of-tree plugins.
 
-Use `--dump-default-config` and `--dump-config` to inspect the composed tree without booting it.
+Use `--dump-default-config` and `--dump-config` to inspect the composed tree without booting it. `--dump-config-schema` imports the composed tree's declared plugin schemas and prints JSON Schema for entries and patches instead of configuration values; read the [schema-dump safety and scope](reference/README.md#config-schema-dump) before inspecting untrusted plugins.
 
-The [CLI behavior reference](reference/README.md) owns exact layer precedence, flags, shutdown behavior, deployment defaults, and source execution.
+The [CLI behavior reference](reference/README.md) owns exact layer precedence, flags, shutdown behavior, deployment defaults, and source execution. The [startup and reload failure table](../../packages/boot/app-boot/README.md#startup-and-reload-failures) compares optional and required plugin failures with configuration HMR.
+
+## Optional overlays
+
+`config/examples/` ships opt-in overlays for GitHub review webhooks, memory MCP servers, and runtime Cordis tools. They are never part of a default profile; the [user guides](../../docs/user/guide/index.md) and [developer practice guides](../../docs/user/develop/practice/index.md) own setup and safety instructions.
 
 ## Development
 
 Production runs require built package and frontend artifacts. From the repository root, run `pnpm run build` separately, then use `pnpm nomix <args...>` to run the TypeScript entry and forward every argument; the [source-execution reference](reference/README.md#source-execution) owns the module-resolution contract.
+
+The `@nomix-ai/nomix-harness/profile-boot` export provides the shared profile lifecycle to the Desktop host. A resolved application profile supplies its own installation anchor for runtime package resolution while retaining the Harness home patch, proxy environment, telemetry switch, patch reload, and bounded shutdown.
+
+Packaged installations call the same `runCli()` entry with their package-manager executable. The Desktop carrier also enables plugin operations for its initialized profile; npm launches omit these options. Installation-owned package environments apply only to plugin package operations; the invoking directory, ordinary profile selection, and agent-shell PATH retain their CLI meanings.
+
+The [Web failure matrix](tests/profiles/web/tests/web-failure-matrix.expected.e2e.ts) runs the built CLI through startup failures and native configuration HMR with `awaitWriteFinish` enabled in `test:expected`. It verifies authenticated HTTP responses, diagnostics, recovery, process exits, and disposal without model API calls; the [startup acceptance](tests/profiles/web/tests/web-best-effort-startup.expected.e2e.ts) also covers the shipped required Web dependencies and port conflicts.

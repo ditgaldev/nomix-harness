@@ -1,6 +1,19 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for 2026-08-25-single-npm-harness-distribution.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/process/2026-08-25-single-npm-harness-distribution.md
-2026-08-25-single-npm-harness-distribution.md: 3098124ef5b64d67a51070cb89b549574a73cb5e
-2026-08-25-single-npm-harness-distribution.zh.md: 16200d75baa7f0ac9a05fd35c33263dd241465a6
+/agent-note-single-npm-harness-distribution:
+  en: 4210e0b8a8d949ce
+  zh: d52f7aa5e1c904f1
+/agent-note-single-npm-harness-distribution/problem:
+  en: 247105d00effeb2f
+  zh: bed50a6310a9f20d
+/agent-note-single-npm-harness-distribution/decision:
+  en: 50125b6453388254
+  zh: 9f42c639b230d0df
+/agent-note-single-npm-harness-distribution/alternatives-considered:
+  en: 185a0b7841dfffb4
+  zh: 81185f8da274fbf7
+/agent-note-single-npm-harness-distribution/consequences:
+  en: 6786f3fc55486341
+  zh: 1409b66c9bd15f93

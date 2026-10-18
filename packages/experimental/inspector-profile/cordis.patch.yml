@@ -1,0 +1,8 @@
+- insert:
+    - id: experimental-inspector
+      name: '@nomix-ai/nomix-experimental-inspector'
+      disabled: false
+      config:
+        captureFetch: true
+    - id: session-inspector
+      name: '@nomix-ai/nomix-experimental-session-inspector'

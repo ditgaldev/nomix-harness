@@ -1,6 +1,6 @@
 {
   "name": "@nomix-ai/nomix-client-ui-plan",
-  "description": "Plan-mode composer control: the conversation.input.plan seat over the plan projection and the /plan command channel",
+  "description": "Plan mode controls, persistent transcript plan cards, and sidebar Markdown previews",
   "version": "0.2.9",
   "publishConfig": {
     "access": "public"
@@ -18,23 +18,25 @@
       "types": "./lib/types/index.d.ts",
       "default": "./lib/index.js"
     },
-    "./invariant": {
-      "types": "./lib/types/invariant.d.ts",
-      "default": "./lib/invariant.js"
-    },
     "./client": {
       "types": "./lib/types/client/index.d.ts",
       "default": "./lib/client.js"
     },
     "./src/*": "./src/*",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
   },
   "nomix": {
     "client": {
       "inject": [
         "@nomix-ai/nomix-api-remotes",
         "@nomix-ai/nomix-client-locale",
-        "@nomix-ai/nomix-client-ui-conversation"
+        "@nomix-ai/nomix-client-ui-conversation",
+        "@nomix-ai/nomix-client-ui-sidebar-right",
+        "@nomix-ai/nomix-client-ui-chat",
+        "@nomix-ai/nomix-client-ui-user-questions",
+        "@nomix-ai/nomix-client-resources",
+        "@nomix-ai/nomix-api-session-controller"
       ],
       "platform": "web"
     }
@@ -45,31 +47,35 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "@nomix-ai/nomix-api-remotes": "workspace:^",
-    "@nomix-ai/nomix-client-locale": "workspace:^",
-    "@nomix-ai/nomix-client-runtime": "workspace:^",
-    "@nomix-ai/nomix-client-ui-conversation": "workspace:^",
-    "@nomix-ai/nomix-invariants": "workspace:^",
-    "@nomix-ai/nomix-plan-mode": "workspace:^",
-    "@nomix-ai/cordis": "workspace:^"
+    "@nomix-ai/cordis": "workspace:~"
   },
   "devDependencies": {
-    "@nomix-ai/nomix-api-remotes": "workspace:^",
-    "@nomix-ai/nomix-client-locale": "workspace:^",
-    "@nomix-ai/nomix-client-runtime": "workspace:^",
-    "@nomix-ai/nomix-client-test-runtime": "workspace:^",
-    "@nomix-ai/nomix-client-ui-conversation": "workspace:^",
-    "@nomix-ai/nomix-client-ui-primitives": "workspace:^",
-    "@nomix-ai/nomix-client-ui-slots": "workspace:^",
-    "@nomix-ai/nomix-invariants": "workspace:^",
-    "@nomix-ai/nomix-plan-mode": "workspace:^",
-    "@types/react": "~18.3.1",
-    "@nomix-ai/cordis": "workspace:^",
-    "react": "^18.2.0"
+    "@nomix-ai/nomix-client-store": "workspace:*",
+    "@nomix-ai/nomix-api-remotes": "workspace:*",
+    "@nomix-ai/nomix-client-locale": "workspace:*",
+    "@nomix-ai/nomix-client-test-runtime": "workspace:*",
+    "@nomix-ai/nomix-client-ui-conversation": "workspace:*",
+    "@nomix-ai/nomix-client-ui-primitives": "workspace:*",
+    "@nomix-ai/nomix-client-ui-slots": "workspace:*",
+    "@nomix-ai/nomix-plan-mode": "workspace:*",
+    "@nomix-ai/cordis": "workspace:~",
+    "react": "^18.2.0",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-client-ui-renderer": "workspace:*",
+    "@nomix-ai/nomix-client-ui-session": "workspace:*",
+    "@nomix-ai/nomix-api-session-controller": "workspace:*",
+    "@nomix-ai/nomix-client-ui-chat": "workspace:*",
+    "@nomix-ai/nomix-client-ui-sidebar-right": "workspace:*",
+    "@nomix-ai/nomix-client-ui-user-questions": "workspace:*",
+    "@nomix-ai/nomix-client-resources": "workspace:*",
+    "@nomix-ai/nomix-typert-protocol": "workspace:*",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-tools": "workspace:*",
+    "@nomix-ai/nomix-util-crypto": "workspace:*"
   },
   "files": [
+    "locale/*.json",
     "lib/index.js",
-    "lib/invariant.js",
     "lib/client.js",
     "lib/types/**/*.d.ts"
   ]

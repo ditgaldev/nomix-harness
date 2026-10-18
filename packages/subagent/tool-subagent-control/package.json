@@ -18,45 +18,48 @@
       "types": "./lib/types/index.d.ts",
       "default": "./lib/index.js"
     },
-    "./invariant": {
-      "types": "./lib/types/invariant.d.ts",
-      "default": "./lib/invariant.js"
-    },
     "./list-agents": {
       "types": "./lib/types/list-agents.d.ts",
       "default": "./lib/types/list-agents.js"
     },
     "./src/*": "./src/*",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json",
+    "./list-agents/locale/*.json": "./locale/list-agents/*.json"
   },
   "files": [
+    "locale/*.json",
+    "locale/list-agents/*.json",
     "lib/index.js",
-    "lib/invariant.js",
     "lib/types/**/*.js",
     "lib/types/**/*.d.ts"
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@nomix-ai/nomix-invariants": "workspace:^",
-    "@nomix-ai/nomix-llm": "workspace:^",
-    "@nomix-ai/nomix-session": "workspace:^",
-    "@nomix-ai/nomix-subagent": "workspace:^",
-    "@nomix-ai/nomix-tools": "workspace:^",
-    "@nomix-ai/cordis": "workspace:^"
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-subagent": "workspace:*",
+    "@nomix-ai/nomix-tools": "workspace:*"
   },
   "devDependencies": {
-    "@nomix-ai/nomix-agent": "workspace:^",
-    "@nomix-ai/nomix-agent-loop": "workspace:^",
-    "@nomix-ai/nomix-agent-loop-testkit": "workspace:^",
-    "@nomix-ai/nomix-invariants": "workspace:^",
-    "@nomix-ai/nomix-llm": "workspace:^",
-    "@nomix-ai/nomix-session": "workspace:^",
-    "@nomix-ai/nomix-session-persistence": "workspace:^",
-    "@nomix-ai/nomix-session-persistence-jsonl": "workspace:^",
-    "@nomix-ai/nomix-session-projection": "workspace:^",
-    "@nomix-ai/nomix-subagent": "workspace:^",
-    "@nomix-ai/nomix-subagent-spawn-in-process": "workspace:^",
-    "@nomix-ai/nomix-tools": "workspace:^",
-    "@nomix-ai/cordis": "workspace:^"
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-agent": "workspace:*",
+    "@nomix-ai/nomix-agent-loop": "workspace:*",
+    "@nomix-ai/nomix-agent-loop-testkit": "workspace:*",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-session-persistence": "workspace:*",
+    "@nomix-ai/nomix-session-persistence-jsonl": "workspace:*",
+    "@nomix-ai/nomix-session-projection": "workspace:*",
+    "@nomix-ai/nomix-session-query": "workspace:*",
+    "@nomix-ai/nomix-subagent": "workspace:*",
+    "@nomix-ai/nomix-subagent-fork-in-process": "workspace:*",
+    "@nomix-ai/nomix-subagent-spawn-in-process": "workspace:*",
+    "@nomix-ai/nomix-tools": "workspace:*"
+  },
+  "dependencies": {
+    "@nomix-ai/nomix-brand": "workspace:*",
+    "@nomix-ai/nomix-util-values": "workspace:*"
   }
 }

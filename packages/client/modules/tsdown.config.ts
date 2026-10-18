@@ -1,6 +1,6 @@
 import { clientBundle } from '../tsdown.client.ts'
 
 export default clientBundle(
-  '@nomix-ai/nomix-client-modules',
-  ['lib/types/index.js', 'lib/types/invariant.js'],
+  import.meta.dirname,
+  ['lib/types/index.js'],
 )

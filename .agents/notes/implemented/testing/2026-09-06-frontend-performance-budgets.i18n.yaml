@@ -1,0 +1,34 @@
+# Bilingual-pair consistency record for 2026-09-06-frontend-performance-budgets.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/testing/2026-09-06-frontend-performance-budgets.md
+/agent-note-frontend-large-session-performance-budgets:
+  en: 705e397f3937d08d
+  zh: 581550297096a2ee
+/agent-note-frontend-large-session-performance-budgets/problem:
+  en: 493bd6746124ff78
+  zh: c89e68e408118eef
+/agent-note-frontend-large-session-performance-budgets/decision:
+  en: c587a479e4f17c29
+  zh: f36166dfcf725662
+/agent-note-frontend-large-session-performance-budgets/calibration:
+  en: 2bbee3ec0bc9e618
+  zh: b4f937d7f4f09ae5
+/agent-note-frontend-large-session-performance-budgets/calibration/actual-ci-runs:
+  en: 4b5daf3b59d755e9
+  zh: 6b59a21c92b23ca6
+/agent-note-frontend-large-session-performance-budgets/calibration/standard-hosted-expectations-and-input-scheduling:
+  en: 346cd1b3d5acf0ea
+  zh: 42e08cd387f982c8
+/agent-note-frontend-large-session-performance-budgets/calibration/older-page-control-preparation:
+  en: de392f6c19df72ee
+  zh: 32cbabf9ebcacbcc
+/agent-note-frontend-large-session-performance-budgets/calibration/trajectory-readiness-polling:
+  en: bdcfefd7358e335b
+  zh: f718f66ca5944203
+/agent-note-frontend-large-session-performance-budgets/alternatives-considered:
+  en: 4d2a4a64ccd14507
+  zh: 8a4aaf4d4abea13d
+/agent-note-frontend-large-session-performance-budgets/consequences:
+  en: 667ba1e4bbfce6e2
+  zh: c12fd450bcbde9c3

@@ -1,0 +1,77 @@
+# Minimal live counterpart for the pwsh-tool-turn snapshot composition.
+- id: llm-deepseek
+  name: '@nomix-ai/nomix-llm-deepseek-api-key'
+  config:
+    models:
+      - id: deepseek-v4-pro
+
+- id: subprocess
+  name: '@nomix-ai/nomix-subprocess-local'
+
+- id: bash-sandbox
+  name: '@nomix-ai/nomix-bash-sandbox'
+  disabled: true
+
+- id: pwsh-sandbox
+  name: '@nomix-ai/nomix-pwsh-sandbox'
+  disabled: false
+
+- id: shell-env
+  name: '@nomix-ai/nomix-shell-env'
+
+- id: agent-default-model
+  name: '@nomix-ai/nomix-agent-default-model'
+  config:
+    provider: deepseek-official
+    model: deepseek-v4-pro
+
+- id: session-persistence-jsonl
+  name: '@nomix-ai/nomix-session-persistence-jsonl'
+  config:
+    root: !!js nomixHomePath('sessions')
+    compression: !!js 'process.env.NOMIX_SNAPSHOT === undefined ? ''zstd'' : ''none'''
+
+- id: agent-instructions
+  name: '@nomix-ai/nomix-agent-instructions'
+  disabled: true
+
+- id: system-prompt
+  name: '@nomix-ai/nomix-system-prompt'
+  config:
+    personaPrefix: You are a concise snapshot agent.
+
+- id: goal
+  name: '@nomix-ai/nomix-goal'
+  disabled: true
+
+- id: goal-round-driver
+  name: '@nomix-ai/nomix-goal-round-driver'
+  disabled: true
+
+- id: command-goal
+  name: '@nomix-ai/nomix-command-goal'
+  disabled: true
+
+- id: tool-goal
+  name: '@nomix-ai/nomix-tool-goal'
+  disabled: true
+
+- id: skill
+  name: '@nomix-ai/nomix-skill'
+  disabled: true
+
+- id: skill-filesystem
+  name: '@nomix-ai/nomix-skill-filesystem'
+  disabled: true
+
+- id: tool-skill
+  name: '@nomix-ai/nomix-tool-skill'
+  disabled: true
+
+- id: tool-bash
+  name: '@nomix-ai/nomix-tool-bash'
+  disabled: true
+
+- id: tool-pwsh
+  name: '@nomix-ai/nomix-tool-pwsh'
+  disabled: false

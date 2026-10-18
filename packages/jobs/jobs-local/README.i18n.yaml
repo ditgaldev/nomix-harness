@@ -1,6 +1,70 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/jobs/jobs-local/README.md
-README.md: 2484b3863f0f741d14708831e7760feccf606e4d
-README.zh.md: 31dedc2afd7cdb34294f0b65476368e578eb3d2d
+/:
+  en: 0abe764a4bc3e3db
+  zh: 280ff3a1c1a8bc5c
+/nomix-ai-nomix-jobs-local:
+  en: 27278017568e6d95
+  zh: 72be44747b1939ef
+/nomix-ai-nomix-jobs-local/summary:
+  en: 5a1d10cedc14974d
+  zh: ea238234e9de9afc
+/nomix-ai-nomix-jobs-local/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-jobs-local/use-this-package:
+  en: 1b2fe44d8bcf9d65
+  zh: a253e1f9d9f6a426
+/nomix-ai-nomix-jobs-local/use-this-package/when-to-choose-it:
+  en: 17479310883edc0a
+  zh: f1cea41c704dabe2
+/nomix-ai-nomix-jobs-local/use-this-package/minimal-configuration:
+  en: 4e8d0fcec38f3508
+  zh: 96aeb33662d1c901
+/nomix-ai-nomix-jobs-local/use-this-package/what-each-owner-gets:
+  en: 9ab66aa770694092
+  zh: 38de930bcfbc132c
+/nomix-ai-nomix-jobs-local/use-this-package/lifecycle:
+  en: 91dd372f742dcdb8
+  zh: 58eeee0254d33cd1
+/nomix-ai-nomix-jobs-local/use-this-package/session-timing-records:
+  en: 46b739c0562df14e
+  zh: 4abcbfbb72c102b1
+/nomix-ai-nomix-jobs-local/use-this-package/what-can-go-wrong:
+  en: 804d4416d6a6c733
+  zh: 1f93900447be32e1
+/nomix-ai-nomix-jobs-local/understand-the-implementation:
+  en: f782557ca8da3138
+  zh: e8f0082b9692cacc
+/nomix-ai-nomix-jobs-local/understand-the-implementation/design-philosophy:
+  en: b92e6e5415553e2e
+  zh: c3e0be579af4c7fb
+/nomix-ai-nomix-jobs-local/understand-the-implementation/source-map:
+  en: cf99103141ed9f13
+  zh: 3a650aa8c4019156
+/nomix-ai-nomix-jobs-local/understand-the-implementation/scope-layers:
+  en: 2c53e11a60965985
+  zh: 63adc1628c71e62e
+/nomix-ai-nomix-jobs-local/understand-the-implementation/admission-and-settlement:
+  en: 925ad87c2c1318f4
+  zh: d8618b9265f9d8f1
+/nomix-ai-nomix-jobs-local/understand-the-implementation/teardown:
+  en: 49e8bd5e2c1f6ffd
+  zh: ad3e1aa712fd59b3
+/nomix-ai-nomix-jobs-local/further-exploration:
+  en: c876a13097263b9a
+  zh: 18d7df595ee1907e
+/nomix-ai-nomix-jobs-local/model-experience:
+  en: 0947f0d353f112f8
+  zh: d6b62ad7a16e3f69
+/nomix-ai-nomix-jobs-local/model-experience/kv-cache-effect:
+  en: e290ccc9b3c92c08
+  zh: d75d48f485447a74
+/nomix-ai-nomix-jobs-local/known-limitations-and-deferred-work:
+  en: 8b3e2d5505caf2cd
+  zh: 46435d6a6b3c9aff
+/nomix-ai-nomix-jobs-local/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

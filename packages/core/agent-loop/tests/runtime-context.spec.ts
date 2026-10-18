@@ -1,15 +1,22 @@
 import { describe, expect, it } from 'vitest'
 import { Context } from '@nomix-ai/cordis'
 import { createUserMessage } from '@nomix-ai/nomix-llm'
+import type { ContextFormed } from '@nomix-ai/nomix-llm'
 import SessionStore, { SessionId } from '@nomix-ai/nomix-session'
 import { RuntimeContextProjection } from '../src/runtime-context.ts'
 
-const SOURCE = '@nomix-ai/nomix-system-prompt'
+declare module '@nomix-ai/nomix-llm' {
+  interface MessageSourceMap {
+    'test-compaction': { kind: 'test-compaction' } & ContextFormed
+  }
+}
+
+const SOURCE = 'runtime-context'
 
 function contextMessage(text: string) {
   return createUserMessage({
     content: [{ type: 'text', text }],
-    source: { kind: 'plugin', plugin: SOURCE },
+    source: { kind: SOURCE },
   })
 }
 
@@ -22,9 +29,9 @@ describe('RuntimeContextProjection', () => {
     const shadowed = session.append('user/message', contextMessage('shadowed'), { surfaceOp: 'append' })
     session.append('user/message', createUserMessage({
       content: [{ type: 'text', text: 'summary' }],
-      source: { kind: 'plugin', plugin: 'test-compaction' },
+      source: { kind: 'test-compaction' },
     }), {
-      surfaceOp: { op: 'replace', start: shadowed.seq, end: shadowed.seq },
+      surfaceOp: { op: 'replace', startSeq: shadowed.seq, endSeq: shadowed.seq },
       sourceEventSeqs: [shadowed.seq],
     })
 
@@ -32,8 +39,7 @@ describe('RuntimeContextProjection', () => {
     expect(session.surface.nodes).toContain(retained.seq)
     expect(projection.project('retained', [])).toBeUndefined()
     expect(projection.project('next', [{ name: 'sandbox:policy', text: 'policy' }])?.source).toEqual({
-      kind: 'plugin',
-      plugin: SOURCE,
+      kind: SOURCE,
       form: 'snapshot',
       sections: [{ name: 'sandbox:policy', text: 'policy' }],
     })

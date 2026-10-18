@@ -1,0 +1,91 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/session/session-format-v3-to-v4/README.md
+/:
+  en: a24b02a97921b07a
+  zh: 92428dfee88d27fd
+/nomix-ai-nomix-session-format-v3-to-v4:
+  en: 8ba44dab3908f5dd
+  zh: 1c3f4a3bb6720955
+/nomix-ai-nomix-session-format-v3-to-v4/summary:
+  en: 0162a0e7e6493e0a
+  zh: 4107af760c449097
+/nomix-ai-nomix-session-format-v3-to-v4/table-of-contents:
+  en: b501b06f4b21cc31
+  zh: bd67928bedf6c786
+/nomix-ai-nomix-session-format-v3-to-v4/use-this-package:
+  en: 4fa1c1de230d6bcb
+  zh: bb746cd923f191cb
+/nomix-ai-nomix-session-format-v3-to-v4/v3-to-v4-specification:
+  en: d3463f5e222c44a2
+  zh: ec932eb4acac30f4
+/nomix-ai-nomix-session-format-v3-to-v4/v3-to-v4-specification/header-and-physical-framing:
+  en: 69f24696bd941ceb
+  zh: bc51ca330a4aa361
+/nomix-ai-nomix-session-format-v3-to-v4/v3-to-v4-specification/tool-result-representation:
+  en: 32b845f1e1867195
+  zh: 3e4e046dbc36478e
+/nomix-ai-nomix-session-format-v3-to-v4/v3-to-v4-specification/extension-data:
+  en: 3e7af0248b029e9a
+  zh: b73ddd133db65d05
+/nomix-ai-nomix-session-format-v3-to-v4/v3-to-v4-specification/message-source-conversion:
+  en: 6487553e2cc6e30c
+  zh: 7bebd2b9e03c95a6
+/nomix-ai-nomix-session-format-v3-to-v4/v3-to-v4-specification/parent-catalog-prerequisites:
+  en: a91f18fe85413145
+  zh: b6fb56b368ea8a81
+/nomix-ai-nomix-session-format-v3-to-v4/v3-to-v4-specification/sequence-references-and-inheritance:
+  en: 8543a15b3c24cd43
+  zh: 5eacb6ffd009d1bc
+/nomix-ai-nomix-session-format-v3-to-v4/v3-to-v4-specification/delivery-generations:
+  en: 1af75967fd8296c7
+  zh: 4efd2a3a3a288610
+/nomix-ai-nomix-session-format-v3-to-v4/v3-to-v4-specification/source-audit-and-refusal:
+  en: bfc56afb05348d19
+  zh: 21afbb4ced91e87f
+/nomix-ai-nomix-session-format-v3-to-v4/native-v4-admission:
+  en: 7c2a1375c98e9b9f
+  zh: 39a57a82df56a2d4
+/nomix-ai-nomix-session-format-v3-to-v4/native-v4-admission/header-messages-and-surface-metadata:
+  en: 610f35b8c44538a2
+  zh: 17e5c07f09783106
+/nomix-ai-nomix-session-format-v3-to-v4/native-v4-admission/lifecycle-and-reference-relationships:
+  en: bae15764867cf91c
+  zh: 09a56ed1a8c9622a
+/nomix-ai-nomix-session-format-v3-to-v4/native-v4-admission/developer-changes-and-deferred-schemas:
+  en: b408907a2e0221a3
+  zh: 8a30bdbd2efa703d
+/nomix-ai-nomix-session-format-v3-to-v4/native-v4-admission/fork-generated-results:
+  en: db82b002989ac151
+  zh: da80b797bf321c3f
+/nomix-ai-nomix-session-format-v3-to-v4/native-v4-admission/validation-entry-points-and-recovery:
+  en: 1d6db95cf7a82846
+  zh: 837c690fe87f47db
+/nomix-ai-nomix-session-format-v3-to-v4/understand-the-implementation:
+  en: bd4d2271b5844ca1
+  zh: b5d00e78d6085a25
+/nomix-ai-nomix-session-format-v3-to-v4/further-exploration:
+  en: 713d771f3b027fca
+  zh: d2ea36290dcc6627
+/nomix-ai-nomix-session-format-v3-to-v4/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-session-format-v3-to-v4/model-experience/historical-restoration:
+  en: e63dd8ef6de7cf7c
+  zh: f1e356f01b601079
+/nomix-ai-nomix-session-format-v3-to-v4/model-experience/historical-restoration/what-the-model-sees:
+  en: 8885a0ae5f305b88
+  zh: 2064d2d02dd1b303
+/nomix-ai-nomix-session-format-v3-to-v4/model-experience/historical-restoration/token-effect:
+  en: adb2bef43125d1df
+  zh: 02f8d1d6a25d57ab
+/nomix-ai-nomix-session-format-v3-to-v4/model-experience/historical-restoration/kv-cache-effect:
+  en: 143ddba012e03d0c
+  zh: 93dfdb806bf9a697
+/nomix-ai-nomix-session-format-v3-to-v4/known-limitations-and-deferred-work:
+  en: 4452fc5487702fcc
+  zh: 15d446103baa0e30
+/nomix-ai-nomix-session-format-v3-to-v4/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 8ec3e73528ddb1a6

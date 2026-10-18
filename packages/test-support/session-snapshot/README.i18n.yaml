@@ -1,0 +1,61 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/test-support/session-snapshot/README.md
+/:
+  en: 35f64a68381efbd0
+  zh: dd2c508ba263d788
+/nomix-ai-nomix-session-snapshot:
+  en: 9195440a3e9ca763
+  zh: 54a5c45a5b29c975
+/nomix-ai-nomix-session-snapshot/summary:
+  en: 66347736085df19f
+  zh: 48474d6bbb1c1e1f
+/nomix-ai-nomix-session-snapshot/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-session-snapshot/use-this-package:
+  en: 594ad1f3e6f02054
+  zh: 7ca4f565976704be
+/nomix-ai-nomix-session-snapshot/use-this-package/writing-a-snapshot-suite:
+  en: 767d19f2f4348a90
+  zh: 2da7e847cfb0b721
+/nomix-ai-nomix-session-snapshot/use-this-package/record-replay-and-refresh:
+  en: 6c178c281cdc63ed
+  zh: 3c84570adc9aff8a
+/nomix-ai-nomix-session-snapshot/use-this-package/pinning-request-headers-and-system-prompts:
+  en: 6b11d5111e1a3222
+  zh: de4d3889b1a5ebb4
+/nomix-ai-nomix-session-snapshot/use-this-package/platform-and-composition-variants:
+  en: 64666ea2894acc4a
+  zh: 0e78df32bcfd3633
+/nomix-ai-nomix-session-snapshot/use-this-package/what-can-go-wrong:
+  en: fb32ca2acd172a9d
+  zh: d86d6c8af3147d22
+/nomix-ai-nomix-session-snapshot/understand-the-implementation:
+  en: 18ff76b440fe40da
+  zh: 4dbf2eb5f9ee98a2
+/nomix-ai-nomix-session-snapshot/understand-the-implementation/design:
+  en: 8771607f15c4f4e1
+  zh: 7c2cf395f704717c
+/nomix-ai-nomix-session-snapshot/understand-the-implementation/source-map:
+  en: 1510b3b09c3bd553
+  zh: 1931fba0891f7d65
+/nomix-ai-nomix-session-snapshot/understand-the-implementation/data-flow:
+  en: a71c8ab2e78798c5
+  zh: 419cebed1c023fbf
+/nomix-ai-nomix-session-snapshot/further-exploration:
+  en: 46974500f44bdfe9
+  zh: 8dc77b5e30c2d5b6
+/nomix-ai-nomix-session-snapshot/model-experience:
+  en: 9f12d94ab5e31ade
+  zh: 7c75a17565caca1c
+/nomix-ai-nomix-session-snapshot/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: f57cc48a1b5cbfa9
+/nomix-ai-nomix-session-snapshot/known-limitations-and-deferred-work:
+  en: 15f76d8337a2e028
+  zh: cfbaedd3e168dcb9
+/nomix-ai-nomix-session-snapshot/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

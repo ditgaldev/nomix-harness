@@ -1,6 +1,55 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/sdk/client/README.md
-README.md: 4edb1238d61c1dff911dd024c8a8a0d2bb44bdbb
-README.zh.md: fc61198bcbae11b8487a33fe5df64cf4c29a21a0
+/:
+  en: b67c6f22f47dbbe4
+  zh: 718fd8a0ce57f8fa
+/nomix-ai-nomix-sdk-client:
+  en: b1cffd64685355d6
+  zh: 60ec4a7fe7e9566a
+/nomix-ai-nomix-sdk-client/summary:
+  en: 411cd4a506ced952
+  zh: a5ec210170cf8d1b
+/nomix-ai-nomix-sdk-client/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-sdk-client/use-this-package:
+  en: 01e2ba25c1e11c2b
+  zh: 2f90fd18030acd61
+/nomix-ai-nomix-sdk-client/use-this-package/running-agent-turns-with-nomixharness:
+  en: 979451beceaba267
+  zh: 4a008abf8fb9e3b2
+/nomix-ai-nomix-sdk-client/use-this-package/lower-level-control-with-harnessclient:
+  en: 936940afff4d1371
+  zh: d3747da3e1836d1d
+/nomix-ai-nomix-sdk-client/understand-the-implementation:
+  en: 8773f50c51da85f0
+  zh: 4649ebc69357deb0
+/nomix-ai-nomix-sdk-client/understand-the-implementation/design-concept:
+  en: fd375dc62ce5bb64
+  zh: 05ee8fe789695bbb
+/nomix-ai-nomix-sdk-client/understand-the-implementation/source-map:
+  en: 5ed9d81527a9e1f8
+  zh: e1ea2ddc8d8b96ad
+/nomix-ai-nomix-sdk-client/understand-the-implementation/owned-activity-flow:
+  en: 94a42babac5f1c7d
+  zh: df9e42ed02f7d002
+/nomix-ai-nomix-sdk-client/understand-the-implementation/errors-and-teardown:
+  en: 165364de2cee0a9f
+  zh: c4dc37b44e1e621e
+/nomix-ai-nomix-sdk-client/further-exploration:
+  en: e16d6d8f0fd85afe
+  zh: 618065b911d63ff4
+/nomix-ai-nomix-sdk-client/model-experience:
+  en: e82a55513d3cd30e
+  zh: ecd8c0875ff2fb87
+/nomix-ai-nomix-sdk-client/model-experience/kv-cache-effect:
+  en: 7abe0be104a791e7
+  zh: 445311f78b1069ca
+/nomix-ai-nomix-sdk-client/known-limitations-and-deferred-work:
+  en: 9464e68347568963
+  zh: 006c11b54e84cfcb
+/nomix-ai-nomix-sdk-client/known-limitations-and-deferred-work/dev-note:
+  en: 6177a56f053936a4
+  zh: 0f4b20228c2d15da

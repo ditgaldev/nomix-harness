@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/ssh/fs-ssh/README.md
+/:
+  en: 7ee4b79f88be1b77
+  zh: 915152892d037c3c
+/nomix-ai-nomix-fs-ssh:
+  en: a13e9148ef2978f4
+  zh: 76cd883c69619138
+/nomix-ai-nomix-fs-ssh/summary:
+  en: 8a83f4e279c2456d
+  zh: 6f52a50c99ab6b79
+/nomix-ai-nomix-fs-ssh/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 725b47765ee8f30b
+/nomix-ai-nomix-fs-ssh/use-this-package:
+  en: 946c28f2f6f7c28b
+  zh: a771e29273d40bda
+/nomix-ai-nomix-fs-ssh/understand-the-implementation:
+  en: 1976585bedcdeaf2
+  zh: 86e4a0f952283638
+/nomix-ai-nomix-fs-ssh/further-exploration:
+  en: ddf05064282dbcee
+  zh: 213853c3d2f71d1b
+/nomix-ai-nomix-fs-ssh/model-experience:
+  en: f8b078c320d36749
+  zh: 5a0f4d1b72574d72
+/nomix-ai-nomix-fs-ssh/model-experience/kv-cache-effect:
+  en: 21f304c66e5ba98b
+  zh: 18185d5b164f8216
+/nomix-ai-nomix-fs-ssh/known-limitations-and-deferred-work:
+  en: 2e75cffd2ab863d6
+  zh: f8fdbabe27082f08
+/nomix-ai-nomix-fs-ssh/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 8ec3e73528ddb1a6

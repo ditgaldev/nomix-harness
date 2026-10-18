@@ -1,0 +1,25 @@
+# Bilingual-pair consistency record for 2026-08-26-generic-file-upload.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-08-26-generic-file-upload.md
+/agent-note-generic-file-upload:
+  en: 600c5b6e2262a5b3
+  zh: 6a8c5048f46a6bbf
+/agent-note-generic-file-upload/problem:
+  en: e7c3b5d7702714fe
+  zh: 268f162b553b37d1
+/agent-note-generic-file-upload/decision:
+  en: d5b5a75eb030834c
+  zh: 8864c31deb7c7974
+/agent-note-generic-file-upload/alternatives-considered:
+  en: 9ffc01ca211c84ed
+  zh: 88fb66b73ded720c
+/agent-note-generic-file-upload/consequences:
+  en: 914ca2455a638848
+  zh: 68534b77deb8535a
+/agent-note-generic-file-upload/testing:
+  en: 3a50ac370d51cda9
+  zh: d490f58922f8795b
+/agent-note-generic-file-upload/related:
+  en: a5390b3fae5d09f9
+  zh: 25aec2e8118b9e7d

@@ -1,0 +1,19 @@
+# Bilingual-pair consistency record for 2026-09-11-plugin-owned-message-projections.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-09-11-plugin-owned-message-projections.md
+/agent-note-plugin-owned-message-projections:
+  en: 71b4e5579c7e02c8
+  zh: 63d9a66eb83f803e
+/agent-note-plugin-owned-message-projections/problem:
+  en: a0b8787e73bb5260
+  zh: 1e4ee823953f9f4d
+/agent-note-plugin-owned-message-projections/decision:
+  en: 50c02960b1f087c6
+  zh: fa3f5c18b897eab9
+/agent-note-plugin-owned-message-projections/alternatives-considered:
+  en: b0da1fbf24bc506a
+  zh: c4e35896599f824c
+/agent-note-plugin-owned-message-projections/consequences:
+  en: c2f3ff0b9639bec5
+  zh: 357f90d9a3423751

@@ -17,18 +17,18 @@ import {
   type ManualCompactAgentContext,
 } from '@nomix-ai/nomix-compaction'
 import * as commandCompact from '@nomix-ai/nomix-command-compact'
-import { Session, SessionId } from '@nomix-ai/nomix-session'
+import { Session, SessionId, SessionSeq } from '@nomix-ai/nomix-session'
 
 const COMPACTION_ID = CompactionId('loader-command-compact-test')
 
 const RESULT: CompactionResult = {
   compactionId: COMPACTION_ID,
-  startSeq: 1,
-  summarySeq: 2,
-  endSeq: 3,
+  startSeq: SessionSeq(1),
+  summarySeq: SessionSeq(2),
+  endSeq: SessionSeq(3),
   summary: [{ type: 'text', text: 'loader summary' }],
-  shadowedRange: { start: 3, end: 8 },
-  shadowedSeqs: [3, 5, 8],
+  shadowedRange: { start: SessionSeq(3), end: SessionSeq(8) },
+  shadowedSeqs: [SessionSeq(3), SessionSeq(5), SessionSeq(8)],
   shadowedTokenCount: 99,
 }
 
@@ -50,13 +50,13 @@ class LoaderCompactionEngine extends CompactionEngine {
     _signal: AbortSignal,
     sourceCommandId?: Parameters<CompactionEngine['compactNow']>[2],
   ): Promise<CompactionResult | null> {
-    const provenance = {
+    const operationIds = {
       compactionId: RESULT.compactionId,
       ...sourceCommandId === undefined ? {} : { sourceCommandId },
     }
-    agent.session.append('compaction/start', { ...provenance, turn: null })
+    agent.session.append('compaction/start', { ...operationIds, turn: null })
     agent.session.append('compaction/summary', {
-      ...provenance,
+      ...operationIds,
       summary: RESULT.summary,
       shadowedRange: RESULT.shadowedRange,
       shadowedSeqs: RESULT.shadowedSeqs,
@@ -64,8 +64,8 @@ class LoaderCompactionEngine extends CompactionEngine {
       provider: 'loader-test',
       model: 'loader-test',
     })
-    agent.session.append('compaction/end', { ...provenance, turn: null })
-    return Promise.resolve({ ...RESULT, ...provenance })
+    agent.session.append('compaction/end', { ...operationIds, turn: null })
+    return Promise.resolve({ ...RESULT, ...operationIds })
   }
 }
 
@@ -120,6 +120,7 @@ describe('command-compact real Loader composition', () => {
       reserveTurnAdmission: () => () => undefined,
     } as unknown as Agent
     expect(context.commands.list(agent)).toContainEqual({
+      definitionId: '@nomix-ai/nomix-command-compact',
       name: 'compact',
       description: 'Compact older conversation history',
     })
@@ -130,7 +131,7 @@ describe('command-compact real Loader composition', () => {
       text: 'Compacted 3 history items (~99 tokens).',
       sourceEventSeq: RESULT.summarySeq,
     })
-    expect(session.events.map(event => ({ type: event.type, data: event.data }))).toEqual([
+    expect(session.snapshotEvents().map(event => ({ type: event.type, data: event.data }))).toEqual([
       {
         type: 'command/run',
         data: {

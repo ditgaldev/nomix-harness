@@ -1,0 +1,52 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-chat/README.md
+/:
+  en: d88f75fc0178ba53
+  zh: 52bc7ae9551ab1cf
+/nomix-ai-nomix-client-ui-chat:
+  en: 37c3eedb970099ba
+  zh: 24891f61b234d769
+/nomix-ai-nomix-client-ui-chat/summary:
+  en: fba5b2fb8080e2dd
+  zh: 32c337123b7dfbcb
+/nomix-ai-nomix-client-ui-chat/table-of-contents:
+  en: 41cd21266011d571
+  zh: 3172d1a2acbb27b7
+/nomix-ai-nomix-client-ui-chat/reference-previews:
+  en: c71527869847dea8
+  zh: 7af3085ae35b672a
+/nomix-ai-nomix-client-ui-chat/hidden-chat-rows:
+  en: cbf1f0a2205046a5
+  zh: 2e59d0815351349f
+/nomix-ai-nomix-client-ui-chat/command-and-failure-rows:
+  en: 0e38a77e85421379
+  zh: 6d358557e2b87bdd
+/nomix-ai-nomix-client-ui-chat/turn-token-usage:
+  en: fdbb6ae41adb1f22
+  zh: af3d2cee51f8e515
+/nomix-ai-nomix-client-ui-chat/completed-turn-footer:
+  en: b4cd36e7ab91281e
+  zh: 8ccf412b9dde61d5
+/nomix-ai-nomix-client-ui-chat/turn-process-folding:
+  en: 931977dd08c4d236
+  zh: 2dfb45577a17218a
+/nomix-ai-nomix-client-ui-chat/grouped-rendering:
+  en: 4cb3e8c8f85ccae0
+  zh: 2935ee17b4077bdb
+/nomix-ai-nomix-client-ui-chat/scroll-ownership:
+  en: 284737900cb75668
+  zh: 12e0844082ff79ce
+/nomix-ai-nomix-client-ui-chat/model-experience:
+  en: c17b4dd43a61c569
+  zh: f7414309810c3a08
+/nomix-ai-nomix-client-ui-chat/model-experience/kv-cache-effect:
+  en: 15a7151ff9268f15
+  zh: 6eae68c718be579b
+/nomix-ai-nomix-client-ui-chat/known-limitations-and-deferred-work:
+  en: 8ffc5a4497876b94
+  zh: 5e1a9c36aa3eebb8
+/nomix-ai-nomix-client-ui-chat/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

@@ -1,7 +1,7 @@
 {
   "name": "@nomix-ai/schemastery",
   "description": "Type driven schema validator",
-  "version": "3.18.1",
+  "version": "3.18.5",
   "publishConfig": {
     "access": "public"
   },
@@ -34,6 +34,6 @@
   "license": "MIT",
   "dependencies": {
     "@standard-schema/spec": "^1.1.0",
-    "@nomix-ai/cosmokit": "workspace:^"
+    "@nomix-ai/cosmokit": "workspace:~"
   }
 }

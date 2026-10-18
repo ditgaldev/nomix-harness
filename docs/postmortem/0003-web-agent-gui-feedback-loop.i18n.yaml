@@ -1,6 +1,28 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for 0003-web-agent-gui-feedback-loop.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/postmortem/0003-web-agent-gui-feedback-loop.md
-0003-web-agent-gui-feedback-loop.md: 25e2cadce0a0d4294ebee58d1975898fede4b5d5
-0003-web-agent-gui-feedback-loop.zh.md: 2f98b789530484f286aa5700538980fe5b7c20af
+/post-mortem-0003-web-agent-validated-a-replacement-server-instead-of-its-current-gui:
+  en: 93a8cfde6ee28e17
+  zh: dd77e4db7aff39c7
+/post-mortem-0003-web-agent-validated-a-replacement-server-instead-of-its-current-gui/executive-summary:
+  en: 9828f2f066205daf
+  zh: 212b3aa28fc65679
+/post-mortem-0003-web-agent-validated-a-replacement-server-instead-of-its-current-gui/summary:
+  en: b3d0957ca4793c68
+  zh: 1a144d549de3afd7
+/post-mortem-0003-web-agent-validated-a-replacement-server-instead-of-its-current-gui/impact:
+  en: 48899c487352c865
+  zh: 7ba3a7ecb1fde2e7
+/post-mortem-0003-web-agent-validated-a-replacement-server-instead-of-its-current-gui/timeline:
+  en: d9bbc395700e4f5e
+  zh: 282f0d4ecce2c6a6
+/post-mortem-0003-web-agent-validated-a-replacement-server-instead-of-its-current-gui/root-cause:
+  en: 933f90d0267ffa8c
+  zh: f3b05b1de85c7880
+/post-mortem-0003-web-agent-validated-a-replacement-server-instead-of-its-current-gui/guardrails-added:
+  en: 535b5f5ee2f8cef6
+  zh: e5adf96c879287a2
+/post-mortem-0003-web-agent-validated-a-replacement-server-instead-of-its-current-gui/lessons:
+  en: f7830cb5a4fe0be4
+  zh: 8422af4234ac9e40

@@ -1,6 +1,61 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/attachment/attachment-local/README.md
-README.md: bcd909d7771d298f83ee038f5d61a3f0d2bc72be
-README.zh.md: 17fffb2b678b523c0103ae2318d838ee58641556
+/:
+  en: 6b01604949e4f91e
+  zh: 9cdd013a70aed001
+/nomix-ai-nomix-attachment-local:
+  en: 0bcc078faf3570e2
+  zh: 6708219d7f04bc4d
+/nomix-ai-nomix-attachment-local/summary:
+  en: fb5ba6771f97102d
+  zh: 053f14b7774840f1
+/nomix-ai-nomix-attachment-local/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-attachment-local/use-this-package:
+  en: 912a19be4b59ff8a
+  zh: 9c14694cf2ebbaf2
+/nomix-ai-nomix-attachment-local/use-this-package/minimal-configuration:
+  en: 7d00b8afdedd64a5
+  zh: cd449ab7db4d4cd2
+/nomix-ai-nomix-attachment-local/use-this-package/where-your-images-are-stored-and-how-long-they-last:
+  en: c5857bc4b1a5c3a8
+  zh: d7e7a578c4bc70de
+/nomix-ai-nomix-attachment-local/use-this-package/what-happens-when-you-attach-an-image:
+  en: 75ba799b1e4edba4
+  zh: 06c5f76200e8da8a
+/nomix-ai-nomix-attachment-local/use-this-package/what-can-go-wrong:
+  en: 377696b2dc08b170
+  zh: 6b831ef31c93f712
+/nomix-ai-nomix-attachment-local/understand-the-implementation:
+  en: e44b0aa3e234a0ef
+  zh: b7dd6829478eb7f1
+/nomix-ai-nomix-attachment-local/understand-the-implementation/design-decisions:
+  en: dcd9857653645420
+  zh: a27259a09f17465d
+/nomix-ai-nomix-attachment-local/understand-the-implementation/write-and-read-paths:
+  en: ed1921b5e4b791de
+  zh: f1a2ae67b77c376a
+/nomix-ai-nomix-attachment-local/understand-the-implementation/source-map:
+  en: 05af85aa85934d01
+  zh: 1c89e80d496dc0a3
+/nomix-ai-nomix-attachment-local/further-exploration:
+  en: 8fc262ad49899160
+  zh: 6a39a7e497700ce4
+/nomix-ai-nomix-attachment-local/model-experience:
+  en: 2e18b3dfbc5af126
+  zh: aaee1745632c561a
+/nomix-ai-nomix-attachment-local/model-experience/kv-cache-effect:
+  en: 64670486210bdab7
+  zh: 44c988dd6268c1ff
+/nomix-ai-nomix-attachment-local/known-limitations-and-deferred-work:
+  en: 46a33da5b3740127
+  zh: c3ac244228b81d8f
+/nomix-ai-nomix-attachment-local/known-limitations-and-deferred-work/dev-note:
+  en: d56846da29ad869c
+  zh: 41e655e01351fd1d
+/nomix-ai-nomix-attachment-local/known-limitations-and-deferred-work/dev-note/future-retention-and-remote-storage:
+  en: 4f9edff2bd3d8983
+  zh: 54746e97c757f9ce

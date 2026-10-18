@@ -1,6 +1,19 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for 2026-08-05-profile-plugin-bundles.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-08-05-profile-plugin-bundles.md
-2026-08-05-profile-plugin-bundles.md: 7d520180c69b9a93614ab0ae0ba247c0dd2e35ae
-2026-08-05-profile-plugin-bundles.zh.md: beb4622fed3e33cd17b3f9a99bcb6e7e05043465
+/agent-note-profile-plugin-bundles-replace-the-fixed-surface-overlays:
+  en: 851aac880f43e460
+  zh: b064bfa08e71593e
+/agent-note-profile-plugin-bundles-replace-the-fixed-surface-overlays/problem:
+  en: 18c0677bfe9be637
+  zh: b0c00432ee9dc0bd
+/agent-note-profile-plugin-bundles-replace-the-fixed-surface-overlays/decision:
+  en: 0832b70e0dbdf4e2
+  zh: e29ae453c410bdfe
+/agent-note-profile-plugin-bundles-replace-the-fixed-surface-overlays/alternatives-considered:
+  en: db8cc1c6a8ce5cd6
+  zh: e31930a5c0d60464
+/agent-note-profile-plugin-bundles-replace-the-fixed-surface-overlays/consequences:
+  en: 54a63e56a38c5703
+  zh: 1a97be5d396a4591

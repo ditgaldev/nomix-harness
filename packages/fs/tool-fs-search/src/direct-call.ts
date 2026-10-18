@@ -1,7 +1,8 @@
 /** Shared top-level-call post-policy selection for search result spill. @module nomix-tool-fs-search/direct-call */
 
 import type { Context } from '@nomix-ai/cordis'
-import type { JsonValue, PostToolDecision, ToolDefinition, ToolExecution, ToolExecutionResult } from '@nomix-ai/nomix-tools'
+import type { PostToolDecision, ToolDefinition, ToolExecution, ToolExecutionResult } from '@nomix-ai/nomix-tools'
+import type { JsonValue } from '@nomix-ai/nomix-util-values'
 
 /**
  * Return the accepted canonical value only when this tool still owns a direct

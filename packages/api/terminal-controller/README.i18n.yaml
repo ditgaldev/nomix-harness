@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/api/terminal-controller/README.md
+/:
+  en: 6a19f6d3fdfe0db2
+  zh: a361afe6b8cd3010
+/nomix-ai-nomix-api-terminal-controller:
+  en: f9cf5e8b3badcb33
+  zh: 456a269b4a434e4e
+/nomix-ai-nomix-api-terminal-controller/summary:
+  en: afcf6f0d2f899ecc
+  zh: e38e2c0830e42ac9
+/nomix-ai-nomix-api-terminal-controller/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 1fa9a72d1ee045cc
+/nomix-ai-nomix-api-terminal-controller/use-this-package:
+  en: c452b6177ef136e7
+  zh: e5e222e083506c6b
+/nomix-ai-nomix-api-terminal-controller/understand-the-implementation:
+  en: d1b6e244c1cd88f5
+  zh: f4d15bfa6d11b368
+/nomix-ai-nomix-api-terminal-controller/further-exploration:
+  en: e86d7aa66e2d29f3
+  zh: 84acc0fb06034c66
+/nomix-ai-nomix-api-terminal-controller/model-experience:
+  en: 236da57b80993d31
+  zh: f4ec4a2d7c2491ac
+/nomix-ai-nomix-api-terminal-controller/model-experience/kv-cache-effect:
+  en: be6f8e99d307c7ac
+  zh: 7dd4dcc0429e766c
+/nomix-ai-nomix-api-terminal-controller/known-limitations-and-deferred-work:
+  en: c4780c1e478683b7
+  zh: 1f10c845b367f4af
+/nomix-ai-nomix-api-terminal-controller/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 7aeea62eda52b83b

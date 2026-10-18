@@ -1,6 +1,40 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/client/ui-input-trigger/README.md
-README.md: 48444017734cbd4ad4a88e2e7cb5d82321f122d6
-README.zh.md: 23475d2df84b8e8f1f8a204f81328ff16b680bba
+/:
+  en: 99c36d8cf52f1a8a
+  zh: 3cc3f1e8c2f42c23
+/nomix-ai-nomix-client-ui-input-trigger:
+  en: f7939ff9aec404b6
+  zh: b252b2c1de0c2d38
+/nomix-ai-nomix-client-ui-input-trigger/summary:
+  en: 2a968a6e0bc65ac4
+  zh: 883f1be84003a5c5
+/nomix-ai-nomix-client-ui-input-trigger/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-client-ui-input-trigger/use-this-package:
+  en: c32eed8d234a108d
+  zh: e0d192dca9c6a1f6
+/nomix-ai-nomix-client-ui-input-trigger/use-this-package/keyboard-and-mouse:
+  en: ba909f11dc3f1acc
+  zh: ce56946c7a884026
+/nomix-ai-nomix-client-ui-input-trigger/understand-the-implementation:
+  en: 6fdb12a80dd3462a
+  zh: 0d63bbe10f4cf6f5
+/nomix-ai-nomix-client-ui-input-trigger/further-exploration:
+  en: d5feb5e282f82f56
+  zh: 103648f377ad99f9
+/nomix-ai-nomix-client-ui-input-trigger/model-experience:
+  en: 5d1596f50088f468
+  zh: 3c72b4f6b1ba27ee
+/nomix-ai-nomix-client-ui-input-trigger/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: de54f3467ef3b9be
+/nomix-ai-nomix-client-ui-input-trigger/known-limitations-and-deferred-work:
+  en: 560e5df72c0fb698
+  zh: ed6fa149bc90258a
+/nomix-ai-nomix-client-ui-input-trigger/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

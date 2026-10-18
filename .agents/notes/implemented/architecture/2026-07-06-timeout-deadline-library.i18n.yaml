@@ -1,6 +1,28 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for 2026-07-06-timeout-deadline-library.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-07-06-timeout-deadline-library.md
-2026-07-06-timeout-deadline-library.md: 325a47b57b4c5387a1a933bcff8aeea5566f2524
-2026-07-06-timeout-deadline-library.zh.md: 6ee8d8f39831067fc13ddd9ff45efe84f9c66399
+/agent-note-a-shared-timeout-deadline-primitive-with-hard-kill-left-to-each-capability:
+  en: 17f4f7da527725e0
+  zh: 5a63b9f3896e8168
+/agent-note-a-shared-timeout-deadline-primitive-with-hard-kill-left-to-each-capability/problem:
+  en: 15ddf4cf1508c403
+  zh: db1eecae07e9be82
+/agent-note-a-shared-timeout-deadline-primitive-with-hard-kill-left-to-each-capability/decision:
+  en: 44870917b1cbdc32
+  zh: 87941fc805244b86
+/agent-note-a-shared-timeout-deadline-primitive-with-hard-kill-left-to-each-capability/decision/the-library-api:
+  en: c62681afef60a0db
+  zh: 69827b4b3165b3da
+/agent-note-a-shared-timeout-deadline-primitive-with-hard-kill-left-to-each-capability/decision/the-division-of-labor:
+  en: 625c2822648e27d6
+  zh: fbd18e809f231be6
+/agent-note-a-shared-timeout-deadline-primitive-with-hard-kill-left-to-each-capability/decision/how-each-capability-consumes-it:
+  en: 14efe3d055be706c
+  zh: 82df45adacdb46e7
+/agent-note-a-shared-timeout-deadline-primitive-with-hard-kill-left-to-each-capability/consequences:
+  en: d2370cbe5ddc3321
+  zh: f05de2d7aa6b8d84
+/agent-note-a-shared-timeout-deadline-primitive-with-hard-kill-left-to-each-capability/alternatives-considered:
+  en: 0f3e3ecfa399c81a
+  zh: 951c2ee71047b11a

@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/badge-skill-bundle/README.md
+/:
+  en: c1e5a589c41f75fd
+  zh: 47325e49158c9954
+/nomix-ai-nomix-experimental-badge-skill-bundle:
+  en: fcc4ada5651caa07
+  zh: 1ade558c61012fbc
+/nomix-ai-nomix-experimental-badge-skill-bundle/summary:
+  en: 85fb6a09775af04c
+  zh: a80e9f167f51bafe
+/nomix-ai-nomix-experimental-badge-skill-bundle/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 988e839059414d27
+/nomix-ai-nomix-experimental-badge-skill-bundle/use-this-package:
+  en: b5c37c1ded5f69fa
+  zh: d9e4df2d9b055579
+/nomix-ai-nomix-experimental-badge-skill-bundle/understand-the-implementation:
+  en: a78efa6fda6fb13a
+  zh: d356bb111bab315a
+/nomix-ai-nomix-experimental-badge-skill-bundle/further-exploration:
+  en: f90a467b0d39755e
+  zh: cd6a7aac5429e9a0
+/nomix-ai-nomix-experimental-badge-skill-bundle/model-experience:
+  en: 9bbaca9902768c78
+  zh: 9eae7753527b2c65
+/nomix-ai-nomix-experimental-badge-skill-bundle/model-experience/kv-cache-effect:
+  en: 1b2209bbbf869b1a
+  zh: 5b9de62271343e4e
+/nomix-ai-nomix-experimental-badge-skill-bundle/known-limitations-and-deferred-work:
+  en: 6c6e181ad900ece5
+  zh: 4d6063075f1ee8a6
+/nomix-ai-nomix-experimental-badge-skill-bundle/known-limitations-and-deferred-work/dev-note:
+  en: 279d01435256cd2a
+  zh: 83780964e5de2f54

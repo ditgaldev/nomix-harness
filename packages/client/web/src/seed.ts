@@ -11,8 +11,12 @@ import * as ReactJsxRuntime from 'react/jsx-runtime'
 import * as ReactDom from 'react-dom'
 import * as ReactDomClient from 'react-dom/client'
 import * as Cordis from '@nomix-ai/cordis'
+import * as Zod from 'zod'
+import * as ReactVirtual from '@tanstack/react-virtual'
+import * as ClientStore from '@nomix-ai/nomix-client-store'
 import * as UiSlots from '@nomix-ai/nomix-client-ui-slots'
 import * as UiPrimitives from '@nomix-ai/nomix-client-ui-primitives'
+import * as UiDockkit from '@nomix-ai/nomix-client-ui-dockkit'
 import type { PlatformModule } from './platform.ts'
 
 /**
@@ -29,7 +33,11 @@ export function getStaticModules(): Record<string, unknown> {
     'react-dom': ReactDom,
     'react-dom/client': ReactDomClient,
     '@nomix-ai/cordis': Cordis,
+    'zod': Zod,
+    '@tanstack/react-virtual': ReactVirtual,
+    '@nomix-ai/nomix-client-store': ClientStore,
     '@nomix-ai/nomix-client-ui-slots': UiSlots,
     '@nomix-ai/nomix-client-ui-primitives': UiPrimitives,
+    '@nomix-ai/nomix-client-ui-dockkit': UiDockkit,
   } satisfies Record<PlatformModule, unknown>
 }

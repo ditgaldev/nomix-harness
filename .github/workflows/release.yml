@@ -18,71 +18,147 @@ env:
   NOMIX_TELEMETRY_DISABLED: '1'
 
 jobs:
-  landlock-matrix:
-    name: Landlock matrix
+  dependencies:
+    name: Dependency layout
+    # Persistent runners accept only trusted, credential-free rehearsals.
+    runs-on: >-
+      ${{ vars.NOMIX_CI_FAILOVER_LINUX == 'selfhosted'
+        && github.repository == 'nomix-harness/nomix-harness'
+        && github.actor != 'dependabot[bot]'
+        && ((github.event_name == 'push' && github.ref == 'refs/heads/master')
+          || (github.event_name == 'pull_request'
+            && github.event.pull_request.head.repo.full_name == github.repository
+            && github.event.pull_request.head.repo.fork == false
+            && github.event.pull_request.user.login != 'dependabot[bot]'))
+        && fromJSON('["self-hosted", "linux", "x64", "vm-backup"]')
+        || 'ubuntu-24.04' }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+          clean: true
+
+      - name: Configure runner-private caches
+        run: |
+          echo "NODE_COMPILE_CACHE=${{ runner.temp }}/node-compile-cache" >> "$GITHUB_ENV"
+          echo "npm_config_devdir=${{ runner.temp }}/node-gyp" >> "$GITHUB_ENV"
+          echo "TMPDIR=${{ runner.temp }}" >> "$GITHUB_ENV"
+
+      - uses: pnpm/action-setup@v5.0.0
+        with:
+          dest: ${{ runner.temp }}/setup-pnpm-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}
+
+      - uses: actions/setup-node@v7.0.0
+        with:
+          node-version: ${{ env.PRIMARY_NODE_VERSION }}
+          package-manager-cache: false
+
+      - name: Configure pnpm store path
+        id: pnpm-store
+        run: |
+          store_root="$HOME/.local/share/pnpm/store"
+          echo "PNPM_CONFIG_STORE_DIR=$store_root" >> "$GITHUB_ENV"
+          store_path=$(PNPM_CONFIG_STORE_DIR="$store_root" pnpm store path --silent)
+          echo "path=$store_path" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/cache/restore@v6.1.0
+        if: runner.environment == 'github-hosted'
+        with:
+          path: ${{ steps.pnpm-store.outputs.path }}
+          key: ${{ runner.os }}-node-${{ env.PRIMARY_NODE_VERSION }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ env.PRIMARY_NODE_VERSION }}-pnpm-
+
+      - name: Install (immutable)
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify dependency policy
+        run: pnpm run verify-package-dependencies
+
+      - name: Verify npm install layout
+        run: pnpm run verify-npm-install-layout
+
+  native-matrix:
+    name: Native matrix
     runs-on: ubuntu-24.04
     outputs:
       prebuilds: ${{ steps.matrix.outputs.prebuilds }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7.0.1
 
       - id: matrix
-        run: echo "prebuilds=$(node native/landlock-run/scripts/github-matrix.mjs release-prebuild)" >> "$GITHUB_OUTPUT"
+        run: echo "prebuilds=$(node native/system/scripts/github-matrix.mjs release-prebuild)" >> "$GITHUB_OUTPUT"
 
-  build-landlock:
+  build-native:
     name: Build ${{ matrix.package }}
-    needs: landlock-matrix
+    needs: native-matrix
     runs-on: ${{ matrix.runner }}
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson(needs.landlock-matrix.outputs.prebuilds) }}
+      matrix: ${{ fromJson(needs.native-matrix.outputs.prebuilds) }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7.0.1
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v5.0.0
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7.0.0
         with:
           node-version: ${{ env.PRIMARY_NODE_VERSION }}
 
       - name: Install native workspace
-        run: pnpm install --filter @nomix-ai/node-addon-landlock-run-workspace... --frozen-lockfile
+        run: pnpm install --filter @nomix-ai/node-addon-system-workspace... --frozen-lockfile
 
       - name: Install musl toolchain
+        if: runner.os == 'Linux'
         run: |
           sudo apt-get update -q
           sudo apt-get install -yq musl-tools
 
-      - name: Build native binary
-        run: pnpm --dir native/landlock-run build:native
+      - name: Build native binaries
+        run: pnpm --dir native/system build:native
 
       - name: Verify binary metadata
-        run: node native/landlock-run/scripts/verify-launcher-binary.mjs ${{ matrix.dir }}
+        run: node native/system/scripts/verify-launcher-binary.mjs ${{ matrix.dir }}
 
-      - uses: actions/upload-artifact@v4
+      - name: Verify built entry and flock
+        run: |
+          pnpm --dir native/system build:ts
+          pnpm --dir native/system build:test-oracle
+          pnpm --dir native/system test:flock
+          pnpm --dir native/system test:packaging
+
+      - uses: actions/upload-artifact@v7.0.1
         with:
           name: ${{ matrix.artifact }}
-          path: native/landlock-run/${{ matrix.dir }}/bin/*
+          path: native/system/${{ matrix.dir }}/bin/**
           if-no-files-found: error
           retention-days: 7
 
   pack:
     name: Build and pack npm artifact
-    needs: build-landlock
+    needs: build-native
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
           persist-credentials: false
+          clean: true
 
-      - uses: pnpm/action-setup@v4
+      - name: Configure runner-private caches
+        run: |
+          echo "NODE_COMPILE_CACHE=${{ runner.temp }}/node-compile-cache" >> "$GITHUB_ENV"
+          echo "npm_config_devdir=${{ runner.temp }}/node-gyp" >> "$GITHUB_ENV"
+          echo "TMPDIR=${{ runner.temp }}" >> "$GITHUB_ENV"
+
+      - uses: pnpm/action-setup@v5.0.0
         with:
-          dest: ${{ runner.temp }}/setup-pnpm
+          dest: ${{ runner.temp }}/setup-pnpm-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7.0.0
         with:
           node-version: ${{ env.PRIMARY_NODE_VERSION }}
+          package-manager-cache: false
 
       - name: Use the pinned npm client
         run: npm install --global npm@12.0.2
@@ -90,14 +166,20 @@ jobs:
       - name: Install (immutable)
         run: pnpm install --frozen-lockfile
 
-      - name: Download Landlock prebuilds
-        uses: actions/download-artifact@v4
+      - name: Download native prebuilds
+        uses: actions/download-artifact@v8.0.1
         with:
           pattern: prebuild-*
-          path: native/landlock-run/.release/prebuild-artifacts
+          path: native/system/.release/prebuild-artifacts
 
-      - name: Assemble Landlock prebuilds
-        run: node native/landlock-run/scripts/assemble-prebuilds.mjs native/landlock-run/.release/prebuild-artifacts
+      - name: Assemble native prebuilds
+        run: node native/system/scripts/assemble-prebuilds.mjs native/system/.release/prebuild-artifacts
+
+      - name: Verify dependency policy
+        run: pnpm run verify-package-dependencies
+
+      - name: Verify npm install layout
+        run: pnpm run verify-npm-install-layout
 
       - name: Verify release version
         env:
@@ -105,7 +187,7 @@ jobs:
         run: pnpm run release:verify --family nomix
 
       - name: Build official workspaces
-        run: pnpm run build:official
+        run: ${{ github.event_name == 'pull_request' && 'pnpm run build:artifacts --profile official' || 'pnpm run build:official' }}
 
       - name: Pack release tarball
         run: pnpm run release:pack --family nomix --out dist/npm
@@ -113,7 +195,7 @@ jobs:
       - name: Verify Linux packed install
         run: pnpm run release:verify-packed-install --family nomix --from dist/npm
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7.0.1
         with:
           name: nomix-npm-tarballs
           path: dist/npm/*
@@ -134,15 +216,15 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7.0.0
         with:
           node-version: ${{ env.PRIMARY_NODE_VERSION }}
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8.0.1
         with:
           name: nomix-npm-tarballs
           path: dist/npm
@@ -159,19 +241,19 @@ jobs:
       matrix:
         manager: [npm, pnpm]
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v5.0.0
         with:
           dest: ${{ runner.temp }}/setup-pnpm
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7.0.0
         with:
           node-version: ${{ env.PRIMARY_NODE_VERSION }}
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8.0.1
         with:
           name: nomix-npm-tarballs
           path: dist/npm
@@ -180,7 +262,7 @@ jobs:
         run: node scripts/release/verify-packed-install.ts --family nomix --from dist/npm --manager ${{ matrix.manager }}
 
   publish:
-    name: Publish npm package with provenance
+    name: Publish npm package with build attestations
     if: github.ref == 'refs/heads/npm-nomix-harness'
     needs: [pack, verify-platform, verify-consumer]
     runs-on: ubuntu-24.04
@@ -192,15 +274,15 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v5.0.0
         with:
           dest: ${{ runner.temp }}/setup-pnpm
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7.0.0
         with:
           node-version: ${{ env.PRIMARY_NODE_VERSION }}
           registry-url: https://registry.npmjs.org
@@ -211,7 +293,7 @@ jobs:
       - name: Install release scripts only
         run: pnpm install --frozen-lockfile --ignore-scripts
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8.0.1
         with:
           name: nomix-npm-tarballs
           path: dist/npm
@@ -234,25 +316,26 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Verify version, latest, integrity, and provenance
+      - name: Verify version, dist-tag, integrity, and build attestations
         shell: bash
         run: |
           version=$(node -p "require('./apps/cli/package.json').version")
+          dist_tag=$(node --input-type=module -e "import { releaseFamily } from './scripts/release/families.ts'; import { readFileSync } from 'node:fs'; console.log(releaseFamily('nomix').distTagForVersion(JSON.parse(readFileSync('apps/cli/package.json', 'utf8')).version) ?? 'latest')")
           for attempt in {1..18}; do
-            published=$(npm view @nomix-ai/nomix-harness version --registry https://registry.npmjs.org 2>/dev/null || true)
-            latest=$(npm view @nomix-ai/nomix-harness dist-tags.latest --registry https://registry.npmjs.org 2>/dev/null || true)
+            published=$(npm view "@nomix-ai/nomix-harness@$version" version --registry https://registry.npmjs.org 2>/dev/null || true)
+            tagged=$(npm view @nomix-ai/nomix-harness "dist-tags.$dist_tag" --registry https://registry.npmjs.org 2>/dev/null || true)
             integrity=$(npm view "@nomix-ai/nomix-harness@$version" dist.integrity --registry https://registry.npmjs.org 2>/dev/null || true)
             signature=$(npm view "@nomix-ai/nomix-harness@$version" dist.signatures.0.sig --registry https://registry.npmjs.org 2>/dev/null || true)
             signature_key=$(npm view "@nomix-ai/nomix-harness@$version" dist.signatures.0.keyid --registry https://registry.npmjs.org 2>/dev/null || true)
             attestation=$(npm view "@nomix-ai/nomix-harness@$version" dist.attestations.url --registry https://registry.npmjs.org 2>/dev/null || true)
             predicate=$(npm view "@nomix-ai/nomix-harness@$version" dist.attestations.provenance.predicateType --registry https://registry.npmjs.org 2>/dev/null || true)
-            if [[ "$published" == "$version" && "$latest" == "$version" && -n "$integrity" && -n "$signature" && -n "$signature_key" && -n "$attestation" && -n "$predicate" ]]; then
+            if [[ "$published" == "$version" && "$tagged" == "$version" && -n "$integrity" && -n "$signature" && -n "$signature_key" && -n "$attestation" && -n "$predicate" ]]; then
               break
             fi
             sleep 10
           done
-          if [[ "$published" != "$version" || "$latest" != "$version" || -z "$integrity" || -z "$signature" || -z "$signature_key" || -z "$attestation" || -z "$predicate" ]]; then
-            printf 'registry verification failed: version=%s latest=%s integrity=%s signature=%s key=%s attestation=%s predicate=%s\n' "$published" "$latest" "$integrity" "$signature" "$signature_key" "$attestation" "$predicate" >&2
+          if [[ "$published" != "$version" || "$tagged" != "$version" || -z "$integrity" || -z "$signature" || -z "$signature_key" || -z "$attestation" || -z "$predicate" ]]; then
+            printf 'registry verification failed: version=%s tagged=%s integrity=%s signature=%s key=%s attestation=%s predicate=%s\n' "$published" "$tagged" "$integrity" "$signature" "$signature_key" "$attestation" "$predicate" >&2
             exit 1
           fi
 
@@ -265,4 +348,4 @@ jobs:
             printf 'installed package reported version=%s, expected=%s\n' "$installed" "$version" >&2
             exit 1
           fi
-          printf 'verified %s latest=%s integrity=%s signature-key=%s attestation=%s predicate=%s\n' "$published" "$latest" "$integrity" "$signature_key" "$attestation" "$predicate"
+          printf 'verified %s tagged=%s integrity=%s signature-key=%s attestation=%s predicate=%s\n' "$published" "$tagged" "$integrity" "$signature_key" "$attestation" "$predicate"

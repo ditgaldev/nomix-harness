@@ -1,0 +1,22 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write benchmarks/session-corpus/README.md
+/session-corpus-benchmarks:
+  en: ac4072bbb23da159
+  zh: 3c01c7d2cf102014
+/session-corpus-benchmarks/summary:
+  en: f8f57353cb203479
+  zh: 1539d564fee4b403
+/session-corpus-benchmarks/table-of-contents:
+  en: 66a769ce60d49ff3
+  zh: 7e0bfa7c598157fa
+/session-corpus-benchmarks/run:
+  en: 2560e832041ae481
+  zh: 2fbbff71135e52ab
+/session-corpus-benchmarks/measurements:
+  en: f2b6308765c0e4d6
+  zh: 343017c3177c147e
+/session-corpus-benchmarks/dev-note:
+  en: b75c8458928b72b9
+  zh: 003ba4e17b4b5269

@@ -18,16 +18,15 @@
       "types": "./lib/types/index.d.ts",
       "default": "./lib/index.js"
     },
-    "./invariant": {
-      "types": "./lib/types/invariant.d.ts",
-      "default": "./lib/invariant.js"
-    },
     "./src/*": "./src/*",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json",
+    "./cordis.patch.yml": "./cordis.patch.yml"
   },
   "files": [
+    "icon.svg",
+    "locale/*.json",
     "lib/index.js",
-    "lib/invariant.js",
     "cordis.patch.yml",
     "lib/types/**/*.d.ts"
   ],
@@ -38,30 +37,37 @@
     }
   },
   "peerDependencies": {
-    "@nomix-ai/nomix-invariants": "workspace:^",
-    "@nomix-ai/nomix-llm": "workspace:^",
-    "@nomix-ai/nomix-session": "workspace:^",
-    "@nomix-ai/nomix-subagent": "workspace:^",
-    "@nomix-ai/nomix-subprocess": "workspace:^",
-    "@nomix-ai/nomix-timeout": "workspace:^",
-    "@nomix-ai/cordis": "workspace:^"
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-subagent": "workspace:*",
+    "@nomix-ai/nomix-subprocess": "workspace:*",
+    "@nomix-ai/nomix-timeout": "workspace:*"
   },
   "dependencies": {
-    "@nomix-ai/nomix-sdk-protocol": "workspace:^",
-    "@nomix-ai/schemastery": "workspace:^",
-    "@openai/codex": "0.147.0"
+    "@nomix-ai/nomix-brand": "workspace:*",
+    "@nomix-ai/nomix-sdk-protocol": "workspace:*",
+    "@nomix-ai/schemastery": "workspace:~",
+    "@openai/codex": "0.153.4",
+    "@nomix-ai/nomix-tool-subagent": "workspace:*"
   },
   "devDependencies": {
-    "@nomix-ai/cordis-plugin-loader": "workspace:^",
-    "@nomix-ai/nomix-agent": "workspace:^",
-    "@nomix-ai/nomix-invariants": "workspace:^",
-    "@nomix-ai/nomix-llm": "workspace:^",
-    "@nomix-ai/nomix-loader-smoke": "workspace:^",
-    "@nomix-ai/nomix-session": "workspace:^",
-    "@nomix-ai/nomix-subagent": "workspace:^",
-    "@nomix-ai/nomix-subprocess": "workspace:^",
-    "@nomix-ai/nomix-subprocess-local": "workspace:^",
-    "@nomix-ai/nomix-timeout": "workspace:^",
-    "@nomix-ai/cordis": "workspace:^"
-  }
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/cordis-plugin-loader": "workspace:~",
+    "@nomix-ai/nomix-agent": "workspace:*",
+    "@nomix-ai/nomix-app-boot": "workspace:*",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-loader-smoke": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-session-checkpoint-policy": "workspace:*",
+    "@nomix-ai/nomix-session-persistence-jsonl": "workspace:*",
+    "@nomix-ai/nomix-session-projection": "workspace:*",
+    "@nomix-ai/nomix-subagent": "workspace:*",
+    "@nomix-ai/nomix-subprocess": "workspace:*",
+    "@nomix-ai/nomix-subprocess-local": "workspace:*",
+    "@nomix-ai/nomix-timeout": "workspace:*",
+    "@nomix-ai/nomix-tool-jobs": "workspace:*",
+    "@nomix-ai/nomix-tools": "workspace:*"
+  },
+  "icon": "./icon.svg"
 }

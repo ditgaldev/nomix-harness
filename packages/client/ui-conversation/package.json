@@ -1,6 +1,6 @@
 {
   "name": "@nomix-ai/nomix-client-ui-conversation",
-  "description": "Conversation domain: skeleton, ordered chat flow, composer with the Host-backed busy-Enter preference, and details host",
+  "description": "Target-neutral Conversation assembly, shell, composer, queue, and view navigation",
   "version": "0.2.9",
   "publishConfig": {
     "access": "public"
@@ -18,26 +18,25 @@
       "types": "./lib/types/index.d.ts",
       "default": "./lib/index.js"
     },
-    "./invariant": {
-      "types": "./lib/types/invariant.d.ts",
-      "default": "./lib/invariant.js"
-    },
     "./client": {
       "types": "./lib/types/client/index.d.ts",
       "default": "./lib/client.js"
     },
     "./src/*": "./src/*",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
   },
   "nomix": {
     "client": {
       "inject": [
-        "@nomix-ai/nomix-client-connection",
+        "@nomix-ai/nomix-api-session-controller",
+        "@nomix-ai/nomix-client-file-upload",
         "@nomix-ai/nomix-client-locale",
-        "@nomix-ai/nomix-client-runtime",
+        "@nomix-ai/nomix-client-ui-layout",
+        "@nomix-ai/nomix-client-ui-renderer",
+        "@nomix-ai/nomix-client-ui-session",
         "@nomix-ai/nomix-client-ui-settings",
-        "@nomix-ai/nomix-api-remotes",
-        "@nomix-ai/nomix-client-ui-layout"
+        "@nomix-ai/nomix-client-ui-workspace"
       ],
       "platform": "web"
     }
@@ -48,68 +47,60 @@
   },
   "license": "MIT",
   "dependencies": {
-    "clsx": "^2.0.0",
-    "@nomix-ai/schemastery": "workspace:^"
+    "@nomix-ai/schemastery": "workspace:~"
   },
   "peerDependencies": {
-    "@nomix-ai/cordis": "workspace:^",
-    "@nomix-ai/nomix-agent": "workspace:^",
-    "@nomix-ai/nomix-api-remotes": "workspace:^",
-    "@nomix-ai/nomix-attachment": "workspace:^",
-    "@nomix-ai/nomix-brand": "workspace:^",
-    "@nomix-ai/nomix-client-connection": "workspace:^",
-    "@nomix-ai/nomix-client-locale": "workspace:^",
-    "@nomix-ai/nomix-client-runtime": "workspace:^",
-    "@nomix-ai/nomix-client-ui-settings": "workspace:^",
-    "@nomix-ai/nomix-client-ui-input-trigger": "workspace:^",
-    "@nomix-ai/nomix-commands": "workspace:^",
-    "@nomix-ai/nomix-compaction": "workspace:^",
-    "@nomix-ai/nomix-invariants": "workspace:^",
-    "@nomix-ai/nomix-llm-retry": "workspace:^",
-    "@nomix-ai/nomix-session-stats": "workspace:^",
-    "@nomix-ai/nomix-token-meter": "workspace:^",
-    "@nomix-ai/nomix-tools": "workspace:^",
-    "@nomix-ai/nomix-settings": "workspace:^",
-    "@nomix-ai/nomix-client-ui-layout": "workspace:^",
-    "@nomix-ai/nomix-goal": "workspace:^",
-    "@nomix-ai/nomix-permission-presets": "workspace:^",
-    "@nomix-ai/nomix-plan-mode": "workspace:^",
-    "@nomix-ai/nomix-tool-todo": "workspace:^"
+    "@nomix-ai/cordis": "workspace:~"
   },
   "devDependencies": {
-    "@nomix-ai/cordis": "workspace:^",
-    "@nomix-ai/nomix-agent": "workspace:^",
-    "@nomix-ai/nomix-api-remotes": "workspace:^",
-    "@nomix-ai/nomix-attachment": "workspace:^",
-    "@nomix-ai/nomix-brand": "workspace:^",
-    "@nomix-ai/nomix-client-connection": "workspace:^",
-    "@nomix-ai/nomix-client-locale": "workspace:^",
-    "@nomix-ai/nomix-client-runtime": "workspace:^",
-    "@nomix-ai/nomix-client-test-runtime": "workspace:^",
-    "@nomix-ai/nomix-client-ui-layout": "workspace:^",
-    "@nomix-ai/nomix-client-ui-primitives": "workspace:^",
-    "@nomix-ai/nomix-client-ui-settings": "workspace:^",
-    "@nomix-ai/nomix-client-ui-input-trigger": "workspace:^",
-    "@nomix-ai/nomix-client-ui-slots": "workspace:^",
-    "@nomix-ai/nomix-commands": "workspace:^",
-    "@nomix-ai/nomix-compaction": "workspace:^",
-    "@nomix-ai/nomix-goal": "workspace:^",
-    "@nomix-ai/nomix-invariants": "workspace:^",
-    "@nomix-ai/nomix-llm-retry": "workspace:^",
-    "@nomix-ai/nomix-permission-presets": "workspace:^",
-    "@nomix-ai/nomix-plan-mode": "workspace:^",
-    "@nomix-ai/nomix-session-projection": "workspace:^",
-    "@nomix-ai/nomix-session-stats": "workspace:^",
-    "@nomix-ai/nomix-token-meter": "workspace:^",
-    "@nomix-ai/nomix-tool-todo": "workspace:^",
-    "@nomix-ai/nomix-tools": "workspace:^",
-    "@types/react": "~18.3.1",
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-api-remotes": "workspace:*",
+    "@nomix-ai/nomix-api-session-controller": "workspace:*",
+    "@nomix-ai/nomix-api-workspace-controller": "workspace:*",
+    "@nomix-ai/nomix-attachment": "workspace:*",
+    "@nomix-ai/nomix-brand": "workspace:*",
+    "@nomix-ai/nomix-client-locale": "workspace:*",
+    "@nomix-ai/nomix-client-file-upload": "workspace:*",
+    "@nomix-ai/nomix-client-store": "workspace:*",
+    "@nomix-ai/nomix-client-test-runtime": "workspace:*",
+    "@nomix-ai/nomix-client-ui-layout": "workspace:*",
+    "@nomix-ai/nomix-client-ui-primitives": "workspace:*",
+    "@nomix-ai/nomix-client-ui-renderer": "workspace:*",
+    "@nomix-ai/nomix-client-ui-session": "workspace:*",
+    "@nomix-ai/nomix-client-ui-settings": "workspace:*",
+    "@nomix-ai/nomix-client-ui-workspace": "workspace:*",
+    "@nomix-ai/nomix-client-ui-slots": "workspace:*",
+    "@nomix-ai/nomix-commands": "workspace:*",
+    "@nomix-ai/nomix-goal": "workspace:*",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-llm-retry": "workspace:*",
+    "@nomix-ai/nomix-plan-mode": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-util-values": "workspace:*",
+    "@nomix-ai/nomix-token-meter": "workspace:*",
+    "@nomix-ai/nomix-tool-todo": "workspace:*",
+    "@nomix-ai/nomix-util-crypto": "workspace:*",
+    "@nomix-ai/nomix-workspace": "workspace:*",
+    "@nomix-ai/nomix-file-reference": "workspace:*",
+    "@nomix-ai/nomix-util-workspace-path": "workspace:*",
     "react": "^18.2.0",
-    "@nomix-ai/nomix-settings": "workspace:^"
+    "@lexical/headless": "^0.49.0",
+    "react-dom": "^18.2.0",
+    "zod": "4.4.3",
+    "lexical": "^0.49.0",
+    "clsx": "^2.0.0",
+    "@lexical/utils": "^0.49.0",
+    "@lexical/text": "^0.49.0",
+    "@lexical/plain-text": "^0.49.0",
+    "@lexical/history": "^0.49.0",
+    "@nomix-ai/nomix-agent": "workspace:*",
+    "@nomix-ai/nomix-settings": "workspace:*",
+    "@nomix-ai/nomix-client-shortcuts": "workspace:*",
+    "@nomix-ai/nomix-client-product-analytics": "workspace:*"
   },
   "files": [
+    "locale/*.json",
     "lib/index.js",
-    "lib/invariant.js",
     "lib/client.js",
     "lib/types/**/*.d.ts"
   ]

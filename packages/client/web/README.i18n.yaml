@@ -1,6 +1,61 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/client/web/README.md
-README.md: 54cd3f5d88e85921c6feb59d31454d5d601d7c0f
-README.zh.md: 1ef31861f2b0d6e83796b28c757f34c7adcfdc85
+/:
+  en: bd6e5fc50f07893f
+  zh: 0ee146674eb01770
+/nomix-ai-nomix-client-web:
+  en: dbc1cebc8be16719
+  zh: bcc95ff43e26575e
+/nomix-ai-nomix-client-web/summary:
+  en: a8b8f44c47224530
+  zh: a6814809728dc3d9
+/nomix-ai-nomix-client-web/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-client-web/use-this-package:
+  en: c8a78172db9a7b3b
+  zh: a662a8f89bc6cd41
+/nomix-ai-nomix-client-web/use-this-package/what-boot-looks-like:
+  en: f3b01aa878764e5c
+  zh: f02eab65d441bfe0
+/nomix-ai-nomix-client-web/use-this-package/the-boot-page:
+  en: 1757ef1631612ff5
+  zh: d2d3fd0313908c12
+/nomix-ai-nomix-client-web/use-this-package/the-shared-module-table:
+  en: d70f04bf6694b6b6
+  zh: 64ed06be8f4ff07b
+/nomix-ai-nomix-client-web/use-this-package/configuration:
+  en: 0acb1754cb12a903
+  zh: 6017b7013399390a
+/nomix-ai-nomix-client-web/understand-the-implementation:
+  en: 2678c96b0c2e2493
+  zh: 2b1e9abe4d98855c
+/nomix-ai-nomix-client-web/understand-the-implementation/design-concept:
+  en: e18ec3ae51dcdc3f
+  zh: e454da2038979aec
+/nomix-ai-nomix-client-web/understand-the-implementation/two-stage-boot:
+  en: fb3cab79c1505627
+  zh: 875897afe593aeb3
+/nomix-ai-nomix-client-web/understand-the-implementation/boot-page-mechanics:
+  en: 83f9195138da9a82
+  zh: 135d7da735fb870a
+/nomix-ai-nomix-client-web/understand-the-implementation/source-map:
+  en: 1fe37d3730368e32
+  zh: 74c2d6980ce82e21
+/nomix-ai-nomix-client-web/further-exploration:
+  en: 72aaa4427d8ec913
+  zh: 3bb5f0daa4568fb6
+/nomix-ai-nomix-client-web/model-experience:
+  en: ec17334dcce181f3
+  zh: bc8bc6e25ecbf9e8
+/nomix-ai-nomix-client-web/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: de54f3467ef3b9be
+/nomix-ai-nomix-client-web/known-limitations-and-deferred-work:
+  en: f498ba05d4ea96d5
+  zh: c3e57dd8ca9b5bda
+/nomix-ai-nomix-client-web/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

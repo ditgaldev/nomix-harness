@@ -1,6 +1,40 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for 2026-07-13-human-review-skill-maintenance.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/proposed/process/2026-07-13-human-review-skill-maintenance.md
-2026-07-13-human-review-skill-maintenance.md: 9a5f3227d5ff9fb5a5d79c11191ff4cf42c00017
-2026-07-13-human-review-skill-maintenance.zh.md: 997a6cce2c04e127c7d828d8fea5c65e8764b31b
+/agent-note-periodic-human-review-maintenance-for-nomix-code-review:
+  en: d1abb189ea14339d
+  zh: 4f5852b65380ab83
+/agent-note-periodic-human-review-maintenance-for-nomix-code-review/problem:
+  en: d767bdb03fe28cb4
+  zh: d4a023f3b278afc3
+/agent-note-periodic-human-review-maintenance-for-nomix-code-review/proposal:
+  en: 564462f99244f322
+  zh: 0ec8034073e9166e
+/agent-note-periodic-human-review-maintenance-for-nomix-code-review/proposal/acquisition-contract:
+  en: a95dea3f6b37af6f
+  zh: 29cfc8f03a8b487b
+/agent-note-periodic-human-review-maintenance-for-nomix-code-review/proposal/adoption-evidence:
+  en: f61dfd9e11b1e5a5
+  zh: c87f245097c39fc7
+/agent-note-periodic-human-review-maintenance-for-nomix-code-review/proposal/dual-reviewer-classification-and-drafting:
+  en: fe1f6987e5a7d4f7
+  zh: 74d990935316e69b
+/agent-note-periodic-human-review-maintenance-for-nomix-code-review/proposal/reviewer-adapter-protocol:
+  en: baa824361e643e80
+  zh: 15d5efb0a1ca2c11
+/agent-note-periodic-human-review-maintenance-for-nomix-code-review/proposal/promotion-contract:
+  en: dd6810cf423430bc
+  zh: 0c81e470f64af150
+/agent-note-periodic-human-review-maintenance-for-nomix-code-review/proposal/where-the-mechanism-lives:
+  en: 163241fb89179f58
+  zh: c8a5d07fa64df786
+/agent-note-periodic-human-review-maintenance-for-nomix-code-review/alternatives-considered:
+  en: 1673a2138ddd34c2
+  zh: 81c91a50ea0703d6
+/agent-note-periodic-human-review-maintenance-for-nomix-code-review/acceptance-criteria:
+  en: 49770a20e2fbdffc
+  zh: f86b4e46a449877c
+/agent-note-periodic-human-review-maintenance-for-nomix-code-review/risks:
+  en: b26ffb43c1c35b3a
+  zh: c2c8b81a8317cd55

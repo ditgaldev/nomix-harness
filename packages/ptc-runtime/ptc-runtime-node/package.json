@@ -1,0 +1,64 @@
+{
+  "name": "@nomix-ai/nomix-ptc-runtime-node",
+  "description": "Node PTC execution with per-call sandboxed processes or in-memory REPL state",
+  "version": "0.2.9",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
+    "directory": "packages/ptc-runtime/ptc-runtime-node"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json",
+    "./process": {
+      "types": "./lib/types/process-entry.d.ts",
+      "default": "./lib/process.js"
+    },
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "locale/*.json",
+    "lib/index.js",
+    "lib/process.js",
+    "lib/persistent-process.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-ptc-runtime": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-timeout": "workspace:*",
+    "@nomix-ai/nomix-fs": "workspace:*",
+    "@nomix-ai/nomix-subprocess": "workspace:*",
+    "@nomix-ai/nomix-sandbox": "workspace:*",
+    "@nomix-ai/nomix-sandbox-policy": "workspace:*"
+  },
+  "dependencies": {
+    "@nomix-ai/nomix-util-values": "workspace:*",
+    "@nomix-ai/schemastery": "workspace:~"
+  },
+  "devDependencies": {
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-ptc-runtime": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-timeout": "workspace:*",
+    "@nomix-ai/nomix-fs": "workspace:*",
+    "@nomix-ai/nomix-subprocess": "workspace:*",
+    "@nomix-ai/nomix-sandbox": "workspace:*",
+    "@nomix-ai/nomix-sandbox-policy": "workspace:*",
+    "@nomix-ai/nomix-fs-local": "workspace:*",
+    "@nomix-ai/nomix-subprocess-local": "workspace:*",
+    "@nomix-ai/nomix-session-projection": "workspace:*",
+    "@nomix-ai/nomix-sandbox-local": "workspace:*"
+  }
+}

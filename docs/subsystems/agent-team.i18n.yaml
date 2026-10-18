@@ -1,6 +1,22 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for agent-team.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write docs/subsystems/agent-team.md
-agent-team.md: d3cca68124bfa199c4a81d6c67c6305ce7f65b6c
-agent-team.zh.md: 773e734a55cf5282fc9507a754d2d4dff8cb5978
+/agent-teams:
+  en: c2074b2fd266d95f
+  zh: 1dbcd7c245003567
+/agent-teams/identity-and-roster:
+  en: 1e0f44d3e51b058a
+  zh: 8ddf261bba537f1c
+/agent-teams/messages-and-historical-mailbox:
+  en: 6d7873323a913558
+  zh: b1b00bff32eefab5
+/agent-teams/shared-task-dag:
+  en: 4515005d07e4d2a3
+  zh: 26811b31f69009d6
+/agent-teams/web-projection:
+  en: 6af99eff8036597a
+  zh: f172f994e01f12c1
+/agent-teams/replay:
+  en: db7161264035e2db
+  zh: c8dcf12b2743abda

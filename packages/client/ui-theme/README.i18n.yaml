@@ -1,6 +1,58 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/client/ui-theme/README.md
-README.md: 81d518d3109c88672122d3c038b4f6766e8a5ba4
-README.zh.md: 45cdeedf121fbb5aad53ba2f432d942535b91c71
+/:
+  en: 78b8f50153aa929d
+  zh: 386920d093670c0e
+/nomix-ai-nomix-client-ui-theme:
+  en: 1449dc3fa7d6c8aa
+  zh: 7a89de62d4c2b6ef
+/nomix-ai-nomix-client-ui-theme/summary:
+  en: 1bad24d4cb3aeb0f
+  zh: 5211446fc93e9e57
+/nomix-ai-nomix-client-ui-theme/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-client-ui-theme/use-this-package:
+  en: 5a279269e31713c1
+  zh: dcd5c31fbdfd63e2
+/nomix-ai-nomix-client-ui-theme/use-this-package/appearance-and-font-size:
+  en: cbfc02f8b3b02e0d
+  zh: 5a8f4d9d688d113c
+/nomix-ai-nomix-client-ui-theme/use-this-package/fonts:
+  en: b45d5b48ca799c3a
+  zh: af65514b3759204f
+/nomix-ai-nomix-client-ui-theme/use-this-package/registering-a-theme:
+  en: 2cd32ccaba33b3e9
+  zh: 53ea78d19929ea02
+/nomix-ai-nomix-client-ui-theme/use-this-package/pre-plugin-palette:
+  en: 92ba376223996401
+  zh: d754fb7d11b1ca8f
+/nomix-ai-nomix-client-ui-theme/understand-the-implementation:
+  en: c0ccfb4e1c2b846a
+  zh: 75610945fd71b06b
+/nomix-ai-nomix-client-ui-theme/understand-the-implementation/stylesheets:
+  en: 0f521b6663396222
+  zh: 7ad794914c00c9f4
+/nomix-ai-nomix-client-ui-theme/understand-the-implementation/scrollbar-rebinding:
+  en: ec8264fe442c1f82
+  zh: 74db9d43eb24dc22
+/nomix-ai-nomix-client-ui-theme/understand-the-implementation/preference-persistence:
+  en: ff96eb1b96a2746b
+  zh: dd88e030e83d3efa
+/nomix-ai-nomix-client-ui-theme/further-exploration:
+  en: b8af1baaee630fb5
+  zh: 670695b636e984b3
+/nomix-ai-nomix-client-ui-theme/model-experience:
+  en: 3120df665299c634
+  zh: 1d9f365d091d0d2a
+/nomix-ai-nomix-client-ui-theme/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: de54f3467ef3b9be
+/nomix-ai-nomix-client-ui-theme/known-limitations-and-deferred-work:
+  en: 0d328dbced31a041
+  zh: 2951de356ba6bb82
+/nomix-ai-nomix-client-ui-theme/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

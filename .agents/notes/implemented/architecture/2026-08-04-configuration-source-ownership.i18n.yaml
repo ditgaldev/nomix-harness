@@ -1,6 +1,19 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for 2026-08-04-configuration-source-ownership.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-08-04-configuration-source-ownership.md
-2026-08-04-configuration-source-ownership.md: 29e69bf509750fa5fc509abf47ecf287a356e1bb
-2026-08-04-configuration-source-ownership.zh.md: fa83cdd433580617c03d215b69b65405f4622749
+/agent-note-one-ordering-for-configuration-sources-and-what-a-discovered-file-may-not-decide:
+  en: 5fd78a232e797c44
+  zh: c703983b9f897a3c
+/agent-note-one-ordering-for-configuration-sources-and-what-a-discovered-file-may-not-decide/problem:
+  en: 9341a8ce4a864302
+  zh: b5b06f1eefb2e52d
+/agent-note-one-ordering-for-configuration-sources-and-what-a-discovered-file-may-not-decide/decision:
+  en: 9a724720f6289be8
+  zh: 95028fdd15b09af9
+/agent-note-one-ordering-for-configuration-sources-and-what-a-discovered-file-may-not-decide/consequences:
+  en: 84f639c9f041563c
+  zh: 0050fbab472f68a4
+/agent-note-one-ordering-for-configuration-sources-and-what-a-discovered-file-may-not-decide/alternatives-considered:
+  en: 821161f0bbb38712
+  zh: 14201acc201c8ed2

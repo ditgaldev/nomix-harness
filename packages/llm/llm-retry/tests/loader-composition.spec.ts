@@ -11,6 +11,7 @@ import AgentLoop from '@nomix-ai/nomix-agent-loop'
 import LlmRuntime, { createUserMessage, LlmAdapter, LlmError, resolveRetryPolicy  } from '@nomix-ai/nomix-llm'
 import type { GenerateOptions, ResolvedRetryPolicy, StreamChunk } from '@nomix-ai/nomix-llm'
 import SessionStore, { SessionId } from '@nomix-ai/nomix-session'
+import SessionProjectionRegistry from '@nomix-ai/nomix-session-projection'
 import SystemPrompt from '@nomix-ai/nomix-system-prompt'
 import ToolRuntime from '@nomix-ai/nomix-tools'
 import * as retry from '../src/index.ts'
@@ -60,6 +61,7 @@ async function loadYaml(lines: readonly string[]): Promise<Context> {
   const modules = new Map<string, unknown>([
     ['@nomix-ai/nomix-llm', LlmRuntime],
     ['@nomix-ai/nomix-session', SessionStore],
+    ['@nomix-ai/nomix-session-projection', SessionProjectionRegistry],
     ['@nomix-ai/nomix-system-prompt', SystemPrompt],
     ['@nomix-ai/nomix-tools', ToolRuntime],
     ['@nomix-ai/nomix-agent', AgentRegistry],
@@ -89,6 +91,7 @@ describe('real Loader composition', () => {
     const loaded = await loadYaml([
       "- name: '@nomix-ai/nomix-llm'",
       "- name: '@nomix-ai/nomix-session'",
+      "- name: '@nomix-ai/nomix-session-projection'",
       "- name: '@nomix-ai/nomix-system-prompt'",
       "- name: '@nomix-ai/nomix-tools'",
       "- name: '@nomix-ai/nomix-agent'",
@@ -104,12 +107,12 @@ describe('real Loader composition', () => {
 
     const adapter = new TransientOnceAdapter()
     loaded.llm.registerAdapter(['mock'], adapter)
-    const agent = loaded.agentLoop.create(SessionId('loader-retry'), { provider: 'mock', model: 'mock' })
+    const agent = await loaded.agentLoop.create(SessionId('loader-retry'), { provider: 'mock', model: 'mock' })
     agent.followup(createUserMessage({ content: [{ type: 'text', text: 'recover' }], source: { kind: 'user' } }))
     await agent.whenIdle()
 
     expect(adapter.requests).toBe(2)
-    expect(agent.session.events.filter(event => event.type === 'llm/retry')).toHaveLength(1)
+    expect(agent.session.snapshotEvents().filter(event => event.type === 'llm/retry')).toHaveLength(1)
     expect(agent.session.deriveMessages().at(-1)).toMatchObject({
       role: 'assistant',
       content: [{ type: 'text', text: 'recovered' }],

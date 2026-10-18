@@ -1,0 +1,61 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/ptc-runtime/ptc-runtime-node/README.md
+/:
+  en: 0743cf05fedb8321
+  zh: 7ad0cfa1b6b8a46b
+/nomix-ai-nomix-ptc-runtime-node:
+  en: d9dd8ccbb6026fdd
+  zh: 93b3ce83f89729ab
+/nomix-ai-nomix-ptc-runtime-node/summary:
+  en: 91379c5dc7f04630
+  zh: 6ae48abc2097a7ef
+/nomix-ai-nomix-ptc-runtime-node/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 725b47765ee8f30b
+/nomix-ai-nomix-ptc-runtime-node/use-this-package:
+  en: 3ed625b5954fe55c
+  zh: 1986472943d2eec5
+/nomix-ai-nomix-ptc-runtime-node/use-this-package/configuration:
+  en: 0098e0c74027683a
+  zh: ab93477685011cb7
+/nomix-ai-nomix-ptc-runtime-node/use-this-package/execution-and-results:
+  en: c79baab0c0a49ca7
+  zh: b90b78d0d75280fb
+/nomix-ai-nomix-ptc-runtime-node/use-this-package/in-memory-mode:
+  en: 4a8e13fd1a977eda
+  zh: c3da6e3768fcdd5b
+/nomix-ai-nomix-ptc-runtime-node/use-this-package/deadlines-and-cancellation:
+  en: 27da8e026e217774
+  zh: c8c5b8e7c990953d
+/nomix-ai-nomix-ptc-runtime-node/use-this-package/failures:
+  en: 7682e50f9dcfa25c
+  zh: ddcb3502e12be06f
+/nomix-ai-nomix-ptc-runtime-node/understand-the-implementation:
+  en: 9020b491a39e4bf5
+  zh: bcd1b2b1a3bde7f3
+/nomix-ai-nomix-ptc-runtime-node/understand-the-implementation/launch-and-control:
+  en: 894cf1c1fdbe0092
+  zh: c1e1179391e89a3f
+/nomix-ai-nomix-ptc-runtime-node/understand-the-implementation/source-and-built-bootstraps:
+  en: e7251a2f7cb8f134
+  zh: f68c08c507992969
+/nomix-ai-nomix-ptc-runtime-node/understand-the-implementation/source-map:
+  en: 2a702f70cac410d1
+  zh: f275136c6019b56d
+/nomix-ai-nomix-ptc-runtime-node/further-exploration:
+  en: 3d3fe96863bfb29c
+  zh: aeb76cc9c6d248d0
+/nomix-ai-nomix-ptc-runtime-node/model-experience:
+  en: 8213cf63162d7e9f
+  zh: 6d75bb12862fd81a
+/nomix-ai-nomix-ptc-runtime-node/model-experience/kv-cache-effect:
+  en: 40294c1c31b74824
+  zh: d91e7b78c0619c7e
+/nomix-ai-nomix-ptc-runtime-node/known-limitations-and-deferred-work:
+  en: 7b8d67207e35bbb3
+  zh: 246cd770e79078ac
+/nomix-ai-nomix-ptc-runtime-node/known-limitations-and-deferred-work/dev-note:
+  en: 0f2c306cdff9f51a
+  zh: fc01646c8107181c

@@ -1,0 +1,53 @@
+{
+  "name": "@nomix-ai/nomix-experimental-agent-team-profile",
+  "description": "Agent Teams collaboration, tools, and Web UI in one experimental bundle",
+  "version": "0.2.9",
+  "icon": "./icon.svg",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
+    "directory": "packages/experimental/agent-team-profile"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./locale/*.json": "./locale/*.json",
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "icon.svg",
+    "locale/*.json",
+    "lib/index.js",
+    "cordis.patch.yml",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "nomix": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "dependencies": {
+    "@nomix-ai/nomix-experimental-agent-team": "workspace:*",
+    "@nomix-ai/nomix-experimental-client-ui-agent-team": "workspace:*",
+    "@nomix-ai/nomix-experimental-tool-agent-team": "workspace:*"
+  },
+  "peerDependencies": {
+    "@nomix-ai/cordis": "workspace:~"
+  },
+  "devDependencies": {
+    "@nomix-ai/cordis-plugin-include": "workspace:~",
+    "@nomix-ai/cordis": "workspace:~",
+    "js-yaml": "^4.3.2"
+  }
+}

@@ -1,23 +1,78 @@
 /** Platform-neutral assembly of generated Host Remote contributions. */
 
 import type { Context } from '@nomix-ai/cordis'
+import productAnalyticsRemote from '@nomix-ai/nomix-client-product-analytics/remote'
+export type {} from '@nomix-ai/nomix-client-product-analytics/remote'
+import agentPresetsRemote from '@nomix-ai/nomix-agent-preset-registry/remote'
+import userQuestionsRemote from '@nomix-ai/nomix-user-questions/remote'
 import commandsRemote from '@nomix-ai/nomix-commands/remote'
+import accountRemote from '@nomix-ai/nomix-api-account-controller/remote'
+import settingsControllerRemote from '@nomix-ai/nomix-api-settings-controller/remote'
+import officeToPdfRemote from '@nomix-ai/nomix-office-to-pdf/remote'
 import goalsRemote from '@nomix-ai/nomix-goal/remote'
+import scheduleRemote from '@nomix-ai/nomix-schedule/remote'
+import llmRemote from '@nomix-ai/nomix-llm/remote'
 import dynamicRemote from '@nomix-ai/nomix-cordis-host-runner/remote'
-import fileReferencesRemote from '@nomix-ai/nomix-file-reference/remote'
+import pluginManagerRemote from '@nomix-ai/nomix-plugin-manager/remote'
+import pluginRegistryProbeRemote from '@nomix-ai/nomix-client-ui-plugin-manager/remote'
+import pluginMarketRemote from '@nomix-ai/nomix-plugin-market/remote'
 import pluginInventoryRemote from '@nomix-ai/nomix-host-plugin-inventory/remote'
 import messageFeedbackRemote from '@nomix-ai/nomix-message-feedback/remote'
+import permissionPresetsRemote from '@nomix-ai/nomix-permission-presets/remote'
+import sessionFeedbackRemote from '@nomix-ai/nomix-command-feedback/remote'
+import fileUploadsRemote from '@nomix-ai/nomix-client-file-upload/remote'
 import sessionReferencesRemote from '@nomix-ai/nomix-session-reference/remote'
-import type { TypertClientRemote } from '@nomix-ai/nomix-typert-protocol'
+import subagentsRemote from '@nomix-ai/nomix-subagent/remote'
+import sessionRemote from '@nomix-ai/nomix-api-session-controller/remote'
+import jobRemote from '@nomix-ai/nomix-api-job-controller/remote'
+import workspaceRemote from '@nomix-ai/nomix-api-workspace-controller/remote'
+import terminalRemote from '@nomix-ai/nomix-api-terminal-controller/remote'
+import workspaceFilesRemote from '@nomix-ai/nomix-api-workspace-files/remote'
+import type { ClientRemote } from '@nomix-ai/nomix-api-gateway/client'
 
-export type { TypertClientRemote as ClientRemote } from '@nomix-ai/nomix-typert-protocol'
+export type { ClientRemote } from '@nomix-ai/nomix-api-gateway/client'
+export type {
+  BundleInfo, BundleRowInfo, ChangeResult, IncompatiblePlugin, InspectOptions, InstallBundleOptions, InstallSpecKind, ManagementError,
+  PackageResult,
+  PluginChange, PluginEntryId, PluginInfo, PluginInspectProblem, PluginInstallCancellation, PluginInstallFailureKind,
+  PluginInstallLogChunk, PluginInstallProgress, PluginInstallRequestId, PluginRegistries, PluginSpecInspection,
+  ReadOnlyReason, Registry, RestartReason,
+} from '@nomix-ai/nomix-plugin-manager/types'
+export type {} from '@nomix-ai/nomix-plugin-manager/remote'
+export type {} from '@nomix-ai/nomix-client-ui-plugin-manager/remote'
+export type {} from '@nomix-ai/nomix-plugin-market/remote'
+export type {
+  MarketCompatibility, MarketIndexSummary, MarketInstallation, MarketInstallationStatus, MarketListingEntry, MarketListingVersion,
+  MarketQuery, MarketSearchResult, MarketSort,
+} from '@nomix-ai/nomix-plugin-market/types'
 export type { PluginInventorySnapshot } from '@nomix-ai/nomix-host-plugin-inventory/types'
+export type {} from '@nomix-ai/nomix-agent-preset-registry/remote'
+export type {} from '@nomix-ai/nomix-user-questions/remote'
 export type {} from '@nomix-ai/nomix-commands/remote'
-export type {} from '@nomix-ai/nomix-file-reference/remote'
+export type {} from '@nomix-ai/nomix-api-settings-controller/remote'
+export type {} from '@nomix-ai/nomix-api-account-controller/remote'
 export type {} from '@nomix-ai/nomix-goal/remote'
+export type {} from '@nomix-ai/nomix-schedule/remote'
+export type {} from '@nomix-ai/nomix-office-to-pdf/remote'
+export type {} from '@nomix-ai/nomix-llm/remote'
 export type {} from '@nomix-ai/nomix-host-plugin-inventory/remote'
 export type {} from '@nomix-ai/nomix-message-feedback/remote'
+export type {} from '@nomix-ai/nomix-permission-presets/remote'
+export type {} from '@nomix-ai/nomix-command-feedback/remote'
+export type {} from '@nomix-ai/nomix-client-file-upload/remote'
 export type {} from '@nomix-ai/nomix-session-reference/remote'
+export type {} from '@nomix-ai/nomix-subagent/remote'
+export type * from '@nomix-ai/nomix-subagent/client'
+export type {} from '@nomix-ai/nomix-api-session-controller/remote'
+export type * from '@nomix-ai/nomix-api-session-controller/types'
+export type {} from '@nomix-ai/nomix-api-job-controller/remote'
+export type * from '@nomix-ai/nomix-api-job-controller/types'
+export type {} from '@nomix-ai/nomix-api-workspace-controller/remote'
+export type * from '@nomix-ai/nomix-api-workspace-controller/types'
+export type {} from '@nomix-ai/nomix-api-workspace-files/remote'
+export type * from '@nomix-ai/nomix-api-workspace-files/types'
+export type {} from '@nomix-ai/nomix-api-terminal-controller/remote'
+export type * from '@nomix-ai/nomix-api-terminal-controller/types'
 // The forwarded-event allowlist's selection seat: without it in the consumer's
 // compilation face `TypertRemoteEvent` is `never` and every `$on` call fails.
 export type { ApiRemoteForwardedEvent } from '../types.ts'
@@ -28,8 +83,12 @@ export type {} from '@nomix-ai/nomix-commands/types'
 export type {} from '@nomix-ai/nomix-cordis-host-runner/types'
 export type {} from '@nomix-ai/nomix-credentials/types'
 export type {} from '@nomix-ai/nomix-llm/types'
-export type {} from '@nomix-ai/nomix-agent-presets/types'
+export type {} from '@nomix-ai/nomix-agent-preset-registry/types'
+export type {} from '@nomix-ai/nomix-permission-presets/types'
 export type {} from '@nomix-ai/nomix-settings/types'
+export type {} from '@nomix-ai/nomix-user-approval/types'
+export type {} from '@nomix-ai/nomix-user-questions/types'
+export type {} from '@nomix-ai/nomix-api-session-controller/types'
 
 /**
  * The carrier's Client-facing types, re-exported so a business package names one
@@ -37,14 +96,10 @@ export type {} from '@nomix-ai/nomix-settings/types'
  * the carrier's runtime values stay behind their own module edge.
  */
 export type {
-  ClientResponse, ConfigurableProviderView, ConnectionHandle, ConnectionSinks, ContentBlock,
-  CredentialView, DirectoryListing, DiscoveredModelView, HistoryEntry, HostFrame, IApiClient,
-  MessageId, ModelCatalogFailure, ModelProviderGroup, ModelReasoningEffort, ModelSelection,
-  MuxFrame, PromptContentPart, QuestionResponsePayload, QueueAction, RpcError, RpcId, RpcReceipt,
-  RpcRequest, RpcResponse, RpcResult, SessionId, SessionModels, SessionSearchItem,
-  SessionSummary, SettingsNamespaceView, SettingsPathOpView, SkillEntry, StreamChunk,
-  SubagentAddress, SubagentCatalog, JobView, ToolCallView, ToolEventView, ToolResultView,
-  WorkspaceId, WorkspaceView,
+  ConnectionHandle, ConnectionSinks, ContentBlock,
+  MessageId,
+  RpcId, RpcRequest, RpcResponse, RpcResult, SessionId,
+  StreamChunk,
 } from '@nomix-ai/nomix-client-connection/client'
 export type {} from '@nomix-ai/nomix-api-gateway/client'
 export type {} from '@nomix-ai/nomix-cordis-host-runner/remote'
@@ -86,19 +141,36 @@ export type {
   DynamicCordisUndefineReceipt,
   RequestRunOutcome,
 } from '@nomix-ai/nomix-cordis-host-runner/types'
-// The JSON vocabulary those payloads are built from, re-exported for the same
-// reason: a Client contribution names what it sends without importing a Host
-// package, and this assembly is where both planes legitimately meet.
-export type { JsonValue } from '@nomix-ai/nomix-session/types'
+// Credential state vocabulary for the credentials namespace (values never ride it).
+export type { CredentialInfo } from '@nomix-ai/nomix-credentials/types'
+// Redacted namespace vocabulary for the settings namespace (secrets never ride
+// it). It travels with its seam, whose `./types` the Client face already reads.
+export type {
+  SettingsDescribeValue, SettingsNamespaceView, SettingsPathOpView, SettingsSecretView,
+} from '@nomix-ai/nomix-settings/types'
+// Provider registry and discovery vocabulary for the llm namespace.
+export type {
+  LlmConfigurableProvider, LlmDiscoveredModel,
+  LlmModelDiscoveryRequest, LlmNativeAuth, LlmProviderInfo,
+} from '@nomix-ai/nomix-llm/types'
 // Reference-discovery result vocabulary for the fileReferences and
 // sessionReferenceResolver namespaces.
 export type { FileReferenceCandidate } from '@nomix-ai/nomix-file-reference/types'
 export type { SessionReferenceMentionCandidate } from '@nomix-ai/nomix-session-reference/types'
 
+// The Remote failure vocabulary, re-exported so business packages keep naming
+// this assembly alone. Types only: a value export would make spec imports load
+// this module's owner /remote artifacts; specs take RemoteError from
+// nomix-client-test-runtime instead.
+export type {
+  RemoteErrorCode, RemoteErrorDetailsMap, RemoteFailure, RemoteResult,
+} from '@nomix-ai/nomix-typert-protocol'
+export type { RemoteHostFacts } from '@nomix-ai/nomix-api-gateway/client'
+
 declare module '@nomix-ai/cordis' {
   interface Context {
     /** Generated Remote namespaces selected by this Client assembly. */
-    remote: TypertClientRemote
+    remote: ClientRemote
   }
 }
 
@@ -114,8 +186,13 @@ export async function apply(ctx: Context): Promise<() => Promise<void>> {
   const disposers: Array<() => Promise<void>> = []
   try {
     for (const contribution of [
-      commandsRemote, goalsRemote, dynamicRemote, fileReferencesRemote,
-      pluginInventoryRemote, messageFeedbackRemote, sessionReferencesRemote,
+      productAnalyticsRemote, agentPresetsRemote, commandsRemote, settingsControllerRemote, accountRemote,
+      goalsRemote, llmRemote, dynamicRemote, scheduleRemote,
+      pluginInventoryRemote, pluginManagerRemote, pluginMarketRemote, pluginRegistryProbeRemote,
+      messageFeedbackRemote, sessionFeedbackRemote,
+      fileUploadsRemote, sessionReferencesRemote,
+      permissionPresetsRemote, subagentsRemote, sessionRemote, jobRemote, workspaceRemote, workspaceFilesRemote, terminalRemote,
+      officeToPdfRemote, userQuestionsRemote,
     ]) {
       disposers.push(await ctx.remote.$mount(contribution))
     }

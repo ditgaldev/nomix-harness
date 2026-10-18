@@ -1,6 +1,70 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/extensions/cordis-host-runner/README.md
-README.md: 631f11ed2c7683ccc60e48a5b1a9d9cd00a45ecb
-README.zh.md: 356fb963b6e5a7ea967482625716f34a756a97b9
+/:
+  en: ac7eacf5f9b1e727
+  zh: 61461cb68f91fcce
+/nomix-ai-nomix-cordis-host-runner:
+  en: b1927daebce8c37e
+  zh: 7457eb93311277c6
+/nomix-ai-nomix-cordis-host-runner/summary:
+  en: 5ff4f53de52042fc
+  zh: 757d9d87b674daf4
+/nomix-ai-nomix-cordis-host-runner/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-cordis-host-runner/use-this-package:
+  en: bdaba8036acf80c9
+  zh: 2dd8f972c3023a8a
+/nomix-ai-nomix-cordis-host-runner/use-this-package/minimal-configuration:
+  en: 704c19c11c23695d
+  zh: de95609f914d59dc
+/nomix-ai-nomix-cordis-host-runner/use-this-package/client-inspection:
+  en: b4a2fe9e7aa9dee7
+  zh: 56f55558809970da
+/nomix-ai-nomix-cordis-host-runner/use-this-package/what-a-run-does:
+  en: a3c86c081974a710
+  zh: 180e1b7824c070d4
+/nomix-ai-nomix-cordis-host-runner/use-this-package/what-happens-to-definitions:
+  en: d1a8777f171d22bb
+  zh: 7f6aa4c2680557b1
+/nomix-ai-nomix-cordis-host-runner/use-this-package/trust-stance:
+  en: ac6cf6122a3558b1
+  zh: b1c7ca392ef0186d
+/nomix-ai-nomix-cordis-host-runner/understand-the-implementation:
+  en: b0a536c0d00cbdb8
+  zh: 08e5d813aa6a612a
+/nomix-ai-nomix-cordis-host-runner/understand-the-implementation/design-philosophy:
+  en: 2193b1c446b388fc
+  zh: 6173e0e3e2df6812
+/nomix-ai-nomix-cordis-host-runner/understand-the-implementation/source-map:
+  en: f567eacc1072b96c
+  zh: 7f50499d9740f802
+/nomix-ai-nomix-cordis-host-runner/understand-the-implementation/how-a-run-flows:
+  en: 63aee8bf4d9be8ce
+  zh: 501b97e3339a5d46
+/nomix-ai-nomix-cordis-host-runner/further-exploration:
+  en: c9143e0bcc1d5564
+  zh: e55405db0811592f
+/nomix-ai-nomix-cordis-host-runner/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-cordis-host-runner/model-experience/run-outcomes-refusals-and-diagnostics-relayed-to-the-owning-session:
+  en: f53130bb645f50df
+  zh: 603361c566527789
+/nomix-ai-nomix-cordis-host-runner/model-experience/run-outcomes-refusals-and-diagnostics-relayed-to-the-owning-session/what-the-model-sees:
+  en: 743dbef78fa3a8ad
+  zh: 2aa4e404e908cf22
+/nomix-ai-nomix-cordis-host-runner/model-experience/run-outcomes-refusals-and-diagnostics-relayed-to-the-owning-session/token-effect:
+  en: c7ef63dd8179a97e
+  zh: e66545088d00956a
+/nomix-ai-nomix-cordis-host-runner/model-experience/run-outcomes-refusals-and-diagnostics-relayed-to-the-owning-session/kv-cache-effect:
+  en: bbc4338c3035757a
+  zh: f51f4848786d5606
+/nomix-ai-nomix-cordis-host-runner/known-limitations-and-deferred-work:
+  en: 1f10688ae249a077
+  zh: ab2ff597e1769b81
+/nomix-ai-nomix-cordis-host-runner/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

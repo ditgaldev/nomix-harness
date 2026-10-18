@@ -1,6 +1,19 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write python/sdk/README.md
-README.md: b1113bab27c28293af6da1ff5e514db015d6296f
-README.zh.md: c9aef9ac2dae672849c3558a2568f297b937dfb0
+/nomix-harness-python-sdk:
+  en: 4c25c1553f7470fe
+  zh: 313e04680a2f3e50
+/nomix-harness-python-sdk/optional-office-operations:
+  en: e8c1322691dd034e
+  zh: 4926aa8cd5d376c7
+/nomix-harness-python-sdk/start-a-runtime:
+  en: 188449a6c975e37e
+  zh: cbe9b8df4c07cf0f
+/nomix-harness-python-sdk/customize-plugins:
+  en: 1eeaa5235334c286
+  zh: 471c9e3b6b630d7b
+/nomix-harness-python-sdk/results-and-notifications:
+  en: 98e071bdf10e2ccb
+  zh: 0638da383e1c8957

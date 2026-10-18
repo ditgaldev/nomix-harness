@@ -1,6 +1,88 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/web/web-search-deepseek/README.md
-README.md: 7e0063ded188b7e71c046235061c0cef5f118bf9
-README.zh.md: c52f4cd492b4655f5bae8b6a8d72647843f75bfc
+/:
+  en: d3ed4f8639422b9d
+  zh: 35c2ac10b0158bd3
+/nomix-ai-nomix-web-search-deepseek:
+  en: 188964c15894eaa9
+  zh: de1f83ab6866c433
+/nomix-ai-nomix-web-search-deepseek/summary:
+  en: ea2b41735efe7676
+  zh: 762c093693a640c2
+/nomix-ai-nomix-web-search-deepseek/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-web-search-deepseek/use-this-package:
+  en: e0d352d6402d9d3b
+  zh: a449234557ef8bd6
+/nomix-ai-nomix-web-search-deepseek/use-this-package/when-to-choose-it:
+  en: 0187c8af8d2d98c5
+  zh: 1c9607b3a662bcaa
+/nomix-ai-nomix-web-search-deepseek/use-this-package/minimal-configuration:
+  en: 08db96b5a0a35731
+  zh: 3a5765fb60ae47eb
+/nomix-ai-nomix-web-search-deepseek/use-this-package/authentication:
+  en: 3e49592f15e94825
+  zh: c1bcf6dbb946149a
+/nomix-ai-nomix-web-search-deepseek/use-this-package/what-a-search-returns:
+  en: e30442c90365357b
+  zh: 9c9e2f1182963a8a
+/nomix-ai-nomix-web-search-deepseek/use-this-package/request-logging:
+  en: 467b8238cf7e140c
+  zh: 85a519c8811557aa
+/nomix-ai-nomix-web-search-deepseek/use-this-package/failures-and-recovery:
+  en: e8b3d05fa39ccf47
+  zh: 2faa8b06ce0c4ad4
+/nomix-ai-nomix-web-search-deepseek/understand-the-implementation:
+  en: 9842c69ad3636bb3
+  zh: 3cdc3f816cbdd0cb
+/nomix-ai-nomix-web-search-deepseek/understand-the-implementation/design-philosophy:
+  en: 1b1760efbf4568c1
+  zh: fca06c959e51ce16
+/nomix-ai-nomix-web-search-deepseek/understand-the-implementation/source-map:
+  en: 680941350c454325
+  zh: 939225eb3a483bb8
+/nomix-ai-nomix-web-search-deepseek/understand-the-implementation/request-flow:
+  en: d6469ab9ac915762
+  zh: 07ddf7b12c748eaf
+/nomix-ai-nomix-web-search-deepseek/further-exploration:
+  en: 702f4f6a21af04b9
+  zh: 7efcd16ed4edc4cf
+/nomix-ai-nomix-web-search-deepseek/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-web-search-deepseek/model-experience/auxiliary-deepseek-search-request:
+  en: 722e4bf02953e236
+  zh: b3432958beb7b60f
+/nomix-ai-nomix-web-search-deepseek/model-experience/auxiliary-deepseek-search-request/what-the-model-sees:
+  en: 6b2b2909347efee8
+  zh: 664c3e210ec75cfd
+/nomix-ai-nomix-web-search-deepseek/model-experience/auxiliary-deepseek-search-request/token-effect:
+  en: 9b079b978c305dd8
+  zh: af2c3f39976b34de
+/nomix-ai-nomix-web-search-deepseek/model-experience/auxiliary-deepseek-search-request/kv-cache-effect:
+  en: 2bac9662f1792a79
+  zh: 556d9baabd79f9cb
+/nomix-ai-nomix-web-search-deepseek/model-experience/conversation-tool-result-indirectly:
+  en: 666f5753c99783ab
+  zh: b44328e99bcc45c9
+/nomix-ai-nomix-web-search-deepseek/model-experience/conversation-tool-result-indirectly/what-the-model-sees:
+  en: bbfa328cf7626d4f
+  zh: abde0e589f38cfa8
+/nomix-ai-nomix-web-search-deepseek/model-experience/conversation-tool-result-indirectly/token-effect:
+  en: 01ec43a9b616139d
+  zh: 0a5b7c28fde34bcf
+/nomix-ai-nomix-web-search-deepseek/model-experience/conversation-tool-result-indirectly/kv-cache-effect:
+  en: f5d5f97a153f7c70
+  zh: f681f89596f500f5
+/nomix-ai-nomix-web-search-deepseek/known-limitations-and-deferred-work:
+  en: 79eab5893dd5443b
+  zh: bca9386a8cdb7839
+/nomix-ai-nomix-web-search-deepseek/known-limitations-and-deferred-work/dev-note:
+  en: 7f775cc79dbce94b
+  zh: 12b8f68f9e7c48ca
+/nomix-ai-nomix-web-search-deepseek/known-limitations-and-deferred-work/dev-note/dedicated-retrieval-endpoint:
+  en: ec810f97731c6ab9
+  zh: 46cad57223ea2694

@@ -1,6 +1,6 @@
 /** Session-local ownership index for Package business views on `cordis_run` cards. */
 
-import type { SessionId } from '@nomix-ai/nomix-client-connection/client'
+import type { SessionId } from '@nomix-ai/nomix-api-remotes/client'
 import type { HostObservable } from '@nomix-ai/nomix-client-ui-slots'
 import type {
   CordisDynamicPackageId, CordisDynamicPluginId, CordisDynamicPluginRunId,

@@ -1,0 +1,31 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/webworker-packer/README.md
+/:
+  en: 5bf871fc6ff3da7c
+  zh: eae970e01432a92a
+/nomix-ai-nomix-experimental-webworker-packer:
+  en: 7ed45780620dd822
+  zh: 50dfe4bec01c6ae7
+/nomix-ai-nomix-experimental-webworker-packer/summary:
+  en: ba413ee298be8804
+  zh: d72ea8be60aab112
+/nomix-ai-nomix-experimental-webworker-packer/table-of-contents:
+  en: 4e53164159b5ce41
+  zh: 89582dc0294d0776
+/nomix-ai-nomix-experimental-webworker-packer/use-this-package:
+  en: 9a7f80ca73b45f63
+  zh: bd92c8d4deda1b4c
+/nomix-ai-nomix-experimental-webworker-packer/model-experience:
+  en: e16b355530dadc1c
+  zh: 8488e03b253b7b33
+/nomix-ai-nomix-experimental-webworker-packer/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: 64715dc7e6d02f71
+/nomix-ai-nomix-experimental-webworker-packer/known-limitations-and-deferred-work:
+  en: 5db57263553b6d4c
+  zh: 4ff7762be23969a9
+/nomix-ai-nomix-experimental-webworker-packer/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

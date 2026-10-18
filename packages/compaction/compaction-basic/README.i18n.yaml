@@ -1,6 +1,100 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/compaction/compaction-basic/README.md
-README.md: 7e8a72f7c47eb2566431f07392aa44bf07bccad9
-README.zh.md: efd9394ff5da3ee9e2462aa6792ea877161275b3
+/:
+  en: 4c3172f95eb524e1
+  zh: dd92ec1300ad9cbe
+/nomix-ai-nomix-compaction-basic:
+  en: bd1305da5d3ade9e
+  zh: f39a327d322a8bf7
+/nomix-ai-nomix-compaction-basic/summary:
+  en: 31202d573182cc31
+  zh: e0a0c96f67a9c1ba
+/nomix-ai-nomix-compaction-basic/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: bda879a892f240f0
+/nomix-ai-nomix-compaction-basic/use-this-package:
+  en: 6dce5dff09bc7073
+  zh: 603f54c2174bbaee
+/nomix-ai-nomix-compaction-basic/use-this-package/what-you-get:
+  en: eb8e340061f72b98
+  zh: 327a51037b2d1adf
+/nomix-ai-nomix-compaction-basic/use-this-package/smallest-working-composition:
+  en: 4cb73d7a57908948
+  zh: 7ba2ddc4c76e4957
+/nomix-ai-nomix-compaction-basic/use-this-package/tuning-when-condensation-starts:
+  en: ea428e17da42705c
+  zh: 531874be95e57e13
+/nomix-ai-nomix-compaction-basic/use-this-package/what-happens-when-condensation-runs:
+  en: c872a8ef069596f0
+  zh: b3a48e309ae830d4
+/nomix-ai-nomix-compaction-basic/use-this-package/on-demand-condensation-with-compact:
+  en: 18a16cef41ba9318
+  zh: ef0e3ae1f1a2f676
+/nomix-ai-nomix-compaction-basic/use-this-package/trimming-oversized-tool-outputs:
+  en: 2002e2436c99ad22
+  zh: a7e8dca1ef301c1e
+/nomix-ai-nomix-compaction-basic/understand-the-implementation:
+  en: deb655b3b1860576
+  zh: 79f56e41a9dfe01f
+/nomix-ai-nomix-compaction-basic/understand-the-implementation/design-philosophy:
+  en: 54945a18965f12a8
+  zh: fecd5d4fc2f2e6d6
+/nomix-ai-nomix-compaction-basic/understand-the-implementation/automatic-triggers-and-overflow-recovery:
+  en: cfee31ee930230eb
+  zh: f32778eb175c1779
+/nomix-ai-nomix-compaction-basic/understand-the-implementation/summarization-mechanics:
+  en: 967531b71453eb88
+  zh: c7919b46e36763e6
+/nomix-ai-nomix-compaction-basic/understand-the-implementation/the-region-transaction:
+  en: f4330f6bff22d400
+  zh: 46e16c51bb66a0f7
+/nomix-ai-nomix-compaction-basic/understand-the-implementation/config-resolution:
+  en: 246736aa86d3013d
+  zh: 35e261927ba0699c
+/nomix-ai-nomix-compaction-basic/understand-the-implementation/source-map:
+  en: 3f1d7a55b790e623
+  zh: 39e878c0785a885c
+/nomix-ai-nomix-compaction-basic/further-exploration:
+  en: ffca49e96f9b5aa7
+  zh: 3c425680fb240021
+/nomix-ai-nomix-compaction-basic/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-compaction-basic/model-experience/conversation-history:
+  en: 2e1148dd0f39a281
+  zh: cd68c9fff63534af
+/nomix-ai-nomix-compaction-basic/model-experience/conversation-history/what-the-model-sees:
+  en: 8d4325e6659bc314
+  zh: f80e69305b39f4a3
+/nomix-ai-nomix-compaction-basic/model-experience/conversation-history/what-the-model-sees/conversation-checkpoint-preamble:
+  en: 129d1eaba2519330
+  zh: 3ec517bdc6cb5ae3
+/nomix-ai-nomix-compaction-basic/model-experience/conversation-history/token-effect:
+  en: 872515a75b5a9726
+  zh: c0045e1972bbac4e
+/nomix-ai-nomix-compaction-basic/model-experience/conversation-history/kv-cache-effect:
+  en: a22b43f321843aee
+  zh: a5960da1bef34441
+/nomix-ai-nomix-compaction-basic/model-experience/auxiliary-summarizer-request:
+  en: 7169bd02a7a6c396
+  zh: 7c62e3d4a97c73f7
+/nomix-ai-nomix-compaction-basic/model-experience/auxiliary-summarizer-request/what-the-model-sees:
+  en: b7afcf1cc1c85c40
+  zh: a112c5b3984c31dc
+/nomix-ai-nomix-compaction-basic/model-experience/auxiliary-summarizer-request/what-the-model-sees/compaction-instruction-final-user-message:
+  en: 39a362ee4890dbdb
+  zh: 3b98699120b1548e
+/nomix-ai-nomix-compaction-basic/model-experience/auxiliary-summarizer-request/token-effect:
+  en: 5e0679cb7cb4291a
+  zh: c9df8ebc526b05d9
+/nomix-ai-nomix-compaction-basic/model-experience/auxiliary-summarizer-request/kv-cache-effect:
+  en: d31d3e3d46542c91
+  zh: 5a42f873993e0c79
+/nomix-ai-nomix-compaction-basic/known-limitations-and-deferred-work:
+  en: 8f459fa26e079883
+  zh: 4acdcefa71ebb409
+/nomix-ai-nomix-compaction-basic/known-limitations-and-deferred-work/dev-note:
+  en: 1fec7b90c3b68c49
+  zh: ad9ae54a598846d0

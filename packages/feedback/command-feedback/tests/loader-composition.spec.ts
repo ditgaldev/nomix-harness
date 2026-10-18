@@ -6,12 +6,13 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import { Context } from '@nomix-ai/cordis'
 import Loader from '@nomix-ai/cordis-plugin-loader'
 import Include from '@nomix-ai/cordis-plugin-include'
-import AgentRegistry, { Inbox } from '@nomix-ai/nomix-agent'
+import AgentRegistry from '@nomix-ai/nomix-agent'
 import type { Agent, AgentStatus } from '@nomix-ai/nomix-agent'
 import CommandRuntime from '@nomix-ai/nomix-commands'
 import SessionStore, { SessionId } from '@nomix-ai/nomix-session'
 import * as CommandFeedback from '@nomix-ai/nomix-command-feedback'
 import { getOrCreateAnonymousUserId } from '@nomix-ai/nomix-anonymous-user-id'
+import { unsupportedInbox } from '@nomix-ai/nomix-agent-loop-testkit'
 
 let root: string | undefined
 let context: Context | undefined
@@ -25,17 +26,16 @@ afterEach(async () => {
 })
 
 /** Register one idle agent over a store-owned session, as an app's spine does. */
-function agent(ctx: Context): Agent {
+async function agent(ctx: Context): Promise<Agent> {
   const scope = ctx.plugin(() => {})
   const id = SessionId('feedback-loader-agent')
   const session = ctx.sessions.create(id)
-  const inbox = new Inbox(session, { inserted: () => {}, discarded: () => {}, claimed: () => {} })
   let status: AgentStatus = 'idle'
   const value: Agent = {
     id,
     options: {},
     session,
-    inbox,
+    inbox: unsupportedInbox(),
     ctx: scope.ctx,
     get status() { return status },
     send: () => {},
@@ -46,7 +46,7 @@ function agent(ctx: Context): Agent {
     runMaintenance: task => task(new AbortController().signal),
     whenIdle: () => Promise.resolve(),
   }
-  ctx.agents.register(value)
+  await ctx.agents.register(value)
   return value
 }
 
@@ -83,7 +83,7 @@ describe('/feedback real Loader composition through cordis.yml', () => {
     await context.loader.create({ name: 'cordis:include', config: { path: pathToFileURL(configPath).href } })
     await context.loader.await()
 
-    const owner = agent(context)
+    const owner = await agent(context)
     const signal = new AbortController().signal
 
     // Discoverable through the composed registry, as a UI adapter finds it.
@@ -93,7 +93,7 @@ describe('/feedback real Loader composition through cordis.yml', () => {
     const userId = getOrCreateAnonymousUserId({ env: { NOMIX_HOME: root } })
     expect(accepted?.result).toEqual({
       kind: 'success',
-      text: `Feedback recorded for session feedback-loader-agent\nAnonymous user: ${userId}. Session sharing is not configured.`,
+      text: `Feedback recorded for session feedback-loader-agent\nAnonymous user: ${userId}.`,
     })
     const rejected = await context.commands.execute(owner, '/feedback', [], signal)
     expect(rejected?.result).toEqual({
@@ -102,13 +102,13 @@ describe('/feedback real Loader composition through cordis.yml', () => {
     })
 
     // The domain event owns the payload; generic command bookkeeping omits it.
-    expect(owner.session.events.map(event => event.type))
+    expect(owner.session.snapshotEvents().map(event => event.type))
       .toEqual(['command/run', 'feedback/record', 'command/done', 'command/run', 'command/done'])
-    const run = owner.session.events.find(event => event.type === 'command/run')
+    const run = owner.session.snapshotEvents().find(event => event.type === 'command/run')
     expect(run?.type === 'command/run' && Object.hasOwn(run.data, 'args')).toBe(false)
-    const feedback = owner.session.events.find(event => event.type === 'feedback/record')
+    const feedback = owner.session.snapshotEvents().find(event => event.type === 'feedback/record')
     expect(feedback?.type === 'feedback/record' && feedback.data.text).toBe('the diff view is unreadable')
-    expect(JSON.stringify(owner.session.events).match(/the diff view is unreadable/gu)).toHaveLength(1)
+    expect(JSON.stringify(owner.session.snapshotEvents()).match(/the diff view is unreadable/gu)).toHaveLength(1)
 
     // Nothing reached the model.
     expect(owner.session.deriveMessages()).toEqual([])

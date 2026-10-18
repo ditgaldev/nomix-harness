@@ -1,6 +1,70 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/boot/app-boot/README.md
-README.md: d18602556c1cb53bc7ddfa38a736ef9902de3f3b
-README.zh.md: d9fce9931402e1cdf01dd1d769ef6982ea85398a
+/:
+  en: ed8b9e4e7692f00d
+  zh: 20fb924fcd41a4e7
+/nomix-ai-nomix-app-boot:
+  en: 0dc6369ef734cf62
+  zh: 30b4e0203a759b5c
+/nomix-ai-nomix-app-boot/summary:
+  en: 737d8cff9b862dd7
+  zh: 22d94c257e47bcf2
+/nomix-ai-nomix-app-boot/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-app-boot/use-this-package:
+  en: f6fa378225009c8f
+  zh: 324c0e4640bb1358
+/nomix-ai-nomix-app-boot/use-this-package/when-to-use-it:
+  en: 5f05da8154395a4d
+  zh: fa16f237f6447c3a
+/nomix-ai-nomix-app-boot/use-this-package/starting-the-app:
+  en: 4a424cd401556f20
+  zh: 0b34dd18e0db6cea
+/nomix-ai-nomix-app-boot/use-this-package/profiles:
+  en: fb5429652bb99e7b
+  zh: de5d9c2289b27026
+/nomix-ai-nomix-app-boot/use-this-package/previewing-the-effective-configuration:
+  en: 646a0ccdd7881ad1
+  zh: e3696acb1573dd7b
+/nomix-ai-nomix-app-boot/use-this-package/inspecting-plugin-configuration-schemas:
+  en: dff8a316e4066728
+  zh: e4e606ce692e4963
+/nomix-ai-nomix-app-boot/use-this-package/reading-plugin-display-metadata:
+  en: 59802ac337765630
+  zh: 06b7332a8417c91d
+/nomix-ai-nomix-app-boot/use-this-package/startup-and-reload-failures:
+  en: 687c09591a7156f6
+  zh: c1ae0c595f538586
+/nomix-ai-nomix-app-boot/understand-the-implementation:
+  en: f4a2695cb4c8a570
+  zh: 89837235d2f376cf
+/nomix-ai-nomix-app-boot/understand-the-implementation/design-notes:
+  en: 83e5cf183952b3e3
+  zh: d757064c97ccc2a6
+/nomix-ai-nomix-app-boot/understand-the-implementation/helper-behavior:
+  en: 6fa850d1bb000d0e
+  zh: aa83a40a9d3db295
+/nomix-ai-nomix-app-boot/understand-the-implementation/source-map:
+  en: 541700d5c39e0ab4
+  zh: 7522dbd9cd68c930
+/nomix-ai-nomix-app-boot/further-exploration:
+  en: 005ca036dd680e4c
+  zh: faf4d699ff27714f
+/nomix-ai-nomix-app-boot/model-experience:
+  en: d2d0a21502d88c50
+  zh: 82a60c7a490a6834
+/nomix-ai-nomix-app-boot/model-experience/kv-cache-effect:
+  en: 5a1d9344c8fdc790
+  zh: 0b32579f658b2ca1
+/nomix-ai-nomix-app-boot/known-limitations-and-deferred-work:
+  en: 1400c4f22a79b59a
+  zh: 269f6c91584aec3e
+/nomix-ai-nomix-app-boot/known-limitations-and-deferred-work/dev-note:
+  en: d2f0d68fe29fb750
+  zh: 323d21ee73a9e3f6
+/nomix-ai-nomix-app-boot/known-limitations-and-deferred-work/dev-note/open-yaml-config-dump-stability:
+  en: c8764e57aaadf874
+  zh: 3b9e64c13236b4f8

@@ -1,6 +1,61 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/web/web-search-exa/README.md
-README.md: 566dbd08eb90eaec47dd639c4b5ae3c0e78a6ac8
-README.zh.md: 7f42feaeb15b3d8b5024ca266723510cf72ad546
+/:
+  en: 4b8ba0a939fdf9d4
+  zh: 8b8ddab7cef0f022
+/nomix-ai-nomix-web-search-exa:
+  en: a5583cdfbb932f86
+  zh: 7b72a7d9defec65d
+/nomix-ai-nomix-web-search-exa/summary:
+  en: 6d25343dfc0438e2
+  zh: 3d9fdfdcf770f61a
+/nomix-ai-nomix-web-search-exa/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-web-search-exa/use-this-package:
+  en: 44ecd69ae3a9e8d3
+  zh: b5f26aa1580f90fc
+/nomix-ai-nomix-web-search-exa/use-this-package/when-to-choose-it:
+  en: d33f61122c271792
+  zh: e097094e69b3f425
+/nomix-ai-nomix-web-search-exa/use-this-package/minimal-configuration:
+  en: f6d96778fe604db9
+  zh: 289280f0b45ee630
+/nomix-ai-nomix-web-search-exa/use-this-package/what-a-search-returns:
+  en: 72c9eb8a1563bfd6
+  zh: 26f7069376a74090
+/nomix-ai-nomix-web-search-exa/use-this-package/failures-and-recovery:
+  en: 5740595fa2cebf20
+  zh: 7316e46e09d8ad9f
+/nomix-ai-nomix-web-search-exa/understand-the-implementation:
+  en: 9842c69ad3636bb3
+  zh: 3cdc3f816cbdd0cb
+/nomix-ai-nomix-web-search-exa/understand-the-implementation/design-philosophy:
+  en: 341f17a367eca5b0
+  zh: ca3a4e4b4956892d
+/nomix-ai-nomix-web-search-exa/understand-the-implementation/source-map:
+  en: ca70cbf87a47c506
+  zh: bb440072bbd6a478
+/nomix-ai-nomix-web-search-exa/understand-the-implementation/request-and-mapping-flow:
+  en: 1fe92c2ad0408273
+  zh: cc8c573e0accc8dc
+/nomix-ai-nomix-web-search-exa/further-exploration:
+  en: a16a15ecdc8122d0
+  zh: 1c69f8e73c8a78c0
+/nomix-ai-nomix-web-search-exa/model-experience:
+  en: b97afd6ca305bad7
+  zh: 81d870e78b8a6e8f
+/nomix-ai-nomix-web-search-exa/model-experience/kv-cache-effect:
+  en: 40294c1c31b74824
+  zh: d75d48f485447a74
+/nomix-ai-nomix-web-search-exa/known-limitations-and-deferred-work:
+  en: 5d40ace687e8b0d1
+  zh: 9f8681f7df17ed1f
+/nomix-ai-nomix-web-search-exa/known-limitations-and-deferred-work/dev-note:
+  en: 7f775cc79dbce94b
+  zh: 12b8f68f9e7c48ca
+/nomix-ai-nomix-web-search-exa/known-limitations-and-deferred-work/dev-note/future-wider-exa-control-surface:
+  en: 7a6c72d34be40225
+  zh: b525946646a9f856

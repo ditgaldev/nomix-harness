@@ -1,0 +1,40 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/client/ui-secret-mask/README.md
+/:
+  en: 1dc6c25906eed342
+  zh: 6d2502e37189d576
+/nomix-ai-nomix-client-ui-secret-mask:
+  en: eb509ab02eb208f0
+  zh: 1c0788d64259fd79
+/nomix-ai-nomix-client-ui-secret-mask/summary:
+  en: 842e444153f15f56
+  zh: bc2a07209dfa71a5
+/nomix-ai-nomix-client-ui-secret-mask/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-client-ui-secret-mask/use-this-package:
+  en: 018fb1b86b154944
+  zh: 5486c4c2ffe24129
+/nomix-ai-nomix-client-ui-secret-mask/use-this-package/what-is-masked:
+  en: 445a9c788955600d
+  zh: b36ebee0735f5c48
+/nomix-ai-nomix-client-ui-secret-mask/understand-the-implementation:
+  en: 78b64414a9e1dce9
+  zh: 201f894f2b3961bc
+/nomix-ai-nomix-client-ui-secret-mask/further-exploration:
+  en: 20c96abf95038893
+  zh: 53d3d99959c6047a
+/nomix-ai-nomix-client-ui-secret-mask/model-experience:
+  en: 9a362b8fa90e0d5a
+  zh: 65c22dcf8f352782
+/nomix-ai-nomix-client-ui-secret-mask/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: c2241315dc0c89c9
+/nomix-ai-nomix-client-ui-secret-mask/known-limitations-and-deferred-work:
+  en: 14c6e5817a106972
+  zh: 13082b68474b5a6f
+/nomix-ai-nomix-client-ui-secret-mask/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: e88aeb617ffb74ea

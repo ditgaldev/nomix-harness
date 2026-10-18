@@ -1,30 +1,123 @@
-# nomix-home-paths
+---
+description: "Shared resolution of the Nomix Harness home and the shared agent configuration root, plus user-data paths, tilde expansion, and stable watch paths."
+kind: "package-library"
+---
+
+# @nomix-ai/nomix-home-paths
 
 English | [中文](README.zh.md)
 
-Shared filesystem path helpers for Nomix Harness user data.
+## Summary
 
-## NOMIX home
+`@nomix-ai/nomix-home-paths` lets package authors resolve the Nomix Harness data root and the shared agent configuration root their consumers read. An explicit path wins over the environment variable, which wins over the default under the operating-system home; blank environment values are ignored. Its public helpers can render a root without revealing an absolute machine path, expand only bare or current-user tilde forms, and canonicalize watch targets whose final components do not yet exist. Use it as a direct library dependency, not through `cordis.yml`.
 
-`resolveNomixHome()` resolves the single-root Nomix Harness home. Precedence, highest first: an explicit configured path, `$NOMIX_HOME`, then `~/.nomix`. The harness keeps all user data under one root.
+## Table of Contents
 
-`nomixHomePath(...segments)` joins child segments onto that resolved home with Node's platform path rules. With no segments it returns the home itself.
+- [Use this package](#use-this-package)
+- [Understand the implementation](#understand-the-implementation)
+- [Further Exploration](#further-exploration)
+- [Known Limitations and Deferred Work](#known-limitations-and-deferred-work)
+- [Dev Note](#dev-note)
 
-`nomixHomeDisplay()` names an active root symbolically for user-facing paths: `~/.nomix` for the default home, `$NOMIX_HOME` for any configured home. It never leaks an absolute machine path.
+-----
 
-`NOMIX_HOME_DIR_NAME` owns the default user-data directory name: `.nomix`.
+<a id="use-this-package"></a>
+## Use this package
 
-`defaultNomixHome()` returns the default Nomix Harness home by joining the operating-system home directory with `.nomix`, using Node's platform path rules.
+Use these helpers wherever a package must agree with the rest of the harness about where user data lives: resolve the home once, then derive every child path from it.
 
-`expandHomePath()` expands `~`, `~/...`, and Windows-style `~\...` prefixes against the operating-system home directory. It leaves non-tilde paths and `~user/...` untouched.
+### Resolving the home
 
-## Watch paths
+```ts
+import { resolveNomixHome, nomixHomePath, nomixCachePath } from '@nomix-ai/nomix-home-paths'
 
-`canonicalizeWatchPath()` gives a native filesystem watcher one stable spelling of its target. It resolves the deepest existing ancestor through `fs.realpath()` and restores any missing suffix, so a file or directory may still be watched before it is created. In particular, Windows 8.3 aliases cannot be mixed with the long paths emitted by the native watcher backend.
+const home = resolveNomixHome()                // configured path, else $NOMIX_HOME, else ~/.nomix
+const settings = nomixHomePath('settings')     // join one child onto the resolved home
+const cache = nomixCachePath('models')         // $NOMIX_HOME/cache/models, default ~/.nomix/cache/models
+```
 
-This package is intentionally small and harness-dep-free so product packages can share user-data path conventions without depending on one another.
+An explicit configured path has the highest precedence, then `$NOMIX_HOME`, then the default `~/.nomix`. An empty or whitespace-only `$NOMIX_HOME` is treated as unset, so a blank override never resolves the home to the current working directory.
+
+`nomixCachePath(...segments)` derives paths from the resolved home's `cache` directory. With no segments it returns the cache directory itself. Pass an initial options object, `nomixCachePath({ nomixHome: home }, ...segments)`, to use an explicit configured home with the same precedence and tilde expansion. It returns an absolute path without creating directories.
+
+### Resolving the shared agents root
+
+```ts
+import { resolveAgentsHome, agentsHomeDisplay } from '@nomix-ai/nomix-home-paths'
+
+const agents = resolveAgentsHome()   // configured path, else $NOMIX_AGENTS_HOME, else ~/.agents
+agentsHomeDisplay(agents)            // ~/.agents, or $NOMIX_AGENTS_HOME for any configured root
+```
+
+`resolveAgentsHome` applies the same precedence, blank-value handling, and tilde expansion as `resolveNomixHome`. The root is deliberately outside `$NOMIX_HOME` because other agent tools share it; `nomix-agent-instructions` reads its user-global `AGENTS.md`, and `nomix-skill-filesystem` scans its `skills/` directory.
+
+### Displaying a home
+
+For user-facing paths, render a root symbolically rather than as a machine path: the default harness home displays as `~/.nomix`, any configured harness home as `$NOMIX_HOME`, the default shared agents root as `~/.agents`, and any configured shared agents root as `$NOMIX_AGENTS_HOME`. Neither display form leaks an absolute machine path.
+
+### Expanding user paths
+
+`expandHomePath` expands a leading `~`, `~/`, or `~\` against the operating-system home and leaves everything else untouched — non-tilde paths and named-user forms such as `~alice/...` pass through unchanged.
+
+### Canonicalizing watch paths
+
+`canonicalizeWatchPath` gives a native filesystem watcher one canonical spelling of its target: the deepest existing ancestor is resolved through `realpath` and any missing suffix is restored, so a file or directory can be watched before it is created. This prevents Windows from treating a regular-file ancestor as ordinary absence, and prevents 8.3 short-name aliases from mixing with the long paths the native watcher backend emits.
+
+-----
+
+<a id="understand-the-implementation"></a>
+## Understand the implementation
+
+<details>
+<summary>Implementation internals — click to expand</summary>
+
+The package is built on one principle: harness user data lives under one root, and the shared agent configuration root stays separate because other agent tools read it too. `resolveRoot` and `rootDisplay` own the precedence and display rules for both roots, so neither can drift from the other.
+
+### Source map
+
+| File | Role |
+|---|---|
+| [`src/index.ts`](src/index.ts) | Home resolution, path joining, display, tilde expansion, and watch-path canonicalization |
+
+### Resolution rules
+
+`resolveNomixHome` reads the explicit override, then `$NOMIX_HOME`, then falls back to the operating-system home joined with `.nomix`. `resolveAgentsHome` reads the same three levels for `$NOMIX_AGENTS_HOME` and `~/.agents`. The chosen value is tilde-expanded and normalized to an absolute path; `nomixHomePath` joins child segments with Node's platform path rules. `nomixHomeDisplay` and `agentsHomeDisplay` compare the resolved path against the default root and return the symbolic label, so a configured root never leaks its absolute path.
+
+### Canonicalization mechanics
+
+`canonicalizeWatchPath` walks up from the target until it finds an existing ancestor, resolves it with `realpath`, proves it is an enumerable directory, and restores the missing suffix. Errors other than absence propagate, and a missing-suffix ancestor that is not a directory is rejected.
+
+</details>
+
+-----
+
+<a id="further-exploration"></a>
+## Further Exploration
+
+Read these pages when you need the launcher or the consumers that depend on a single home root.
+
+- [Boot package](../../boot/app-boot/README.md) — the launcher that resolves the home before any plugin mounts.
+- [Shell environment](../../shell/shell-env/README.md) — how `NOMIX_HOME` reaches model shell calls.
+- [Anonymous user id](../../identity/anonymous-user-id/README.md) — a stored identity file under the resolved home.
+
+-----
 
 ## Known Limitations and Deferred Work
 
+<a id="known-limitations-and-deferred-work"></a>
+
+
+These limits define when the helpers are not the right tool. They are current package constraints, not a task backlog.
+
 - **Expansion is deliberately narrow** — only bare `~`, `~/...`, and `~\...` use the current operating-system home; named-user forms such as `~alice/...`, environment variables, and shell expressions remain unchanged.
-- **Canonicalization reads but never mutates** — `canonicalizeWatchPath()` performs `realpath` probes and propagates errors other than absence; callers still own directory creation, permissions, and trust policy for the resulting path.
+- **Canonicalization reads but never mutates** — `canonicalizeWatchPath` performs `realpath` probes and propagates errors other than absence; callers still own directory creation, permissions, and trust policy for the resulting path.
+
+<a id="dev-note"></a>
+### Dev Note
+
+<details>
+<summary>Working context for maintainers — click to expand</summary>
+
+None.
+
+</details>

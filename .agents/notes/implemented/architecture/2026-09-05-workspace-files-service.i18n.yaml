@@ -1,0 +1,52 @@
+# Bilingual-pair consistency record for 2026-09-05-workspace-files-service.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-09-05-workspace-files-service.md
+/agent-note-workspace-file-service:
+  en: 7e0d14b229804d8f
+  zh: b47565270a222e5c
+/agent-note-workspace-file-service/problem:
+  en: 4bc7e33f52e2d27b
+  zh: 8c9783d729a0d012
+/agent-note-workspace-file-service/decision:
+  en: d7e9776df8764fa0
+  zh: 460cc567732ae733
+/agent-note-workspace-file-service/decision/package-topology:
+  en: 760b9a209852b0ed
+  zh: 36bbf8ea748e52c8
+/agent-note-workspace-file-service/decision/the-workspacefiles-file-operations:
+  en: 02fc697cd8e192bc
+  zh: 3c85113d91f0f29a
+/agent-note-workspace-file-service/decision/paths-on-the-wire:
+  en: 8b2652fdf48e4157
+  zh: 641533a82df30857
+/agent-note-workspace-file-service/decision/file-checks-and-workspace-containment:
+  en: 1b588f346590a0fd
+  zh: 1cdac02b967b157f
+/agent-note-workspace-file-service/decision/failures:
+  en: 0e419dd7bdcf38ba
+  zh: 6cb588a77593913c
+/agent-note-workspace-file-service/decision/configuration:
+  en: 796ee295af0895bd
+  zh: 4dfa113ed19f5f9a
+/agent-note-workspace-file-service/decision/the-readbyterange-seam-in-nomix-fs:
+  en: be591c41d7aaa670
+  zh: 3779673a01a4c678
+/agent-note-workspace-file-service/decision/the-client-file-provider:
+  en: 0d42d4716dde706f
+  zh: 4e95b8af2df232b6
+/agent-note-workspace-file-service/decision/related-notes:
+  en: 4127d4d8bab522c4
+  zh: 0a7c5a9a6fed69d8
+/agent-note-workspace-file-service/alternatives-considered:
+  en: 3f3f88197b68f76b
+  zh: bfeebd8ba4a06b6a
+/agent-note-workspace-file-service/consequences:
+  en: 246bb7aed62f6c9b
+  zh: debf6d4129ee477b
+/agent-note-workspace-file-service/testing:
+  en: 7205745bb34fb753
+  zh: ef7ae6dd3ed1c8be
+/agent-note-workspace-file-service/deferred:
+  en: b033218338ca0122
+  zh: aa48fa67f9eb36c3

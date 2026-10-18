@@ -1,0 +1,37 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/voice-input-bundle/README.md
+/:
+  en: a610a36da32c92ad
+  zh: 19434bfe1701828d
+/nomix-ai-nomix-experimental-voice-input-bundle:
+  en: 477f5480f7cea39d
+  zh: 6e5da4425856824a
+/nomix-ai-nomix-experimental-voice-input-bundle/summary:
+  en: e84cf8d1493e2a08
+  zh: f0549f75a5234388
+/nomix-ai-nomix-experimental-voice-input-bundle/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 364c80ee00a374ff
+/nomix-ai-nomix-experimental-voice-input-bundle/use-this-package:
+  en: 9151bf11e64b4f1c
+  zh: 7c9638c16ac6a0db
+/nomix-ai-nomix-experimental-voice-input-bundle/understand-the-implementation:
+  en: 505fdda2e42f60d5
+  zh: ac44740ce8e4c45f
+/nomix-ai-nomix-experimental-voice-input-bundle/further-exploration:
+  en: b12fd1498b409b8a
+  zh: 0807b506a3d92ce5
+/nomix-ai-nomix-experimental-voice-input-bundle/model-experience:
+  en: 3c5a85f8b7129ce8
+  zh: d5f491ca88d9a810
+/nomix-ai-nomix-experimental-voice-input-bundle/model-experience/kv-cache-effect:
+  en: b5ec79db2e1d0dbc
+  zh: e5aff567ae5ee6fc
+/nomix-ai-nomix-experimental-voice-input-bundle/known-limitations-and-deferred-work:
+  en: 931937cfc71333aa
+  zh: 836b7576c1426bc7
+/nomix-ai-nomix-experimental-voice-input-bundle/known-limitations-and-deferred-work/dev-note:
+  en: 0225ba087c5266f3
+  zh: 4e706f1b2b984e63

@@ -1,0 +1,52 @@
+# Replay-only patch layered after `cordis.yml`: replace the network adapter
+# with recorded JSONL, pin the recorded top-level model, and keep persistence
+# raw for fixture harvesting.
+
+- id: llm-deepseek
+  name: '@nomix-ai/nomix-llm-deepseek-api-key'
+  disabled: true
+
+- id: acp
+  name: '@nomix-ai/nomix-acp'
+  config:
+    provider: deepseek-official
+    model: deepseek-v4-flash
+
+- id: session-persistence-jsonl
+  name: '@nomix-ai/nomix-session-persistence-jsonl'
+  config:
+    root: !!js process.env.NOMIX_SNAPSHOT_SESSIONS_ROOT ?? nomixHomePath('sessions')
+    compression: none
+
+- id: sandbox
+  name: '@nomix-ai/nomix-sandbox-local'
+  config:
+    runnerCommand:
+      - bash
+      - -c
+      - while [ "$1" != "--" ]; do shift; done; shift; exec "$@"
+      - passthrough-runner
+    runnerFailureSignatures:
+      - 'passthrough-runner: profile rejected'
+
+- insert:
+    - id: llm-replay
+      name: '@nomix-ai/nomix-llm-replay'
+      config:
+        providers:
+          - id: deepseek-official
+            name: DeepSeek
+            models:
+              - id: deepseek-v4-flash
+              - id: deepseek-v4-pro
+
+    - id: subagent-settlement-marker
+      name: './subagent-settlement-marker.ts'
+
+- insert:
+    - id: snapshot-shell-path
+      name: ../../../scripts/snapshot-shell-path.ts
+      config:
+        command: "printf 'escalated\\n' > /tmp/nomix-escalated.txt && cat /tmp/nomix-escalated.txt && rm /tmp/nomix-escalated.txt"
+        recordedPath: /tmp/nomix-escalated.txt
+        livePath: !!js process.env.NOMIX_SNAPSHOT_SPILL_ROOT + '/nomix-escalated.txt'

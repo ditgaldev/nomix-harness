@@ -1,6 +1,6 @@
 import { Context } from '@nomix-ai/cordis'
 import Timer from '@nomix-ai/cordis-plugin-timer'
-import { CallId } from '@nomix-ai/nomix-llm'
+import { ToolCallId } from '@nomix-ai/nomix-llm'
 import SystemPrompt from '@nomix-ai/nomix-system-prompt'
 import ToolRegistry from '@nomix-ai/nomix-tools'
 import type { ToolDefinition, ToolExecutionResult } from '@nomix-ai/nomix-tools'
@@ -48,7 +48,7 @@ interface Harness {
 
 /**
  * Build a real tree with the runner mounted and a recording gateway provided.
- * @param config - runner config overrides (the vm bound).
+ * @param config - runner configuration overrides.
  * @returns the context, the runner service, and the gateway recorder.
  */
 export async function setup(config?: Config): Promise<Harness> {
@@ -147,7 +147,7 @@ let callCounter = 0
 export function call(ctx: Context, name: string, args: unknown): Promise<ToolExecutionResult> {
   return ctx.tools.execute({
     signal: new AbortController().signal,
-    callId: CallId(`call-${++callCounter}`),
+    callId: ToolCallId(`call-${++callCounter}`),
     name,
     arguments: args,
   })

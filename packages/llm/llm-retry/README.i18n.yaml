@@ -1,6 +1,70 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/llm/llm-retry/README.md
-README.md: ac2e4e981005d844340a5cd8f01ac6ba2dcd3f9c
-README.zh.md: 3607942b0fc4762f967689f61137e7783c04c1e4
+/:
+  en: 48b7b8ee60e92601
+  zh: 28dfac5ed11f58ce
+/nomix-ai-nomix-llm-retry:
+  en: 4058a6772827440d
+  zh: 21a3bdf4c5fa6587
+/nomix-ai-nomix-llm-retry/summary:
+  en: 7402ff0414a0457a
+  zh: 553215fd111fc7d7
+/nomix-ai-nomix-llm-retry/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-llm-retry/use-this-package:
+  en: ecee4f255eaa53bd
+  zh: 2e7983fd7668fa00
+/nomix-ai-nomix-llm-retry/use-this-package/when-to-choose-it:
+  en: 906ac1546ba8b23f
+  zh: 1c0ae0664f02bfca
+/nomix-ai-nomix-llm-retry/use-this-package/minimal-configuration:
+  en: 95b1cf09ee2c77a9
+  zh: 4d45e437db4988c7
+/nomix-ai-nomix-llm-retry/use-this-package/what-you-can-observe:
+  en: 21267b22ad48e012
+  zh: 521bfad2c2d8e418
+/nomix-ai-nomix-llm-retry/use-this-package/failures-and-recovery:
+  en: 730567739a21a4d2
+  zh: 3ea222c68d960948
+/nomix-ai-nomix-llm-retry/understand-the-implementation:
+  en: cef3289094f94c25
+  zh: c7f40ff6e4e56de6
+/nomix-ai-nomix-llm-retry/understand-the-implementation/design-philosophy:
+  en: fc4f15a14435698c
+  zh: 3c6d83f5ba04ec0e
+/nomix-ai-nomix-llm-retry/understand-the-implementation/source-map:
+  en: 9b79cdd6597930e0
+  zh: 0838f3efbc1e83ac
+/nomix-ai-nomix-llm-retry/understand-the-implementation/recovery-flow:
+  en: 85bace285b029101
+  zh: 6e0237450ca6ccc0
+/nomix-ai-nomix-llm-retry/understand-the-implementation/waterfall-composition:
+  en: 388e8db333e03cb1
+  zh: 54b6446ac3584724
+/nomix-ai-nomix-llm-retry/further-exploration:
+  en: e4a797268db357c2
+  zh: f23a5f02f8db0c91
+/nomix-ai-nomix-llm-retry/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-llm-retry/model-experience/model-request-recovery:
+  en: 8496b7aefbe6fa20
+  zh: ed7b60ef09380ec4
+/nomix-ai-nomix-llm-retry/model-experience/model-request-recovery/what-the-model-sees:
+  en: 9772b77e48e70dba
+  zh: df3d4105f7b8c256
+/nomix-ai-nomix-llm-retry/model-experience/model-request-recovery/token-effect:
+  en: f86254d7c2ed2444
+  zh: 7e0f7b9e026e0bf2
+/nomix-ai-nomix-llm-retry/model-experience/model-request-recovery/kv-cache-effect:
+  en: 82d6bdfc0ec747ea
+  zh: 14269c9dcd086611
+/nomix-ai-nomix-llm-retry/known-limitations-and-deferred-work:
+  en: bef1baa545592b9c
+  zh: 61984a1e10de8294
+/nomix-ai-nomix-llm-retry/known-limitations-and-deferred-work/dev-note:
+  en: add61ee91e4ae8e4
+  zh: 3877c147b541b2c9

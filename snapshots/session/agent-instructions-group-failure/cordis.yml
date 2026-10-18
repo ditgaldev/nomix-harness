@@ -1,0 +1,31 @@
+# The snapshot harness supplies scenario-local .nomix and .agents roots.
+- id: agent-default-model
+  name: '@nomix-ai/nomix-agent-default-model'
+  config:
+    provider: deepseek-official
+    model: deepseek-v4-pro
+
+- id: session-persistence-jsonl
+  name: '@nomix-ai/nomix-session-persistence-jsonl'
+  config:
+    root: !!js nomixHomePath('sessions')
+    compression: none
+
+- id: agent-instructions
+  name: '@nomix-ai/nomix-agent-instructions'
+  config:
+    maxBytes: 65536
+    projectRootMarkers:
+      - .nomix-project
+
+- id: system-prompt
+  name: '@nomix-ai/nomix-system-prompt'
+  config:
+    personaPrefix: |
+      You are a coding assistant powered by the {{model}} model.
+
+      Verify your work by running the code or tests. Keep answers brief and factual.
+
+- insert:
+    - id: workspace-context-global-failure
+      name: '../../../packages/test-support/session-snapshot/tests/fixtures/workspace-context-global-failure.ts'

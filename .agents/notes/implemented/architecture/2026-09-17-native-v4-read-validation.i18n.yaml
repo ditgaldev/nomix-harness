@@ -1,0 +1,19 @@
+# Bilingual-pair consistency record for 2026-09-17-native-v4-read-validation.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-09-17-native-v4-read-validation.md
+/agent-note-mandatory-native-v4-relationship-validation:
+  en: bf7e72f38c4cac08
+  zh: 244c3e0a0d3c704f
+/agent-note-mandatory-native-v4-relationship-validation/problem:
+  en: cfb527c1c2ca661a
+  zh: b61a906330cdaf97
+/agent-note-mandatory-native-v4-relationship-validation/decision:
+  en: 2c8cd152bee1f07f
+  zh: c836ba2f493d895b
+/agent-note-mandatory-native-v4-relationship-validation/alternatives-considered:
+  en: 96a37d9ba0252630
+  zh: fdf2d085805f0010
+/agent-note-mandatory-native-v4-relationship-validation/consequences:
+  en: b76aaca1c35dcc6c
+  zh: b933c2518c64c60c

@@ -1,6 +1,6 @@
 {
   "name": "@nomix-ai/nomix-api-remotes",
-  "description": "Remote BFF assembly and Host Agent/Session lookup policy",
+  "description": "Remote BFF assembly for application-selected Host capabilities",
   "version": "0.2.9",
   "publishConfig": {
     "access": "public"
@@ -18,10 +18,6 @@
       "types": "./lib/types/index.d.ts",
       "default": "./lib/index.js"
     },
-    "./invariant": {
-      "types": "./lib/types/invariant.d.ts",
-      "default": "./lib/invariant.js"
-    },
     "./client": {
       "types": "./lib/types/client/index.d.ts",
       "default": "./lib/client.js"
@@ -31,7 +27,8 @@
       "default": "./lib/types/types.js"
     },
     "./src/*": "./src/*",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
   },
   "nomix": {
     "client": {
@@ -48,53 +45,59 @@
   },
   "license": "MIT",
   "files": [
+    "locale/*.json",
     "lib/index.js",
-    "lib/invariant.js",
     "lib/client.js",
     "lib/types/**/*.js",
     "lib/types/**/*.d.ts"
   ],
   "dependencies": {
-    "@nomix-ai/nomix-typert-protocol": "workspace:^"
+    "@nomix-ai/nomix-deque": "workspace:*",
+    "@nomix-ai/nomix-util-values": "workspace:*"
   },
   "peerDependencies": {
-    "@nomix-ai/nomix-agent": "workspace:^",
-    "@nomix-ai/nomix-agent-presets": "workspace:^",
-    "@nomix-ai/nomix-api-gateway": "workspace:^",
-    "@nomix-ai/nomix-commands": "workspace:^",
-    "@nomix-ai/nomix-cordis-host-runner": "workspace:^",
-    "@nomix-ai/nomix-credentials": "workspace:^",
-    "@nomix-ai/nomix-file-reference": "workspace:^",
-    "@nomix-ai/nomix-goal": "workspace:^",
-    "@nomix-ai/nomix-host-plugin-inventory": "workspace:^",
-    "@nomix-ai/nomix-invariants": "workspace:^",
-    "@nomix-ai/nomix-llm": "workspace:^",
-    "@nomix-ai/nomix-message-feedback": "workspace:^",
-    "@nomix-ai/nomix-session": "workspace:^",
-    "@nomix-ai/nomix-session-persistence": "workspace:^",
-    "@nomix-ai/nomix-session-reference": "workspace:^",
-    "@nomix-ai/nomix-settings": "workspace:^",
-    "@nomix-ai/nomix-typert-registry": "workspace:^",
-    "@nomix-ai/cordis": "workspace:^"
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-scope": "workspace:*"
   },
   "devDependencies": {
-    "@nomix-ai/nomix-agent": "workspace:^",
-    "@nomix-ai/nomix-agent-presets": "workspace:^",
-    "@nomix-ai/nomix-api-gateway": "workspace:^",
-    "@nomix-ai/nomix-commands": "workspace:^",
-    "@nomix-ai/nomix-cordis-host-runner": "workspace:^",
-    "@nomix-ai/nomix-credentials": "workspace:^",
-    "@nomix-ai/nomix-file-reference": "workspace:^",
-    "@nomix-ai/nomix-goal": "workspace:^",
-    "@nomix-ai/nomix-host-plugin-inventory": "workspace:^",
-    "@nomix-ai/nomix-invariants": "workspace:^",
-    "@nomix-ai/nomix-llm": "workspace:^",
-    "@nomix-ai/nomix-message-feedback": "workspace:^",
-    "@nomix-ai/nomix-session": "workspace:^",
-    "@nomix-ai/nomix-session-persistence": "workspace:^",
-    "@nomix-ai/nomix-session-reference": "workspace:^",
-    "@nomix-ai/nomix-settings": "workspace:^",
-    "@nomix-ai/nomix-typert-registry": "workspace:^",
-    "@nomix-ai/cordis": "workspace:^"
+    "@nomix-ai/nomix-agent": "workspace:*",
+    "@nomix-ai/nomix-agent-preset-registry": "workspace:*",
+    "@nomix-ai/nomix-api-gateway": "workspace:*",
+    "@nomix-ai/nomix-api-job-controller": "workspace:*",
+    "@nomix-ai/nomix-api-session-controller": "workspace:*",
+    "@nomix-ai/nomix-api-settings-controller": "workspace:*",
+    "@nomix-ai/nomix-api-workspace-controller": "workspace:*",
+    "@nomix-ai/nomix-api-workspace-files": "workspace:*",
+    "@nomix-ai/nomix-client-connection": "workspace:*",
+    "@nomix-ai/nomix-client-file-upload": "workspace:*",
+    "@nomix-ai/nomix-commands": "workspace:*",
+    "@nomix-ai/nomix-cordis-host-runner": "workspace:*",
+    "@nomix-ai/nomix-credentials": "workspace:*",
+    "@nomix-ai/nomix-file-reference": "workspace:*",
+    "@nomix-ai/nomix-goal": "workspace:*",
+    "@nomix-ai/nomix-host-plugin-inventory": "workspace:*",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-message-feedback": "workspace:*",
+    "@nomix-ai/nomix-permission-presets": "workspace:*",
+    "@nomix-ai/nomix-schedule": "workspace:*",
+    "@nomix-ai/nomix-scope": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-session-reference": "workspace:*",
+    "@nomix-ai/nomix-settings": "workspace:*",
+    "@nomix-ai/nomix-subagent": "workspace:*",
+    "@nomix-ai/nomix-typert-protocol": "workspace:*",
+    "@nomix-ai/nomix-user-approval": "workspace:*",
+    "@nomix-ai/nomix-user-questions": "workspace:*",
+    "@nomix-ai/cordis": "workspace:~",
+    "zod": "4.4.3",
+    "@nomix-ai/nomix-command-feedback": "workspace:*",
+    "@nomix-ai/nomix-api-terminal-controller": "workspace:*",
+    "@nomix-ai/nomix-plugin-manager": "workspace:*",
+    "@nomix-ai/nomix-plugin-market": "workspace:*",
+    "@nomix-ai/nomix-client-ui-plugin-manager": "workspace:*",
+    "@nomix-ai/nomix-office-to-pdf": "workspace:*",
+    "@nomix-ai/nomix-api-account-controller": "workspace:*",
+    "@nomix-ai/nomix-deepseek-account": "workspace:*",
+    "@nomix-ai/nomix-client-product-analytics": "workspace:*"
   }
 }

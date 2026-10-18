@@ -1,6 +1,46 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/client/ui-attachment/README.md
-README.md: d7611f2bc272256efbdc097b057acd0ccbabcbb8
-README.zh.md: 04b2ed6fc09a337475a44aa6a39119da1f51f38c
+/:
+  en: 414cbe20f39f7a82
+  zh: f56ebf03129a29b8
+/nomix-ai-nomix-client-ui-attachment:
+  en: 909f8a083e5a20fe
+  zh: 231434daeaba4758
+/nomix-ai-nomix-client-ui-attachment/summary:
+  en: f36aa7a85597dd66
+  zh: f7e87849791fe89a
+/nomix-ai-nomix-client-ui-attachment/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-client-ui-attachment/use-this-package:
+  en: 7c7199a3cb979112
+  zh: d72bc9bdf42d0440
+/nomix-ai-nomix-client-ui-attachment/use-this-package/draft-attachments:
+  en: a77c8ec48e219aec
+  zh: 756d4fe881403006
+/nomix-ai-nomix-client-ui-attachment/use-this-package/message-images-and-the-lightbox:
+  en: 8b3d7729152d8060
+  zh: 815f932ccc9653f5
+/nomix-ai-nomix-client-ui-attachment/use-this-package/drop-overlay:
+  en: 836a62c8f73366ac
+  zh: 35da7836eaf68a67
+/nomix-ai-nomix-client-ui-attachment/understand-the-implementation:
+  en: 07204b7d538b7434
+  zh: 705cc6b0c9387cce
+/nomix-ai-nomix-client-ui-attachment/further-exploration:
+  en: dd536ff96f3ce75f
+  zh: 8b791e70852ba328
+/nomix-ai-nomix-client-ui-attachment/model-experience:
+  en: 25566605d7b38667
+  zh: 927d3ea272893296
+/nomix-ai-nomix-client-ui-attachment/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: de54f3467ef3b9be
+/nomix-ai-nomix-client-ui-attachment/known-limitations-and-deferred-work:
+  en: 9a16cb4f174464cf
+  zh: 3de4b8288a74c594
+/nomix-ai-nomix-client-ui-attachment/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

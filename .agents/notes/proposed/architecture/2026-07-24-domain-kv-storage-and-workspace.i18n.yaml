@@ -1,6 +1,49 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for 2026-07-24-domain-kv-storage-and-workspace.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/proposed/architecture/2026-07-24-domain-kv-storage-and-workspace.md
-2026-07-24-domain-kv-storage-and-workspace.md: bab85e3822a8362ce26399ea22270811d2e60522
-2026-07-24-domain-kv-storage-and-workspace.zh.md: b2eb9348b4c2302becab630416842cc387fd2cc0
+/agent-note-domain-kv-storage-capability-seam-and-the-workspace-entity:
+  en: 013e7c93f8601fa8
+  zh: d41f92b2452bfd8e
+/agent-note-domain-kv-storage-capability-seam-and-the-workspace-entity/problem:
+  en: 6b4948df4ae6199f
+  zh: 65e155e1395ac131
+/agent-note-domain-kv-storage-capability-seam-and-the-workspace-entity/proposal:
+  en: 7efcb7a4c858224c
+  zh: 77e2ae45a67f154c
+/agent-note-domain-kv-storage-capability-seam-and-the-workspace-entity/proposal/nomix-storage-the-storage-hub:
+  en: 8f62fcc23b37c131
+  zh: ca0e2e3fb85810c1
+/agent-note-domain-kv-storage-capability-seam-and-the-workspace-entity/proposal/nomix-storage-json:
+  en: bb0f0397d1eaab49
+  zh: 961cc852aaaf9ce4
+/agent-note-domain-kv-storage-capability-seam-and-the-workspace-entity/proposal/nomix-storage-sqlite:
+  en: 9cd1ca7a49fcda7a
+  zh: 12b6f372ec1c4716
+/agent-note-domain-kv-storage-capability-seam-and-the-workspace-entity/proposal/nomix-domain-the-domain-data-form:
+  en: ec89e0a0be9d0b5b
+  zh: 48297e87b83a728e
+/agent-note-domain-kv-storage-capability-seam-and-the-workspace-entity/proposal/future-work-session-side-deletion-design-settled-not-implemented-this-phase:
+  en: a3824326587b6539
+  zh: 9736e3060bd57651
+/agent-note-domain-kv-storage-capability-seam-and-the-workspace-entity/proposal/nomix-workspace:
+  en: cfb7b4ffee33f99f
+  zh: c916c9b3cba95caa
+/agent-note-domain-kv-storage-capability-seam-and-the-workspace-entity/proposal/reuse-and-the-session-backend-migration-outlook:
+  en: f2a646a747bba779
+  zh: f26439893efb42ae
+/agent-note-domain-kv-storage-capability-seam-and-the-workspace-entity/proposal/test-matrix:
+  en: 4f8560110ec03322
+  zh: 574d611d6e086e96
+/agent-note-domain-kv-storage-capability-seam-and-the-workspace-entity/proposal/out-of-scope-list:
+  en: 6a8b96b362f8a742
+  zh: 4ba5c96353ae46f5
+/agent-note-domain-kv-storage-capability-seam-and-the-workspace-entity/alternatives-considered:
+  en: 159649c838437048
+  zh: 286e2f61c796cb1c
+/agent-note-domain-kv-storage-capability-seam-and-the-workspace-entity/acceptance-criteria:
+  en: ec4f2e69de32577b
+  zh: 64a4d049a3b75004
+/agent-note-domain-kv-storage-capability-seam-and-the-workspace-entity/risks:
+  en: d5d49b31afe6cfab
+  zh: 19606893bbde5b03

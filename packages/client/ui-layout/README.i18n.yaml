@@ -1,6 +1,43 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/client/ui-layout/README.md
-README.md: 3ffa8969dc3ca852ac5214b7c511e89836fc8d79
-README.zh.md: 11d26d815ae781335252c2ad660eb71748ab1011
+/:
+  en: d96ec500357f8268
+  zh: 57610f377112cbde
+/nomix-ai-nomix-client-ui-layout:
+  en: a302eda8fcceba38
+  zh: 593d3f34f6b2ff0f
+/nomix-ai-nomix-client-ui-layout/summary:
+  en: 88db8e221f3eedc2
+  zh: 4a72a6887895f0fc
+/nomix-ai-nomix-client-ui-layout/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-client-ui-layout/use-this-package:
+  en: cc6e9021ba3001bc
+  zh: 97444857762b4e8e
+/nomix-ai-nomix-client-ui-layout/use-this-package/window-chrome-seat:
+  en: d01bb508ce729206
+  zh: ede26f6b9e50f6e5
+/nomix-ai-nomix-client-ui-layout/use-this-package/theme-presentation:
+  en: 05b340a182fb98ef
+  zh: 646bc6b050b03971
+/nomix-ai-nomix-client-ui-layout/understand-the-implementation:
+  en: 5ab6b311a912fb06
+  zh: d7e88894686b1682
+/nomix-ai-nomix-client-ui-layout/further-exploration:
+  en: 01cfff7046fc777a
+  zh: 0b8e245cc05a35ee
+/nomix-ai-nomix-client-ui-layout/model-experience:
+  en: 9a94a7197da60052
+  zh: 369a59ab63d050f1
+/nomix-ai-nomix-client-ui-layout/model-experience/kv-cache-effect:
+  en: ca75c51c89c2c9b0
+  zh: de54f3467ef3b9be
+/nomix-ai-nomix-client-ui-layout/known-limitations-and-deferred-work:
+  en: da92b97ac60d989f
+  zh: 5816b861728f1a04
+/nomix-ai-nomix-client-ui-layout/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

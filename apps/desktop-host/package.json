@@ -1,0 +1,35 @@
+{
+  "name": "@nomix-ai/nomix-desktop-host",
+  "description": "Private Node-mode host process for the Electron desktop application",
+  "version": "0.2.9",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "main": "lib/index.js",
+  "files": [
+    "lib/index.js",
+    "lib/cli.js"
+  ],
+  "dependencies": {
+    "koffi": "3.1.1",
+    "@deepseek-ai/libreoffice-kit": "^0.1.5",
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-harness": "workspace:*",
+    "@nomix-ai/nomix-agent": "workspace:*",
+    "@nomix-ai/nomix-app-boot": "workspace:*",
+    "@nomix-ai/nomix-client-connection": "workspace:*",
+    "@nomix-ai/nomix-host-webserver": "workspace:*",
+    "@nomix-ai/nomix-home-paths": "workspace:*",
+    "@nomix-ai/nomix-jobs": "workspace:*",
+    "@nomix-ai/nomix-schedule": "workspace:*",
+    "@nomix-ai/nomix-tool-workspace-dependencies": "workspace:*",
+    "@nomix-ai/nomix-skill-office": "workspace:*",
+    "@nomix-ai/nomix-deepseek-account": "workspace:*",
+    "@nomix-ai/nomix-workspace": "workspace:*"
+  },
+  "devDependencies": {
+    "@nomix-ai/cordis-plugin-loader": "workspace:~",
+    "@nomix-ai/cordis-plugin-include": "workspace:~",
+    "@nomix-ai/nomix-skill": "workspace:*"
+  }
+}

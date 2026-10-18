@@ -1,11 +1,12 @@
 import { Context } from '@nomix-ai/cordis'
+import WorkingDirectory from '@nomix-ai/nomix-working-directory'
 import type { Agent } from '@nomix-ai/nomix-agent'
 import AgentLoop from '@nomix-ai/nomix-agent-loop'
 import { mountAgentLoopTestDependencies } from '@nomix-ai/nomix-agent-loop-testkit'
 import LocalFileSystem from '@nomix-ai/nomix-fs-local'
 import * as FsPolicy from '@nomix-ai/nomix-fs-observation-policy'
 import * as ToolFs from '@nomix-ai/nomix-tool-fs'
-import * as LlmDeepSeek from '@nomix-ai/nomix-llm-deepseek'
+import * as LlmDeepSeek from '@nomix-ai/nomix-llm-deepseek-api-key'
 
 /**
  * Build the real fs-tool stack for with-key e2e tests. Agents have no session
@@ -14,10 +15,11 @@ import * as LlmDeepSeek from '@nomix-ai/nomix-llm-deepseek'
  */
 export async function fsHarness(fsCwd: string, persona = ''): Promise<Context> {
   const ctx = new Context()
-  await mountAgentLoopTestDependencies(ctx, { systemPrompt: { persona } })
+  await mountAgentLoopTestDependencies(ctx, { systemPrompt: { personaPrefix: persona } })
   await ctx.plugin(AgentLoop, { agents: [] })
   await ctx.plugin(LlmDeepSeek)
   await ctx.plugin(LocalFileSystem, { cwd: fsCwd })
+  await ctx.plugin(WorkingDirectory, { defaultDirectory: fsCwd })
   await ctx.plugin(FsPolicy)
   await ctx.plugin(ToolFs)
   return ctx

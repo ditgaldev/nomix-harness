@@ -1,0 +1,16 @@
+# Bilingual-pair consistency record for guide.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write docs/upgrade-guide/v0.2.1-alpha.1/python-ptc-sandbox/guide.md
+/:
+  en: 37441fc2c29e3ee9
+  zh: de434de0f9da7d40
+/python-ptc-applies-the-shared-file-sandbox:
+  en: d7cfc8c2b159a683
+  zh: 89ca7d06b8d7df26
+/python-ptc-applies-the-shared-file-sandbox/change:
+  en: 55c13e76974cd9f4
+  zh: 18adc3329ec57d9e
+/python-ptc-applies-the-shared-file-sandbox/migration:
+  en: dbef929dfee5c1aa
+  zh: 5c77732e6b9da273

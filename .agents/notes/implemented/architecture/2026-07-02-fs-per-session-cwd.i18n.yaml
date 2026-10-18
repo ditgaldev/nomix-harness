@@ -1,6 +1,0 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
-#   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-07-02-fs-per-session-cwd.md
-2026-07-02-fs-per-session-cwd.md: 0d1bf36758a637b4596b71db9053db14cac40451
-2026-07-02-fs-per-session-cwd.zh.md: 62ae3de18330e6e92a6145d87f1744810ecf82b7

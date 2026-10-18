@@ -3,25 +3,35 @@
 
 # NOMIX Base Composition
 
-The nomix-base bundle patch every profile applies first; mode bundles (nomix-web-app, nomix-headless) and the user's profile layer patch over it.
+The nomix-base bundle patch shared by the web, headless, sdk, and acp profiles; their mode bundles and user layers patch over it, while sdk-minimal owns a separate standalone tree.
 
 ```mermaid
 flowchart LR
   cfg["packages/bundle/base/cordis.patch.yml<br/>cordis.yml"]
+  plugin_nomix_base_tool_plugin_manager["tool-plugin-manager<br/>@nomix-ai/nomix-plugin-manager/tools"]
+  cfg --> plugin_nomix_base_tool_plugin_manager
+  plugin_nomix_base_plugin_manager["plugin-manager<br/>@nomix-ai/nomix-plugin-manager"]
+  cfg --> plugin_nomix_base_plugin_manager
   plugin_nomix_base_timer["timer<br/>@nomix-ai/cordis-plugin-timer"]
   cfg --> plugin_nomix_base_timer
-  plugin_nomix_base_hmr["hmr<br/>@nomix-ai/cordis-plugin-hmr"]
+  plugin_nomix_base_hmr["hmr<br/>@nomix-ai/nomix-hmr"]
   cfg --> plugin_nomix_base_hmr
   plugin_nomix_base_llm["llm<br/>@nomix-ai/nomix-llm"]
   cfg --> plugin_nomix_base_llm
+  plugin_nomix_base_deepseek_llm_api_extensions["deepseek-llm-api-extensions<br/>@nomix-ai/nomix-deepseek-llm-api-extensions"]
+  cfg --> plugin_nomix_base_deepseek_llm_api_extensions
   plugin_nomix_base_session["session<br/>@nomix-ai/nomix-session"]
   cfg --> plugin_nomix_base_session
+  plugin_nomix_base_session_log_deepseek["session-log-deepseek<br/>@nomix-ai/nomix-session-log-deepseek"]
+  cfg --> plugin_nomix_base_session_log_deepseek
   plugin_nomix_base_typert["typert<br/>@nomix-ai/nomix-typert-registry"]
   cfg --> plugin_nomix_base_typert
   plugin_nomix_base_typert_loader["typert-loader<br/>@nomix-ai/nomix-typert-loader"]
   cfg --> plugin_nomix_base_typert_loader
   plugin_nomix_base_typert_gateway["typert-gateway<br/>@nomix-ai/nomix-api-gateway"]
   cfg --> plugin_nomix_base_typert_gateway
+  plugin_nomix_base_remote_access["remote-access<br/>@nomix-ai/nomix-api-remote-access"]
+  cfg --> plugin_nomix_base_remote_access
   plugin_nomix_base_session_title["session-title<br/>@nomix-ai/nomix-session-title"]
   cfg --> plugin_nomix_base_session_title
   plugin_nomix_base_session_title_llm["session-title-llm<br/>@nomix-ai/nomix-session-title-first-prompt-llm"]
@@ -30,14 +40,22 @@ flowchart LR
   cfg --> plugin_nomix_base_user_questions
   plugin_nomix_base_agent["agent<br/>@nomix-ai/nomix-agent"]
   cfg --> plugin_nomix_base_agent
+  plugin_nomix_base_plugin_package_inventory_deepseek["plugin-package-inventory-deepseek<br/>@nomix-ai/nomix-plugin-package-inventory-deepseek"]
+  cfg --> plugin_nomix_base_plugin_package_inventory_deepseek
   plugin_nomix_base_agent_default_model["agent-default-model<br/>@nomix-ai/nomix-agent-default-model"]
   cfg --> plugin_nomix_base_agent_default_model
   plugin_nomix_base_jobs["jobs<br/>@nomix-ai/nomix-jobs-local"]
   cfg --> plugin_nomix_base_jobs
   plugin_nomix_base_llm_retry["llm-retry<br/>@nomix-ai/nomix-llm-retry"]
   cfg --> plugin_nomix_base_llm_retry
-  plugin_nomix_base_settings["settings<br/>@nomix-ai/nomix-settings-file"]
+  plugin_nomix_base_config_editor["config-editor<br/>@nomix-ai/nomix-config-editor"]
+  cfg --> plugin_nomix_base_config_editor
+  plugin_nomix_base_settings["settings<br/>@nomix-ai/nomix-settings"]
   cfg --> plugin_nomix_base_settings
+  plugin_nomix_base_authorization["authorization<br/>@nomix-ai/nomix-authorization"]
+  cfg --> plugin_nomix_base_authorization
+  plugin_nomix_base_deepseek_account["deepseek-account<br/>@nomix-ai/nomix-deepseek-account-platform"]
+  cfg --> plugin_nomix_base_deepseek_account
   plugin_nomix_base_credentials["credentials<br/>@nomix-ai/nomix-credentials-local"]
   cfg --> plugin_nomix_base_credentials
   plugin_nomix_base_llm_pi_ai["llm-pi-ai<br/>@nomix-ai/nomix-llm-pi-ai"]
@@ -48,8 +66,22 @@ flowchart LR
   cfg --> plugin_nomix_base_attachment_local
   plugin_nomix_base_session_query_sqlite["session-query-sqlite<br/>@nomix-ai/nomix-session-query-sqlite"]
   cfg --> plugin_nomix_base_session_query_sqlite
+  plugin_nomix_base_working_directory["working-directory<br/>@nomix-ai/nomix-working-directory"]
+  cfg --> plugin_nomix_base_working_directory
+  plugin_nomix_base_tool_working_directory["tool-working-directory<br/>@nomix-ai/nomix-tool-working-directory"]
+  cfg --> plugin_nomix_base_tool_working_directory
   plugin_nomix_base_session_projection["session-projection<br/>@nomix-ai/nomix-session-projection"]
   cfg --> plugin_nomix_base_session_projection
+  plugin_nomix_base_storage["storage<br/>@nomix-ai/nomix-storage"]
+  cfg --> plugin_nomix_base_storage
+  plugin_nomix_base_storage_json["storage-json<br/>@nomix-ai/nomix-storage-json"]
+  cfg --> plugin_nomix_base_storage_json
+  plugin_nomix_base_storage_domain["storage-domain<br/>@nomix-ai/nomix-storage-domain"]
+  cfg --> plugin_nomix_base_storage_domain
+  plugin_nomix_base_session_projection_cache["session-projection-cache<br/>@nomix-ai/nomix-session-projection-cache"]
+  cfg --> plugin_nomix_base_session_projection_cache
+  plugin_nomix_base_otel["otel<br/>@nomix-ai/nomix-otel"]
+  cfg --> plugin_nomix_base_otel
   plugin_nomix_base_session_telemetry_otel["session-telemetry-otel<br/>@nomix-ai/nomix-session-telemetry-otel"]
   cfg --> plugin_nomix_base_session_telemetry_otel
   plugin_nomix_base_subprocess["subprocess<br/>@nomix-ai/nomix-subprocess-local"]
@@ -86,8 +118,6 @@ flowchart LR
   cfg --> plugin_nomix_base_skill
   plugin_nomix_base_skill_filesystem["skill-filesystem<br/>@nomix-ai/nomix-skill-filesystem"]
   cfg --> plugin_nomix_base_skill_filesystem
-  plugin_nomix_base_skill_badge["skill-badge<br/>@nomix-ai/nomix-skill-badge"]
-  cfg --> plugin_nomix_base_skill_badge
   plugin_nomix_base_tool_skill["tool-skill<br/>@nomix-ai/nomix-tool-skill"]
   cfg --> plugin_nomix_base_tool_skill
   plugin_nomix_base_commands["commands<br/>@nomix-ai/nomix-commands"]
@@ -122,10 +152,10 @@ flowchart LR
   cfg --> plugin_nomix_base_tool_subagent
   plugin_nomix_base_tool_subagent_fork["tool-subagent-fork<br/>@nomix-ai/nomix-tool-subagent"]
   cfg --> plugin_nomix_base_tool_subagent_fork
-  plugin_nomix_base_tool_subagent_report["tool-subagent-report<br/>@nomix-ai/nomix-tool-subagent-report"]
-  cfg --> plugin_nomix_base_tool_subagent_report
-  plugin_nomix_base_workflow_worker_thread["workflow-worker-thread<br/>@nomix-ai/nomix-workflow-worker-thread"]
-  cfg --> plugin_nomix_base_workflow_worker_thread
+  plugin_nomix_base_ptc_runtime["ptc-runtime<br/>@nomix-ai/nomix-ptc-runtime-node"]
+  cfg --> plugin_nomix_base_ptc_runtime
+  plugin_nomix_base_workflow_ptc["workflow-ptc<br/>@nomix-ai/nomix-workflow-ptc"]
+  cfg --> plugin_nomix_base_workflow_ptc
   plugin_nomix_base_tool_workflow["tool-workflow<br/>@nomix-ai/nomix-tool-workflow"]
   cfg --> plugin_nomix_base_tool_workflow
   plugin_nomix_base_timeout_policy["timeout-policy<br/>@nomix-ai/nomix-tool-call-timeout-policy"]
@@ -138,22 +168,26 @@ flowchart LR
   cfg --> plugin_nomix_base_session_checkpoint_policy
   plugin_nomix_base_tool_result_pruner["tool-result-pruner<br/>@nomix-ai/nomix-compaction-tool-result-pruner"]
   cfg --> plugin_nomix_base_tool_result_pruner
+  plugin_nomix_base_image_offload["image-offload<br/>@nomix-ai/nomix-compaction-image-offload"]
+  cfg --> plugin_nomix_base_image_offload
   plugin_nomix_base_tool_todo["tool-todo<br/>@nomix-ai/nomix-tool-todo"]
   cfg --> plugin_nomix_base_tool_todo
   plugin_nomix_base_tool_goal["tool-goal<br/>@nomix-ai/nomix-tool-goal"]
   cfg --> plugin_nomix_base_tool_goal
-  plugin_nomix_base_tool_ralph["tool-ralph<br/>@nomix-ai/nomix-tool-ralph"]
-  cfg --> plugin_nomix_base_tool_ralph
-  plugin_nomix_base_tool_str_replace_editor["tool-str-replace-editor<br/>@nomix-ai/nomix-tool-str-replace-editor"]
-  cfg --> plugin_nomix_base_tool_str_replace_editor
   plugin_nomix_base_repeat_tool_reminder["repeat-tool-reminder<br/>@nomix-ai/nomix-repeat-tool-reminder"]
   cfg --> plugin_nomix_base_repeat_tool_reminder
   plugin_nomix_base_web["web<br/>@nomix-ai/nomix-web"]
   cfg --> plugin_nomix_base_web
   plugin_nomix_base_web_search_deepseek["web-search-deepseek<br/>@nomix-ai/nomix-web-search-deepseek"]
   cfg --> plugin_nomix_base_web_search_deepseek
+  plugin_nomix_base_web_deepseek_api["web-deepseek-api<br/>@nomix-ai/nomix-web-deepseek-api"]
+  cfg --> plugin_nomix_base_web_deepseek_api
+  plugin_nomix_base_web_fetch_http["web-fetch-http<br/>@nomix-ai/nomix-web-fetch-http"]
+  cfg --> plugin_nomix_base_web_fetch_http
   plugin_nomix_base_tool_web["tool-web<br/>@nomix-ai/nomix-tool-web"]
   cfg --> plugin_nomix_base_tool_web
+  plugin_nomix_base_mcp_resources["mcp-resources<br/>@nomix-ai/nomix-mcp-resources"]
+  cfg --> plugin_nomix_base_mcp_resources
   plugin_nomix_base_tools["tools<br/>@nomix-ai/nomix-tools"]
   cfg --> plugin_nomix_base_tools
   plugin_nomix_base_system_prompt["system-prompt<br/>@nomix-ai/nomix-system-prompt"]
@@ -162,33 +196,51 @@ flowchart LR
   cfg --> plugin_nomix_base_agent_loop
   plugin_nomix_base_fs_sandbox["fs-sandbox<br/>@nomix-ai/nomix-fs-sandbox"]
   cfg --> plugin_nomix_base_fs_sandbox
-  plugin_nomix_base_llm_deepseek["llm-deepseek<br/>@nomix-ai/nomix-llm-deepseek"]
+  plugin_nomix_base_llm_deepseek["llm-deepseek<br/>@nomix-ai/nomix-llm-deepseek-api-key"]
   cfg --> plugin_nomix_base_llm_deepseek
+  plugin_nomix_base_llm_deepseek_account["llm-deepseek-account<br/>@nomix-ai/nomix-llm-deepseek-account"]
+  cfg --> plugin_nomix_base_llm_deepseek_account
 ```
 
 | Plugin id | Package / module |
 | --- | --- |
+| `tool-plugin-manager` | `@nomix-ai/nomix-plugin-manager/tools` |
+| `plugin-manager` | `@nomix-ai/nomix-plugin-manager` |
 | `timer` | `@nomix-ai/cordis-plugin-timer` |
-| `hmr` | `@nomix-ai/cordis-plugin-hmr` |
+| `hmr` | `@nomix-ai/nomix-hmr` |
 | `llm` | `@nomix-ai/nomix-llm` |
+| `deepseek-llm-api-extensions` | `@nomix-ai/nomix-deepseek-llm-api-extensions` |
 | `session` | `@nomix-ai/nomix-session` |
+| `session-log-deepseek` | `@nomix-ai/nomix-session-log-deepseek` |
 | `typert` | `@nomix-ai/nomix-typert-registry` |
 | `typert-loader` | `@nomix-ai/nomix-typert-loader` |
 | `typert-gateway` | `@nomix-ai/nomix-api-gateway` |
+| `remote-access` | `@nomix-ai/nomix-api-remote-access` |
 | `session-title` | `@nomix-ai/nomix-session-title` |
 | `session-title-llm` | `@nomix-ai/nomix-session-title-first-prompt-llm` |
 | `user-questions` | `@nomix-ai/nomix-user-questions` |
 | `agent` | `@nomix-ai/nomix-agent` |
+| `plugin-package-inventory-deepseek` | `@nomix-ai/nomix-plugin-package-inventory-deepseek` |
 | `agent-default-model` | `@nomix-ai/nomix-agent-default-model` |
 | `jobs` | `@nomix-ai/nomix-jobs-local` |
 | `llm-retry` | `@nomix-ai/nomix-llm-retry` |
-| `settings` | `@nomix-ai/nomix-settings-file` |
+| `config-editor` | `@nomix-ai/nomix-config-editor` |
+| `settings` | `@nomix-ai/nomix-settings` |
+| `authorization` | `@nomix-ai/nomix-authorization` |
+| `deepseek-account` | `@nomix-ai/nomix-deepseek-account-platform` |
 | `credentials` | `@nomix-ai/nomix-credentials-local` |
 | `llm-pi-ai` | `@nomix-ai/nomix-llm-pi-ai` |
 | `session-persistence-jsonl` | `@nomix-ai/nomix-session-persistence-jsonl` |
 | `attachment-local` | `@nomix-ai/nomix-attachment-local` |
 | `session-query-sqlite` | `@nomix-ai/nomix-session-query-sqlite` |
+| `working-directory` | `@nomix-ai/nomix-working-directory` |
+| `tool-working-directory` | `@nomix-ai/nomix-tool-working-directory` |
 | `session-projection` | `@nomix-ai/nomix-session-projection` |
+| `storage` | `@nomix-ai/nomix-storage` |
+| `storage-json` | `@nomix-ai/nomix-storage-json` |
+| `storage-domain` | `@nomix-ai/nomix-storage-domain` |
+| `session-projection-cache` | `@nomix-ai/nomix-session-projection-cache` |
+| `otel` | `@nomix-ai/nomix-otel` |
 | `session-telemetry-otel` | `@nomix-ai/nomix-session-telemetry-otel` |
 | `subprocess` | `@nomix-ai/nomix-subprocess-local` |
 | `sandbox` | `@nomix-ai/nomix-sandbox-local` |
@@ -207,7 +259,6 @@ flowchart LR
 | `agent-instructions` | `@nomix-ai/nomix-agent-instructions` |
 | `skill` | `@nomix-ai/nomix-skill` |
 | `skill-filesystem` | `@nomix-ai/nomix-skill-filesystem` |
-| `skill-badge` | `@nomix-ai/nomix-skill-badge` |
 | `tool-skill` | `@nomix-ai/nomix-tool-skill` |
 | `commands` | `@nomix-ai/nomix-commands` |
 | `command-feedback` | `@nomix-ai/nomix-command-feedback` |
@@ -225,28 +276,31 @@ flowchart LR
 | `tool-subagent-list-agents` | `@nomix-ai/nomix-tool-subagent-control/list-agents` |
 | `tool-subagent` | `@nomix-ai/nomix-tool-subagent` |
 | `tool-subagent-fork` | `@nomix-ai/nomix-tool-subagent` |
-| `tool-subagent-report` | `@nomix-ai/nomix-tool-subagent-report` |
-| `workflow-worker-thread` | `@nomix-ai/nomix-workflow-worker-thread` |
+| `ptc-runtime` | `@nomix-ai/nomix-ptc-runtime-node` |
+| `workflow-ptc` | `@nomix-ai/nomix-workflow-ptc` |
 | `tool-workflow` | `@nomix-ai/nomix-tool-workflow` |
 | `timeout-policy` | `@nomix-ai/nomix-tool-call-timeout-policy` |
 | `spill-local` | `@nomix-ai/nomix-spill-local` |
 | `spill-policy` | `@nomix-ai/nomix-spill-policy` |
 | `session-checkpoint-policy` | `@nomix-ai/nomix-session-checkpoint-policy` |
 | `tool-result-pruner` | `@nomix-ai/nomix-compaction-tool-result-pruner` |
+| `image-offload` | `@nomix-ai/nomix-compaction-image-offload` |
 | `tool-todo` | `@nomix-ai/nomix-tool-todo` |
 | `tool-goal` | `@nomix-ai/nomix-tool-goal` |
-| `tool-ralph` | `@nomix-ai/nomix-tool-ralph` |
-| `tool-str-replace-editor` | `@nomix-ai/nomix-tool-str-replace-editor` |
 | `repeat-tool-reminder` | `@nomix-ai/nomix-repeat-tool-reminder` |
 | `web` | `@nomix-ai/nomix-web` |
 | `web-search-deepseek` | `@nomix-ai/nomix-web-search-deepseek` |
+| `web-deepseek-api` | `@nomix-ai/nomix-web-deepseek-api` |
+| `web-fetch-http` | `@nomix-ai/nomix-web-fetch-http` |
 | `tool-web` | `@nomix-ai/nomix-tool-web` |
+| `mcp-resources` | `@nomix-ai/nomix-mcp-resources` |
 | `tools` | `@nomix-ai/nomix-tools` |
 | `system-prompt` | `@nomix-ai/nomix-system-prompt` |
 | `agent-loop` | `@nomix-ai/nomix-agent-loop` |
 | `fs-sandbox` | `@nomix-ai/nomix-fs-sandbox` |
-| `llm-deepseek` | `@nomix-ai/nomix-llm-deepseek` |
+| `llm-deepseek` | `@nomix-ai/nomix-llm-deepseek-api-key` |
+| `llm-deepseek-account` | `@nomix-ai/nomix-llm-deepseek-account` |
 
 Source config: [`packages/bundle/base/cordis.patch.yml`](../../packages/bundle/base/cordis.patch.yml).
 
-Maintenance mode: hybrid: the leaf plugin list is parsed from its `cordis.yml`; app package expansion is curated from package source.
+Maintenance mode: hybrid: the patch row list is parsed from its `cordis.yml`; app package expansion is curated from package source.

@@ -1,0 +1,55 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/experimental/computer-use-cua-driver-mcp/README.md
+/:
+  en: 9402e76135b1a640
+  zh: 13645ec9b9fe38de
+/nomix-ai-nomix-experimental-computer-use-cua-driver-mcp:
+  en: 1e1d09c198fa0153
+  zh: 2c57af883cba9e71
+/nomix-ai-nomix-experimental-computer-use-cua-driver-mcp/summary:
+  en: 44777c18cdaf3b1a
+  zh: c9074f5857539122
+/nomix-ai-nomix-experimental-computer-use-cua-driver-mcp/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 725b47765ee8f30b
+/nomix-ai-nomix-experimental-computer-use-cua-driver-mcp/use-this-package:
+  en: 149a932b33ff39d2
+  zh: 9ef491e11c74f622
+/nomix-ai-nomix-experimental-computer-use-cua-driver-mcp/use-this-package/minimal-configuration:
+  en: f8d7635ad811cc80
+  zh: 1cb9dec41f12daa7
+/nomix-ai-nomix-experimental-computer-use-cua-driver-mcp/use-this-package/activation-and-ownership:
+  en: 2bf75f7665ad7ad1
+  zh: a43009b2577c12d0
+/nomix-ai-nomix-experimental-computer-use-cua-driver-mcp/understand-the-implementation:
+  en: 13e164882813f89e
+  zh: dd8abaad16d1e76a
+/nomix-ai-nomix-experimental-computer-use-cua-driver-mcp/understand-the-implementation/verify-an-installed-driver:
+  en: 980a46b2a3cd090b
+  zh: e3906f9310ea5d2d
+/nomix-ai-nomix-experimental-computer-use-cua-driver-mcp/further-exploration:
+  en: 655cab8ee4ab41d2
+  zh: a6084daf0f9f448c
+/nomix-ai-nomix-experimental-computer-use-cua-driver-mcp/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-experimental-computer-use-cua-driver-mcp/model-experience/cua-driver-tools-and-screenshots:
+  en: 9d221bfceb3efcf9
+  zh: 3ee738cd4d24157e
+/nomix-ai-nomix-experimental-computer-use-cua-driver-mcp/model-experience/cua-driver-tools-and-screenshots/what-the-model-sees:
+  en: 721e7cd3fba61ad4
+  zh: da2b6d63450101dc
+/nomix-ai-nomix-experimental-computer-use-cua-driver-mcp/model-experience/cua-driver-tools-and-screenshots/token-effect:
+  en: fd697825fdf78c9b
+  zh: 973cf9a0caaaa558
+/nomix-ai-nomix-experimental-computer-use-cua-driver-mcp/model-experience/cua-driver-tools-and-screenshots/kv-cache-effect:
+  en: 7064d248c94a5c4c
+  zh: 18abcf5142c078c7
+/nomix-ai-nomix-experimental-computer-use-cua-driver-mcp/known-limitations-and-deferred-work:
+  en: 038fac0671701fa6
+  zh: 116fd7598147e531
+/nomix-ai-nomix-experimental-computer-use-cua-driver-mcp/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 8ec3e73528ddb1a6

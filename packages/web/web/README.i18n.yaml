@@ -1,6 +1,67 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/web/web/README.md
-README.md: 3cee474e0608f41257b33691f06582972a3b5e33
-README.zh.md: e160e0ffb3ad5762457905a1ff25931e8b47d6c3
+/:
+  en: 31868a4f15364a93
+  zh: 86824e1a18e237a7
+/nomix-ai-nomix-web:
+  en: f17a13ede9efdccd
+  zh: dfb84d5be276ceb8
+/nomix-ai-nomix-web/summary:
+  en: f3e46aa20db975b4
+  zh: 6e22f43546b4fbf2
+/nomix-ai-nomix-web/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-web/use-this-package:
+  en: 6171e13a1f1a343a
+  zh: add47f8eb138deb5
+/nomix-ai-nomix-web/use-this-package/when-to-choose-it:
+  en: 26fb9f2ccce8ddb5
+  zh: 392dbe219d62d62b
+/nomix-ai-nomix-web/use-this-package/minimal-configuration:
+  en: 4de3cc902dd06f7a
+  zh: 2e6f2ae4d4cf9566
+/nomix-ai-nomix-web/use-this-package/searching-and-fetching:
+  en: 84e72f4ea51c9143
+  zh: 8bd20355c9cbbdef
+/nomix-ai-nomix-web/use-this-package/provider-selection:
+  en: a1d16fc8e3d3d7eb
+  zh: d7c91ce0bbd5e0e7
+/nomix-ai-nomix-web/use-this-package/failures-and-recovery:
+  en: d8d09ed3839f6474
+  zh: 7164d902f333592a
+/nomix-ai-nomix-web/understand-the-implementation:
+  en: a3364d8193deb7f0
+  zh: d1c4afbf25a7ae4d
+/nomix-ai-nomix-web/understand-the-implementation/design-philosophy:
+  en: c4d5437cfb1e2157
+  zh: 411b1b398de73426
+/nomix-ai-nomix-web/understand-the-implementation/source-map:
+  en: fd09f717e9b70e51
+  zh: 22a8ba43b0e0ebe0
+/nomix-ai-nomix-web/understand-the-implementation/data-model:
+  en: 81675d88b62f143d
+  zh: 8b36e349df93e567
+/nomix-ai-nomix-web/understand-the-implementation/selection-flow:
+  en: 07dcd35a0a6369b2
+  zh: 927fe797d9079547
+/nomix-ai-nomix-web/further-exploration:
+  en: a0e568009b04df3c
+  zh: 2bf384fbec4abb9a
+/nomix-ai-nomix-web/model-experience:
+  en: 8e5634ce4bbfa78d
+  zh: 53e62fdaf60661f6
+/nomix-ai-nomix-web/model-experience/kv-cache-effect:
+  en: 40294c1c31b74824
+  zh: d75d48f485447a74
+/nomix-ai-nomix-web/known-limitations-and-deferred-work:
+  en: 577ea1de500dba25
+  zh: a6de1080bc69307e
+/nomix-ai-nomix-web/known-limitations-and-deferred-work/dev-note:
+  en: 7f775cc79dbce94b
+  zh: 12b8f68f9e7c48ca
+/nomix-ai-nomix-web/known-limitations-and-deferred-work/dev-note/future-observing-provider-state:
+  en: 855f97574a820579
+  zh: 360ff6cd2ed82904

@@ -29,6 +29,7 @@ function write(path: string, content: string): void {
 function buildFixture(environment: Record<string, string>): string {
   const root = mkdtempSync(join(tmpdir(), 'nomix-release-build-'))
   roots.push(root)
+  write(join(root, 'package.json'), `${JSON.stringify({ version: environment.NOMIX_CLIENT_VERSION ?? '0.0.1' })}\n`)
   write(join(root, 'apps/web/dist/index.html'), '<main></main>')
   write(join(root, 'packages/client/example/lib/client.js'), 'module.exports = {}\n')
   writeClientBuildRecord(root, environment)
@@ -41,17 +42,95 @@ afterEach(() => {
 })
 
 describe('release families', () => {
-  it('excludes private experimental packages from the nomix release', () => {
+  it('publishes all current experimental packages', () => {
     const members = releaseFamily('nomix').members(resolve(import.meta.dirname, '../..'))
 
-    expect(members.some(member => member.directory.startsWith('packages/experimental/'))).toBe(false)
-    expect(members.map(member => member.name)).not.toContain('@nomix-ai/nomix-experimental-agent-team')
+    expect(members
+      .filter(member => member.directory.startsWith('packages/experimental/'))
+      .map(member => member.name)).toEqual([
+      '@nomix-ai/nomix-experimental-agent-team-profile',
+      '@nomix-ai/nomix-experimental-agent-team',
+      '@nomix-ai/nomix-experimental-api-speech-to-text',
+      '@nomix-ai/nomix-experimental-auto-review',
+      '@nomix-ai/nomix-experimental-badge-skill-bundle',
+      '@nomix-ai/nomix-experimental-browser-use-chrome-devtools-mcp',
+      '@nomix-ai/nomix-experimental-browser-use-playwright-mcp',
+      '@nomix-ai/nomix-experimental-browser-use-runtime',
+      '@nomix-ai/nomix-experimental-browser-use-stagehand-native',
+      '@nomix-ai/nomix-experimental-claude-code-mods',
+      '@nomix-ai/nomix-experimental-client-ui-agent-team',
+      '@nomix-ai/nomix-experimental-client-ui-claude-code-mods',
+      '@nomix-ai/nomix-experimental-client-ui-cot-translation',
+      '@nomix-ai/nomix-experimental-client-ui-voice-input',
+      '@nomix-ai/nomix-experimental-computer-use-cua-driver-mcp',
+      '@nomix-ai/nomix-experimental-computer-use-cua-driver-native',
+      '@nomix-ai/nomix-experimental-cot-translation-bundle',
+      '@nomix-ai/nomix-experimental-cua-macos',
+      '@nomix-ai/nomix-cua',
+      '@nomix-ai/nomix-hook-protocol',
+      '@nomix-ai/nomix-hooks-claude-code',
+      '@nomix-ai/nomix-hooks-codex',
+      '@nomix-ai/nomix-experimental-inspector-profile',
+      '@nomix-ai/nomix-experimental-inspector',
+      '@nomix-ai/nomix-experimental-plugin-market-bundle',
+      '@nomix-ai/nomix-experimental-ptc-runtime-python',
+      '@nomix-ai/nomix-experimental-ralph-bundle',
+      '@nomix-ai/nomix-experimental-session-inspector',
+      '@nomix-ai/nomix-experimental-session-search',
+      '@nomix-ai/nomix-session-title-all-prompts-llm',
+      '@nomix-ai/nomix-experimental-session-titles-bundle',
+      '@nomix-ai/nomix-skill-badge',
+      '@nomix-ai/nomix-experimental-speech-to-text-sensevoice',
+      '@nomix-ai/nomix-experimental-speech-to-text',
+      '@nomix-ai/nomix-experimental-terminal-bundle',
+      '@nomix-ai/nomix-experimental-tool-agent-team',
+      '@nomix-ai/nomix-tool-ralph',
+      '@nomix-ai/nomix-tool-session-query',
+      '@nomix-ai/nomix-tool-terminal',
+      '@nomix-ai/nomix-experimental-tool-worktree',
+      '@nomix-ai/nomix-experimental-translator',
+      '@nomix-ai/nomix-experimental-voice-input-bundle',
+      '@nomix-ai/nomix-webhook-github',
+      '@nomix-ai/nomix-webhook',
+      '@nomix-ai/nomix-experimental-webworker-packer',
+      '@nomix-ai/nomix-experimental-webworker-runtime',
+      '@nomix-ai/nomix-experimental-worktree',
+    ])
   })
 
-  it('bumps private nomix packages without adding release tags', () => {
+  it('excludes private applications from the publish set', () => {
+    const root = mkdtempSync(join(tmpdir(), 'nomix-release-private-'))
+    roots.push(root)
+    write(join(root, 'apps/public/package.json'), '{"name":"@nomix-ai/nomix-public","version":"0.0.1"}\n')
+    write(join(root, 'apps/private/package.json'), '{"name":"@nomix-ai/nomix-private","version":"0.0.1","private":true}\n')
+
+    expect(releaseFamily('nomix').members(root).map(entry => entry.name)).toEqual(['@nomix-ai/nomix-public'])
+  })
+
+  it('publishes unlisted experimental packages while retaining private exclusions', () => {
+    const root = mkdtempSync(join(tmpdir(), 'nomix-release-experimental-'))
+    roots.push(root)
+    write(join(root, 'packages/experimental/prototype/package.json'), JSON.stringify({
+      name: '@nomix-ai/nomix-experimental-prototype',
+      version: '0.0.1',
+      publishConfig: { access: 'public' },
+    }))
+    write(join(root, 'packages/experimental/inspector/package.json'), JSON.stringify({
+      name: '@nomix-ai/nomix-experimental-inspector',
+      version: '0.0.1',
+      private: true,
+    }))
+
+    expect(releaseFamily('nomix').members(root).map(entry => entry.name)).toEqual([
+      '@nomix-ai/nomix-experimental-prototype',
+    ])
+  })
+
+  it('bumps private nomix workspaces without adding release tags', () => {
     const root = mkdtempSync(join(tmpdir(), 'nomix-release-version-'))
     roots.push(root)
     write(join(root, 'package.json'), '{"version":"0.0.1"}\n')
+    write(join(root, 'apps/desktop/package.json'), '{"version":"0.0.1","private":true}\n')
     write(join(root, 'packages/experimental/prototype/package.json'), '{"version":"0.0.1","private":true}\n')
     write(join(root, 'packages/core/unselected/package.json'), '{"version":"0.0.1"}\n')
 
@@ -62,9 +141,26 @@ describe('release families', () => {
     expect(planned.map(entry => ({ path: entry.manifestPath, tag: entry.tag }))).toEqual([
       { path: 'package.json', tag: undefined },
       { path: 'packages/core/published/package.json', tag: 'nomix-v0.0.2' },
+      { path: 'apps/desktop/package.json', tag: undefined },
       { path: 'packages/experimental/prototype/package.json', tag: undefined },
     ])
   })
+
+  it.each(['0.0.2-alpha.1', '0.0.2-canary.1', '0.0.2-rc.1'])(
+    'accepts the explicit nomix prerelease version %s',
+    (version) => {
+      const root = mkdtempSync(join(tmpdir(), 'nomix-release-prerelease-'))
+      roots.push(root)
+      write(join(root, 'package.json'), '{"version":"0.0.1"}\n')
+
+      const nomix = releaseFamily('nomix')
+      const published = member('packages/core/published', '@nomix-ai/nomix-published')
+      const plan = planShared(nomix, root, [published], version)
+
+      expect(plan.version).toBe(version)
+      expect(plan.planned[1]?.tag).toBe(`nomix-v${version}`)
+    },
+  )
 
   it('names one tag for the whole nomix family and one per vendored package', () => {
     const nomix = releaseFamily('nomix')
@@ -93,6 +189,18 @@ describe('release families', () => {
     expect(nomix.packing).toBe('bundled-workspaces')
   })
 
+  it('assigns alpha and canary dist-tags only to nomix releases', () => {
+    const nomix = releaseFamily('nomix')
+    const vendor = releaseFamily('vendor')
+
+    expect(nomix.distTagForVersion('0.0.2-alpha.1')).toBe('alpha')
+    expect(nomix.distTagForVersion('0.0.2-canary.1')).toBe('canary')
+    expect(nomix.distTagForVersion('0.0.2-rc.1')).toBe('next')
+    expect(nomix.distTagForVersion('0.0.2')).toBeUndefined()
+    expect(vendor.distTagForVersion('4.0.1-alpha.1')).toBe('next')
+    expect(vendor.distTagForVersion('4.0.1-canary.1')).toBe('next')
+  })
+
   it('rejects a family whose members disagree on the shared version', () => {
     const nomix = releaseFamily('nomix')
     const members = [member('apps/cli', '@nomix-ai/nomix-harness'), { ...member('apps/web', '@nomix-ai/nomix-web-frontend'), version: '0.0.2' }]
@@ -119,11 +227,13 @@ describe('release families', () => {
     vi.stubEnv('NOMIX_CLIENT_COMMIT_HASH', officialEnvironment.NOMIX_CLIENT_COMMIT_HASH)
     const official = buildFixture(officialEnvironment)
     const defaultBuild = buildFixture({})
+    const missing = join(defaultBuild, 'missing')
+    write(join(missing, 'package.json'), `${JSON.stringify({ version: officialEnvironment.NOMIX_CLIENT_VERSION })}\n`)
 
     expect(() => { nomix.verifyBuildArtifacts(official) }).not.toThrow()
     expect(() => { nomix.verifyBuildArtifacts(defaultBuild) }).toThrow(/NOMIX_CLIENT_TITLE/)
-    expect(() => { nomix.verifyBuildArtifacts(join(defaultBuild, 'missing')) }).toThrow(/record.*missing/)
-    expect(() => { vendor.verifyBuildArtifacts(join(defaultBuild, 'missing')) }).not.toThrow()
+    expect(() => { nomix.verifyBuildArtifacts(missing) }).toThrow(/record.*missing/)
+    expect(() => { vendor.verifyBuildArtifacts(missing) }).not.toThrow()
 
     write(join(official, 'packages/client/example/lib/client.js'), 'module.exports = { changed: true }\n')
     expect(() => { nomix.verifyBuildArtifacts(official) }).toThrow(/artifacts differ/)
@@ -142,6 +252,33 @@ describe('release families', () => {
       '@nomix-ai/nomix-consumer',
       '@nomix-ai/nomix-zebra',
     ])
+  })
+
+  it('packs catalog providers in the aggregate without separate registry prerequisites', () => {
+    const harness = member('apps/cli', '@nomix-ai/nomix-harness')
+    expect(releaseFamily('nomix').publishOrder([harness]).order).toEqual([harness])
+  })
+
+  it.each(['dependencies', 'optionalDependencies', 'peerDependencies'])(
+    'requires exact packed NOMIX %s while preserving external ranges', (section) => {
+      const pkg = member('packages/example/provider', '@nomix-ai/nomix-provider')
+      const family = releaseFamily('nomix')
+      const manifest = { name: pkg.name, version: pkg.version, [section]: { '@nomix-ai/nomix-tools': pkg.version, external: '^4.0.0' } }
+      expect(() => { family.validatePackedManifest(pkg, manifest) }).not.toThrow()
+      for (const range of ['workspace:*', '^0.0.1', '~0.0.1', '0.0.2', '*']) {
+        expect(() => { family.validatePackedManifest(pkg, { ...manifest, [section]: { '@nomix-ai/nomix-tools': range } }) })
+          .toThrow(`packed ${section}.@nomix-ai/nomix-tools must equal`)
+      }
+    },
+  )
+
+  it('checks packed identities and preserves independent vendor versions', () => {
+    const pkg = member('vendor/example', '@nomix-ai/example')
+    const family = releaseFamily('vendor')
+    expect(() => { family.validatePackedManifest(pkg, { name: pkg.name, version: pkg.version, dependencies: { '@nomix-ai/nomix-tools': '^4.0.0' } }) })
+      .not.toThrow()
+    expect(() => { family.validatePackedManifest(pkg, { name: '@nomix-ai/other', version: pkg.version }) }).toThrow('packed identity')
+    expect(() => { family.validatePackedManifest(pkg, { name: pkg.name, version: '0.0.2' }) }).toThrow('packed identity')
   })
 
   it('reports a runtime dependency cycle instead of emitting an arbitrary order', () => {
@@ -252,9 +389,32 @@ describe('release families', () => {
     expect(() => { vendor.validatePayload(vendored, []) }).toThrow(/empty tarball/)
   })
 
+  it('requires every supported native payload in the aggregate tarball', () => {
+    const harness = member('apps/cli', '@nomix-ai/nomix-harness')
+    const files = [
+      'package/dist/cli/bin.js',
+      'package/node_modules/@nomix-ai/cordis/lib/index.js',
+      'package/node_modules/@nomix-ai/nomix-agent/lib/index.js',
+      'package/node_modules/@nomix-ai/nomix-web-app/cordis.patch.yml',
+      'package/node_modules/@nomix-ai/nomix-web-frontend/dist/index.html',
+      'package/node_modules/@nomix-ai/node-addon-system/lib/index.js',
+      ...['linux-x64', 'linux-arm64'].flatMap(platform => [
+        `package/node_modules/@nomix-ai/node-addon-system-${platform}/bin/landlock-run`,
+        ...['glibc', 'musl'].map(libc => `package/node_modules/@nomix-ai/node-addon-system-${platform}/bin/${libc}/system.node`),
+      ]),
+      ...['darwin-x64', 'darwin-arm64'].map(platform => `package/node_modules/@nomix-ai/node-addon-system-${platform}/bin/system.node`),
+    ]
+    const family = releaseFamily('nomix')
+    expect(() => { family.validatePayload(harness, files) }).not.toThrow()
+    for (const missing of files.filter(file => file.includes('node-addon-system'))) {
+      expect(() => { family.validatePayload(harness, files.filter(file => file !== missing)) }).toThrow(missing.slice('package/'.length))
+    }
+  })
+
   it('drives the installed entry only for the family that publishes one', () => {
     expect(releaseFamily('nomix').installedEntry).toEqual({
       packageName: '@nomix-ai/nomix-harness',
+      binPath: 'dist/cli/bin.js',
       command: 'nomix',
       smokeArgs: ['web', '--help'],
       smokeOutput: 'Usage: nomix --profile web',
@@ -294,6 +454,12 @@ describe('vendored version baseline', () => {
 })
 
 describe('version precedence', () => {
+  it('orders alpha, canary, and release-candidate versions by semver precedence', () => {
+    expect(compareVersions('4.0.1-alpha.1', '4.0.1-canary.1')).toBeLessThan(0)
+    expect(compareVersions('4.0.1-canary.1', '4.0.1-rc.1')).toBeLessThan(0)
+    expect(compareVersions('4.0.1-rc.1', '4.0.1')).toBeLessThan(0)
+  })
+
   it('ranks a release above the prerelease it follows', () => {
     // git --sort=v:refname disagrees, placing 4.0.1-rc.1 above 4.0.1, which is
     // why the newest published version is chosen here rather than by git.

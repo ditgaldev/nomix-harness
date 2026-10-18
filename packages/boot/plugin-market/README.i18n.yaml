@@ -1,0 +1,43 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/boot/plugin-market/README.md
+/:
+  en: 847c61ab6dac5fd2
+  zh: 4107ba58fbda723e
+/nomix-ai-nomix-plugin-market:
+  en: 9fe40d5f36011428
+  zh: b7d31f52590fa1d1
+/nomix-ai-nomix-plugin-market/summary:
+  en: e0203e9b3b13fae5
+  zh: 49163bda23dd2b01
+/nomix-ai-nomix-plugin-market/table-of-contents:
+  en: 76368b6b1da79c80
+  zh: 52384aee991ac542
+/nomix-ai-nomix-plugin-market/use-this-package:
+  en: a8a3f80cbf19a33e
+  zh: 247407e9e3e98600
+/nomix-ai-nomix-plugin-market/understand-the-implementation:
+  en: 8dcd7b6b913630cc
+  zh: 6f6bb01f5adc36fb
+/nomix-ai-nomix-plugin-market/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-plugin-market/model-experience/market-listing-tool:
+  en: b8183cb06f3e4ba9
+  zh: 9a213e7a124f092d
+/nomix-ai-nomix-plugin-market/model-experience/market-listing-tool/what-the-model-sees:
+  en: 6b31cda393b9a811
+  zh: 8e97bc7cf94897b0
+/nomix-ai-nomix-plugin-market/model-experience/market-listing-tool/token-effect:
+  en: 2589c52e6deb5e48
+  zh: 9a71ca215165a8a5
+/nomix-ai-nomix-plugin-market/model-experience/market-listing-tool/kv-cache-effect:
+  en: 02cf6033092eb236
+  zh: cb928bfa6d39a7f7
+/nomix-ai-nomix-plugin-market/known-limitations-and-deferred-work:
+  en: 2097c5644d5b6d85
+  zh: 1deb4c97e7efbfc6
+/nomix-ai-nomix-plugin-market/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

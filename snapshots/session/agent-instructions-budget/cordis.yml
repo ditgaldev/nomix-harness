@@ -1,0 +1,29 @@
+# Workspace-context snapshot patch: the harness exports NOMIX_HOME=<cwd>/.nomix and
+# NOMIX_AGENTS_HOME=<cwd>/.agents, so project-root and both user-global root
+# discoveries stay inside the scenario's temporary cwd.
+- id: agent-default-model
+  name: '@nomix-ai/nomix-agent-default-model'
+  config:
+    provider: deepseek-official
+    model: deepseek-v4-pro
+
+- id: session-persistence-jsonl
+  name: '@nomix-ai/nomix-session-persistence-jsonl'
+  config:
+    root: !!js nomixHomePath('sessions')
+    compression: !!js 'process.env.NOMIX_SNAPSHOT === undefined ? ''zstd'' : ''none'''
+
+- id: agent-instructions
+  name: '@nomix-ai/nomix-agent-instructions'
+  config:
+    maxBytes: 700
+    projectRootMarkers:
+      - .nomix-project
+
+- id: system-prompt
+  name: '@nomix-ai/nomix-system-prompt'
+  config:
+    personaPrefix: |
+      You are a coding assistant powered by the {{model}} model.
+
+      Verify your work by running the code or tests. Keep answers brief and factual.

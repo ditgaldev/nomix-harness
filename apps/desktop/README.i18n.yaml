@@ -1,0 +1,79 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write apps/desktop/README.md
+/:
+  en: 0d36989eb614345d
+  zh: a0a1a18c07621393
+/nomix-harness-desktop:
+  en: 1ffa4177e4b041fe
+  zh: 52a64a587548591e
+/nomix-harness-desktop/summary:
+  en: 7bc8bf30de693222
+  zh: e85993d8852b6cab
+/nomix-harness-desktop/table-of-contents:
+  en: 05fd227f99ee535a
+  zh: 60d7d62bc0026973
+/nomix-harness-desktop/application-overview:
+  en: 62b052f576ae4c24
+  zh: 303e1aaf7c40d52c
+/nomix-harness-desktop/terminal-command:
+  en: 879afd19fa2c58da
+  zh: 0252985c91fa5e4c
+/nomix-harness-desktop/closing-the-window-and-quitting:
+  en: b06d683fb0d3f5bf
+  zh: 47c0fc4cdf73237b
+/nomix-harness-desktop/key-technical-decisions:
+  en: 3d2f18b51ffadcb1
+  zh: 652917a91696d7ad
+/nomix-harness-desktop/key-technical-decisions/bundled-workspace-dependencies:
+  en: a15f55bb2bfb9006
+  zh: 848f86f7cb04517c
+/nomix-harness-desktop/bundled-command-runtime:
+  en: 4a76f5efef3d7668
+  zh: 1b8cc2b0e845caab
+/nomix-harness-desktop/installation-ownership:
+  en: 11294a68cfe13223
+  zh: 9fba11ecefbca385
+/nomix-harness-desktop/installation-ownership/runtime-and-plugin-activation:
+  en: 1bdce281d3e3126c
+  zh: e5015c7a2b11093d
+/nomix-harness-desktop/installation-ownership/host-environment:
+  en: ffc0b1e0856a4bb8
+  zh: 4271cdb9250e5ec9
+/nomix-harness-desktop/develop:
+  en: 5b17f935ccc3459a
+  zh: 20cf4468e37dea48
+/nomix-harness-desktop/develop/startup-onboarding:
+  en: 5a06928762ff4dda
+  zh: 5738c3ccc932a239
+/nomix-harness-desktop/develop/welcome-window-appearance:
+  en: f015de1e977298fb
+  zh: d951201b81f36840
+/nomix-harness-desktop/package:
+  en: a7f0ffe703e97fa7
+  zh: 5603008b3c719476
+/nomix-harness-desktop/windows-installer-interface:
+  en: dcc722b7433aa25f
+  zh: dd8ff6716e7f70ea
+/nomix-harness-desktop/updates:
+  en: a2e2b15a1cc36c19
+  zh: 398d076918b285eb
+/nomix-harness-desktop/updates/local-desktop-settings:
+  en: f86350e4a236b6e2
+  zh: 2a648b32a6f49915
+/nomix-harness-desktop/updates/mandatory-update-policy:
+  en: 662f5c2424da58eb
+  zh: d6824094aa451d5d
+/nomix-harness-desktop/updates/local-updater-qualification:
+  en: 498dc3a5b9d07f04
+  zh: 1adbfabdb334d420
+/nomix-harness-desktop/low-level-development-overrides:
+  en: 2f2f2a84d83b3de0
+  zh: 74c4121bde2f449c
+/nomix-harness-desktop/known-limitations:
+  en: e42e6e531feac175
+  zh: ab6f22f181ef6b27
+/nomix-harness-desktop/dev-note:
+  en: e7ff829926d55cc5
+  zh: 33e7b53c34b8c075

@@ -1,0 +1,25 @@
+# Bilingual-pair consistency record for 2026-09-04-session-open-performance-gate.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/testing/2026-09-04-session-open-performance-gate.md
+/agent-note-required-ci-performance-gate-for-opening-large-sessions:
+  en: 92b7f9e840edf23d
+  zh: 53e177278e56a3a4
+/agent-note-required-ci-performance-gate-for-opening-large-sessions/problem:
+  en: 00ba1f66195351e2
+  zh: a738b81adceda351
+/agent-note-required-ci-performance-gate-for-opening-large-sessions/decision:
+  en: b67add5e264d822c
+  zh: 3958cf4b5c708450
+/agent-note-required-ci-performance-gate-for-opening-large-sessions/calibration-evidence:
+  en: f1001a139470f6b7
+  zh: b7b46f96b84b1271
+/agent-note-required-ci-performance-gate-for-opening-large-sessions/calibration-evidence/indexed-traversal-of-stored-json-arrays:
+  en: 4ff4df8437e978a8
+  zh: 642ac8ab685c7a11
+/agent-note-required-ci-performance-gate-for-opening-large-sessions/alternatives-considered:
+  en: 5debbc2a0382ed13
+  zh: 415d11776f73f871
+/agent-note-required-ci-performance-gate-for-opening-large-sessions/consequences:
+  en: 2df4ab10522ef33d
+  zh: 3220ffe7aa10a3fd

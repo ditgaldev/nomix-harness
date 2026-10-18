@@ -1,0 +1,34 @@
+# Bilingual-pair consistency record for 2026-10-01-replace-changed-package-modules-on-recomposition.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-10-01-replace-changed-package-modules-on-recomposition.md
+/agent-note-replace-plugins-whose-loaded-package-files-changed-during-profile-recomposition:
+  en: 0da94a8201002cbd
+  zh: c3c2133e4479f7c3
+/agent-note-replace-plugins-whose-loaded-package-files-changed-during-profile-recomposition/problem:
+  en: 5bef135c67f01341
+  zh: 4732bd38ea6dc3e8
+/agent-note-replace-plugins-whose-loaded-package-files-changed-during-profile-recomposition/decision:
+  en: a15c7c13f167e5ac
+  zh: a15c7c13f167e5ac
+/agent-note-replace-plugins-whose-loaded-package-files-changed-during-profile-recomposition/decision/one-recomposition-path:
+  en: f2874c3fc946cf7a
+  zh: 4c32b9f94e1f9709
+/agent-note-replace-plugins-whose-loaded-package-files-changed-during-profile-recomposition/decision/detecting-changed-modules:
+  en: bca3823511374d68
+  zh: 346558a8495c3216
+/agent-note-replace-plugins-whose-loaded-package-files-changed-during-profile-recomposition/decision/replacing-them:
+  en: 6fe2cbe5aa3a9786
+  zh: fe30fbf672ea8c21
+/agent-note-replace-plugins-whose-loaded-package-files-changed-during-profile-recomposition/decision/plugin-manager-and-runtime-resolution:
+  en: 794ed33204d91014
+  zh: b08daa2a43cbe3b3
+/agent-note-replace-plugins-whose-loaded-package-files-changed-during-profile-recomposition/alternatives-considered:
+  en: a67d0c6bc4957060
+  zh: 32e02ab45b8e71cc
+/agent-note-replace-plugins-whose-loaded-package-files-changed-during-profile-recomposition/consequences:
+  en: 3f480eaaae6b2f57
+  zh: 9e2f66769decc6a9
+/agent-note-replace-plugins-whose-loaded-package-files-changed-during-profile-recomposition/verification:
+  en: d4750abb810faac2
+  zh: 78c9c4d86d719b9b

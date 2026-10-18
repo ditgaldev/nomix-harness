@@ -1,6 +1,97 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/jobs/tool-jobs/README.md
-README.md: fbeee8cd4b6308f960c98c3bccaf162cdb051e37
-README.zh.md: 1fb17968f54106c91d9014fe8bde2d317c7130ff
+/:
+  en: bab11659311ef065
+  zh: 00536402873e1a55
+/nomix-ai-nomix-tool-jobs:
+  en: 3df79b23798348e6
+  zh: 81c1ca3d5b1d0d7c
+/nomix-ai-nomix-tool-jobs/summary:
+  en: 000b2186db5e8db4
+  zh: 5acf91bd55318e4c
+/nomix-ai-nomix-tool-jobs/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-tool-jobs/use-this-package:
+  en: 823e94910a15e2e1
+  zh: c23e0b605f32f0bd
+/nomix-ai-nomix-tool-jobs/use-this-package/the-three-tools:
+  en: e9e9cb2ee5cea462
+  zh: 833beb2bca84bd6a
+/nomix-ai-nomix-tool-jobs/use-this-package/completion-notices:
+  en: f69e3f96353234c3
+  zh: 6caa74174a2d79b1
+/nomix-ai-nomix-tool-jobs/use-this-package/minimal-configuration:
+  en: a2fddb67b6d599e2
+  zh: 7d555eddafda7d58
+/nomix-ai-nomix-tool-jobs/use-this-package/what-can-go-wrong:
+  en: a09c5c8225dec06c
+  zh: 3e9fcab42613775e
+/nomix-ai-nomix-tool-jobs/understand-the-implementation:
+  en: 32a36a3fe388e2c1
+  zh: f4bd2866fff6fa8d
+/nomix-ai-nomix-tool-jobs/understand-the-implementation/design-philosophy:
+  en: e1d89b73fdcc5b24
+  zh: 38dd176ae111561f
+/nomix-ai-nomix-tool-jobs/understand-the-implementation/source-map:
+  en: 6f006ff2d901bc92
+  zh: 779d18ba7bec4202
+/nomix-ai-nomix-tool-jobs/understand-the-implementation/output-capping:
+  en: ca18e4bdfb12a1e2
+  zh: 6592697c561c6e6d
+/nomix-ai-nomix-tool-jobs/understand-the-implementation/notice-delivery-lanes:
+  en: 2540b7abbb3c9710
+  zh: 4fb355bceab2f865
+/nomix-ai-nomix-tool-jobs/further-exploration:
+  en: bda724d329784a89
+  zh: 04dc8a2b63307a59
+/nomix-ai-nomix-tool-jobs/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-tool-jobs/model-experience/system-prompt:
+  en: cf78b9dd5596495f
+  zh: bd44560f8c2435e8
+/nomix-ai-nomix-tool-jobs/model-experience/system-prompt/what-the-model-sees:
+  en: 39e8a31dc801e9c5
+  zh: 372c41269cf9c41b
+/nomix-ai-nomix-tool-jobs/model-experience/system-prompt/what-the-model-sees/background-job-guidance:
+  en: 3d751cf8e40e220f
+  zh: 91df3ed91d02b5f2
+/nomix-ai-nomix-tool-jobs/model-experience/system-prompt/token-effect:
+  en: 544674c70d5e5e0f
+  zh: eec61a623f4cfc13
+/nomix-ai-nomix-tool-jobs/model-experience/system-prompt/kv-cache-effect:
+  en: 13e7c6007bf6b5dc
+  zh: 9663c65441f0a3f0
+/nomix-ai-nomix-tool-jobs/model-experience/tool-schemas:
+  en: 3039bc5e7a796b21
+  zh: 6b7a9eaf69c9ea53
+/nomix-ai-nomix-tool-jobs/model-experience/tool-schemas/what-the-model-sees:
+  en: 65c18ecff86689bd
+  zh: 63d6ed3e36e90a97
+/nomix-ai-nomix-tool-jobs/model-experience/tool-schemas/token-effect:
+  en: 3ce42a9605c3596c
+  zh: ab29758f0fbbb1c6
+/nomix-ai-nomix-tool-jobs/model-experience/tool-schemas/kv-cache-effect:
+  en: 24266e9d669810a2
+  zh: bfde811c7e84890f
+/nomix-ai-nomix-tool-jobs/model-experience/results-and-notices:
+  en: 8160e01d6bfc5e0c
+  zh: 570dc95be7f13260
+/nomix-ai-nomix-tool-jobs/model-experience/results-and-notices/what-the-model-sees:
+  en: 960436b3f61c7f96
+  zh: 2c956bb4fee134c2
+/nomix-ai-nomix-tool-jobs/model-experience/results-and-notices/token-effect:
+  en: 16efd9cb948ca4bf
+  zh: 563cc4c78dc63b4d
+/nomix-ai-nomix-tool-jobs/model-experience/results-and-notices/kv-cache-effect:
+  en: 2fbf2175168e8244
+  zh: f681f89596f500f5
+/nomix-ai-nomix-tool-jobs/known-limitations-and-deferred-work:
+  en: 1971e3b84c568c3c
+  zh: 3e357265178a8b00
+/nomix-ai-nomix-tool-jobs/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

@@ -1,6 +1,6 @@
 {
   "name": "@nomix-ai/nomix-client-ui-settings-plugins",
-  "description": "Plugins settings section with feature-owned tabs and configurable host-plane plugin cards",
+  "description": "Built-in plugins settings section for the nomix web client: the Settings navigation entry and the tab chrome feature-owned tabs register into",
   "version": "0.2.9",
   "publishConfig": {
     "access": "public"
@@ -18,25 +18,19 @@
       "types": "./lib/types/index.d.ts",
       "default": "./lib/index.js"
     },
-    "./invariant": {
-      "types": "./lib/types/invariant.d.ts",
-      "default": "./lib/invariant.js"
-    },
     "./client": {
       "types": "./lib/types/client/index.d.ts",
       "default": "./lib/client.js"
     },
     "./src/*": "./src/*",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
   },
   "nomix": {
     "client": {
       "inject": [
-        "@nomix-ai/nomix-client-connection",
         "@nomix-ai/nomix-client-locale",
-        "@nomix-ai/nomix-client-runtime",
-        "@nomix-ai/nomix-client-ui-settings",
-        "@nomix-ai/nomix-api-remotes"
+        "@nomix-ai/nomix-client-ui-settings"
       ],
       "platform": "web"
     }
@@ -47,35 +41,22 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "@nomix-ai/cordis": "workspace:^",
-    "@nomix-ai/nomix-api-remotes": "workspace:^",
-    "@nomix-ai/nomix-client-connection": "workspace:^",
-    "@nomix-ai/nomix-client-locale": "workspace:^",
-    "@nomix-ai/nomix-client-runtime": "workspace:^",
-    "@nomix-ai/nomix-client-ui-settings": "workspace:^",
-    "@nomix-ai/nomix-invariants": "workspace:^"
+    "@nomix-ai/cordis": "workspace:~"
   },
   "devDependencies": {
-    "@nomix-ai/cordis": "workspace:^",
-    "@nomix-ai/nomix-api-remotes": "workspace:^",
-    "@nomix-ai/nomix-client-connection": "workspace:^",
-    "@nomix-ai/nomix-client-locale": "workspace:^",
-    "@nomix-ai/nomix-client-runtime": "workspace:^",
-    "@nomix-ai/nomix-client-test-runtime": "workspace:^",
-    "@nomix-ai/nomix-client-ui-primitives": "workspace:^",
-    "@nomix-ai/nomix-client-ui-settings": "workspace:^",
-    "@nomix-ai/nomix-client-ui-slots": "workspace:^",
-    "@nomix-ai/nomix-invariants": "workspace:^",
-    "@types/react": "~18.3.1",
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-client-locale": "workspace:*",
+    "@nomix-ai/nomix-client-test-runtime": "workspace:*",
+    "@nomix-ai/nomix-client-ui-renderer": "workspace:*",
+    "@nomix-ai/nomix-client-ui-settings": "workspace:*",
+    "@nomix-ai/nomix-client-ui-slots": "workspace:*",
+    "@nomix-ai/nomix-util-values": "workspace:*",
     "react": "^18.2.0"
   },
   "files": [
+    "locale/*.json",
     "lib/index.js",
-    "lib/invariant.js",
     "lib/client.js",
     "lib/types/**/*.d.ts"
-  ],
-  "dependencies": {
-    "clsx": "^2.0.0"
-  }
+  ]
 }

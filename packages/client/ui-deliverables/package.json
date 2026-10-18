@@ -1,6 +1,6 @@
 {
   "name": "@nomix-ai/nomix-client-ui-deliverables",
-  "description": "Produced-files turn tail and clickable final-response file references for Web",
+  "description": "Changed-files card with per-file comparison tabs, delivery cards, and clickable final-response file references for Web",
   "version": "0.2.9",
   "publishConfig": {
     "access": "public"
@@ -18,24 +18,26 @@
       "types": "./lib/types/index.d.ts",
       "default": "./lib/index.js"
     },
-    "./invariant": {
-      "types": "./lib/types/invariant.d.ts",
-      "default": "./lib/invariant.js"
-    },
     "./client": {
       "types": "./lib/types/client/index.d.ts",
       "default": "./lib/client.js"
     },
     "./src/*": "./src/*",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
   },
   "nomix": {
     "client": {
       "inject": [
+        "@nomix-ai/nomix-api-remotes",
         "@nomix-ai/nomix-client-connection",
         "@nomix-ai/nomix-client-locale",
-        "@nomix-ai/nomix-client-runtime",
-        "@nomix-ai/nomix-client-ui-conversation"
+        "@nomix-ai/nomix-client-ui-chat",
+        "@nomix-ai/nomix-client-ui-conversation",
+        "@nomix-ai/nomix-client-ui-renderer",
+        "@nomix-ai/nomix-client-ui-sidebar-right",
+        "@nomix-ai/nomix-client-ui-tool",
+        "@nomix-ai/nomix-client-ui-settings"
       ],
       "platform": "web"
     }
@@ -46,32 +48,47 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "@nomix-ai/nomix-client-connection": "workspace:^",
-    "@nomix-ai/nomix-client-locale": "workspace:^",
-    "@nomix-ai/nomix-client-runtime": "workspace:^",
-    "@nomix-ai/nomix-client-ui-conversation": "workspace:^",
-    "@nomix-ai/nomix-invariants": "workspace:^",
-    "@nomix-ai/nomix-system-prompt": "workspace:^",
-    "@nomix-ai/cordis": "workspace:^"
+    "@nomix-ai/cordis": "workspace:~"
   },
   "devDependencies": {
-    "@nomix-ai/nomix-client-connection": "workspace:^",
-    "@nomix-ai/nomix-client-locale": "workspace:^",
-    "@nomix-ai/nomix-client-runtime": "workspace:^",
-    "@nomix-ai/nomix-client-test-runtime": "workspace:^",
-    "@nomix-ai/nomix-client-ui-conversation": "workspace:^",
-    "@nomix-ai/nomix-client-ui-slots": "workspace:^",
-    "@nomix-ai/nomix-invariants": "workspace:^",
-    "@nomix-ai/nomix-system-prompt": "workspace:^",
-    "@types/react": "~18.3.1",
-    "@nomix-ai/cordis": "workspace:^",
+    "@nomix-ai/nomix-api-remotes": "workspace:*",
+    "@nomix-ai/nomix-client-connection": "workspace:*",
+    "@nomix-ai/nomix-client-locale": "workspace:*",
+    "@nomix-ai/nomix-client-store": "workspace:*",
+    "@nomix-ai/nomix-client-test-runtime": "workspace:*",
+    "@nomix-ai/nomix-client-ui-chat": "workspace:*",
+    "@nomix-ai/nomix-client-ui-conversation": "workspace:*",
+    "@nomix-ai/nomix-client-ui-dockkit": "workspace:*",
+    "@nomix-ai/nomix-client-ui-renderer": "workspace:*",
+    "@nomix-ai/nomix-client-ui-sidebar-right": "workspace:*",
+    "@nomix-ai/nomix-client-ui-slots": "workspace:*",
+    "@nomix-ai/cordis": "workspace:~",
     "react": "^18.2.0",
-    "@nomix-ai/nomix-client-ui-primitives": "workspace:^"
+    "@nomix-ai/nomix-client-ui-primitives": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*",
+    "@nomix-ai/nomix-system-prompt": "workspace:*",
+    "@nomix-ai/nomix-session-query": "workspace:*",
+    "@nomix-ai/nomix-llm": "workspace:*",
+    "@nomix-ai/nomix-client-ui-tool": "workspace:*",
+    "@nomix-ai/nomix-tool-present": "workspace:*",
+    "@nomix-ai/nomix-workspace-changes": "workspace:*",
+    "@nomix-ai/nomix-api-session-controller": "workspace:*",
+    "@nomix-ai/nomix-util-values": "workspace:*",
+    "@nomix-ai/nomix-util-workspace-path": "workspace:*",
+    "@nomix-ai/nomix-api-workspace-files": "workspace:*",
+    "@nomix-ai/nomix-fs": "workspace:*",
+    "@nomix-ai/nomix-fs-local": "workspace:*",
+    "@nomix-ai/nomix-agent": "workspace:*",
+    "@nomix-ai/nomix-sandbox-policy": "workspace:*",
+    "@nomix-ai/nomix-client-ui-settings": "workspace:*"
   },
   "files": [
+    "locale/*.json",
     "lib/index.js",
-    "lib/invariant.js",
     "lib/client.js",
     "lib/types/**/*.d.ts"
-  ]
+  ],
+  "dependencies": {
+    "@nomix-ai/nomix-typert-protocol": "workspace:*"
+  }
 }

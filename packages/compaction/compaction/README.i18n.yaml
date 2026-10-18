@@ -1,6 +1,85 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/compaction/compaction/README.md
-README.md: 837fcd487198e6bda1bbd137ddf73982c6a5d0a5
-README.zh.md: 546adf85b59c7b23660a580919acf842f1b8c793
+/:
+  en: 5c47c9629036f119
+  zh: 7730d7468a38b38d
+/nomix-ai-nomix-compaction:
+  en: 8eec0be3e3d8e5c8
+  zh: bec44441164baf5e
+/nomix-ai-nomix-compaction/summary:
+  en: db7cace2476eedbe
+  zh: 0b560af586d650f9
+/nomix-ai-nomix-compaction/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-compaction/use-this-package:
+  en: 7d1dad97626dbd2e
+  zh: 075fef4e1844ad12
+/nomix-ai-nomix-compaction/use-this-package/when-to-choose-it:
+  en: aaa6d79ce908e4c1
+  zh: 62bc4e70aecb7af1
+/nomix-ai-nomix-compaction/use-this-package/what-condensation-looks-like:
+  en: 0abbee3a3b929a90
+  zh: 334736dffe93488d
+/nomix-ai-nomix-compaction/use-this-package/turning-condensation-on:
+  en: eb1c20091064b981
+  zh: 1c027d41438dab5b
+/nomix-ai-nomix-compaction/use-this-package/implementing-a-backend:
+  en: f847edc25322bc8c
+  zh: b22d8b150f576f44
+/nomix-ai-nomix-compaction/use-this-package/recognizing-condensed-history:
+  en: 35502487f2850f05
+  zh: 333d2b86cc1d6eb0
+/nomix-ai-nomix-compaction/understand-the-implementation:
+  en: 321c3dc665ea03ff
+  zh: f0fa408cde7b0454
+/nomix-ai-nomix-compaction/understand-the-implementation/design-philosophy:
+  en: 53de6fefbc2436a5
+  zh: 1e5b6f5f47d5c129
+/nomix-ai-nomix-compaction/understand-the-implementation/service-api:
+  en: d606ae54c6ef9c97
+  zh: 5f365076edb3f7d2
+/nomix-ai-nomix-compaction/understand-the-implementation/manual-failure-taxonomy:
+  en: da5c856ad928296a
+  zh: e9ea8ea26d9725bc
+/nomix-ai-nomix-compaction/understand-the-implementation/tool-pairing-boundaries:
+  en: 15dad68a04d6c86b
+  zh: 3b95acf1b7e503bf
+/nomix-ai-nomix-compaction/understand-the-implementation/the-surface-contract:
+  en: 09f32ea1aeddd5c1
+  zh: 5d99679493f4ff50
+/nomix-ai-nomix-compaction/understand-the-implementation/source-map:
+  en: 076448ecc9911baf
+  zh: 1b671f96fb217d5e
+/nomix-ai-nomix-compaction/understand-the-implementation/locking-and-serialization:
+  en: 68caa51bed28bada
+  zh: 3f8261f9dcba95ed
+/nomix-ai-nomix-compaction/understand-the-implementation/events:
+  en: 06a27117578a7d48
+  zh: b9d6556f1ac60831
+/nomix-ai-nomix-compaction/further-exploration:
+  en: c33680ded172b2b0
+  zh: 7dcd040bf42a6762
+/nomix-ai-nomix-compaction/model-experience:
+  en: 215e7ba838619b7b
+  zh: a311da3843709f90
+/nomix-ai-nomix-compaction/model-experience/conversation-history-when-a-backend-is-invoked:
+  en: 94de97ed1e85db85
+  zh: c8e37d8050609e63
+/nomix-ai-nomix-compaction/model-experience/conversation-history-when-a-backend-is-invoked/what-the-model-sees:
+  en: 3c4875a13da17814
+  zh: 9b257950a9e2c7c1
+/nomix-ai-nomix-compaction/model-experience/conversation-history-when-a-backend-is-invoked/token-effect:
+  en: be91f4a4bbb9338b
+  zh: 2b5de31d4d7caff1
+/nomix-ai-nomix-compaction/model-experience/conversation-history-when-a-backend-is-invoked/kv-cache-effect:
+  en: 40ba838a2309c44a
+  zh: c609fc1587a0d666
+/nomix-ai-nomix-compaction/known-limitations-and-deferred-work:
+  en: fee9ba06d3e5f35c
+  zh: 2bb5241e2447d15d
+/nomix-ai-nomix-compaction/known-limitations-and-deferred-work/dev-note:
+  en: 270e23ae6414aff0
+  zh: c6d219b8a547dbca

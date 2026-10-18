@@ -1,0 +1,42 @@
+- id: agent-default-model
+  name: '@nomix-ai/nomix-agent-default-model'
+  config:
+    provider: deepseek-official
+    model: deepseek-v4-flash-vision-exp
+
+- id: session-persistence-jsonl
+  name: '@nomix-ai/nomix-session-persistence-jsonl'
+  config:
+    root: !!js nomixHomePath('sessions')
+    compression: none
+
+- id: tools
+  name: '@nomix-ai/nomix-tools'
+  config:
+    mode: native
+
+- id: system-prompt
+  name: '@nomix-ai/nomix-system-prompt'
+  config:
+    personaPrefix: |
+      You are a coding assistant powered by the {{model}} model.
+
+      Verify your work by running the code or tests. Keep answers brief and factual.
+
+- id: attachment-local
+  name: '@nomix-ai/nomix-attachment-local'
+
+- insert:
+    - id: computer-use
+      name: '@nomix-ai/nomix-computer-use'
+    - id: cua-native
+      name: '@nomix-ai/nomix-experimental-cua-macos'
+      config:
+        helperPath: !!js process.cwd() + '/native-helper.mjs'
+
+- id: user-questions
+  name: '@nomix-ai/nomix-user-questions'
+
+- insert:
+    - id: cua-consent-fixture
+      name: './consent-fixture.mjs'

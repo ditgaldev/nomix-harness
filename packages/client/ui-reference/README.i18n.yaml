@@ -1,6 +1,49 @@
-# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
-# side as of the last confirmed-consistent state. Both languages carry equal authority;
-# after editing either side, bring the other along and re-record with:
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write packages/client/ui-reference/README.md
-README.md: acd062e7f7874c7fd576a32d3c6b75a837d99d6f
-README.zh.md: d047dbc2f4bd1ddbb7a6723701e2537962364c22
+/:
+  en: 891fa9f998222b74
+  zh: 5eed64a6df09c534
+/nomix-ai-nomix-client-ui-reference:
+  en: 8c40052da10c2393
+  zh: d0b006de772f814f
+/nomix-ai-nomix-client-ui-reference/summary:
+  en: 8a11db788f42b75c
+  zh: 4cf34bacc7839ca0
+/nomix-ai-nomix-client-ui-reference/table-of-contents:
+  en: d152484eb41ac6b4
+  zh: 09388d293f9be9cb
+/nomix-ai-nomix-client-ui-reference/use-this-package:
+  en: 779a9a534eaad38b
+  zh: 3dd159a2c35702d6
+/nomix-ai-nomix-client-ui-reference/use-this-package/what-a-pick-inserts:
+  en: ec758efed1e13b08
+  zh: 22f86a3f545d3c0f
+/nomix-ai-nomix-client-ui-reference/use-this-package/failure-behavior:
+  en: 228ee6f4b81d96a7
+  zh: e1c960c3f5b25317
+/nomix-ai-nomix-client-ui-reference/understand-the-implementation:
+  en: dbfe93987c800112
+  zh: 200d477cc8cd8a1a
+/nomix-ai-nomix-client-ui-reference/understand-the-implementation/candidate-flow:
+  en: 6c77da1e946f72e1
+  zh: b7b8e1e1d4f5a102
+/nomix-ai-nomix-client-ui-reference/understand-the-implementation/serialization:
+  en: 0587f0ef57ae7f46
+  zh: 9c77a2b581ca0300
+/nomix-ai-nomix-client-ui-reference/further-exploration:
+  en: e3f6dbb5c578b41d
+  zh: 3db2e2b85ffa9bc2
+/nomix-ai-nomix-client-ui-reference/model-experience:
+  en: f7fa58a80d82d63a
+  zh: 8235157cbbbd18cf
+/nomix-ai-nomix-client-ui-reference/model-experience/kv-cache-effect:
+  en: ff23f8026f7c6050
+  zh: 6b0841800076bcd2
+/nomix-ai-nomix-client-ui-reference/known-limitations-and-deferred-work:
+  en: e79991a25b11e342
+  zh: 15064e8374c8e63d
+/nomix-ai-nomix-client-ui-reference/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98

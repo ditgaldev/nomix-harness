@@ -1,0 +1,51 @@
+{
+  "name": "@nomix-ai/nomix-experimental-ptc-runtime-python",
+  "description": "CPython subprocess implementation of the Nomix Harness PTC execution seam",
+  "version": "0.2.9",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ditgaldev/nomix-harness.git",
+    "directory": "packages/experimental/ptc-runtime-python"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "py/**/*.py",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@nomix-ai/nomix-ptc-runtime": "workspace:*",
+    "@nomix-ai/nomix-timeout": "workspace:*",
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-util-values": "workspace:*",
+    "@nomix-ai/nomix-sandbox": "workspace:*",
+    "@nomix-ai/nomix-sandbox-policy": "workspace:*"
+  },
+  "devDependencies": {
+    "@nomix-ai/nomix-ptc-runtime": "workspace:*",
+    "@nomix-ai/nomix-timeout": "workspace:*",
+    "@nomix-ai/cordis": "workspace:~",
+    "@nomix-ai/nomix-util-values": "workspace:*",
+    "@nomix-ai/nomix-sandbox": "workspace:*",
+    "@nomix-ai/nomix-sandbox-policy": "workspace:*",
+    "@nomix-ai/nomix-sandbox-local": "workspace:*",
+    "@nomix-ai/nomix-session-projection": "workspace:*",
+    "@nomix-ai/nomix-session": "workspace:*"
+  },
+  "dependencies": {
+    "@nomix-ai/schemastery": "workspace:~"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,43 @@
+# Bilingual-pair consistency record for 2026-09-04-right-sidebar-docking-infrastructure.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/feature/2026-09-04-right-sidebar-docking-infrastructure.md
+/agent-note-right-sidebar-docking-infrastructure:
+  en: 66687b4f23a160af
+  zh: 668a81c287b548f7
+/agent-note-right-sidebar-docking-infrastructure/problem:
+  en: dae256ae605900f2
+  zh: 11e9c51126ad836c
+/agent-note-right-sidebar-docking-infrastructure/decision:
+  en: cdacf0bbb9fc8d23
+  zh: 5b94dcc639349cf5
+/agent-note-right-sidebar-docking-infrastructure/decision/package-topology:
+  en: 422bb72bbd699a02
+  zh: c862930787b78224
+/agent-note-right-sidebar-docking-infrastructure/decision/layout-engine:
+  en: af79bc03cd8e8f72
+  zh: 88145221570301bf
+/agent-note-right-sidebar-docking-infrastructure/decision/the-frame-s-right-column:
+  en: e1d6d04a7e6ed595
+  zh: 5e9317813d0061ca
+/agent-note-right-sidebar-docking-infrastructure/decision/state:
+  en: f81b23358b4fb181
+  zh: 4e98914cc2ac1c54
+/agent-note-right-sidebar-docking-infrastructure/decision/beyond-the-surface:
+  en: 3d53fe588908a8f0
+  zh: ca8ed2a4b3648c58
+/agent-note-right-sidebar-docking-infrastructure/decision/entry-points-and-removals:
+  en: a6faa02fd5058e81
+  zh: c71ca128269bd439
+/agent-note-right-sidebar-docking-infrastructure/alternatives-considered:
+  en: 6569babd25fc0599
+  zh: f9d93c937b2cad60
+/agent-note-right-sidebar-docking-infrastructure/consequences:
+  en: deb3f1a934c49958
+  zh: 040de05a3c602858
+/agent-note-right-sidebar-docking-infrastructure/testing:
+  en: c7ca930dede9f819
+  zh: 44c76a4faefe7268
+/agent-note-right-sidebar-docking-infrastructure/deferred:
+  en: 6c2cd149c6ecf2b0
+  zh: b2673dee64de6bd6
