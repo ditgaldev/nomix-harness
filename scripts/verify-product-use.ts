@@ -191,7 +191,7 @@ export function verifyProductUse(
   const catalogPath = resolve(root, ON_DEMAND_SOURCE)
   const catalogFile = ts.createSourceFile(catalogPath, readFileSync(catalogPath, 'utf8'), ts.ScriptTarget.Latest, true)
   const optionals = [
-    ...stringList(literalDeclaration(profileFile, 'OPTIONAL_BUNDLES'), PROFILE_SOURCE),
+    ...stringList(literalDeclaration(catalogFile, 'OPTIONAL_BUNDLES'), ON_DEMAND_SOURCE),
     ...stringList(literalDeclaration(catalogFile, 'ON_DEMAND_BUNDLES'), ON_DEMAND_SOURCE),
   ]
   if (!isRecord(templates)) throw new Error(`${PROFILE_SOURCE}: PROFILE_TEMPLATES must be a literal object`)

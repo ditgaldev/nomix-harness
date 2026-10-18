@@ -1,7 +1,7 @@
-/** Packed-install npm cache ownership through the real offline verifier entry. */
+/** Dependency-free packed-install startup and npm cache ownership through the real verifier entry. */
 
 import { spawnSync } from 'node:child_process'
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
@@ -11,6 +11,41 @@ const roots: string[] = []
 
 afterEach(() => {
   for (const directory of roots.splice(0)) rmSync(directory, { recursive: true, force: true })
+})
+
+it('starts the real packed-install verifier and checks isolation without workspace dependencies', () => {
+  const directory = mkdtempSync(join(tmpdir(), 'nomix-packed-clean-'))
+  roots.push(directory)
+  for (const source of ['scripts', 'packages/boot/app-boot/src']) {
+    cpSync(join(root, source), join(directory, source), { recursive: true })
+  }
+  writeFileSync(join(directory, 'package.json'), '{"type":"module"}\n')
+  expect(existsSync(join(directory, 'node_modules'))).toBe(false)
+  expect(existsSync(join(directory, 'tsconfig.json'))).toBe(false)
+  const environment = Object.fromEntries(Object.entries(process.env).filter(([key]) => !/^NODE_(OPTIONS|PATH)$/i.test(key)))
+  const startup = spawnSync(process.execPath, [
+    'scripts/release/verify-packed-install.ts', '--family', 'vendor', '--from', 'unused',
+  ], { cwd: directory, env: environment, encoding: 'utf8', timeout: 30_000 })
+  expect(startup.error).toBeUndefined()
+  expect(startup.signal).toBeNull()
+  expect(startup.status, startup.stdout + startup.stderr).toBe(0)
+  expect(startup.stdout).toContain('family vendor publishes no executable')
+
+  const isolation = spawnSync(process.execPath, ['--input-type=module', '--eval', `
+import assert from 'node:assert/strict'
+import { mkdirSync, writeFileSync } from 'node:fs'
+import { verifyInstalledProductIsolation } from './scripts/release/installed-product-isolation.ts'
+mkdirSync('installed')
+writeFileSync('installed/package.json', JSON.stringify({ name: '@fixture/product' }))
+assert.equal(verifyInstalledProductIsolation('installed'), 1)
+writeFileSync('installed/package.json', JSON.stringify({
+  name: '@fixture/product', dependencies: { '@nomix-ai/nomix-experimental-prototype': '*' },
+}))
+assert.throws(() => verifyInstalledProductIsolation('installed'), /default product includes an experimental package/)
+`], { cwd: directory, env: environment, encoding: 'utf8', timeout: 30_000 })
+  expect(isolation.error).toBeUndefined()
+  expect(isolation.signal).toBeNull()
+  expect(isolation.status, isolation.stdout + isolation.stderr).toBe(0)
 })
 
 // The release verifier invokes POSIX npm directly, not the Windows npm.cmd shim.

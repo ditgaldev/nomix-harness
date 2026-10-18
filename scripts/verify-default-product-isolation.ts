@@ -24,6 +24,7 @@ import { isExperimentalPackageName } from './experimental-package-policy.ts'
 // The independently published entry package owns platform-engine dependencies.
 const EXTERNAL_KIT_PACKAGES = new Set(['@deepseek-ai/libreoffice-kit'])
 const PROFILE_SOURCE = 'packages/boot/app-boot/src/profile.ts'
+const BUNDLE_SOURCE = 'packages/boot/app-boot/src/official-bundle-packages.ts'
 const PRESET_PATTERN = 'packages/bundle/web-app/presets/*.patch.yml'
 const RUNTIME_SECTIONS = ['dependencies', 'optionalDependencies', 'peerDependencies'] as const
 
@@ -84,7 +85,7 @@ export function verifyDefaultProductIsolation(root: string): ProductIsolationRes
   // The bundles the launcher ships switched off: each a runtime dependency of the installation that is a bundle
   // with an icon and locale display metadata for the plugin manager's Official group, none a default.
   const profilePath = resolve(root, PROFILE_SOURCE)
-  const selection = existsSync(profilePath) ? profilePackages(readFileSync(profilePath, 'utf8')) : undefined
+  const selection = existsSync(profilePath) ? profilePackages(root) : undefined
   const optionalBundles = new Set(selection?.optionalBundles ?? [])
   for (const name of optionalBundles) {
     if (cli?.manifest.dependencies?.[name] === undefined) {
@@ -359,9 +360,8 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 }
 
 /** Read the literal package lists that define installation-owned profile defaults and the optional bundles it ships. */
-function profilePackages(source: string): { packages: string[]; webBundles: string[]; optionalBundles: string[] } {
-  const file = ts.createSourceFile(PROFILE_SOURCE, source, ts.ScriptTarget.Latest, true)
-  const required = new Set(['PROFILE_TEMPLATES', 'DEFAULT_PROFILE_BUNDLES'])
+function profilePackages(root: string): { packages: string[]; webBundles: string[]; optionalBundles: string[] } {
+  const required = new Set(['PROFILE_TEMPLATES', 'DEFAULT_PROFILE_BUNDLES', 'OPTIONAL_BUNDLES'])
   const found = new Set<string>()
   const packages: string[] = []
   const webBundles: string[] = []
@@ -383,18 +383,20 @@ function profilePackages(source: string): { packages: string[]; webBundles: stri
       literals(node.expression, path)
     } else throw new Error(`${PROFILE_SOURCE}: default profile packages must use static literal lists`)
   }
-  for (const statement of file.statements) {
-    if (!ts.isVariableStatement(statement)) continue
-    for (const declaration of statement.declarationList.declarations) {
-      if (!ts.isIdentifier(declaration.name)
-        || !required.has(declaration.name.text) && declaration.name.text !== 'INSTALLATION_OWNED_PROFILE_TUPLES'
-        && declaration.name.text !== 'OPTIONAL_BUNDLES') continue
-      if (declaration.initializer === undefined) continue
-      if (required.has(declaration.name.text)) found.add(declaration.name.text)
-      const before = packages.length
-      literals(declaration.initializer, [declaration.name.text])
-      if (declaration.name.text !== 'OPTIONAL_BUNDLES' && packages.length === before) {
-        throw new Error(`${PROFILE_SOURCE}: ${declaration.name.text} has no default bundles`)
+  for (const source of [PROFILE_SOURCE, BUNDLE_SOURCE]) {
+    const file = ts.createSourceFile(source, readFileSync(resolve(root, source), 'utf8'), ts.ScriptTarget.Latest, true)
+    for (const statement of file.statements) {
+      if (!ts.isVariableStatement(statement)) continue
+      for (const declaration of statement.declarationList.declarations) {
+        if (!ts.isIdentifier(declaration.name)
+          || !required.has(declaration.name.text) && declaration.name.text !== 'INSTALLATION_OWNED_PROFILE_TUPLES') continue
+        if (declaration.initializer === undefined) continue
+        if (required.has(declaration.name.text)) found.add(declaration.name.text)
+        const before = packages.length
+        literals(declaration.initializer, [declaration.name.text])
+        if (declaration.name.text !== 'OPTIONAL_BUNDLES' && packages.length === before) {
+          throw new Error(`${source}: ${declaration.name.text} has no default bundles`)
+        }
       }
     }
   }

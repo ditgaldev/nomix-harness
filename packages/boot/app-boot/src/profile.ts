@@ -212,28 +212,7 @@ const RETIRED_BUNDLES: ReadonlySet<string> = new Set([
 /** The bundle list a `nomix plugin` init uses for a name with no shipped template. */
 export const DEFAULT_PROFILE_BUNDLES: readonly string[] = ['@nomix-ai/nomix-base']
 
-/**
- * The bundles the nomix installation ships for a person to switch on: each a
- * runtime dependency of the installation that declares `nomix.bundle.patch`,
- * an `icon`, and `./locale/*.json` display metadata, selected by no shipped
- * template, and offered switched off by the plugin manager
- * ([rationale](../../../../.agents/notes/implemented/process/2026-09-15-shipped-optional-bundles.md),
- * [admission](../../../../.agents/notes/implemented/architecture/2026-09-21-experimental-capabilities-as-optional-bundles.md)).
- */
-export const OPTIONAL_BUNDLES: readonly string[] = [
-  '@nomix-ai/nomix-experimental-session-search',
-  '@nomix-ai/nomix-experimental-ralph-bundle',
-  '@nomix-ai/nomix-experimental-terminal-bundle',
-  '@nomix-ai/nomix-experimental-badge-skill-bundle',
-  '@nomix-ai/nomix-experimental-session-titles-bundle',
-  '@nomix-ai/nomix-experimental-agent-team-profile',
-  '@nomix-ai/nomix-experimental-voice-input-bundle',
-  '@nomix-ai/nomix-experimental-cot-translation-bundle',
-  '@nomix-ai/nomix-experimental-auto-review',
-  '@nomix-ai/nomix-experimental-inspector-profile',
-  '@nomix-ai/nomix-experimental-plugin-market-bundle',
-  '@nomix-ai/nomix-experimental-tool-worktree',
-]
+export { OPTIONAL_BUNDLES } from './official-bundle-packages.ts'
 
 const PROFILE_PATCH_TEMPLATE = `# Your patch layer for this nomix profile, applied after every bundle layer:
 # a top-level YAML array of loader patch entries (id-targeted config

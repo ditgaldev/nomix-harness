@@ -14,6 +14,7 @@ const experimental = '@nomix-ai/nomix-experimental-prototype'
 const core = '@nomix-ai/nomix-core'
 const base = '@nomix-ai/nomix-base'
 const profile = 'packages/boot/app-boot/src/profile.ts'
+const catalog = 'packages/boot/app-boot/src/official-bundle-packages.ts'
 const preset = 'packages/bundle/web-app/presets/standard.patch.yml'
 const patch = 'packages/bundle/base/cordis.patch.yml'
 
@@ -25,6 +26,7 @@ function manifest(root: string, path: string, fields: Record<string, unknown>): 
 function fixture(): string {
   const root = mkdtempSync(join(tmpdir(), 'nomix.default-isolation-'))
   roots.push(root)
+  write(root, catalog, 'export const OPTIONAL_BUNDLES = []\n')
   write(root, 'apps/cli/package.json', { name: '@nomix-ai/nomix-harness', dependencies: { [core]: 'workspace:^' } })
   write(root, 'apps/cli/src/bin.ts', 'export {}\n')
   write(root, 'apps/web/package.json', { name: '@nomix-ai/nomix-web-frontend' })
@@ -48,6 +50,15 @@ afterEach(() => {
 })
 
 describe('default product isolation', () => {
+  it.each([
+    ['export {}\n', 'missing default profile declarations'],
+    ['export const OPTIONAL_BUNDLES = loadBundles()\n', 'must use static literal lists'],
+  ])('rejects an optional bundle declaration that is absent or computed: %s', (source, diagnostic) => {
+    const root = fixture()
+    write(root, catalog, source)
+    expect(() => verifyDefaultProductIsolation(root)).toThrow(diagnostic)
+  })
+
   describe.each(Object.entries(EXPERIMENTAL_PACKAGE_NAME_EXCEPTIONS))('retained experimental identity %s', (directory, name) => {
     it.each(['direct dependency', 'transitive dependency', 'npm alias', 'value import', 'subpath import', 'profile row', 'preset row'])(
       'rejects default product use through a %s', (route) => {
@@ -124,8 +135,8 @@ describe('default product isolation', () => {
     write(root, 'packages/experimental/layer/cordis.patch.yml', [{ insert: [{ name: experimental }] }])
     manifest(root, 'apps/cli/package.json', { dependencies: { [core]: 'workspace:^', [layer]: 'workspace:^' } })
     write(root, profile, `export const PROFILE_TEMPLATES = { web: { bundles: ['${base}'] } }\n`
-      + `export const DEFAULT_PROFILE_BUNDLES = ['${base}']\n`
-      + `export const OPTIONAL_BUNDLES = ['${layer}']\n`)
+      + `export const DEFAULT_PROFILE_BUNDLES = ['${base}']\n`)
+    write(root, catalog, `export const OPTIONAL_BUNDLES = ['${layer}']\n`)
     expect(verifyDefaultProductIsolation(root)).toMatchObject({ failures: [], packageCount: 6 })
 
     // The exception covers the dependency edge alone: a runtime import or a default template still names the product.
@@ -133,8 +144,8 @@ describe('default product isolation', () => {
     expect(verifyDefaultProductIsolation(root).failures.join('\n')).toContain(`apps/cli/src/bin.ts -> ${layer}`)
     write(root, 'apps/cli/src/bin.ts', 'export {}\n')
     write(root, profile, `export const PROFILE_TEMPLATES = { web: { bundles: ['${base}', '${layer}'] } }\n`
-      + `export const DEFAULT_PROFILE_BUNDLES = ['${base}']\n`
-      + `export const OPTIONAL_BUNDLES = ['${layer}']\n`)
+      + `export const DEFAULT_PROFILE_BUNDLES = ['${base}']\n`)
+    write(root, catalog, `export const OPTIONAL_BUNDLES = ['${layer}']\n`)
     expect(verifyDefaultProductIsolation(root).failures.join('\n')).toContain(`optional bundle ${layer} must not be a default bundle`)
   })
 
@@ -150,7 +161,8 @@ describe('default product isolation', () => {
       write(root, 'packages/bundle/optional-layer/cordis.patch.yml', [])
       manifest(root, 'apps/cli/package.json', { dependencies: { [core]: 'workspace:*', [layer]: 'workspace:*' } })
       write(root, profile, `export const PROFILE_TEMPLATES = { web: { bundles: ['${base}'] } }\n`
-        + `export const DEFAULT_PROFILE_BUNDLES = ['${base}']\nexport const OPTIONAL_BUNDLES = ['${layer}']\n`)
+        + `export const DEFAULT_PROFILE_BUNDLES = ['${base}']\n`)
+      write(root, catalog, `export const OPTIONAL_BUNDLES = ['${layer}']\n`)
       expect(verifyDefaultProductIsolation(root).failures).toEqual([])
       if (kind === 'dependencies') {
         manifest(root, 'packages/bundle/optional-layer/package.json', { dependencies: { [experimental]: 'workspace:*' } })
@@ -166,8 +178,8 @@ describe('default product isolation', () => {
   it('requires each optional bundle to be a runtime dependency that declares a bundle patch, an icon, and locale metadata', () => {
     const root = fixture()
     write(root, profile, `export const PROFILE_TEMPLATES = { web: { bundles: ['${base}'] } }\n`
-      + `export const DEFAULT_PROFILE_BUNDLES = ['${base}']\n`
-      + `export const OPTIONAL_BUNDLES = ['${experimental}']\n`)
+      + `export const DEFAULT_PROFILE_BUNDLES = ['${base}']\n`)
+    write(root, catalog, `export const OPTIONAL_BUNDLES = ['${experimental}']\n`)
     const failures = verifyDefaultProductIsolation(root).failures.join('\n')
     expect(failures).toContain(`optional bundle ${experimental} must be a runtime dependency of apps/cli`)
     expect(failures).toContain(`optional bundle ${experimental} must declare nomix.bundle.patch`)
@@ -175,6 +187,7 @@ describe('default product isolation', () => {
     expect(failures).toContain(`optional bundle ${experimental} must export ./locale/*.json display metadata`)
 
     // An experimental runtime dependency the list does not name is still a product requirement.
+    write(root, catalog, 'export const OPTIONAL_BUNDLES = []\n')
     write(root, profile, `export const PROFILE_TEMPLATES = { web: { bundles: ['${base}'] } }\n`
       + `export const DEFAULT_PROFILE_BUNDLES = ['${base}']\n`)
     manifest(root, 'apps/cli/package.json', { dependencies: { [core]: 'workspace:^', [experimental]: 'workspace:^' } })
